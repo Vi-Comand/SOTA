@@ -1,8 +1,45 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+<link rel="stylesheet" href="~/docs/style.css" type="text/css">
+<script type="text/css" src="~/docs/style.css">
+</script>
+<script type="text/javascript" src="~/scripts/wysiwyg.js"></script>
+<script type="text/javascript" src="~/scripts/wysiwyg-settings.js"></script>
+
+<script type="text/javascript">
+    // Use it to attach the editor to all textareas with full featured setup
+    //WYSIWYG.attach('all', full);
+
+    // Use it to attach the editor directly to a defined textarea
+    WYSIWYG.attach('textarea1'); // default setup
+    WYSIWYG.attach('textarea2', full); // full featured setup
+    WYSIWYG.attach('textarea3', small); // small setup
+
+            // Use it to display an iframes instead of a textareas
+            //WYSIWYG.display('all', full);
+</script>
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
 
+    <textarea id="textarea2" name="test2" style="width:80%;height:200px;">
+<h1>GNU Lesser General Public License</h1>
+<tt>
+<p>Version 2.1, February 1999</p>
+
+<blockquote>
+<p>Copyright (C) 1991, 1999 Free Software Foundation, Inc.
+59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+Everyone is permitted to copy and distribute verbatim copies
+of this license document, but changing it is not allowed.</p>
+
+<p>[This is the first released version of the Lesser GPL.  It also counts
+ as the successor of the GNU Library Public License, version 2, hence
+ the version number 2.1.]</p>
+</blockquote>
+
+<h3>Preamble</h3>
+<p>The licenses for most software are designed to take away your freedom to share and change it.</p></tt>
+</textarea>
 </div>
