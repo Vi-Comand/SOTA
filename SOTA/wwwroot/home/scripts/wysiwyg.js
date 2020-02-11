@@ -1,4 +1,4 @@
-/********************************************************************
+﻿/********************************************************************
  * openWYSIWYG v1.47 Copyright (c) 2006 openWebWare.com 
  * Contact us at devs@openwebware.com
  * This copyright notice MUST stay intact for use.
@@ -54,10 +54,10 @@ var WYSIWYG = {
 		this.PreviewHeight = 400;
 		
 		// Confirmation message if you strip any HTML added by word
-		this.RemoveFormatConfMessage = "Clean HTML inserted by MS Word ?";
+		this.RemoveFormatConfMessage = "Очистить стили Word ?";
 		
 		// Nofication if browser is not supported by openWYSIWYG, leave it blank for no message output.
-		this.NoValidBrowserMessage = "openWYSIWYG does not support your browser.";
+		this.NoValidBrowserMessage = "openWYSIWYG не работает в этом браузере.";
 				
 		// Anchor path to strip, leave it blank to ignore
 		// or define auto to strip the path where the editor is placed 
@@ -98,7 +98,7 @@ var WYSIWYG = {
 		this.Toolbar[0] = new Array(
 			"font", 
 			"fontsize",
-			"headings",	
+			//"headings",	
 			"bold", 
 			"italic", 
 			"underline", 
@@ -118,15 +118,12 @@ var WYSIWYG = {
 			"indent"
 		);
 		this.Toolbar[1] = new Array(
-			"save",
+			
 			// "return",  // return button disabled by default
-			"seperator", 
+			
 			"subscript", 
 			"superscript", 
 			"seperator", 
-			"cut", 
-			"copy", 
-			"paste",
 			"removeformat",
 			"seperator", 
 			"undo", 
@@ -141,8 +138,8 @@ var WYSIWYG = {
 			"seperator", 
 			"viewSource",
 			"maximize", 
-			"seperator", 
-			"help"
+			"seperator" 
+			
 		);
 		
 		// DropDowns
@@ -245,44 +242,44 @@ var WYSIWYG = {
 	// List of available actions and their respective ID and images
 	ToolbarList: {
 	//Name              buttonID               buttonTitle           	buttonImage               buttonImageRollover
-	"bold":           ['Bold',                 'Bold',               	'bold.gif',               'bold_on.gif'],
-	"italic":         ['Italic',               'Italic',             	'italics.gif',            'italics_on.gif'],
-	"underline":      ['Underline',            'Underline',          	'underline.gif',          'underline_on.gif'],
-	"strikethrough":  ['Strikethrough',        'Strikethrough',      	'strikethrough.gif',      'strikethrough_on.gif'],
+	"bold":           ['Bold',                 'Жирный',               	'bold.gif',               'bold_on.gif'],
+	"italic":         ['Italic',               'Курсив',             	'italics.gif',            'italics_on.gif'],
+	"underline":      ['Underline',            'Подчёркнутый',          	'underline.gif',          'underline_on.gif'],
+	"strikethrough":  ['Strikethrough',        'Зачёркнутый',      	'strikethrough.gif',      'strikethrough_on.gif'],
 	"seperator":      ['',                     '',                   	'seperator.gif',          'seperator.gif'],
-	"subscript":      ['Subscript',            'Subscript',          	'subscript.gif',          'subscript_on.gif'],
-	"superscript":    ['Superscript',          'Superscript',        	'superscript.gif',        'superscript_on.gif'],
-	"justifyleft":    ['Justifyleft',          'Justifyleft',        	'justify_left.gif',       'justify_left_on.gif'],
-	"justifycenter":  ['Justifycenter',        'Justifycenter',      	'justify_center.gif',     'justify_center_on.gif'],
-	"justifyright":   ['Justifyright',         'Justifyright',       	'justify_right.gif',      'justify_right_on.gif'],
-	"justifyfull": 	  ['Justifyfull', 		   'Justifyfull', 			'justify_justify.gif', 	  'justify_justify_on.gif'], 
-	"unorderedlist":  ['InsertUnorderedList',  'Insert Unordered List',	'list_unordered.gif',     'list_unordered_on.gif'],
-	"orderedlist":    ['InsertOrderedList',    'Insert Ordered List',  	'list_ordered.gif',       'list_ordered_on.gif'],
-	"outdent":        ['Outdent',              'Outdent',            	'indent_left.gif',        'indent_left_on.gif'],
-	"indent":         ['Indent',               'Indent',             	'indent_right.gif',       'indent_right_on.gif'],
-	"cut":            ['Cut',                  'Cut',                	'cut.gif',                'cut_on.gif'],
-	"copy":           ['Copy',                 'Copy',               	'copy.gif',               'copy_on.gif'],
-	"paste":          ['Paste',                'Paste',              	'paste.gif',              'paste_on.gif'],
-	"forecolor":      ['ForeColor',            'Fore Color',          	'forecolor.gif',          'forecolor_on.gif'],
-	"backcolor":      ['BackColor',            'Back Color',          	'backcolor.gif',          'backcolor_on.gif'],
-	"undo":           ['Undo',                 'Undo',               	'undo.gif',               'undo_on.gif'],
-	"redo":           ['Redo',                 'Redo',               	'redo.gif',               'redo_on.gif'],
-	"inserttable":    ['InsertTable',          'Insert Table',        	'insert_table.gif',       'insert_table_on.gif'],
-	"insertimage":    ['InsertImage',          'Insert Image',        	'insert_picture.gif',     'insert_picture_on.gif'],
-	"createlink":     ['CreateLink',           'Create Link',         	'insert_hyperlink.gif',   'insert_hyperlink_on.gif'],
-	"viewSource":     ['ViewSource',           'View Source',         	'view_source.gif',        'view_source_on.gif'],
-	"viewText":       ['ViewText',             'View Text',           	'view_text.gif',          'view_text_on.gif'],
+	"subscript":      ['Subscript',            'Подстрочный',          	'subscript.gif',          'subscript_on.gif'],
+	"superscript":    ['Superscript',          'Надстрочный',        	'superscript.gif',        'superscript_on.gif'],
+	"justifyleft":    ['Justifyleft',          'По левому',        	'justify_left.gif',       'justify_left_on.gif'],
+	"justifycenter":  ['Justifycenter',        'По центру',      	'justify_center.gif',     'justify_center_on.gif'],
+	"justifyright":   ['Justifyright',         'По правому',       	'justify_right.gif',      'justify_right_on.gif'],
+	"justifyfull": 	  ['Justifyfull', 		   'По ширине', 			'justify_justify.gif', 	  'justify_justify_on.gif'], 
+	"unorderedlist":  ['InsertUnorderedList',  'Маркеры',	'list_unordered.gif',     'list_unordered_on.gif'],
+	"orderedlist":    ['InsertOrderedList',    'Нумерация',  	'list_ordered.gif',       'list_ordered_on.gif'],
+	"outdent":        ['Outdent',              'Отступ',            	'indent_left.gif',        'indent_left_on.gif'],
+	"indent":         ['Indent',               'Выступ',             	'indent_right.gif',       'indent_right_on.gif'],
+	"cut":            ['Cut',                  'Вырезать',                	'cut.gif',                'cut_on.gif'],
+	"copy":           ['Copy',                 'Копировать',               	'copy.gif',               'copy_on.gif'],
+	"paste":          ['Paste',                'Вставить',              	'paste.gif',              'paste_on.gif'],
+	"forecolor":      ['ForeColor',            'Цвет',          	'forecolor.gif',          'forecolor_on.gif'],
+	"backcolor":      ['BackColor',            'Заливка',          	'backcolor.gif',          'backcolor_on.gif'],
+	"undo":           ['Undo',                 'Назад',               	'undo.gif',               'undo_on.gif'],
+	"redo":           ['Redo',                 'Вперёд',               	'redo.gif',               'redo_on.gif'],
+	"inserttable":    ['InsertTable',          'Вставить таблицу',        	'insert_table.gif',       'insert_table_on.gif'],
+	"insertimage":    ['InsertImage',          'Вставить изображение',        	'insert_picture.gif',     'insert_picture_on.gif'],
+	"createlink":     ['CreateLink',           'Вставить ссылку',         	'insert_hyperlink.gif',   'insert_hyperlink_on.gif'],
+	"viewSource":     ['ViewSource',           'Код',         	'view_source.gif',        'view_source_on.gif'],
+	"viewText":       ['ViewText',             'Код',           	'view_text.gif',          'view_text_on.gif'],
 	"help":           ['Help',                 'Help',               	'help.gif',               'help_on.gif'],
 	"fonts":     	  ['Fonts',           	   'Select Font',        	'select_font.gif',        'select_font_on.gif'],
 	"fontsizes":      ['Fontsizes',            'Select Size',        	'select_size.gif',        'select_size_on.gif'],
 	"headings":       ['Headings',             'Select Size',        	'select_heading.gif',     'select_heading_on.gif'],
-	"preview":		  ['Preview', 			   'Preview',       	 	'preview.gif',			  'preview_on.gif'],
-	"print":		  ['Print', 			   'Print',       	 	 	'print.gif',			  'print_on.gif'],
-	"removeformat":   ['RemoveFormat',         'Strip Word HTML',    	'remove_format.gif',      'remove_format_on.gif'],
+        "preview": ['Preview', 			   'Предпросмотр',       	 	'preview.gif',			  'preview_on.gif'],
+	"print":		  ['Print', 			   'Печать',       	 	 	'print.gif',			  'print_on.gif'],
+	"removeformat":   ['RemoveFormat',         'Очистить стили Word',    	'remove_format.gif',      'remove_format_on.gif'],
 	"delete":         ['Delete',               'Delete',             	'delete.gif',     		  'delete_on.gif'],
 	"save": 		  ['Save', 				   'Save document',         'save.gif', 			  'save_on.gif'],
 	"return": 		  ['Return', 			   'Return without saving', 'return.gif', 			  'return_on.gif'],
-	"maximize": 	  ['Maximize', 			   'Maximize the editor',   'maximize.gif', 		  'maximize_on.gif']
+	"maximize": 	  ['Maximize', 			   'Развернуть редактор',   'maximize.gif', 		  'maximize_on.gif']
 	},
 	
 	// stores the different settings for each textarea
@@ -2694,7 +2691,7 @@ var WYSIWYG_Table = {
 		//alert("ENABLE: ELM = " + node.tagName + "; STYLE = " + style);
 		WYSIWYG_Core.removeAttribute(node, "prevstyle");
 		WYSIWYG_Core.setAttribute(node, "prevstyle", style);
-		WYSIWYG_Core.setAttribute(node, "style", "border:1px dashed #AAAAAA;");
+	//	WYSIWYG_Core.setAttribute(node, "style", "border:1px solid #AAAAAA;");
 	},
 	
 	/**
