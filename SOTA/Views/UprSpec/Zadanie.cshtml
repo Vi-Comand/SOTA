@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 
 
-<script type="text/javascript" src="~/home/scripts/jquery-2.x-git.js"></script>
+<script type="text/javascript" src="~/UprSpec/scripts/jquery-2.x-git.js"></script>
 <script>
         $(document).ready(function () {
             alert('Ваша версия jQuery ' + jQuery.fn.jquery);
@@ -13,13 +13,13 @@
 <html>
 <head>
     <title>openWYSIWYG</title>
-    <link rel="stylesheet" href="/home/docs/style.css" type="text/css">
+    <link rel="stylesheet" href="~/UprSpec/docs/style.css" type="text/css">
 
     <!--
         Include the WYSIWYG javascript files
     -->
-    <script type="text/javascript" src="~/home/scripts/wysiwyg.js"></script>
-    <script type="text/javascript" src="~/home/scripts/wysiwyg-settings.js"></script>
+    <script type="text/javascript" src="~/UprSpec/scripts/wysiwyg.js"></script>
+    <script type="text/javascript" src="~/UprSpec/scripts/wysiwyg-settings.js"></script>
     <!--
         Attach the editor on the textareas
     -->
@@ -36,32 +36,43 @@
         //WYSIWYG.display('all', full);
     </script>
 
-
     <form>
-        <button class="btn btn-outline-success " id="KolvoLoad" form="0">Сформировать1</button>
+        <button class="btn btn-outline-success " id="SaveZadanie" form="0">Сохранить</button>
     </form>
-    <div class="scroll" id="text">
-        Изначальное содержимое
-    </div>
     <script type="text/javascript">
-        //if (document.getElementById('KolvoLoad').onclick) {
-        //    alert('Нажата кнопка');
-        //}
-        
-        jQuery("#KolvoLoad").click(function () {
-            
-            jQuery('#ViewSource').click();
-      
-            alert(document.getElementById("wysiwygtextarea1").contentWindow.document.body.innerHTML);
-            document.getElementById('text') = document.getElementById("wysiwygtextarea1").contentWindow.document.body.innerHTML;
 
-            
+
+
+        jQuery("#SaveZadanie").click(function () {
+            alert("fsdf");
+            jQuery('#ViewSource').click();
+
+            alert(document.getElementById("wysiwygtextarea1").contentWindow.document.body.innerHTML);
+            document.getElementById('text').innerHTML = document.getElementById("wysiwygtextarea1").contentWindow.document.body.innerHTML;
+            alert("dasdas");
+            jQuery.ajax({
+                url: '/UprSpec/SaveWysiwygText/',
+                type: "POST",
+                dataType: "json",
+                data: { Name: "1", IdSpec: "1", Text: document.getElementById("wysiwygtextarea1").contentWindow.document.body.innerHTML, Variant: "1", Nomer: "1" },
+                success: function (query) {
+                    alert(query);
+                }
+
+            });
+
         });
     </script>
 
 </head>
 
 <body>
+
+    
+
+    <div class="scroll" id="text">
+     
+    </div>
     <input type="submit" id="KolvoLoad" value="Кликни" />
 
     <script>
