@@ -1,0 +1,130 @@
+﻿
+@{
+    ViewData["Title"] = "Авторизация";
+}
+
+<body>
+    <main class="page hire-me-page">
+        <section class="portfolio-block hire-me">
+            <div class="container">
+                <br />
+                <form asp-action="Login" asp-controller="Account" asp-anti-forgery="true" class="text-center was-validated" style="width: 300px; margin-left: auto; margin-right: auto;" method="post">
+                    <div class="validation center" asp-validation-summary="ModelOnly" />
+                    <div class="form-row  rounded col-md-12">
+                        <div class="form-group">
+                            <label for="validationLog">Логин</label>
+                            <input type="text" class="form-control " id="validationLog" placeholder="Логин" required />
+                            <div class="invalid-feedback">
+                                Введите логин.
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="validationPass">Пароль</label>
+                            <input type="password" class="form-control " id="validationPass" placeholder="Пароль" required />
+                            <div class="invalid-feedback">
+                                Введите пароль.
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            
+                                <input type="button" id="KolvoLoad" value="Войти" style="width:192px" class="btn  btn-outline-success" />
+                            
+                        </div>
+                    </div>
+
+
+
+                </form>
+            </div>
+        </section>
+    </main>
+    <div class="accordion" id="accordionExample">
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" type="button" id="uslov_collaps" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Условие
+                    </button>
+                </h5>
+            </div>
+
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                <div class="card-body">
+                    Вставь сюда редактор!
+                    <input type="text" id="uslov" />
+                    <a href="#" onclick="continueButton()">Далее</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header" id="headingTwo">
+                <h5 class="mb-0">
+                    <button disabled class="btn btn-link collapsed" id="otvet_collaps" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Ответ
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                <div class="card-body">
+                    <ul class="nav nav-tabs" id="otv_Tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#otv1" role="tab" aria-controls="otv1" aria-selected="true">Строчный ответ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#otv2" role="tab" aria-controls="otv2" aria-selected="false">Выбор ответа</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#otv3" role="tab" aria-controls="otv3" aria-selected="false">Выпадающий список</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#otv4" role="tab" aria-controls="otv4" aria-selected="false">Табличный</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#otv5" role="tab" aria-controls="otv5" aria-selected="false">Свободный ответ</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="otv1" role="tabpanel" aria-labelledby="otv1-tab">1</div>
+                        <div class="tab-pane fade" id="otv2" role="tabpanel" aria-labelledby="otv2-tab">2</div>
+                        <div class="tab-pane fade" id="otv3" role="tabpanel" aria-labelledby="otv3-tab">3</div>
+                        <div class="tab-pane fade" id="otv4" role="tabpanel" aria-labelledby="otv4-tab">4</div>
+                        <div class="tab-pane fade" id="otv5" role="tabpanel" aria-labelledby="otv5-tab">5</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingThree">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        Предпросмотр и сохранение
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                <div class="card-body">
+                    Смотри
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            alert('Ваша версия jQuery ' + jQuery.fn.jquery);
+        });
+        function continueButton() {
+            if (document.getElementById("uslov").value != "") {
+                document.getElementById("otvet_collaps").removeAttribute("disabled");
+                $("#otvet_collaps").removeClass("collapsed");
+               // $("#uslov_collaps").addClass("collapsed");
+                document.getElementById("otvet_collaps").setAttribute("aria-expanded", "true");
+                $("#collapseTwo").addClass("show");
+                $("#collapseOne").removeClass("show");
+            }
+        }
+    </script>
+</body>
