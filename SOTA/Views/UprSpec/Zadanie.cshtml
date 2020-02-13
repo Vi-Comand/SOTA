@@ -1,7 +1,13 @@
-﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-
-
+﻿@{
+    Layout = "_Layout";
+}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <script type="text/javascript" src="~/UprSpec/scripts/jquery-2.x-git.js"></script>
+
+
+
+
+
 <script>
     $(document).ready(function () {
         alert('Ваша версия jQuery ' + jQuery.fn.jquery);
@@ -13,7 +19,7 @@
 <html>
 <head>
     <title>openWYSIWYG</title>
-    <link rel="stylesheet" href="~/UprSpec/docs/style.css" type="text/css">
+    @*<link rel="stylesheet" href="~/UprSpec/docs/style.css" type="text/css">*@
 
     <!--
         Include the WYSIWYG javascript files
@@ -36,9 +42,9 @@
         //WYSIWYG.display('all', full);
     </script>
 
-    <form>
+    
         <button class="btn btn-outline-success " id="SaveZadanie" form="0">Сохранить</button>
-    </form>
+    
     <script type="text/javascript">
 
 
@@ -89,16 +95,7 @@
                     </div>
                     <input type="submit" id="KolvoLoad" value="Кликни" />
 
-                    <script>
 
-                        $("#sendwellmini").click(function () { // задаем функцию при нажатиии на элемент <button>
-
-                            alert("fsd");
-
-
-                        });
-
-                    </script>
 
 
 
@@ -154,8 +151,33 @@
                         </li>
                     </ul>
                     <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="otv1" role="tabpanel" aria-labelledby="otv1-tab">1</div>
-                        <div class="tab-pane fade" id="otv2" role="tabpanel" aria-labelledby="otv2-tab">2</div>
+                        <div class="tab-pane fade show active" id="otv1" role="tabpanel" aria-labelledby="otv1-tab">
+                            <input type="text" id="StrOtvet" />
+
+                            <button class="btn btn-outline-warning">Ryjgrf rhfcbdfz </button>
+                        </div>
+                        <div class="tab-pane fade" id="otv2" role="tabpanel" aria-labelledby="otv2-tab">
+                            <form name="myForm">
+                                <div id="ViborOtvetov">
+                                    <div id="DivViborOtveta[1]"> <input name="ViborOtveta[1]" id="ViborOtveta[1]" type="text" /> <input type="checkbox" name="check[1]" id="check[1]" /></div>
+                                    <div id="ViborOtveta[2]"></div>
+                                    <input name="ViborOtveta[2]" id="ViborOtveta[2]" type="text" /> <input type="checkbox" name="check[2]" id="check[2]" />
+                                </div>
+                                <div id="ViborOtveta[3]">
+                                 <input name="DivViborOtveta[3]" id="ViborOtveta[3]" type="text" /> <input type="checkbox" name="check[3]" id="check[3]" /></div>
+                                    <div id="DivViborOtveta[4]">
+                                        <input name="ViborOtveta[4]" id="ViborOtveta[4]" type="text" /> <input type="checkbox" name="check[4]" id="check[4]" />
+                                                                                                            </div>
+
+                                 <div>
+                                     <button name="del">Удалить</button>
+                                     <button name="add">Добавить</button>
+                                    </div>
+</form>
+                            <form >
+                               
+                                </form>
+                        </div>
                         <div class="tab-pane fade" id="otv3" role="tabpanel" aria-labelledby="otv3-tab">3</div>
                         <div class="tab-pane fade" id="otv4" role="tabpanel" aria-labelledby="otv4-tab">4</div>
                         <div class="tab-pane fade" id="otv5" role="tabpanel" aria-labelledby="otv5-tab">5</div>
@@ -178,20 +200,73 @@
             </div>
         </div>
     </div>
-    <script src="~/lib/jquery/dist/jquery.js"></script>
+
+    <script>
+        var inputs = 0;
+        var form = document.forms.myForm;
+        var i = 5;
+        if (form) {
+            form.getElementsByTagName('div').length;
+            form.addEventListener('click', function (event) {
+                event.preventDefault();
+
+                if (event.target.name == 'add') {
+                    //form.appendChild(event.target.parentNode.(true));
+                    
+
+
+                      var ViborOtvetov = document.getElementById( "ViborOtvetov" );
+                    var div = document.createElement("div");
+                    div.id="DivViborOtveta[" + i+ "]";
+ // Добавляем HTML-контент с пом. свойства innerHTML
+ div.innerHTML = "<input name=\"ViborOtveta[" + i+ "]\" id=\"ViborOtveta[" + i+ "]\" type=\"text\" /> <input type=\"checkbox\" name=check["+i+"] id=check["+i+"]  />";
+ // Добавляем новый узел в конец списка полей
+  ViborOtvetov.before(div);
+
+                  
+                    i++;
+
+
+           
+                }
+                if (event.target.name == 'del') {
+                    
+                    if (i > 3) {
+
+         
+               
+                
+                        var elem = document.getElementById( "check[" +(i - 1)+ "]" );
+                    
+                      
+                       elem.parentNode.removeChild(elem);
+                          var elem = document.getElementById("ViborOtveta[" + (i-1)+ "]");
+                        elem.remove();
+
+                        i--
+
+                    }
+                }
+            });
+        }
+    </script>
+
+
+
+    @*<script src="~/lib/jquery/dist/jquery.js"></script>*@
     <script>
 
-        $(document).ready(function () {
-            alert('Ваша версия jQuery ' + jQuery.fn.jquery);
-        });
+        //$(document).ready(function () {
+        //    alert('Ваша версия jQuery ' + jQuery.fn.jquery);
+        //});
         function continueButton() {
-            if (document.getElementById("uslov").value != "") {
+            if (document.getElementById("wysiwygtextarea1").contentWindow.document.body.innerHTML != "") {
                 document.getElementById("otvet_collaps").removeAttribute("disabled");
-                $("#otvet_collaps").removeClass("collapsed");
+                jQuery("#otvet_collaps").removeClass("collapsed");
                 // $("#uslov_collaps").addClass("collapsed");
                 document.getElementById("otvet_collaps").setAttribute("aria-expanded", "true");
-                $("#collapseTwo").addClass("show");
-                $("#collapseOne").removeClass("show");
+                jQuery("#collapseTwo").addClass("show");
+                jQuery("#collapseOne").removeClass("show");
             }
         }
     </script>
