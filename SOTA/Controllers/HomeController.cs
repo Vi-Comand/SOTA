@@ -5,14 +5,24 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Sota.Models;
 
 namespace SOTA.Controllers
 {
     public class HomeController : Controller
     {
+
+
+        SotaContext db;
+
+        public HomeController(SotaContext context)
+        {
+            db = context;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            return View(db.Zadanie.ToList());
         }
 
         public IActionResult Privacy()
