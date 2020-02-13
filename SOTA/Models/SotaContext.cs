@@ -7,12 +7,12 @@ namespace Sota.Models
     public class SotaContext : DbContext
     {
         public DbSet<Zadanie> Zadanie { get; set; }
-      
+
 
         public SotaContext(DbContextOptions<SotaContext> options)
             : base(options)
         {
-            Database.EnsureCreated();
+            //    Database.EnsureCreated();
         }
     }
 }

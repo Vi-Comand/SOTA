@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Sota.Models;
 using SOTA.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Sota.Models;
 
 namespace SOTA.Controllers
 {
@@ -22,7 +22,7 @@ namespace SOTA.Controllers
 
         public IActionResult Index()
         {
-            return View(db.Zadanie.ToList());
+            return View();
         }
 
         public IActionResult Privacy()
