@@ -155,20 +155,32 @@
                             <input type="text" id="StrOtvet" />
 
                             <button class="btn btn-outline-warning">Ryjgrf rhfcbdfz </button>
+                            
+                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                
+                            
                         </div>
                         <div class="tab-pane fade" id="otv2" role="tabpanel" aria-labelledby="otv2-tab">
+                            <div id="ViborOtveta[2]" class="form-group form-check">
+                                <input name="ViborOtveta[2]" id="ViborOtveta[2]" type="text" />
+                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                            </div>
                             <form name="myForm">
                                 <div id="ViborOtvetov">
                                     <div id="DivViborOtveta[1]"> <input name="ViborOtveta[1]" id="ViborOtveta[1]" type="text" /> <input type="checkbox" name="check[1]" id="check[1]" /></div>
-                                    <div id="ViborOtveta[2]"></div>
-                                    <input name="ViborOtveta[2]" id="ViborOtveta[2]" type="text" /> <input type="checkbox" name="check[2]" id="check[2]" />
-                                </div>
-                                <div id="ViborOtveta[3]">
-                                 <input name="DivViborOtveta[3]" id="ViborOtveta[3]" type="text" /> <input type="checkbox" name="check[3]" id="check[3]" /></div>
+                                    <div id="ViborOtveta[2]" class="form-group form-check">
+                                        <input name="ViborOtveta[2]" id="ViborOtveta[2]" type="text" />
+                                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                                    </div>
+                                    <div id="ViborOtveta[3]">
+                                        <input name="DivViborOtveta[3]" id="ViborOtveta[3]" type="text" /> <input type="checkbox" name="check[3]" id="check[3]" />
+                                    </div>
                                     <div id="DivViborOtveta[4]">
                                         <input name="ViborOtveta[4]" id="ViborOtveta[4]" type="text" /> <input type="checkbox" name="check[4]" id="check[4]" />
-                                                                                                            </div>
-
+                                    </div>
+                                </div>
                                  <div>
                                      <button name="del">Удалить</button>
                                      <button name="add">Добавить</button>
@@ -208,7 +220,7 @@
         if (form) {
             form.getElementsByTagName('div').length;
             form.addEventListener('click', function (event) {
-                event.preventDefault();
+               // event.preventDefault();
 
                 if (event.target.name == 'add') {
                     //form.appendChild(event.target.parentNode.(true));

@@ -12,7 +12,7 @@ namespace Sota.Models
         public SotaContext(DbContextOptions<SotaContext> options)
             : base(options)
         {
-            //    Database.EnsureCreated();
+            Database.EnsureCreated();
         }
     }
 }

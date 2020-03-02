@@ -1,6 +1,7 @@
 ﻿
 @{
     ViewData["Title"] = "Авторизация";
+
 }
 <script defer src="~/js/jquery.pwstrength.js"></script>
 <body>
@@ -8,23 +9,36 @@
         <section class="portfolio-block hire-me">
             <div class="container">
                 <br />
-                <form asp-action="Login" asp-controller="Account" asp-anti-forgery="true" class="text-center was-validated" style="width: 300px; margin-left: auto; margin-right: auto;" method="post">
+                <form asp-action="Login" asp-controller="Account" asp-anti-forgery="true" class="text-center was-validated mx-auto" style="width: 400px;" method="post">
                     <div class="validation center" asp-validation-summary="ModelOnly" />
-                    <div class="form-row  rounded col-md-12">
-                        <div class="form-group">
-                            <label for="validationLog">Логин</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
+                    <div class="form-row  rounded col-md-12 shadow-lg p-3 mb-5 bg-white-80 rounded">
+                        <div class="form-group ">
+                            <img src="~/favicon.png" />
+                            <h4>Сиситема онлайн тестирования и аналитики</h4>
+                            <br />
+                            <h2>Вход</h2>
+                        </div>
+                        <div class="form-group centr-div">
+                            <label aria-label="Логин" for="validationLog">Логин</label>
+                            <div class="input-group wrap-input100 validate-input">
+                                <div class="input-group-prepend ">
                                     <div class="input-group-text">
                                         <i class="fas fa-at"></i>
                                     </div>
                                 </div>
-                                <input type="text" class="form-control " id="validationLog" placeholder="Логин" required />
+                                <input type="text" class="form-control input100" id="validationLog" placeholder="Логин" pattern="[A-Za-zА-Яа-яЁё0-9]{6,}" required />
+                                <span class="focus-input100"></span>
                                 <div class="invalid-feedback">
                                     Введите логин.
                                 </div>
                             </div>
-
+                            <div class="wrap-input100 validate-input" data-validate="Password is required">
+                                <input class="input100" type="password" name="pass" placeholder="Password">
+                                <span class="focus-input100"></span>
+                                <span class="symbol-input100">
+                                    <i class="fa fa-lock" aria-hidden="true"></i>
+                                </span>
+                            </div>
                             <div class="form-group">
                                 <label for="validationPass">Пароль</label>
                                 <div class="input-group">
@@ -33,141 +47,23 @@
                                             <i class="fas fa-lock"></i>
                                         </div>
                                     </div>
-                                    <input type="password" class="form-control pwstrength" id="validationPass" placeholder="Пароль" required />
+                                    <input type="password" class="form-control pwstrength " id="validationPass" placeholder="Пароль" pattern="[A-Za-zА-Яа-яЁё0-9]{6,}" required />
                                     <div class="invalid-feedback">
                                         Введите пароль.
                                     </div>
                                 </div>
-
                             </div>
                             <div class="form-group">
-                                <label><ya-tr-span data-index="149-0" data-value="Password Strength" data-translation="надежность пароля" data-type="trSpan">надежность пароля</ya-tr-span></label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            <i class="fas fa-lock"></i>
-                                        </div>
-                                    </div>
-                                    <input type="password" class="form-control pwstrength" data-indicator="pwindicator">
-                                </div>
-                                <div id="pwindicator" class="pwindicator pw-strong">
-                                    <div class="bar"></div>
-                                    <div class="label"><ya-tr-span data-index="234-0" data-value="strong" data-translation="сильный" data-type="trSpan">сильный</ya-tr-span></div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-
                                 <button id="KolvoLoad" style="width:192px" class="btn btn-icon icon-left btn-outline-success">
-                                    <i class="far"></i>Войти
+                                    Войти
+                                    <i class="far fa-lock"></i>
                                 </button>
 
                             </div>
                         </div>
-
-
-
-                </form>
-                <div class="form-group">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">
-                                <i class="fas fa-calculator"></i>
-                            </div>
-                        </div>
-                        <input type="text" class="form-control" id="validationPass" placeholder="Введите числовой ответ" pattern="\d+(,\d+)?|\d+(\.\d+)?" required />
-                        
                     </div>
-
-                </div>
+                </form>
             </div>
         </section>
     </main>
-    <div class="accordion" id="accordionExample">
-        <div class="card">
-            <div class="card-header" id="headingOne">
-                <h5 class="mb-0">
-                    <button class="btn btn-link" type="button" id="uslov_collaps" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        Условие
-                    </button>
-                </h5>
-            </div>
-
-            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                <div class="card-body">
-                    Вставь сюда редактор!
-                    <input type="text" id="uslov" />
-                    <a href="#" onclick="continueButton()">Далее</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-header" id="headingTwo">
-                <h5 class="mb-0">
-                    <button disabled class="btn btn-link collapsed" id="otvet_collaps" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                        Ответ
-                    </button>
-                </h5>
-            </div>
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                <div class="card-body">
-                    <ul class="nav nav-tabs" id="otv_Tab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#otv1" role="tab" aria-controls="otv1" aria-selected="true">Строчный ответ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#otv2" role="tab" aria-controls="otv2" aria-selected="false">Выбор ответа</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#otv3" role="tab" aria-controls="otv3" aria-selected="false">Выпадающий список</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#otv4" role="tab" aria-controls="otv4" aria-selected="false">Табличный</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#otv5" role="tab" aria-controls="otv5" aria-selected="false">Свободный ответ</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="otv1" role="tabpanel" aria-labelledby="otv1-tab">1</div>
-                        <div class="tab-pane fade" id="otv2" role="tabpanel" aria-labelledby="otv2-tab">2</div>
-                        <div class="tab-pane fade" id="otv3" role="tabpanel" aria-labelledby="otv3-tab">3</div>
-                        <div class="tab-pane fade" id="otv4" role="tabpanel" aria-labelledby="otv4-tab">4</div>
-                        <div class="tab-pane fade" id="otv5" role="tabpanel" aria-labelledby="otv5-tab">5</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-header" id="headingThree">
-                <h5 class="mb-0">
-                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                        Предпросмотр и сохранение
-                    </button>
-                </h5>
-            </div>
-            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-                <div class="card-body">
-                    Смотри
-                </div>
-            </div>
-        </div>
-    </div>
-    <script src="~/lib/jquery/dist/jquery.js"></script>
-    <script>
-
-        //$(document).ready(function () {
-        //    alert('Ваша версия jQuery ' + jQuery.fn.jquery);
-        //});
-        function continueButton() {
-            if (document.getElementById("uslov").value != "") {
-                document.getElementById("otvet_collaps").removeAttribute("disabled");
-                $("#otvet_collaps").removeClass("collapsed");
-                // $("#uslov_collaps").addClass("collapsed");
-                document.getElementById("otvet_collaps").setAttribute("aria-expanded", "true");
-                $("#collapseTwo").addClass("show");
-                $("#collapseOne").removeClass("show");
-            }
-        }
-    </script>
 </body>
