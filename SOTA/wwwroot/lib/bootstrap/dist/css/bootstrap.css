@@ -3572,7 +3572,7 @@ input[type="button"].btn-block {
   flex-wrap: wrap;
   -ms-flex-align: stretch;
   align-items: stretch;
-  width: 100%;
+  width: 260px; /*правка*/
 }
 
 .input-group > .form-control,
@@ -6775,7 +6775,9 @@ button.bg-dark:focus {
 .bg-white {
   background-color: #fff !important;
 }
-
+.bg-white-80 {
+    background-color: #ffffffde !important;
+}
 .bg-transparent {
   background-color: transparent !important;
 }

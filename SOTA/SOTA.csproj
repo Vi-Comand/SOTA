@@ -4,7 +4,31 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
     <UserSecretsId>a599eb8b-ece8-4d4c-834b-3eae8af931fa</UserSecretsId>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\fonts\nunito-v9-latin-600.eot" />
+    <Content Remove="wwwroot\fonts\nunito-v9-latin-600.svg" />
+    <Content Remove="wwwroot\fonts\nunito-v9-latin-600.ttf" />
+    <Content Remove="wwwroot\fonts\nunito-v9-latin-600.woff" />
+    <Content Remove="wwwroot\fonts\nunito-v9-latin-600.woff2" />
+    <Content Remove="wwwroot\fonts\nunito-v9-latin-700.eot" />
+    <Content Remove="wwwroot\fonts\nunito-v9-latin-700.svg" />
+    <Content Remove="wwwroot\fonts\nunito-v9-latin-700.ttf" />
+    <Content Remove="wwwroot\fonts\nunito-v9-latin-700.woff" />
+    <Content Remove="wwwroot\fonts\nunito-v9-latin-700.woff2" />
+    <Content Remove="wwwroot\fonts\nunito-v9-latin-800.eot" />
+    <Content Remove="wwwroot\fonts\nunito-v9-latin-800.svg" />
+    <Content Remove="wwwroot\fonts\nunito-v9-latin-800.ttf" />
+    <Content Remove="wwwroot\fonts\nunito-v9-latin-800.woff" />
+    <Content Remove="wwwroot\fonts\nunito-v9-latin-800.woff2" />
+    <Content Remove="wwwroot\fonts\nunito-v9-latin-regular.eot" />
+    <Content Remove="wwwroot\fonts\nunito-v9-latin-regular.svg" />
+    <Content Remove="wwwroot\fonts\nunito-v9-latin-regular.ttf" />
+    <Content Remove="wwwroot\fonts\nunito-v9-latin-regular.woff" />
+    <Content Remove="wwwroot\fonts\nunito-v9-latin-regular.woff2" />
+  </ItemGroup>
 
 
   <ItemGroup>
@@ -17,6 +41,21 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
     <PackageReference Include="php-7.2-nts" Version="7.2.8" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.2.6" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="wwwroot\fonts\" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <None Include="wwwroot\webfonts\fa-brands-400.svg" />
+    <None Include="wwwroot\webfonts\fa-brands-400.woff2" />
+    <None Include="wwwroot\webfonts\fa-regular-400.svg" />
+    <None Include="wwwroot\webfonts\fa-regular-400.woff2" />
+    <None Include="wwwroot\webfonts\fa-solid-900.svg" />
+    <None Include="wwwroot\webfonts\fa-solid-900.woff2" />
   </ItemGroup>
 
 
