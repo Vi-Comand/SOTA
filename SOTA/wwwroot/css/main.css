@@ -37,9 +37,9 @@
     bottom: 0;
     width: 100%;
     height: 100%;
-    background: #d5ff700f;
+    background: rgb(250, 253, 251);
     z-index: -1;
-    background-image: url('background.jpg');
+    /*background-image: url('background.jpg');*/
     background-position: center center;
     background-size: cover;
 }
@@ -47,30 +47,12 @@
 /*//////////////////////////////////////////////////////////////////
 [ FONT ]*/
 
-@font-face {
-  font-family: Poppins-Regular;
-  src: url('../fonts/poppins/Poppins-Regular.ttf'); 
-}
 
-@font-face {
-  font-family: Poppins-Bold;
-  src: url('../fonts/poppins/Poppins-Bold.ttf'); 
-}
-
-@font-face {
-  font-family: Poppins-Medium;
-  src: url('../fonts/poppins/Poppins-Medium.ttf'); 
-}
-
-@font-face {
-  font-family: Montserrat-Bold;
-  src: url('../fonts/montserrat/Montserrat-Bold.ttf'); 
-}
 
 /*//////////////////////////////////////////////////////////////////
 [ RESTYLE TAG ]*/
 
-* {
+/** {
 	margin: 0px; 
 	padding: 0px; 
 	box-sizing: border-box;
@@ -79,10 +61,10 @@
 body, html {
 	height: 100%;
 	font-family: Poppins-Regular, sans-serif;
-}
+}*/
 
 /*---------------------------------------------*/
-a {
+/*a {
 	font-family: Poppins-Regular;
 	font-size: 14px;
 	line-height: 1.7;
@@ -101,10 +83,10 @@ a:focus {
 a:hover {
 	text-decoration: none;
   color: #57b846;
-}
+}*/
 
 /*---------------------------------------------*/
-h1,h2,h3,h4,h5,h6 {
+/*h1,h2,h3,h4,h5,h6 {
 	margin: 0px;
 }
 
@@ -119,25 +101,25 @@ p {
 ul, li {
 	margin: 0px;
 	list-style-type: none;
-}
+}*/
 
 
 /*---------------------------------------------*/
-input {
+/*input {
 	outline: none;
 	border: none;
-}
+}*/
 
-textarea {
+/*textarea {
   outline: none;
   border: none;
-}
+}*/
 
-textarea:focus, input:focus {
+/*textarea:focus, input:focus {
   border-color: transparent !important;
-}
+}*/
 
-input:focus::-webkit-input-placeholder { color:transparent; }
+/*input:focus::-webkit-input-placeholder { color:transparent; }
 input:focus:-moz-placeholder { color:transparent; }
 input:focus::-moz-placeholder { color:transparent; }
 input:focus:-ms-input-placeholder { color:transparent; }
@@ -155,10 +137,10 @@ input:-ms-input-placeholder { color: #999999; }
 textarea::-webkit-input-placeholder { color: #999999; }
 textarea:-moz-placeholder { color: #999999; }
 textarea::-moz-placeholder { color: #999999; }
-textarea:-ms-input-placeholder { color: #999999; }
+textarea:-ms-input-placeholder { color: #999999; }*/
 
 /*---------------------------------------------*/
-button {
+/*button {
 	outline: none !important;
 	border: none;
 	background: transparent;
@@ -170,12 +152,12 @@ button:hover {
 
 iframe {
 	border: none !important;
-}
+}*/
 
 
 /*//////////////////////////////////////////////////////////////////
 [ Utility ]*/
-.txt1 {
+/*.txt1 {
   font-family: Poppins-Regular;
   font-size: 13px;
   line-height: 1.5;
@@ -187,13 +169,13 @@ iframe {
   font-size: 13px;
   line-height: 1.5;
   color: #666666;
-}
+}*/
 
 
 /*//////////////////////////////////////////////////////////////////
 [ login ]*/
 
-.limiter {
+/*.limiter {
   width: 100%;
   margin: 0 auto;
 }
@@ -215,9 +197,9 @@ iframe {
   background: -o-linear-gradient(-135deg, #c850c0, #4158d0);
   background: -moz-linear-gradient(-135deg, #c850c0, #4158d0);
   background: linear-gradient(-135deg, #c850c0, #4158d0);
-}
+}*/
 
-.wrap-login100 {
+/*.wrap-login100 {
   width: 960px;
   background: #fff;
   border-radius: 10px;
@@ -231,7 +213,7 @@ iframe {
   flex-wrap: wrap;
   justify-content: space-between;
   padding: 177px 130px 33px 95px;
-}
+}*/
 
 /*------------------------------------------------------------------
 [  ]*/
@@ -246,7 +228,7 @@ iframe {
 
 /*------------------------------------------------------------------
 [  ]*/
-.login100-form {
+/*.login100-form {
   width: 290px;
 }
 
@@ -260,29 +242,29 @@ iframe {
   width: 100%;
   display: block;
   padding-bottom: 54px;
-}
+}*/
 
 
 /*---------------------------------------------*/
 .wrap-input100 {
-  position: relative;
-  width: 100%;
+  /*position: relative;
+  width: 100%;*/
   z-index: 1;
-  margin-bottom: 10px;
+  /*margin-bottom: 10px;*/
 }
 
 .input100 {
-  font-family: Poppins-Medium;
+  /*font-family: Poppins-Medium;
   font-size: 15px;
   line-height: 1.5;
-  color: #666666;
+  color: #666666;*/
 
   display: block;
   width: 100%;
-  background: #e6e6e6;
+  /*background: #e6e6e6;
   height: 50px;
   border-radius: 25px;
-  padding: 0 30px 0 68px;
+  padding: 0 30px 0 68px;*/
 }
 
 
@@ -291,7 +273,7 @@ iframe {
 .focus-input100 {
   display: block;
   position: absolute;
-  border-radius: 25px;
+  border-radius: 5px;
   bottom: 0;
   left: 0;
   z-index: -1;
@@ -302,8 +284,8 @@ iframe {
 }
 
 .input100:focus + .focus-input100 {
-  -webkit-animation: anim-shadow 0.5s ease-in-out forwards;
-  animation: anim-shadow 0.5s ease-in-out forwards;
+  -webkit-animation: anim-shadow 0.9s ease-in-out forwards;
+  animation: anim-shadow 0.9s ease-in-out forwards;
 }
 
 @-webkit-keyframes anim-shadow {

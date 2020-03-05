@@ -10,14 +10,12 @@
     <link rel="stylesheet" href="~/css/style.css" />
     <link rel="stylesheet" href="~/css/all.css" />
     <link rel="stylesheet" href="~/css/main.css" />
-    @*<link rel="stylesheet" href="~/css/util.css" />*@
-    
-    <style>
 
-        
+
+    <style>
     </style>
 </head>
-<body >
+<body>
     <canvas width="1080" height="1980"> </canvas>
     <header></header>
 
@@ -36,7 +34,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2020 - СОТА - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2020 - СОТА, ГБОУ ИРО КК
         </div>
     </footer>
 
@@ -156,10 +154,10 @@
                         ctx.moveTo(line.p1.x, line.p1.y);
                         ctx.lineTo(line.p2.x, line.p2.y);
                         ctx.strokeStyle = `rgb(
-                    ${Math.floor(line.color.r * colorSwing)},
-                    ${Math.floor((line.color.g * 0.5) + ((line.color.g * 0.5) * colorSwing))},
-                    ${line.color.b}
-                    )`
+                        ${Math.floor(line.color.r * colorSwing)},
+                        ${Math.floor((line.color.g * 0.5) + ((line.color.g * 0.5) * colorSwing))},
+                        ${line.color.b}
+                        )`
                         ctx.lineWidth = (line.opacity * 4);
                         ctx.stroke();
                         ctx.closePath();

@@ -12,45 +12,40 @@
                 <form asp-action="Login" asp-controller="Account" asp-anti-forgery="true" class="text-center was-validated mx-auto" style="width: 400px;" method="post">
                     <div class="validation center" asp-validation-summary="ModelOnly" />
                     <div class="form-row  rounded col-md-12 shadow-lg p-3 mb-5 bg-white-80 rounded">
-                        <div class="form-group ">
-                            <img src="~/favicon.png" />
+                        
+                        <div class="form-group  js-tilt  " onclick="location.href='/';" data-tilt>
+                            <img src="~/favicon.png" alt="IMG" />
                             <h4>Сиситема онлайн тестирования и аналитики</h4>
                             <br />
                             <h2>Вход</h2>
                         </div>
+                        
                         <div class="form-group centr-div">
                             <label aria-label="Логин" for="validationLog">Логин</label>
                             <div class="input-group wrap-input100 validate-input">
+
                                 <div class="input-group-prepend ">
                                     <div class="input-group-text">
                                         <i class="fas fa-at"></i>
                                     </div>
                                 </div>
-                                <input type="text" class="form-control input100" id="validationLog" placeholder="Логин" pattern="[A-Za-zА-Яа-яЁё0-9]{6,}" required />
+                                <input type="text" class="form-control input100" id="validationLog" placeholder="Логин" pattern="[A-Za-zА-Яа-яЁё0-9@@]{6,}" required />
                                 <span class="focus-input100"></span>
-                                <div class="invalid-feedback">
-                                    Введите логин.
-                                </div>
+                                
+
                             </div>
-                            <div class="wrap-input100 validate-input" data-validate="Password is required">
-                                <input class="input100" type="password" name="pass" placeholder="Password">
-                                <span class="focus-input100"></span>
-                                <span class="symbol-input100">
-                                    <i class="fa fa-lock" aria-hidden="true"></i>
-                                </span>
-                            </div>
+                            
                             <div class="form-group">
                                 <label for="validationPass">Пароль</label>
-                                <div class="input-group">
+                                <div class="input-group wrap-input100 validate-input">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">
                                             <i class="fas fa-lock"></i>
                                         </div>
                                     </div>
-                                    <input type="password" class="form-control pwstrength " id="validationPass" placeholder="Пароль" pattern="[A-Za-zА-Яа-яЁё0-9]{6,}" required />
-                                    <div class="invalid-feedback">
-                                        Введите пароль.
-                                    </div>
+                                    <input type="password" class="form-control pwstrength input100" id="validationPass" placeholder="Пароль" pattern="[A-Za-zА-Яа-яЁё0-9]{6,}" required />
+                                    <span class="focus-input100"></span>
+                                    
                                 </div>
                             </div>
                             <div class="form-group">
@@ -66,4 +61,13 @@
             </div>
         </section>
     </main>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/js/tilt.jquery.min.js">
+    
+
+        jQuery('.js-tilt').tilt({
+            scale: 1.1
+        })
+    </script>
+
 </body>
