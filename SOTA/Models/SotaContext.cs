@@ -7,7 +7,7 @@ namespace Sota.Models
     public class SotaContext : DbContext
     {
         public DbSet<Zadanie> Zadanie { get; set; }
-
+        public DbSet<Otvet> Otvet { get; set; }
 
         public SotaContext(DbContextOptions<SotaContext> options)
             : base(options)

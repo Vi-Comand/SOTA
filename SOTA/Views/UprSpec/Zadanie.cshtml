@@ -47,15 +47,15 @@
     
     <script type="text/javascript">
 
-
-
         jQuery("#SaveZadanie").click(function () {
-            alert("fsdf");
+
+           
+
             jQuery('#ViewSource').click();
 
             alert(document.getElementById("wysiwygtextarea1").contentWindow.document.body.innerHTML);
             document.getElementById('text').innerHTML = document.getElementById("wysiwygtextarea1").contentWindow.document.body.innerHTML;
-            alert("dasdas");
+           
             jQuery.ajax({
                 url: '/UprSpec/SaveWysiwygText/',
                 type: "POST",
@@ -118,7 +118,7 @@
                         </tbody>
                     </table>
                     <input type="text" id="uslov" />
-                    <a href="#" onclick="continueButton()">Далее</a>
+                    <a href="#" onclick="continueButton()" >Далее</a>
                 </div>
             </div>
         </div>
@@ -136,6 +136,7 @@
                     <ul class="nav nav-tabs" id="otv_Tab" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#otv1" role="tab" aria-controls="otv1" aria-selected="true">Строчный ответ</a>
+                           
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="profile-tab" data-toggle="tab" href="#otv2" role="tab" aria-controls="otv2" aria-selected="false">Выбор ответа</a>
@@ -152,13 +153,25 @@
                     </ul>
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="otv1" role="tabpanel" aria-labelledby="otv1-tab">
-                            <input type="text" id="StrOtvet" />
 
-                            <button class="btn btn-outline-warning">Ryjgrf rhfcbdfz </button>
-                            
-                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                
-                            
+                            <form name="myForm1">
+                                <div id="StrOtvet[0]">
+                                    <input type="text" id="StrOtv[0]" />
+                                    <button type="button" name="delAlternative" class="classDelAlternative" value="1" id="delAlternative">Удалить</button>
+                                </div>
+
+                                <div>
+
+                                    <button type="button" name="addAlternative" id="addAlternative">Добавить</button>
+                                </div>
+
+
+                            </form>
+
+
+
+
+                            <button class="btn btn-outline-warning" id="SaveOtvet">Сохранить ответ</button>
                         </div>
                         <div class="tab-pane fade" id="otv2" role="tabpanel" aria-labelledby="otv2-tab">
                             <div id="ViborOtveta[2]" class="form-group form-check">
@@ -167,32 +180,63 @@
                                 <label class="form-check-label" for="exampleCheck1">Check me out</label>
                             </div>
                             <form name="myForm">
+
                                 <div id="ViborOtvetov">
-                                    <div id="DivViborOtveta[1]"> <input name="ViborOtveta[1]" id="ViborOtveta[1]" type="text" /> <input type="checkbox" name="check[1]" id="check[1]" /></div>
-                                    <div id="ViborOtveta[2]" class="form-group form-check">
+                                    <div id="DivViborOtveta[1]"> <input name="ViborOtveta[1]" id="ViborOtveta[1]" type="text" /> <input type="checkbox" name="check[1]" id="check[1]" value="1" /></div>
+                                    <div id="DivViborOtveta[2]">
                                         <input name="ViborOtveta[2]" id="ViborOtveta[2]" type="text" />
-                                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                                        <input type="checkbox" name="check[2]" id="check[2]" value="1" />
+
                                     </div>
-                                    <div id="ViborOtveta[3]">
-                                        <input name="DivViborOtveta[3]" id="ViborOtveta[3]" type="text" /> <input type="checkbox" name="check[3]" id="check[3]" />
+                                    <div id="DivViborOtveta[3]">
+                                        <input name="DivViborOtveta[3]" id="ViborOtveta[3]" type="text" /> <input type="checkbox" name="check[3]" id="check[3]" value="1"/>
                                     </div>
                                     <div id="DivViborOtveta[4]">
-                                        <input name="ViborOtveta[4]" id="ViborOtveta[4]" type="text" /> <input type="checkbox" name="check[4]" id="check[4]" />
+
+                                        <input name="ViborOtveta[4]" id="ViborOtveta[4]" type="text" /> <input type="checkbox" name="check[4]" id="check[4]" value="1"/>
                                     </div>
                                 </div>
-                                 <div>
-                                     <button name="del">Удалить</button>
-                                     <button name="add">Добавить</button>
-                                    </div>
-</form>
-                            <form >
-                               
-                                </form>
+                                <div>
+                                    <button type="button" name="del" id="del">Удалить</button>
+                                    <button type="button" name="add" id="add">Добавить</button>
+                                </div>
+                            </form>
+                            <button class="btn btn-outline-warning" id="SaveViborOtvet">Сохранить ответ</button>
                         </div>
                         <div class="tab-pane fade" id="otv3" role="tabpanel" aria-labelledby="otv3-tab">3</div>
-                        <div class="tab-pane fade" id="otv4" role="tabpanel" aria-labelledby="otv4-tab">4</div>
-                        <div class="tab-pane fade" id="otv5" role="tabpanel" aria-labelledby="otv5-tab">5</div>
+                        <div class="tab-pane fade" id="otv4" role="tabpanel" aria-labelledby="otv4-tab">
+
+
+
+                            <input type="text" id="kolRow" />
+                            @*<input type="text" id="kolCol" />*@
+                            <button type="button" name="AddTabel" id="AddTabel" OnClick="generateTable()">Добавить таблицу</button>
+
+                            <div id="TableCreate">
+
+
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="otv5" role="tabpanel" aria-labelledby="otv5-tab">
+
+                            <form name="myForm2">
+                                <div id="SvobodOtvet">
+                                    <textarea name="Kriterii" id="Kriterii">
+                             
+</textarea>
+                                    
+                                </div>
+
+                                <div>
+
+                                    <button type="button" name="addAlternativeArea" id="addAlternativeArea">Добавить</button>
+                                </div>
+
+
+                            </form>
+
+
+                        </div>
                     </div>
                 </div>
             </div>
@@ -217,50 +261,244 @@
         var inputs = 0;
         var form = document.forms.myForm;
         var i = 5;
-        if (form) {
-            form.getElementsByTagName('div').length;
-            form.addEventListener('click', function (event) {
-               // event.preventDefault();
+        var StrNomer = 0;
+        var SvobodNomer = 1;
+         var NomerViborOtv = 5;
+         //   form.addEventListener('click', function (event) {
+            //    event.preventDefault();
 
-                if (event.target.name == 'add') {
-                    //form.appendChild(event.target.parentNode.(true));
-                    
-
-
-                      var ViborOtvetov = document.getElementById( "ViborOtvetov" );
-                    var div = document.createElement("div");
-                    div.id="DivViborOtveta[" + i+ "]";
- // Добавляем HTML-контент с пом. свойства innerHTML
- div.innerHTML = "<input name=\"ViborOtveta[" + i+ "]\" id=\"ViborOtveta[" + i+ "]\" type=\"text\" /> <input type=\"checkbox\" name=check["+i+"] id=check["+i+"]  />";
- // Добавляем новый узел в конец списка полей
-  ViborOtvetov.before(div);
-
+         jQuery("#SaveViborOtvet").click(function () {
+              var arr = new Array(NomerViborOtv);
+           var arr1 = new Array(NomerViborOtv);
+              for (iStr = 0; iStr < NomerViborOtv-1; iStr++) {
+                  //alert("StrOtv[" + iStr + "]");
                   
-                    i++;
+                 arr[iStr] = document.getElementById("ViborOtveta[" + (iStr + 1) + "]").value;
+                 // alert(arr[iStr]);
+             }
+              for (iStr = 0; iStr < NomerViborOtv-1; iStr++) {
+                  //alert("StrOtv[" + iStr + "]");
+                  
+               var chbox = document.getElementById("check[" + (iStr+1) + "]");
+                  if (chbox.checked) {
+                      arr1[iStr] = 1;
+	}
+	else {
+		 arr1[iStr] = 0;
+	}
+             }
+             
+             vbd(2, arr, arr1);
 
+                 // alert(arr[iStr]);
+ 
+ });
 
+          jQuery("#SaveOtvet").click(function () {
+              var arr = new Array(StrNomer);
            
+              for (iStr = 0; iStr < StrNomer+1; iStr++) {
+                  //alert("StrOtv[" + iStr + "]");
+                  
+                  arr[iStr] = document.getElementById("StrOtv[" + iStr + "]").value;
+                 // alert(arr[iStr]);
+                  }
+             
+               vbd(1, arr, arr1);
+
+ });
+        function vbd(tip,arr,arr1) {
+
+            jQuery.ajax({
+                url: '/UprSpec/SaveOtveti/',
+                type: "POST",
+                dataType: "json",
+                data: { tip: tip, idZadania: 1, arr: arr,arr1:arr1 },
+                success: function (query) {
+                    alert(query);
                 }
-                if (event.target.name == 'del') {
-                    
-                    if (i > 3) {
+
+            });
+        }
+
+        jQuery('#add').click(function(){
+            //form.appendChild(event.target.parentNode.(true));
+
+         
+
+            var ViborOtvetov = document.getElementById("DivViborOtveta["+(NomerViborOtv-1)+"]");
+            var div = document.createElement("div");
+            div.id = "DivViborOtveta[" + NomerViborOtv + "]";
+            // Добавляем HTML-контент с пом. свойства innerHTML
+            div.innerHTML = "<input name=\"ViborOtveta[" + NomerViborOtv + "]\" id=\"ViborOtveta[" + NomerViborOtv + "]\" type=\"text\" /> <input type=\"checkbox\"  name=check[" + NomerViborOtv+ "] id=check[" + NomerViborOtv + "]  >";
+            // Добавляем новый узел в конец списка полей
+            ViborOtvetov.after(div);
+
+
+            NomerViborOtv++;
+
+
+
+         });
+               
+                 jQuery('#del').click(function(){       
+                    if (NomerViborOtv > 3) {
 
          
                
                 
-                        var elem = document.getElementById( "check[" +(i - 1)+ "]" );
+                        var elem = document.getElementById( "check[" +(NomerViborOtv - 1)+ "]" );
                     
                       
                        elem.parentNode.removeChild(elem);
-                          var elem = document.getElementById("ViborOtveta[" + (i-1)+ "]");
+                          var elem = document.getElementById("DivViborOtveta[" + (NomerViborOtv-1)+ "]");
                         elem.remove();
-
-                        i--
+                       
+                        NomerViborOtv--;
+                      
 
                     }
-                }
-            });
+                
+                 });
+         
+
+        jQuery('#addAlternative').click(function () {
+                StrNomer++;
+            //form.appendChild(event.target.parentNode.(true));
+            var ViborOtvetov = document.getElementById("StrOtvet["+(StrNomer-1)+"]");
+            var div = document.createElement("div");
+            div.id = "StrOtvet[" + StrNomer+ "]";
+            // Добавляем HTML-контент с пом. свойства innerHTML
+            div.innerHTML = "<input type=\"text\" name=\"StrOtv[" + StrNomer + "]\" id=\"StrOtv[" + StrNomer + "]\" />   <button type=\"button\" name=\"delAlternative\" id=\"delAlternative\" class=\"classDelAlternative\"  OnClick=\"a("+StrNomer+");\"  >Удалить</button>";
+            // Добавляем новый узел в конец списка полей
+            ViborOtvetov.after(div);
+
+
+             
+            
+
+
+         });
+               document.getElementById('delAlternative').onclick = function() {
+   
+        
+            alert("dasd");
+                    if (i > 3) {
+                    
+                       elem.parentNode.removeChild(elem);
+                          var elem = document.getElementById("StrOtvet[" + (i-1)+ "]");
+                        elem.remove();
+
+                        i--;
+
+                    }
+                
+        };
+
+
+         function a(n)
+         {
+
+             if (StrNomer > 0) {
+
+                      // elem.parentNode.removeChild(elem);
+                          var elem = document.getElementById("StrOtvet[" + n+ "]");
+                        elem.remove();
+
+                        StrNomer--;
+
+                    }
+                    }
+         
+
+	function generateTable(){
+       row= document.getElementById("kolRow").value;
+        var elem = document.getElementById("TabelOtvet");
+        if (elem) {
+            elem.remove();
         }
+		var table = '<table class="simple-little-table" id=\"TabelOtvet\">';
+
+        for (var i = 1; i <= row; i++) {
+
+            table += '<tr>';
+
+            for (var j = 1; j <= 2; j++) {
+                if (j == 1) {
+                    table += "<td><input name= \"' + i + ',' + j + '\"/> </td>";
+                }
+                else {
+                    table += "<td><input name= \"' + i + ',' + j + '\"/> <button type=\"button\" name=\"delAlternative\" id=\"delAlternative\" class=\"classDelAlternative\"  OnClick=\"addInput();\"  >Добавить</button> <button type=\"button\" name=\"delAlternative\" id=\"delAlternative\" class=\"classDelAlternative\"  OnClick=\"delInput();\"  >Удалить</button> ";
+                }
+            }
+
+            table += '</tr>';
+        
+		}
+		table += '</table>';
+       // document.getElementById('table').innerHTML = table;
+          var div = document.createElement("div");
+        var TableCreate = document.getElementById("TableCreate");
+        div.innerHTML = table;
+        TableCreate.after(div);
+	}
+
+
+
+        function delalternativearea(n)
+         {
+
+             if (SvobodNomer > 0) {
+
+                      // elem.parentNode.removeChild(elem);
+                          var elem = document.getElementById("Kriterii[" + n+ "]");
+                        elem.remove();
+
+                        SvobodNomer--;
+
+                    }
+                    }
+
+
+
+  jQuery('#addAlternativeArea').click(function(){
+            //form.appendChild(event.target.parentNode.(true));
+            var ViborOtvetov = document.getElementById("SvobodOtvet");
+            var div = document.createElement("div");
+            div.id = "Kriterii[" + SvobodNomer+ "]";
+            // Добавляем HTML-контент с пом. свойства innerHTML
+            div.innerHTML = "<textarea name=\"Kriterii[" + i + "]\" id=\"Kriterii[" + i + "]\" type=\"text\" >  </textarea> <button type=\"button\" name=\"delAlternativeArea\" id=\"delAlternativeArea\" class=\"classDelAlternativeArea\"  OnClick=\"delalternativearea("+SvobodNomer+");\"  >Удалить</button>";
+            // Добавляем новый узел в конец списка полей
+            ViborOtvetov.after(div);
+
+
+               SvobodNomer++;
+            
+
+
+         });
+               
+        jQuery('#TableCreate').click(function () {
+           
+            //form.appendChild(event.target.parentNode.(true));
+            var ViborOtvetov = document.getElementById("SvobodOtvet");
+            var div = document.createElement("div");
+            div.id = "Kriterii[" + SvobodNomer+ "]";
+            // Добавляем HTML-контент с пом. свойства innerHTML
+            div.innerHTML = "<textarea name=\"Kriterii[" + i + "]\" id=\"Kriterii[" + i + "]\" type=\"text\" >  </textarea> <button type=\"button\" name=\"delAlternativeArea\" id=\"delAlternativeArea\" class=\"classDelAlternativeArea\"  OnClick=\"delalternativearea("+SvobodNomer+");\"  >Удалить</button>";
+            // Добавляем новый узел в конец списка полей
+            ViborOtvetov.after(div);
+
+
+               SvobodNomer++;
+            
+
+
+         });
+
+
+
+        
     </script>
 
 
@@ -271,6 +509,12 @@
         //$(document).ready(function () {
         //    alert('Ваша версия jQuery ' + jQuery.fn.jquery);
         //});
+        function addInput() {
+        
+         var table = document.getElementById('TabelOtvet');
+            alert(table.rows[1].cells.length);
+        }
+
         function continueButton() {
             if (document.getElementById("wysiwygtextarea1").contentWindow.document.body.innerHTML != "") {
                 document.getElementById("otvet_collaps").removeAttribute("disabled");
