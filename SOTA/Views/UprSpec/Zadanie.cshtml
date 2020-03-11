@@ -422,14 +422,14 @@
         for (var i = 1; i <= row; i++) {
 
             table += '<tr>';
-
+           
             for (var j = 1; j <= 2; j++) {
                 if (j == 1) {
+                    table += "<td id=\"but[" + i + "]\"><button type=\"button\" name=\"addAlternativeTable[" + i + "]\" id=\"addAlternativeTable[" + i + "]\" class=\"classAddAlternativeTable\"  OnClick=\"addInput(" + i + ",2);\"  >+</button> <button type=\"button\" name=\"delAlternativeTable[" + i + "]\" id=\"delAlternativeTable[" + i + "]\" class=\"classDelAlternativeTable\"  OnClick=\"delInput(" + i + ",2);\"  >-</button></td> ";
+                }
                     table += "<td><input name= \"' + i + ',' + j + '\"/> </td>";
-                }
-                else {
-                    table += "<td><input name= \"' + i + ',' + j + '\"/> <button type=\"button\" name=\"delAlternative\" id=\"delAlternative\" class=\"classDelAlternative\"  OnClick=\"addInput();\"  >Добавить</button> <button type=\"button\" name=\"delAlternative\" id=\"delAlternative\" class=\"classDelAlternative\"  OnClick=\"delInput();\"  >Удалить</button> ";
-                }
+                
+               
             }
 
             table += '</tr>';
@@ -509,10 +509,38 @@
         //$(document).ready(function () {
         //    alert('Ваша версия jQuery ' + jQuery.fn.jquery);
         //});
-        function addInput() {
+
+
+        function delInput(row, column) {
+            if (column > 2) {
+                var table = document.getElementById('TabelOtvet');
+                var trArray = table.getElementsByTagName('tr');
+                trArray[row - 1].deleteCell(column);
+                var elem = document.getElementById("addAlternativeTable[" + row + "]");
+                elem.remove();
+                var elem = document.getElementById("delAlternativeTable[" + row + "]");
+                elem.remove();
+                but = document.getElementById('but[' + row + ']');
+                but.innerHTML = " <button type=\"button\" name=\"addAlternativeTable[" + row + "]\" id=\"addAlternativeTable[" + row + "]\" class=\"classAddAlternativeTable\"  OnClick=\"addInput(" + row + "," + (column - 1) + ");\"  >+</button> <button type=\"button\" name=\"delAlternativeTable[" + row + "]\" id=\"delAlternativeTable[" + row + "]\" class=\"classDelAlternativeTable\"  OnClick=\"delInput(" + row + "," + (column - 1) + ");\"  >-</button> "
+
+            }
+        }
+
+        function addInput(row,column) {
+            
+                 var elem = document.getElementById("addAlternativeTable["+row+"]");
+            elem.remove();
+            var elem = document.getElementById("delAlternativeTable["+row+"]");
+                        elem.remove();
+            var table = document.getElementById('TabelOtvet');
+               var trArray = table.getElementsByTagName('tr');
+
+             but=document.getElementById('but['+row+']');
+      but.innerHTML= " <button type=\"button\" name=\"addAlternativeTable[" + row + "]\" id=\"addAlternativeTable[" + row + "]\" class=\"classAddAlternativeTable\"  OnClick=\"addInput(" + row + "," + (column+1) + ");\"  >+</button> <button type=\"button\" name=\"delAlternativeTable[" + row + "]\" id=\"delAlternativeTable[" + row + "]\" class=\"classDelAlternativeTable\"  OnClick=\"delInput(" + row + "," + (column+1) + ");\"  >-</button> ";
+            trArray[row - 1].insertCell(column+1).innerHTML = "<input name= \"' + i + ',' + j + '\"/> ";
         
-         var table = document.getElementById('TabelOtvet');
-            alert(table.rows[1].cells.length);
+         
+
         }
 
         function continueButton() {
