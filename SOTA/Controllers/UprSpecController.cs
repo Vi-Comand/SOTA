@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Sota.Models;
 using SOTA.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Sota.Models;
 
 namespace SOTA.Controllers
 {
@@ -21,7 +21,7 @@ namespace SOTA.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> SaveWysiwygText(string Name, string IdSpec, string Text  , string Variant , string Nomer)
+        public async Task<IActionResult> SaveWysiwygText(string Name, string IdSpec, string Text, string Variant, string Nomer)
         {
             Zadanie AddZadanie = new Zadanie();
             AddZadanie.Name = Name;
@@ -29,7 +29,7 @@ namespace SOTA.Controllers
             AddZadanie.Text = Text;
             AddZadanie.Variant = Convert.ToInt32(Variant);
             AddZadanie.Nomer = Convert.ToInt32(Nomer);
-            
+
 
 
             await db.Zadanie.AddAsync(AddZadanie).ConfigureAwait(false);
@@ -44,24 +44,24 @@ namespace SOTA.Controllers
             try
             {
                 List<Otvet> ListOtvets = new List<Otvet>();
-                for (int i=0;i<arr.Count();i++)
+                for (int i = 0; i < arr.Count(); i++)
                 {
                     Otvet AddOtvet = new Otvet();
                     AddOtvet.IdZadan = idZadania;
                     AddOtvet.Text = arr[i];
-                    if(tip ==2)
+                    if (tip == 2)
                     {
-                        AddOtvet.Verno = Convert.ToInt32(arr1[i]); 
+                        AddOtvet.Verno = Convert.ToInt32(arr1[i]);
                     }
                     else
                         AddOtvet.Verno = 1;
                     ListOtvets.Add(AddOtvet);
                 }
-               
+
                 await db.Otvet.AddRangeAsync(ListOtvets).ConfigureAwait(false);
                 await db.SaveChangesAsync().ConfigureAwait(false);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             { return Json(ex); }
             return Json("ok");
         }
@@ -78,5 +78,7 @@ namespace SOTA.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+
     }
 }

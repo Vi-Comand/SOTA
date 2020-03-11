@@ -1,0 +1,88 @@
+﻿
+@{
+    ViewData["Title"] = "Добавление спецификации";
+}
+
+<div class="col-12">
+    <div class="container">
+        <div class="row">
+            <div class="input-group wrap-input100 validate-input col-10">
+
+                <div class="input-group-prepend ">
+                    <div class="input-group-text">
+                        <i class="fas fa-comment-alt"></i>
+                    </div>
+                </div>
+                <input type="text" class="form-control input100" id="nazv" placeholder="Название" pattern="[A-Za-zА-Яа-яЁё0-9@@]{6,}" required />
+                <span class="focus-input100"></span>
+            </div>
+
+            <div class="input-group wrap-input100 validate-input col-5">
+
+                <div class="input-group-prepend ">
+                    <div class="input-group-text">
+                        <i class="fas fa-list-alt"></i>
+                    </div>
+                </div>
+                <select class="form-control input100" id="tip">
+                    <option value="">Выберите тип</option>
+                    <option>КДР</option>
+                    <option>ОГЭ</option>
+                    <option>ЕГЭ</option>
+                </select>
+                <span class="focus-input100"></span>
+            </div>
+
+            <div class="input-group wrap-input100 validate-input col-5 ">
+
+                <div class="input-group-prepend ">
+                    <div class="input-group-text">
+                        <i class="fas fa-list-ul"></i>
+                    </div>
+                </div>
+                <select class="form-control input100" id="predmet">
+                    <option value="">Выберите предмет</option>
+                    <option>Русский язык</option>
+                    <option>Математика</option>
+                    <option>Биология</option>
+                    <option>География</option>
+                    <option>Химия</option>
+                </select>
+                <span class="focus-input100"></span>
+            </div>
+
+            <div class="input-group wrap-input100 validate-input col-3">
+
+                <div class="input-group-prepend ">
+                    <div class="input-group-text">
+                        <i class="fas fa-list-ol"></i>
+                    </div>
+                </div>
+                <input type="text" class="form-control input100" id="nazv" placeholder="Количество вариантов" pattern="[0-9]{6,}" required value="4" />
+                <span class="focus-input100"></span>
+            </div>
+
+            <div class="input-group wrap-input100 validate-input col-3">
+
+                <div class="input-group-prepend ">
+                    <div class="input-group-text">
+                        <i class="fas fa-list-ol"></i>
+                    </div>
+                </div>
+                <input type="text" class="form-control input100" id="nazv" placeholder="Количество заданий" pattern="[0-9]{6,}" required value="8" />
+                <span class="focus-input100"></span>
+            </div>
+
+            <div class="input-group wrap-input100 validate-input col-3">
+
+                <div class="input-group-prepend ">
+                    <div class="input-group-text">
+                        <i class="fas fa-at"></i>
+                    </div>
+                </div>
+                <input type="text" class="form-control input100" id="nazv" placeholder="Количество заданий" pattern="[0-9]{6,}" required value="8" />
+                <span class="focus-input100"></span>
+            </div>
+        </div>
+    </div>
+</div>

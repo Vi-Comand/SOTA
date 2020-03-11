@@ -12,15 +12,15 @@
                 <form asp-action="Login" asp-controller="Account" asp-anti-forgery="true" class="text-center was-validated mx-auto" style="width: 400px;" method="post">
                     <div class="validation center" asp-validation-summary="ModelOnly" />
                     <div class="form-row  rounded col-md-12 shadow-lg p-3 mb-5 bg-white-80 rounded">
-                        
+
                         <div class="form-group  js-tilt  " onclick="location.href='/';" data-tilt>
                             <img src="~/favicon.png" alt="IMG" />
                             <h4>Сиситема онлайн тестирования и аналитики</h4>
                             <br />
                             <h2>Вход</h2>
                         </div>
-                        
-                        <div class="form-group centr-div">
+
+                        <div class="form-group centr-div col-9">
                             <label aria-label="Логин" for="validationLog">Логин</label>
                             <div class="input-group wrap-input100 validate-input">
 
@@ -31,10 +31,10 @@
                                 </div>
                                 <input type="text" class="form-control input100" id="validationLog" placeholder="Логин" pattern="[A-Za-zА-Яа-яЁё0-9@@]{6,}" required />
                                 <span class="focus-input100"></span>
-                                
+
 
                             </div>
-                            
+
                             <div class="form-group">
                                 <label for="validationPass">Пароль</label>
                                 <div class="input-group wrap-input100 validate-input">
@@ -45,11 +45,11 @@
                                     </div>
                                     <input type="password" class="form-control pwstrength input100" id="validationPass" placeholder="Пароль" pattern="[A-Za-zА-Яа-яЁё0-9]{6,}" required />
                                     <span class="focus-input100"></span>
-                                    
+
                                 </div>
                             </div>
                             <div class="form-group">
-                                <button id="KolvoLoad" style="width:192px" class="btn btn-icon icon-left btn-outline-success">
+                                <button id="KolvoLoad" class="btn btn-icon icon-left btn-outline-success col-12">
                                     Войти
                                     <i class="far fa-lock"></i>
                                 </button>
@@ -62,8 +62,8 @@
         </section>
     </main>
     <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/js/tilt.jquery.min.js">
-    
+    <script src="~/js/tilt.jquery.min.js">
+
 
         jQuery('.js-tilt').tilt({
             scale: 1.1
