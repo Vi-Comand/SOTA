@@ -69,8 +69,14 @@ namespace SOTA.Controllers
         {
             return View();
         }
-        public IActionResult Zadanie()
+        //public IActionResult Zadanie()
+        //{
+        //    return View();
+        //}
+
+        public IActionResult Zadanie(string spec, string idZadan)
         {
+
             return View();
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
