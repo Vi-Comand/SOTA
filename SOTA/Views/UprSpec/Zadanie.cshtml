@@ -18,7 +18,7 @@
 
 <html>
 <head>
-    <title>openWYSIWYG</title>
+
     @*<link rel="stylesheet" href="~/UprSpec/docs/style.css" type="text/css">*@
 
     <!--
@@ -42,20 +42,20 @@
         //WYSIWYG.display('all', full);
     </script>
 
-    
-        <button class="btn btn-outline-success " id="SaveZadanie" form="0">Сохранить</button>
-    
+
+    <button class="btn btn-outline-success " id="SaveZadanie" form="0">Сохранить</button>
+
     <script type="text/javascript">
 
         jQuery("#SaveZadanie").click(function () {
 
-           
+
 
             jQuery('#ViewSource').click();
 
             alert(document.getElementById("wysiwygtextarea1").contentWindow.document.body.innerHTML);
             document.getElementById('text').innerHTML = document.getElementById("wysiwygtextarea1").contentWindow.document.body.innerHTML;
-           
+
             jQuery.ajax({
                 url: '/UprSpec/SaveWysiwygText/',
                 type: "POST",
@@ -93,32 +93,27 @@
                     <div class="scroll" id="text">
 
                     </div>
-                    <input type="submit" id="KolvoLoad" value="Кликни" />
-
-
-
-
-
                     <table border="0" cellpadding="2" cellspacing="0" style="width:100%;">
                         <tbody>
-
-
-
                             <tr>
                                 <td>
                                     <br>
                                     <form name="exampleForm" action="example.html" method="post">
-
                                         <textarea id="textarea1" name="test1" style="width:560px;height:200px;">
 
-                                </textarea>
+                                        </textarea>
                                     </form>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                    <input type="text" id="uslov" />
-                    <a href="#" onclick="continueButton()" >Далее</a>
+
+                    <div class="input-group wrap-input100 validate-input col-3">
+                        <a href="#" onclick="continueButton()" class="btn btn-success btn-icon icon-left">
+                            <i class="fas  fa-arrow-right"></i>
+                            <ya-tr-span data-index="147-0" data-value=" Default" data-translation="Далее" data-type="trSpan">Далее</ya-tr-span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -136,7 +131,7 @@
                     <ul class="nav nav-tabs" id="otv_Tab" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#otv1" role="tab" aria-controls="otv1" aria-selected="true">Строчный ответ</a>
-                           
+
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="profile-tab" data-toggle="tab" href="#otv2" role="tab" aria-controls="otv2" aria-selected="false">Выбор ответа</a>
@@ -155,61 +150,148 @@
                         <div class="tab-pane fade show active" id="otv1" role="tabpanel" aria-labelledby="otv1-tab">
 
                             <form name="myForm1">
-                                <input type="text" id="BallStrOtv" size="3" />
+                                <div class="col row">
 
-                                <div id="StrOtvet[0]">
-                                    <input type="text" id="StrOtv[0]" />
-                                    <button type="button" name="delAlternative" class="classDelAlternative" value="1" id="delAlternative" OnClick="a(0);">Удалить</button>
+                                    <div class="input-group wrap-input100 validate-input col-4">
+
+                                        <div class="input-group-prepend ">
+                                            <div class="input-group-text">
+                                                <i class="fas fa-list-ol"></i>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control input100" id="BallStrOtv" size="3" placeholder="Баллы" />
+                                        <span class="focus-input100"></span>
+                                    </div>
+                                    <div class="col-6">
+                                        <a href="#" class="btn btn-icon btn btn-warning" name="addAlternative" id="addAlternative">
+                                            <i class="fas fa-plus"></i>
+                                            <ya-tr-span data-index="147-0" data-value=" Default" data-translation="Добавить альтернативный ответ" data-type="trSpan">Добавить альтернативный ответ</ya-tr-span>
+                                        </a>
+
+                                    </div>
                                 </div>
 
-                                <div>
+                                <div class="col">
 
-                                    <button type="button" name="addAlternative" id="addAlternative">Добавить</button>
+                                    <div id="StrOtvet[0]" class="input-group wrap-input100 validate-input col-12">
+
+                                        <div class="input-group-prepend ">
+                                            <div class="input-group-text">
+                                                <i class="far fa-comment-alt"></i>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control input100" id="StrOtv[0]" placeholder="Правильный ответ" />
+                                        <span class="focus-input100"></span>
+                                        @*<a href="#" class="classDelAlternative btn btn-icon btn btn-danger" name="delAlternative" value="1" id="delAlternative" OnClick="a(0);"><i class="fas fa-times"></i></a>*@
+                                    </div>
                                 </div>
-
-
                             </form>
 
+                            <div class="input-group wrap-input100 validate-input col-3">
+                                <a href="#" class="btn btn-success input100 btn-icon icon-left" name="SaveOtvet" id="SaveOtvet" OnClick="generateTable()">
+                                    <i class="far fa-save"></i>
+                                    <ya-tr-span data-index="147-0" data-value=" Default" data-translation="Сохранить ответ" data-type="trSpan">Сохранить ответ</ya-tr-span>
+                                </a>
+                                <span class="focus-input100"></span>
+                            </div>
 
 
-
-                            <button class="btn btn-outline-warning" id="SaveOtvet">Сохранить ответ</button>
                         </div>
                         <div class="tab-pane fade" id="otv2" role="tabpanel" aria-labelledby="otv2-tab">
 
 
                             <form name="myForm">
-                            
-                                <input type="checkbox" name="checkBallVibOtv" id="checkBallVibOtv" onchange="ballvibotvall()"/>
-                        <input type="text" id="BallVibOtv" size="3"/>
-                        <div id="ViborOtvetov">
-                            <div id="DivViborOtveta[1]"> <input name="ViborOtveta[1]" id="ViborOtveta[1]" type="text" /> <input type="checkbox" name="check[1]" id="check[1]" value="1" onchange="ballvibotv(1)" /></div>
-                            <div id="DivViborOtveta[2]">
-                                <input name="ViborOtveta[2]" id="ViborOtveta[2]" type="text" />
-                                <input type="checkbox" name="check[2]" id="check[2]" value="1" onchange="ballvibotv(2)" />
 
-                            </div>
-                            <div id="DivViborOtveta[3]">
-                                <input name="DivViborOtveta[3]" id="ViborOtveta[3]" type="text" /> <input type="checkbox" name="check[3]" id="check[3]" value="1" onchange="ballvibotv(3)"  />
-                            </div>
-                            <div id="DivViborOtveta[4]">
+                                <div class="row align-items-center">
+                                    <div class="col-4">
+                                        <div class="input-group wrap-input100 validate-input row">
 
-                                <input name="ViborOtveta[4]" id="ViborOtveta[4]" type="text" /> <input type="checkbox" name="check[4]" id="check[4]" value="1" onchange="ballvibotv(4)" />
+                                            <div class="input-group-prepend ">
+                                                <div class="input-group-text">
+                                                    <i class="fas fa-list-ol"></i>
+                                                </div>
+                                            </div>
+                                            <input type="text" class="form-control input100" id="BallVibOtv" size="3" placeholder="Баллы" />
+                                            <span class="focus-input100"></span>
+
+                                            <label class="custom-switch mt-2">
+
+                                                <input type="checkbox" name="checkBallVibOtv" id="checkBallVibOtv" onchange="ballvibotvall()" class="custom-switch-input">
+                                                <span class="custom-switch-indicator"></span>
+                                                <span class="custom-switch-description">Раздельные баллы</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-4">Ответы</div>
+                                    <div class="col-1">Верный ответ</div>
+                                    <div class="col-2">Балл за ответ</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <div id="ViborOtvetov">
+                                            <div id="DivViborOtveta[1]">
+                                                <input name="ViborOtveta[1]" id="ViborOtveta[1]" type="text" />
+                                                <input type="checkbox" name="check[1]" id="check[1]" value="1" onchange="ballvibotv(1)" />
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-2">
+
+                                    </div>
+                                    <div class="col-2">
+
+                                    </div>
+                                </div>
+
+
+                                    <input type="checkbox" name="checkBallVibOtv" id="checkBallVibOtv" onchange="ballvibotvall()" />
+                                    <input type="text" id="BallVibOtv" size="3" />
+                                    <div id="ViborOtvetov">
+                                        <div id="DivViborOtveta[1]"> 
+                                        <input name="ViborOtveta[1]" id="ViborOtveta[1]" type="text" /> 
+                                        <input type="checkbox" name="check[1]" id="check[1]" value="1" onchange="ballvibotv(1)" />
+                                        </div>
+                                        <div id="DivViborOtveta[2]">
+                                            <input name="ViborOtveta[2]" id="ViborOtveta[2]" type="text" />
+                                            <input type="checkbox" name="check[2]" id="check[2]" value="1" onchange="ballvibotv(2)" />
+
+                                        </div>
+                                        <div id="DivViborOtveta[3]">
+                                            <input name="DivViborOtveta[3]" id="ViborOtveta[3]" type="text" /> <input type="checkbox" name="check[3]" id="check[3]" value="1" onchange="ballvibotv(3)" />
+                                        </div>
+                                        <div id="DivViborOtveta[4]">
+
+                                            <input name="ViborOtveta[4]" id="ViborOtveta[4]" type="text" /> <input type="checkbox" name="check[4]" id="check[4]" value="1" onchange="ballvibotv(4)" />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <button type="button" name="del" id="del">Удалить</button>
+                                        <button type="button" name="add" id="add">Добавить</button>
+                                    </div>
+
+
+
+
+                            </form>
+
+
+                            <div class="input-group wrap-input100 validate-input col-3">
+                                <a href="#" class="btn btn-success input100 btn-icon icon-left" name="SaveViborOtvet" id="SaveViborOtvet" OnClick="generateTable()">
+                                    <i class="far fa-save"></i>
+                                    <ya-tr-span data-index="147-0" data-value=" Default" data-translation="Сохранить ответ" data-type="trSpan">Сохранить ответ</ya-tr-span>
+                                </a>
+                                <span class="focus-input100"></span>
                             </div>
+
                         </div>
-                        <div>
-                            <button type="button" name="del" id="del">Удалить</button>
-                            <button type="button" name="add" id="add">Добавить</button>
-                        </div>
-                        </form>
-                        <button class="btn btn-outline-warning" id="SaveViborOtvet">Сохранить ответ</button>
-                    </div>
                         <div class="tab-pane fade" id="otv3" role="tabpanel" aria-labelledby="otv3-tab">3</div>
                         <div class="tab-pane fade" id="otv4" role="tabpanel" aria-labelledby="otv4-tab">
 
 
-                            <input type="checkbox" name="checkBallTabOtv" id="checkBallTabOtv" onchange = "balltableotv()"/>
-                            <input type="text" id="BallTabOtv" size="3"/>
+                            <input type="checkbox" name="checkBallTabOtv" id="checkBallTabOtv" onchange="balltableotv()" />
+                            <input type="text" id="BallTabOtv" size="3" />
                             <input type="text" id="kolRow" />
                             @*<input type="text" id="kolCol" />*@
                             <button type="button" name="AddTabel" id="AddTabel" OnClick="generateTable()">Добавить таблицу</button>
@@ -227,7 +309,7 @@
                                 <table id="tableSvbOtv">
                                     <tr id="SvbOtvetRow[0]">
                                         <td>
-                                            <input type="text" id="BallSvbOtv[0]"  size="3"/>
+                                            <input type="text" id="BallSvbOtv[0]" size="3" />
                                         </td>
                                         <td>
                                             <div id="SvbOtvetDiv[0]">
@@ -239,15 +321,15 @@
                                             <button type="button" name="delAlternativeSvb" class="classDelAlternativeSvb" value="1" id="delAlternativeSvb" OnClick="d(0);">Удалить</button>
                                         </td>
                                     </tr>
-</table>
-                                         
-                                                <div>
+                                </table>
 
-                                                    <button type="button" name="addAlternativeSvb" id="addAlternativeSvb">Добавить</button>
-                                                </div>
+                                <div>
+
+                                    <button type="button" name="addAlternativeSvb" id="addAlternativeSvb">Добавить</button>
+                                </div>
 
 
-</form>
+                            </form>
 
 
 
@@ -283,166 +365,164 @@
         var SvbNomer = 0;
         var CountSvbOtv = 0;
         var SvobodNomer = 1;
-         var NomerViborOtv = 5;
-         //   form.addEventListener('click', function (event) {
-            //    event.preventDefault();
+        var NomerViborOtv = 5;
+        //   form.addEventListener('click', function (event) {
+        //    event.preventDefault();
 
-         jQuery("#SaveViborOtvet").click(function () {
-              var arr = new Array(NomerViborOtv);
-           var arr1 = new Array(NomerViborOtv);
-             var iStr = 0;
-             var obshBall = 0;
-              var checkboxBallVibOtv = document.getElementById("checkBallVibOtv");
-              if (checkboxBallVibOtv.checked)
-                  obshBall = 1;
-              else
-                  obshBall = 0;
-             alert(obshBall);
+        jQuery("#SaveViborOtvet").click(function () {
+            var arr = new Array(NomerViborOtv);
+            var arr1 = new Array(NomerViborOtv);
+            var iStr = 0;
+            var obshBall = 0;
+            var checkboxBallVibOtv = document.getElementById("checkBallVibOtv");
+            if (checkboxBallVibOtv.checked)
+                obshBall = 1;
+            else
+                obshBall = 0;
+            alert(obshBall);
 
 
-             for (i = 0; i < NomerViborOtv - 1; i++) {
-                  //alert("StrOtv[" + iStr + "]");
-                 if (document.getElementById("ViborOtveta[" + (i + 1) + "]") != null)
-                 {
-                 arr[iStr] = document.getElementById("ViborOtveta[" + (i + 1) + "]").value;
-                     // alert(arr[iStr]);
-                     iStr++;
-                 }
+            for (i = 0; i < NomerViborOtv - 1; i++) {
+                //alert("StrOtv[" + iStr + "]");
+                if (document.getElementById("ViborOtveta[" + (i + 1) + "]") != null) {
+                    arr[iStr] = document.getElementById("ViborOtveta[" + (i + 1) + "]").value;
+                    // alert(arr[iStr]);
+                    iStr++;
+                }
 
-                 if (obshBall == 0) {
-                     arr1[i] = 0;
-                    
-                         if (!(document.getElementById("checkBallVibOtv").checked)) {
-                             arr1[i] = document.getElementById("BallVibOtv").value;
-                             alert(arr1[i]);
-                         }
-                     }
+                if (obshBall == 0) {
+                    arr1[i] = 0;
 
-                 
+                    if (!(document.getElementById("checkBallVibOtv").checked)) {
+                        arr1[i] = document.getElementById("BallVibOtv").value;
+                        alert(arr1[i]);
+                    }
+                }
 
-                 else {
-                     if (document.getElementById("BallVibOtv[" + (i + 1) + "]") != null) {
-                         arr1[i] = document.getElementById("BallVibOtv[" + (i + 1) + "]").value;
 
-                     }
-                     else {
-                         arr1[i] = 0;
-                     }
-                 }
-                    console.log(arr1[i]);
-             }
 
-             
-             vbd(2, arr, arr1,obshBall);
+                else {
+                    if (document.getElementById("BallVibOtv[" + (i + 1) + "]") != null) {
+                        arr1[i] = document.getElementById("BallVibOtv[" + (i + 1) + "]").value;
 
-                 // alert(arr[iStr]);
- 
- });
+                    }
+                    else {
+                        arr1[i] = 0;
+                    }
+                }
+                console.log(arr1[i]);
+            }
 
-          jQuery("#SaveOtvet").click(function () {
-              var arr = [];
-              var arr1 = [];
-              indexmass = 0;
-              arr1[0] = document.getElementById("BallStrOtv").value;
-              for (iStr = 0; iStr < arrStr.length ; iStr++) {
-               
-                  if (document.getElementById("StrOtv["+arrStr[iStr]+"]")!= null) {
-                      arr[indexmass] = document.getElementById("StrOtv["+arrStr[iStr]+"]").value;
-                      alert(arr[indexmass]);
-                      indexmass++;
-                  }
 
-                  // alert(arr[iStr]);
-                  }
-             
-               vbd(1, arr, arr1,0);
+            vbd(2, arr, arr1, obshBall);
 
-          });
+            // alert(arr[iStr]);
+
+        });
+
+        jQuery("#SaveOtvet").click(function () {
+            var arr = [];
+            var arr1 = [];
+            indexmass = 0;
+            arr1[0] = document.getElementById("BallStrOtv").value;
+            for (iStr = 0; iStr < arrStr.length; iStr++) {
+
+                if (document.getElementById("StrOtv[" + arrStr[iStr] + "]") != null) {
+                    arr[indexmass] = document.getElementById("StrOtv[" + arrStr[iStr] + "]").value;
+                    alert(arr[indexmass]);
+                    indexmass++;
+                }
+
+                // alert(arr[iStr]);
+            }
+
+            vbd(1, arr, arr1, 0);
+
+        });
         jQuery("#SaveSvbOtvet").click(function () {
             var arr = [];
-              var arr1 = [];
-              indexmass = 0;
-              for (iStr = 0; iStr < arrSvb.length ; iStr++) {
-        
-        
-                  if (document.getElementById("SvbOtv["+arrSvb[iStr]+"]")!= null) {
-                      arr[indexmass] = document.getElementById("SvbOtv[" + arrSvb[iStr] + "]").value;
-                       arr1[indexmass] = document.getElementById("BallSvbOtv[" + arrSvb[iStr] + "]").value;
+            var arr1 = [];
+            indexmass = 0;
+            for (iStr = 0; iStr < arrSvb.length; iStr++) {
 
 
-                 
-                     // alert(arr[indexmass]);
-                      indexmass++;
-
-                  }
-
-                  // alert(arr[iStr]);
-                  }
-             
-             
-               vbd(5, arr, arr1,0);
-
-          });
+                if (document.getElementById("SvbOtv[" + arrSvb[iStr] + "]") != null) {
+                    arr[indexmass] = document.getElementById("SvbOtv[" + arrSvb[iStr] + "]").value;
+                    arr1[indexmass] = document.getElementById("BallSvbOtv[" + arrSvb[iStr] + "]").value;
 
 
 
-          jQuery("#SaveOtvetTable").click(function () {
-              var arr = [];
-              var arr1 = [];
-              var indexArr = 0;
-              var obshBall = 0;
-              var checkboxBallOtv = document.getElementById("checkBallTabOtv");
-              if (checkboxBallOtv.checked)
-                  obshBall = 1;
-              else
-                  obshBall = 0;
-              for (i = 1; i < (parseInt(row) + 1); i++) {
-                  arr1[i - 1] = document.getElementById("BallTabOtv[" + i + "]").value;
-                  for (j = 1; j < j + 1; j++) {
-                     
-                      //alert(document.getElementById("ach" + i + "," + j + "").value);
-                      if (document.getElementById("ach" + i + "," + j + "") == null) {
-                         
-                          break;
-                      }
-                      else
-                      {
-                          //arr.set(i + "," + j, document.getElementById("ach" + i + "," + j + "").value);
-                         // arr.set( "gcf","gh");
-                      
-                     
+                    // alert(arr[indexmass]);
+                    indexmass++;
 
-                          arr[indexArr] = i + "," + j;
-                          indexArr++;
-                          arr[indexArr] =  document.getElementById("ach" + i + "," + j + "").value;
-                          indexArr++;
-                           
-                          //alert(document.getElementById("ach" + i+","+j+"").value);
+                }
+
+                // alert(arr[iStr]);
+            }
+
+
+            vbd(5, arr, arr1, 0);
+
+        });
+
+
+
+        jQuery("#SaveOtvetTable").click(function () {
+            var arr = [];
+            var arr1 = [];
+            var indexArr = 0;
+            var obshBall = 0;
+            var checkboxBallOtv = document.getElementById("checkBallTabOtv");
+            if (checkboxBallOtv.checked)
+                obshBall = 1;
+            else
+                obshBall = 0;
+            for (i = 1; i < (parseInt(row) + 1); i++) {
+                arr1[i - 1] = document.getElementById("BallTabOtv[" + i + "]").value;
+                for (j = 1; j < j + 1; j++) {
+
+                    //alert(document.getElementById("ach" + i + "," + j + "").value);
+                    if (document.getElementById("ach" + i + "," + j + "") == null) {
+
+                        break;
+                    }
+                    else {
+                        //arr.set(i + "," + j, document.getElementById("ach" + i + "," + j + "").value);
+                        // arr.set( "gcf","gh");
+
+
+
+                        arr[indexArr] = i + "," + j;
+                        indexArr++;
+                        arr[indexArr] = document.getElementById("ach" + i + "," + j + "").value;
+                        indexArr++;
+
+                        //alert(document.getElementById("ach" + i+","+j+"").value);
                         //  console.log(arr[i][j]);
-                      }
-                         
-                  }
+                    }
 
-                  //alert("StrOtv[" + iStr + "]");
-                  
+                }
+
+                //alert("StrOtv[" + iStr + "]");
+
                 //  arr[iStr] = document.getElementById("StrOtv[" + iStr + "]").value;
-                 // alert(arr[iStr]);
-              }
-          
-   
-         
-              vbd(4, arr, arr1,obshBall);
-
- });
+                // alert(arr[iStr]);
+            }
 
 
-        function vbd(tip,arr,arr1,obshBall) {
+
+            vbd(4, arr, arr1, obshBall);
+
+        });
+
+
+        function vbd(tip, arr, arr1, obshBall) {
 
             jQuery.ajax({
                 url: '/UprSpec/SaveOtveti/',
                 type: "POST",
                 dataType: "json",
-                data: { tip: tip, idZadania: 1, arr: arr,arr1:arr1,obshBall:obshBall },
+                data: { tip: tip, idZadania: 1, arr: arr, arr1: arr1, obshBall: obshBall },
                 success: function (query) {
                     alert(query);
                 }
@@ -450,16 +530,16 @@
             });
         }
 
-        jQuery('#add').click(function(){
+        jQuery('#add').click(function () {
             //form.appendChild(event.target.parentNode.(true));
 
-         
 
-            var ViborOtvetov = document.getElementById("DivViborOtveta["+(NomerViborOtv-1)+"]");
+
+            var ViborOtvetov = document.getElementById("DivViborOtveta[" + (NomerViborOtv - 1) + "]");
             var div = document.createElement("div");
             div.id = "DivViborOtveta[" + NomerViborOtv + "]";
             // Добавляем HTML-контент с пом. свойства innerHTML
-            div.innerHTML = "<input name=\"ViborOtveta[" + NomerViborOtv + "]\" id=\"ViborOtveta[" + NomerViborOtv + "]\" type=\"text\" /> <input type=\"checkbox\"  name=check[" + NomerViborOtv+ "] id=check[" + NomerViborOtv + "] onchange='ballvibotv("+NomerViborOtv+")' >";
+            div.innerHTML = "<input name=\"ViborOtveta[" + NomerViborOtv + "]\" id=\"ViborOtveta[" + NomerViborOtv + "]\" type=\"text\" /> <input type=\"checkbox\"  name=check[" + NomerViborOtv + "] id=check[" + NomerViborOtv + "] onchange='ballvibotv(" + NomerViborOtv + ")' >";
             // Добавляем новый узел в конец списка полей
             ViborOtvetov.after(div);
 
@@ -468,88 +548,88 @@
 
 
 
-         });
-               
-                 jQuery('#del').click(function(){       
-                    if (NomerViborOtv > 3) {
+        });
 
-         
-               
-                
-                        var elem = document.getElementById( "check[" +(NomerViborOtv - 1)+ "]" );
-                    
-                      
-                       elem.parentNode.removeChild(elem);
-                          var elem = document.getElementById("DivViborOtveta[" + (NomerViborOtv-1)+ "]");
-                        elem.remove();
-                       
-                        NomerViborOtv--;
-                      
+        jQuery('#del').click(function () {
+            if (NomerViborOtv > 3) {
 
-                    }
-                
-                 });
+
+
+
+                var elem = document.getElementById("check[" + (NomerViborOtv - 1) + "]");
+
+
+                elem.parentNode.removeChild(elem);
+                var elem = document.getElementById("DivViborOtveta[" + (NomerViborOtv - 1) + "]");
+                elem.remove();
+
+                NomerViborOtv--;
+
+
+            }
+
+        });
 
 
         var arrSvb = [];
-         arrSvb[0]=0;
+        arrSvb[0] = 0;
         jQuery('#addAlternativeSvb').click(function () {
 
-            		// Создать пустой массив
-            //for (i = 0; i < arr.length; i++) 
+            // Создать пустой массив
+            //for (i = 0; i < arr.length; i++)
             //      alert(arr[i]);
 
 
             ////form.appendChild(event.target.parentNode.(true));
-            var LastDivSvbOtv=0;
-        
-            i = arrSvb.length;  
+            var LastDivSvbOtv = 0;
+
+            i = arrSvb.length;
             while (i > 0) {
-              
-                if (arrSvb[i-1] != null) {
-                    LastDivSvbOtv = "SvbOtvetDiv["+arrSvb[i - 1]+"]";
+
+                if (arrSvb[i - 1] != null) {
+                    LastDivSvbOtv = "SvbOtvetDiv[" + arrSvb[i - 1] + "]";
                     break;
 
                 }
-                    i--;
+                i--;
 
             }
             var ViborOtvetov = document.getElementById(LastDivSvbOtv);
             var div = document.createElement("div");
             SvbNomer++;
-            i = arrSvb.length; 
-         //   alert(arrSvb.length);
+            i = arrSvb.length;
+            //   alert(arrSvb.length);
 
-             var table = document.getElementById('tableSvbOtv');
-           
-              var row = document.createElement("TR");
-    table.appendChild(row);
-    var td1 = document.createElement("TD");
+            var table = document.getElementById('tableSvbOtv');
+
+            var row = document.createElement("TR");
+            table.appendChild(row);
+            var td1 = document.createElement("TD");
             var td2 = document.createElement("TD");
-             var td3 = document.createElement("TD");
+            var td3 = document.createElement("TD");
             row.id = "SvbOtvetRow[" + SvbNomer + "]";
-                arrSvb[i] =SvbNomer;
+            arrSvb[i] = SvbNomer;
             //div.id = "SvbOtvetDiv[" + SvbNomer+ "]";
             //// Добавляем HTML-контент с пом. свойства innerHTML
             //div.innerHTML = "  <div id=\"SvbOtvetDiv[" + SvbNomer+ "]\"><textarea rows=\"2\" cols=\"45\" name=\"SvbOtv[" + SvbNomer + "]\" id=\"SvbOtv[" + SvbNomer + "]\" /> </textarea> </div>";
             // Добавляем новый узел в конец списка полей
-             row.appendChild(td1);
-    row.appendChild(td2);
- row.appendChild(td3);
-    // Наполняем ячейки
-    td1.innerHTML =   '<input type="text" id="BallSvbOtv['+SvbNomer+']"  size="3"/>';
-            td2.innerHTML = "  <div id=\"SvbOtvetDiv[" + SvbNomer+ "]\"><textarea rows=\"2\" cols=\"45\" name=\"SvbOtv[" + SvbNomer + "]\" id=\"SvbOtv[" + SvbNomer + "]\" /> </textarea> </div>";
-  td3.innerHTML =" <button type=\"button\" name=\"delAlternativeArea\" id=\"delAlternativeArea\" class=\"classDelAlternativeArea\"  OnClick=\"d("+SvbNomer+");\"  >Удалить</button>";
+            row.appendChild(td1);
+            row.appendChild(td2);
+            row.appendChild(td3);
+            // Наполняем ячейки
+            td1.innerHTML = '<input type="text" id="BallSvbOtv[' + SvbNomer + ']"  size="3"/>';
+            td2.innerHTML = "  <div id=\"SvbOtvetDiv[" + SvbNomer + "]\"><textarea rows=\"2\" cols=\"45\" name=\"SvbOtv[" + SvbNomer + "]\" id=\"SvbOtv[" + SvbNomer + "]\" /> </textarea> </div>";
+            td3.innerHTML = " <button type=\"button\" name=\"delAlternativeArea\" id=\"delAlternativeArea\" class=\"classDelAlternativeArea\"  OnClick=\"d(" + SvbNomer + ");\"  >Удалить</button>";
 
-          
+
             //ViborOtvetov.after(div);
             CountSvbOtv++;
 
-             
-            
 
 
-         });
+
+
+        });
         //document.getElementById('delAlternativeArea').onclick = function () {
 
 
@@ -567,97 +647,83 @@
         function ballvibotvall() {
             for (i = 1; i <= NomerViborOtv; i++) {
                 ballvibotv(i);
-             
+
                 var checkbox = document.getElementById('checkBallVibOtv');
                 if (checkbox.checked) {
                     document.getElementById('BallVibOtv').hidden = true;
                 }
                 else {
-                     document.getElementById('BallVibOtv').hidden = false;
+                    document.getElementById('BallVibOtv').hidden = false;
                 }
-              
+
             }
         }
         function ballvibotv(n) {
-    
+
             var checkbox = document.getElementById('checkBallVibOtv');
             var checkboxi = document.getElementById('check[' + n + ']');
-              
-            if (checkbox.checked && checkboxi.checked ) {
-                checkboxi.remove();
-                    var DivVibOtv = document.getElementById("DivViborOtveta[" + n + "]");
-                    DivVibOtv.innerHTML += '<input type=\"checkbox\"  name=check[' + n+ '] id=check[' + n + '] onchange="ballvibotv('+n+')" checked > <input type="text" id="BallVibOtv[' + n + ']"  size="2"  />';
 
-                
-             }
-            else
-            {
+            if (checkbox.checked && checkboxi.checked) {
+                checkboxi.remove();
+                var DivVibOtv = document.getElementById("DivViborOtveta[" + n + "]");
+                DivVibOtv.innerHTML += '<input type=\"checkbox\"  name=check[' + n + '] id=check[' + n + '] onchange="ballvibotv(' + n + ')" checked > <input type="text" id="BallVibOtv[' + n + ']"  size="2"  />';
+
+
+            }
+            else {
                 var ball = document.getElementById("BallVibOtv[" + n + "]");
-                if(ball!=null)
-                ball.remove();
-               // document.getElementById("BallVibOtv").hidden = false;
+                if (ball != null)
+                    ball.remove();
+                // document.getElementById("BallVibOtv").hidden = false;
                 //   var table = document.getElementById('TabelOtvet');
                 //for (i = 1; i <= table.rows.length; i++) {
                 //    var ballTabOtv = document.getElementById("BallTabOtv[" + i + "]");
                 //    if(ballTabOtv!=null)
                 //    ballTabOtv.remove();
 
-                }
-                }
+            }
+        }
 
 
-            
-        
+
+
         function balltableotv() {
             var checkbox = document.getElementById('checkBallTabOtv');
             if (checkbox.checked) {
-                document.getElementById("BallTabOtv").hidden=true;
+                document.getElementById("BallTabOtv").hidden = true;
                 var table = document.getElementById('TabelOtvet');
                 for (i = 1; i <= table.rows.length; i++) {
                     var but = document.getElementById("but[" + i + "]");
                     but.innerHTML = '<input type="text" id="BallTabOtv[' + i + ']"  size="2"  />' + but.innerHTML;
 
                 }
-             }
-            else
-                {
+            }
+            else {
                 document.getElementById("BallTabOtv").hidden = false;
-                   var table = document.getElementById('TabelOtvet');
+                var table = document.getElementById('TabelOtvet');
                 for (i = 1; i <= table.rows.length; i++) {
                     var ballTabOtv = document.getElementById("BallTabOtv[" + i + "]");
-                    if(ballTabOtv!=null)
-                    ballTabOtv.remove();
+                    if (ballTabOtv != null)
+                        ballTabOtv.remove();
 
                 }
-                }
+            }
         }
-         function d(n)
-         {
-             
-            
-             if (CountSvbOtv > 0) {
-                 for (i = 0; i < arrSvb.length; i++)
-                     if ( "SvbOtvetDiv[" +arrSvb[i]+ "]" == "SvbOtvetDiv[" + n + "]")
-                     {
-                        delete  arrSvb[i];
-                         var elem = document.getElementById("SvbOtvetDiv[" + n + "]");
-                         elem.remove();
-                         var elem = document.getElementById("SvbOtvetRow[" + n + "]");
-                         elem.remove();
-                           CountSvbOtv--;
-                     }
+        function d(n) {
+
+
+            if (CountSvbOtv > 0) {
+                for (i = 0; i < arrSvb.length; i++)
+                    if ("SvbOtvetDiv[" + arrSvb[i] + "]" == "SvbOtvetDiv[" + n + "]") {
+                        delete arrSvb[i];
+                        var elem = document.getElementById("SvbOtvetDiv[" + n + "]");
+                        elem.remove();
+                        var elem = document.getElementById("SvbOtvetRow[" + n + "]");
+                        elem.remove();
+                        CountSvbOtv--;
+                    }
                 //  arr.pop("SvbOtvetDiv[" + n+ "]");
-                      // elem.parentNode.removeChild(elem);
-                 
-                         
-              
-              
-                
-                      
-
-                    }
-                    }
-         
+                // elem.parentNode.removeChild(elem);
 
 
 
@@ -665,172 +731,184 @@
 
 
 
+            }
+        }
 
-           var arrStr = [];
-         arrStr.push(0);
+
+
+
+
+
+
+
+
+        var arrStr = [];
+        arrStr.push(0);
 
         jQuery('#addAlternative').click(function () {
-                StrNomer++;
+            StrNomer++;
             //form.appendChild(event.target.parentNode.(true));
-           
 
-             var LastStrOtv=0;
-              i = arrStr.length;  
+
+            var LastStrOtv = 0;
+            i = arrStr.length;
             while (i > 0) {
-              
-                if (arrStr[i-1] != null) {
-              
+
+                if (arrStr[i - 1] != null) {
+
                     LastStrOtv = "StrOtvet[" + arrStr[i - 1] + "]";
                     break;
 
                 }
-                    i--;
+                i--;
 
             }
 
-             var ViborOtvetov = document.getElementById(LastStrOtv);
-      
+            var ViborOtvetov = document.getElementById(LastStrOtv);
+
             var div = document.createElement("div");
-             i = arrStr.length;  
-            arrStr[i] =  StrNomer ;
-            div.id = "StrOtvet[" + StrNomer+ "]";
+            i = arrStr.length;
+            arrStr[i] = StrNomer;
+            div.id = "StrOtvet[" + StrNomer + "]";
+            div.className = "input-group wrap-input100 validate-input col-12";
+
             // Добавляем HTML-контент с пом. свойства innerHTML
-            div.innerHTML = "<input type=\"text\" name=\"StrOtv[" + StrNomer + "]\" id=\"StrOtv[" + StrNomer + "]\" />   <button type=\"button\" name=\"delAlternative\" id=\"delAlternative\" class=\"classDelAlternative\"  OnClick=\"a("+StrNomer+");\"  >Удалить</button>";
+            // div.innerHTML = "<input type=\"text\" name=\"StrOtv[" + StrNomer + "]\" id=\"StrOtv[" + StrNomer + "]\" />   <button type=\"button\" name=\"delAlternative\" id=\"delAlternative\" class=\"classDelAlternative\"  OnClick=\"a(" + StrNomer + ");\"  >Удалить</button>";
             // Добавляем новый узел в конец списка полей
+            div.innerHTML = "<div class=\"input-group-prepend \"><div class=\"input-group-text\"><i class=\"far fa-comment-alt\"></i></div></div><input type=\"text\" class=\"form-control input100\" name=\"StrOtv[" + StrNomer + "]\" id=\"StrOtv[" + StrNomer + "]\" placeholder=\"Альтернативный правильный ответ\" /><span class=\"focus-input100\"></span><a href=\"#\" class=\"classDelAlternative btn btn-icon btn btn-danger\" name=\"delAlternative\"  id=\"delAlternative\" OnClick=\"a(" + StrNomer + ");\"><i class=\"fas fa-times\"></i></a>";
+
+
             ViborOtvetov.after(div);
 
 
-             
-            
 
 
-         });
-               document.getElementById('delAlternative').onclick = function() {
-   
-          
-                    if (i > 3) {
-                    
-                       elem.parentNode.removeChild(elem);
-                          var elem = document.getElementById("StrOtvet[" + (i-1)+ "]");
-                        elem.remove();
-
-                        i--;
-
-                    }
-                
-        };
 
 
-         function a(n)
-         {
+        });
+        //document.getElementById('delAlternative').onclick = function () {
 
-             if (StrNomer > 0) {
 
-                    for (i = 0; i < arrStr.length; i++)
-                     if ("StrOtvet[" + arrStr[i]+ "]" == "StrOtvet[" + n + "]")
-                     {
-                        delete  arrStr[i];
-                       
-                     }
-                          var elem = document.getElementById("StrOtvet[" + n+ "]");
-                        elem.remove();
+        //    if (i > 3) {
 
-                      
+        //        elem.parentNode.removeChild(elem);
+        //        var elem = document.getElementById("StrOtvet[" + (i - 1) + "]");
+        //        elem.remove();
+
+        //        i--;
+
+        //    }
+
+        //};
+
+
+        function a(n) {
+
+            if (StrNomer > 0) {
+
+                for (i = 0; i < arrStr.length; i++)
+                    if ("StrOtvet[" + arrStr[i] + "]" == "StrOtvet[" + n + "]") {
+                        delete arrStr[i];
 
                     }
-                    }
-         
+                var elem = document.getElementById("StrOtvet[" + n + "]");
+                elem.remove();
 
-	function generateTable(){
-       row= document.getElementById("kolRow").value;
-        var elem = document.getElementById("TabelOtvet");
-        if (elem) {
-            elem.remove();
+
+
+            }
         }
-		var table = '<table class="simple-little-table" id=\"TabelOtvet\">';
 
-        for (var i = 1; i <= row; i++) {
 
-            table += '<tr>';
-           
-            for (var j = 1; j <= 2; j++) {
-                if (j == 1) {
-                    table += "<td id=\"but[" + i + "]\"><button type=\"button\" name=\"addAlternativeTable[" + i + "]\" id=\"addAlternativeTable[" + i + "]\" class=\"classAddAlternativeTable\"  OnClick=\"addInput(" + i + ",2);\"  >+</button> <button type=\"button\" name=\"delAlternativeTable[" + i + "]\" id=\"delAlternativeTable[" + i + "]\" class=\"classDelAlternativeTable\"  OnClick=\"delInput(" + i + ",2);\"  >-</button></td> ";
-                }
-                    table += "<td><input name= \"ach" + i + "," + j + "\" id= \"ach" + i + "," + j + "\"/> </td>";
-                
-               
+        function generateTable() {
+            row = document.getElementById("kolRow").value;
+            var elem = document.getElementById("TabelOtvet");
+            if (elem) {
+                elem.remove();
             }
+            var table = '<table class="simple-little-table" id=\"TabelOtvet\">';
 
-            table += '</tr>';
-        
-		}
-		table += '</table>';
-       // document.getElementById('table').innerHTML = table;
-          var div = document.createElement("div");
-        var TableCreate = document.getElementById("TableCreate");
-        div.innerHTML = table;
-        TableCreate.after(div);
-        balltableotv();
+            for (var i = 1; i <= row; i++) {
 
-	}
+                table += '<tr>';
 
-
-
-        function delalternativearea(n)
-         {
-
-             if (SvobodNomer > 0) {
-
-                      // elem.parentNode.removeChild(elem);
-                          var elem = document.getElementById("Kriterii[" + n+ "]");
-                        elem.remove();
-
-                        SvobodNomer--;
-
+                for (var j = 1; j <= 2; j++) {
+                    if (j == 1) {
+                        table += "<td id=\"but[" + i + "]\"><button type=\"button\" name=\"addAlternativeTable[" + i + "]\" id=\"addAlternativeTable[" + i + "]\" class=\"classAddAlternativeTable\"  OnClick=\"addInput(" + i + ",2);\"  >+</button> <button type=\"button\" name=\"delAlternativeTable[" + i + "]\" id=\"delAlternativeTable[" + i + "]\" class=\"classDelAlternativeTable\"  OnClick=\"delInput(" + i + ",2);\"  >-</button></td> ";
                     }
-                    }
+                    table += "<td><input name= \"ach" + i + "," + j + "\" id= \"ach" + i + "," + j + "\"/> </td>";
+
+
+                }
+
+                table += '</tr>';
+
+            }
+            table += '</table>';
+            // document.getElementById('table').innerHTML = table;
+            var div = document.createElement("div");
+            var TableCreate = document.getElementById("TableCreate");
+            div.innerHTML = table;
+            TableCreate.after(div);
+            balltableotv();
+
+        }
 
 
 
-  jQuery('#addAlternativeArea').click(function(){
+        function delalternativearea(n) {
+
+            if (SvobodNomer > 0) {
+
+                // elem.parentNode.removeChild(elem);
+                var elem = document.getElementById("Kriterii[" + n + "]");
+                elem.remove();
+
+                SvobodNomer--;
+
+            }
+        }
+
+
+
+        jQuery('#addAlternativeArea').click(function () {
             //form.appendChild(event.target.parentNode.(true));
             var ViborOtvetov = document.getElementById("SvobodOtvet");
             var div = document.createElement("div");
-            div.id = "Kriterii[" + SvobodNomer+ "]";
+            div.id = "Kriterii[" + SvobodNomer + "]";
             // Добавляем HTML-контент с пом. свойства innerHTML
-            div.innerHTML = "<textarea name=\"Kriterii[" + i + "]\" id=\"Kriterii[" + i + "]\" type=\"text\" >  </textarea> <button type=\"button\" name=\"delAlternativeArea\" id=\"delAlternativeArea\" class=\"classDelAlternativeArea\"  OnClick=\"delalternativearea("+SvobodNomer+");\"  >Удалить</button>";
+            div.innerHTML = "<textarea name=\"Kriterii[" + i + "]\" id=\"Kriterii[" + i + "]\" type=\"text\" >  </textarea> <button type=\"button\" name=\"delAlternativeArea\" id=\"delAlternativeArea\" class=\"classDelAlternativeArea\"  OnClick=\"delalternativearea(" + SvobodNomer + ");\"  >Удалить</button>";
             // Добавляем новый узел в конец списка полей
             ViborOtvetov.after(div);
 
 
-               SvobodNomer++;
-            
+            SvobodNomer++;
 
 
-         });
-               
+
+        });
+
         jQuery('#TableCreate').click(function () {
-           
+
             //form.appendChild(event.target.parentNode.(true));
             var ViborOtvetov = document.getElementById("SvobodOtvet");
             var div = document.createElement("div");
-            div.id = "Kriterii[" + SvobodNomer+ "]";
+            div.id = "Kriterii[" + SvobodNomer + "]";
             // Добавляем HTML-контент с пом. свойства innerHTML
-            div.innerHTML = "<textarea name=\"Kriterii[" + i + "]\" id=\"Kriterii[" + i + "]\" type=\"text\" >  </textarea> <button type=\"button\" name=\"delAlternativeArea\" id=\"delAlternativeArea\" class=\"classDelAlternativeArea\"  OnClick=\"delalternativearea("+SvobodNomer+");\"  >Удалить</button>";
+            div.innerHTML = "<textarea name=\"Kriterii[" + i + "]\" id=\"Kriterii[" + i + "]\" type=\"text\" >  </textarea> <button type=\"button\" name=\"delAlternativeArea\" id=\"delAlternativeArea\" class=\"classDelAlternativeArea\"  OnClick=\"delalternativearea(" + SvobodNomer + ");\"  >Удалить</button>";
             // Добавляем новый узел в конец списка полей
             ViborOtvetov.after(div);
 
 
-               SvobodNomer++;
-            
-
-
-         });
+            SvobodNomer++;
 
 
 
-        
+        });
+
+
+
+
     </script>
 
 
@@ -858,20 +936,20 @@
             }
         }
 
-        function addInput(row,column) {
-            
-                 var elem = document.getElementById("addAlternativeTable["+row+"]");
-            elem.remove();
-            var elem = document.getElementById("delAlternativeTable["+row+"]");
-                        elem.remove();
-            var table = document.getElementById('TabelOtvet');
-               var trArray = table.getElementsByTagName('tr');
+        function addInput(row, column) {
 
-             but=document.getElementById('but['+row+']');
-      but.innerHTML= " <button type=\"button\" name=\"addAlternativeTable[" + row + "]\" id=\"addAlternativeTable[" + row + "]\" class=\"classAddAlternativeTable\"  OnClick=\"addInput(" + row + "," + (column+1) + ");\"  >+</button> <button type=\"button\" name=\"delAlternativeTable[" + row + "]\" id=\"delAlternativeTable[" + row + "]\" class=\"classDelAlternativeTable\"  OnClick=\"delInput(" + row + "," + (column+1) + ");\"  >-</button> ";
-            trArray[row - 1].insertCell(column+1).innerHTML = "<input name= \"ach" + row + "," + (column+1) + "\" id= \"ach" + row + "," + (column+1) + "\"/> ";
-        
-         
+            var elem = document.getElementById("addAlternativeTable[" + row + "]");
+            elem.remove();
+            var elem = document.getElementById("delAlternativeTable[" + row + "]");
+            elem.remove();
+            var table = document.getElementById('TabelOtvet');
+            var trArray = table.getElementsByTagName('tr');
+
+            but = document.getElementById('but[' + row + ']');
+            but.innerHTML = " <button type=\"button\" name=\"addAlternativeTable[" + row + "]\" id=\"addAlternativeTable[" + row + "]\" class=\"classAddAlternativeTable\"  OnClick=\"addInput(" + row + "," + (column + 1) + ");\"  >+</button> <button type=\"button\" name=\"delAlternativeTable[" + row + "]\" id=\"delAlternativeTable[" + row + "]\" class=\"classDelAlternativeTable\"  OnClick=\"delInput(" + row + "," + (column + 1) + ");\"  >-</button> ";
+            trArray[row - 1].insertCell(column + 1).innerHTML = "<input name= \"ach" + row + "," + (column + 1) + "\" id= \"ach" + row + "," + (column + 1) + "\"/> ";
+
+
 
         }
 
@@ -886,6 +964,7 @@
             }
         }
     </script>
+
 
 </body>
 </html>
