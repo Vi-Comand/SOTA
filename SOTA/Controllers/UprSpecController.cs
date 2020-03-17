@@ -6,6 +6,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Sota.Models;
+using Newtonsoft.Json;
+
 
 namespace SOTA.Controllers
 {
@@ -36,35 +38,103 @@ namespace SOTA.Controllers
             await db.SaveChangesAsync().ConfigureAwait(false);
             return Json("ok");
         }
-        public async Task<IActionResult> SaveOtveti(int tip, int idZadania, string[] arr, string[] arr1)
+        public async Task<IActionResult> SaveOtveti(int tip, int idZadania, string[] arr, string[] arr1, int obshBall)
         {
+           
             Zadanie EditZadanie = new Zadanie();
-            EditZadanie = db.Zadanie.Find(idZadania);
+           EditZadanie = db.Zadanie.Find(idZadania);
             EditZadanie.Tip = tip;
-            try
+            if (obshBall == 0)
+            {
+                EditZadanie.Ball = Convert.ToDouble(arr1[0]);
+            }
+            if (tip == 4)
             {
                 List<Otvet> ListOtvets = new List<Otvet>();
-                for (int i=0;i<arr.Count();i++)
+                Otvet AddOtvet = new Otvet(); 
+                for (int i = 0; i < arr.Count(); i++)
                 {
-                    Otvet AddOtvet = new Otvet();
-                    AddOtvet.IdZadan = idZadania;
-                    AddOtvet.Text = arr[i];
-                    if(tip ==2)
+                  
+                    if (i%2==0)
                     {
-                        AddOtvet.Verno = Convert.ToInt32(arr1[i]); 
+                        AddOtvet = new Otvet();
+                        AddOtvet.Param1 = Convert.ToDouble(arr[i]);
+                        if (obshBall == 1 && AddOtvet.Param1==1.1)
+                        {
+                            AddOtvet.Ball = Convert.ToDouble(arr1[i]);
+                        }
+                     
+                       
                     }
                     else
-                        AddOtvet.Verno = 1;
-                    ListOtvets.Add(AddOtvet);
+                    {
+                        AddOtvet.IdZadan = idZadania;
+                        AddOtvet.Text = arr[i];
+                        
+                        ListOtvets.Add(AddOtvet);
+                    }
+
                 }
-               
                 await db.Otvet.AddRangeAsync(ListOtvets).ConfigureAwait(false);
                 await db.SaveChangesAsync().ConfigureAwait(false);
             }
-            catch(Exception ex)
-            { return Json(ex); }
+            else
+            {
+                try
+                {
+                    List<Otvet> ListOtvets = new List<Otvet>();
+                    for (int i = 0; i < arr.Count(); i++)
+                    {
+                        Otvet AddOtvet = new Otvet();
+                        AddOtvet.IdZadan = idZadania;
+
+                        if (tip == 2)
+                        {
+                            
+                                AddOtvet.Text = arr[i];
+                           
+                            
+
+                                if (obshBall == 1)
+                            {
+                                AddOtvet.Ball = Convert.ToDouble(arr1[i]);
+                               if (Convert.ToDouble(arr1[i])!=0)
+                                AddOtvet.Verno = 1;
+                            }                            
+                            else
+                            {
+                                if(Convert.ToDouble(arr1[i])==1)
+                                    { AddOtvet.Verno = 1; }
+                                else
+                                    { AddOtvet.Verno = 0; }
+                            }
+                           
+                        }
+                        else
+                        {
+                            AddOtvet.Text = arr[i];
+                            AddOtvet.Verno = 1;
+                        }
+                        if (tip == 5)
+                        {
+                            AddOtvet.Ball = Convert.ToDouble(arr1[i]);
+                        }
+                        ListOtvets.Add(AddOtvet);
+                    }
+                    await db.Otvet.AddRangeAsync(ListOtvets).ConfigureAwait(false);
+                    await db.SaveChangesAsync().ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                { return Json(ex); }
+            }
+
+           
+          db.SaveChanges();
+
+
             return Json("ok");
         }
+      
         public IActionResult Privacy()
         {
             return View();
