@@ -25,6 +25,15 @@ namespace SOTA.Controllers
             return View();
         }
 
+        public IActionResult SpecifikacList()
+        {
+            return View();
+        }
+
+        public IActionResult SpecifikacAdd()
+        {
+            return View();
+        }
         public IActionResult Privacy()
         {
             return View();

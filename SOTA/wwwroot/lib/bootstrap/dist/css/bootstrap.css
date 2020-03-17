@@ -633,8 +633,9 @@ pre code {
 .col-xl-auto {
   position: relative;
   width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
+  margin: 10px;
+  /*padding-right: 15px;
+  padding-left: 15px;   правка*/
 }
 
 .col {
@@ -713,9 +714,9 @@ pre code {
 }
 
 .col-5 {
-  -ms-flex: 0 0 41.666667%;
-  flex: 0 0 41.666667%;
-  max-width: 41.666667%;
+    -ms-flex: 0 0 41.666667%;
+    flex: 0 0 40.7%;
+    max-width: 40.7%; /*было 41.666667%*/
 }
 
 .col-6 {

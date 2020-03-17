@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Sota.Models;
 using SOTA.Models;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace SOTA.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> SaveWysiwygText(string Name, string IdSpec, string Text  , string Variant , string Nomer)
+        public async Task<IActionResult> SaveWysiwygText(string Name, string IdSpec, string Text, string Variant, string Nomer)
         {
             Zadanie AddZadanie = new Zadanie();
             AddZadanie.Name = Name;
@@ -31,7 +32,7 @@ namespace SOTA.Controllers
             AddZadanie.Text = Text;
             AddZadanie.Variant = Convert.ToInt32(Variant);
             AddZadanie.Nomer = Convert.ToInt32(Nomer);
-            
+
 
 
             await db.Zadanie.AddAsync(AddZadanie).ConfigureAwait(false);
@@ -139,8 +140,14 @@ namespace SOTA.Controllers
         {
             return View();
         }
-        public IActionResult Zadanie()
+        //public IActionResult Zadanie()
+        //{
+        //    return View();
+        //}
+
+        public IActionResult Zadanie(string spec, string idZadan)
         {
+
             return View();
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -148,5 +155,7 @@ namespace SOTA.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+
     }
 }
