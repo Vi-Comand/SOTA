@@ -42,7 +42,7 @@
         //WYSIWYG.display('all', full);
     </script>
 
-
+    <button type="button"  OnClick="predprosmotr()">Предпросмотр</button>
     <button class="btn btn-outline-success " id="SaveZadanie" form="0">Сохранить</button>
 
     <script type="text/javascript">
@@ -68,6 +68,28 @@
             });
 
         });
+
+        function predprosmotr() {
+
+
+
+            var idZadan = 1;
+
+
+            jQuery.ajax({
+                url: '/UprSpec/VivodZadaniaAjax/',
+                type: "POST",
+                dataType: "json",
+                data: { idZadan: idZadan, },
+                success: function (data) {
+                    alert(data);
+                }
+
+            });
+
+        }
+
+
     </script>
 
 </head>
@@ -351,7 +373,12 @@
             </div>
             <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
                 <div class="card-body">
-                    Смотри
+                    <div id="TextZadanPredprosmotr" class="card-body">
+                        Смотри
+                    </div>
+                    <div id="OtvetiZadanPredprosmotr" class="card-body">
+                        Смотри
+                    </div>
                 </div>
             </div>
         </div>

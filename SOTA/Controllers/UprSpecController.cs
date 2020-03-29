@@ -6,8 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Sota.Models;
-using Newtonsoft.Json;
+
 
 
 namespace SOTA.Controllers
@@ -39,12 +38,25 @@ namespace SOTA.Controllers
             await db.SaveChangesAsync().ConfigureAwait(false);
             return Json("ok");
         }
-        public async Task<IActionResult> SaveOtveti(int tip, int idZadania, string[] arr, string[] arr1, int obshBall)
+
+
+        public async Task<IActionResult> VivodZadaniaAjax(int idZadania)
         {
-           
+            ZadanVivod Zadan = new ZadanVivod();
+            Zadan.Zadan= db.Zadanie.Find(idZadania);
+            Zadan.Otv=db.Otvet.Where(x => x.IdZadan == idZadania).ToList();
+            return Json(new { data = Zadan });
+        }
+
+            public async Task<IActionResult> SaveOtveti(int tip, int idZadania, string[] arr, string[] arr1, int obshBall)
+        {
+            List<Otvet> OldOtv = db.Otvet.Where(x => x.IdZadan == idZadania).ToList() ;
+             db.Otvet.RemoveRange(OldOtv);
+            await db.SaveChangesAsync().ConfigureAwait(false);
             Zadanie EditZadanie = new Zadanie();
            EditZadanie = db.Zadanie.Find(idZadania);
             EditZadanie.Tip = tip;
+
             if (obshBall == 0)
             {
                 EditZadanie.Ball = Convert.ToDouble(arr1[0]);
