@@ -43,47 +43,55 @@ namespace SOTA.Controllers
         public async Task<IActionResult> VivodZadaniaAjax(int idZadania)
         {
             ZadanVivod Zadan = new ZadanVivod();
-            Zadan.Zadan= db.Zadanie.Find(idZadania);
-            Zadan.Otv=db.Otvet.Where(x => x.IdZadan == idZadania).ToList();
-            return Json(new { data = Zadan });
+            List<Otvet> ListOtv = new List<Otvet>();
+            Zadan.Zadan = db.Zadanie.Find(1);
+            try
+            {
+                Zadan.Otv = db.Otvet.Where(x => x.IdZadan == 1).ToList();
+            }
+            catch (Exception ex)
+            {
+                return Json(new { data = ex });
+            }
+            return Json(Zadan);
         }
 
-            public async Task<IActionResult> SaveOtveti(int tip, int idZadania, string[] arr, string[] arr1, int obshBall)
+        public async Task<IActionResult> SaveOtveti(int tip, int idZadania, string[] arr, string[] arr1, int obshBall)
         {
-            List<Otvet> OldOtv = db.Otvet.Where(x => x.IdZadan == idZadania).ToList() ;
-             db.Otvet.RemoveRange(OldOtv);
+            List<Otvet> OldOtv = db.Otvet.Where(x => x.IdZadan == idZadania).ToList();
+            db.Otvet.RemoveRange(OldOtv);
             await db.SaveChangesAsync().ConfigureAwait(false);
             Zadanie EditZadanie = new Zadanie();
-           EditZadanie = db.Zadanie.Find(idZadania);
+            EditZadanie = db.Zadanie.Find(idZadania);
             EditZadanie.Tip = tip;
 
-            if (obshBall == 0)
+            if (obshBall != 0)
             {
                 EditZadanie.Ball = Convert.ToDouble(arr1[0]);
             }
             if (tip == 4)
             {
                 List<Otvet> ListOtvets = new List<Otvet>();
-                Otvet AddOtvet = new Otvet(); 
+                Otvet AddOtvet = new Otvet();
                 for (int i = 0; i < arr.Count(); i++)
                 {
-                  
-                    if (i%2==0)
+
+                    if (i % 2 == 0)
                     {
                         AddOtvet = new Otvet();
                         AddOtvet.Param1 = Convert.ToDouble(arr[i]);
-                        if (obshBall == 1 && AddOtvet.Param1==1.1)
+                        if (obshBall == 1 && AddOtvet.Param1 == 1.1)
                         {
                             AddOtvet.Ball = Convert.ToDouble(arr1[i]);
                         }
-                     
-                       
+
+
                     }
                     else
                     {
                         AddOtvet.IdZadan = idZadania;
                         AddOtvet.Text = arr[i];
-                        
+
                         ListOtvets.Add(AddOtvet);
                     }
 
@@ -103,25 +111,25 @@ namespace SOTA.Controllers
 
                         if (tip == 2)
                         {
-                            
-                                AddOtvet.Text = arr[i];
-                           
-                            
 
-                                if (obshBall == 1)
+                            AddOtvet.Text = arr[i];
+
+
+
+                            if (obshBall !=0)
                             {
-                                AddOtvet.Ball = Convert.ToDouble(arr1[i]);
-                               if (Convert.ToDouble(arr1[i])!=0)
-                                AddOtvet.Verno = 1;
-                            }                            
+                                //AddOtvet.Ball = Convert.ToDouble(arr1[i]);
+                                if (Convert.ToDouble(arr1[i]) != 0)
+                                    AddOtvet.Verno = 1;
+                            }
                             else
                             {
-                                if(Convert.ToDouble(arr1[i])==1)
-                                    { AddOtvet.Verno = 1; }
+                                if (Convert.ToDouble(arr1[i]) == 1)
+                                { AddOtvet.Verno = 1; }
                                 else
-                                    { AddOtvet.Verno = 0; }
+                                { AddOtvet.Verno = 0; }
                             }
-                           
+
                         }
                         else
                         {
@@ -141,13 +149,13 @@ namespace SOTA.Controllers
                 { return Json(ex); }
             }
 
-           
-          db.SaveChanges();
+
+            db.SaveChanges();
 
 
             return Json("ok");
         }
-      
+
         public IActionResult Privacy()
         {
             return View();
