@@ -65,7 +65,7 @@ namespace SOTA.Controllers
             EditZadanie = db.Zadanie.Find(idZadania);
             EditZadanie.Tip = tip;
 
-            if (obshBall != 0)
+            if (obshBall == 0)
             {
                 EditZadanie.Ball = Convert.ToDouble(arr1[0]);
             }
@@ -116,18 +116,24 @@ namespace SOTA.Controllers
 
 
 
-                            if (obshBall !=0)
+                            if (obshBall == 0)
                             {
-                                //AddOtvet.Ball = Convert.ToDouble(arr1[i]);
+                                AddOtvet.Ball = 0;
                                 if (Convert.ToDouble(arr1[i]) != 0)
                                     AddOtvet.Verno = 1;
                             }
                             else
                             {
-                                if (Convert.ToDouble(arr1[i]) == 1)
-                                { AddOtvet.Verno = 1; }
+                                if (Convert.ToDouble(arr1[i]) > 0)
+                                {
+                                    AddOtvet.Ball = Convert.ToDouble(arr1[i]);
+                                    AddOtvet.Verno = 1;
+                                }
                                 else
-                                { AddOtvet.Verno = 0; }
+                                {
+                                    AddOtvet.Ball = 0;
+                                    AddOtvet.Verno = 0;
+                                }
                             }
 
                         }
