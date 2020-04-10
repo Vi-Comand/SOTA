@@ -77,8 +77,36 @@ namespace SOTA.Controllers
             return View(model);
         }
 
+        public async Task<IActionResult> CheckLog(string name)
+        {
+            Users user = new Users();
+            try
+            {
+                user = await db.Users.FirstOrDefaultAsync(u => u.Name == name).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                ex.Message.ToString();
+            }
+            if (user != null)
+            {
+                if(user.Pass=="")
+                {
+                    return Json(0);
+                }
+                else
+                {
+                    return Json(1);
+                }
 
-        private async Task Authenticate(string userName)
+              
+
+            }
+            return Json(9);
+        }
+
+
+            private async Task Authenticate(string userName)
         {
 
             //CompositeModel compositeModel=new CompositeModel(db);
