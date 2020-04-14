@@ -35,28 +35,32 @@ namespace SOTA.Controllers
         {
 
 
-            string password = model.Pass;
 
-            // generate a 128-bit salt using a secure PRNG
-            /*string a = "Соль";
 
-            byte[] salt = Encoding.Default.GetBytes(a);
 
-            // derive a 256-bit subkey (use HMACSHA1 with 10,000 iterations)
-            string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                password: password,
-                salt: salt,
-                prf: KeyDerivationPrf.HMACSHA1,
-                iterationCount: 10000,
-                numBytesRequested: 256 / 8));*/
             string remoteIpAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
             Users user = new Users();
-            if (model.Pass != null)
+            if (model.AddPass == null)
             {
 
                 try
                 {
-                    user = await db.Users.FirstOrDefaultAsync(u => u.Name == model.Name && u.Pass == password).ConfigureAwait(false);
+                    string password = model.Pass;
+
+                    //generate a 128 - bit salt using a secure PRNG
+                    string a = "ПерестройкаИАЦ";
+
+                    byte[] salt = Encoding.Default.GetBytes(a);
+
+                    // derive a 256-bit subkey (use HMACSHA1 with 10,000 iterations)
+                    string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                        password: password,
+                        salt: salt,
+                        prf: KeyDerivationPrf.HMACSHA1,
+                        iterationCount: 10000,
+                        numBytesRequested: 256 / 8));
+
+                    user = await db.Users.FirstOrDefaultAsync(u => u.Name == model.Name && u.Pass == hashed).ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
@@ -68,10 +72,28 @@ namespace SOTA.Controllers
             {
                 try
                 {
-                    user = await db.Users.FirstOrDefaultAsync(u => u.Name == model.Name).ConfigureAwait(false);
-                    user.Pass = model.AddPass;
-                    //await db.Users.Sav(user).ConfigureAwait(false);
-                    await db.SaveChangesAsync().ConfigureAwait(false);
+                    if (model.AddPass == model.AddPass2 && model.Sogl == true)
+                    {
+                        user = await db.Users.FirstOrDefaultAsync(u => u.Name == model.Name).ConfigureAwait(false);
+                        string password = model.AddPass;
+
+                        //generate a 128 - bit salt using a secure PRNG
+                        string a = "ПерестройкаИАЦ";
+
+                        byte[] salt = Encoding.Default.GetBytes(a);
+
+                        // derive a 256-bit subkey (use HMACSHA1 with 10,000 iterations)
+                        string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                            password: password,
+                            salt: salt,
+                            prf: KeyDerivationPrf.HMACSHA1,
+                            iterationCount: 10000,
+                            numBytesRequested: 256 / 8));
+
+                        user.Pass = hashed;
+                        user.Sogl = 1;
+                        await db.SaveChangesAsync().ConfigureAwait(false);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -125,39 +147,39 @@ namespace SOTA.Controllers
             return Json(9);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> NewPass(LoginModel model)
-        {
-            Users user = new Users();
-            try
+        /*    [HttpPost]
+            [ValidateAntiForgeryToken]
+            public async Task<IActionResult> NewPass(LoginModel model)
             {
-                user = await db.Users.FirstOrDefaultAsync(u => u.Name == model.Name).ConfigureAwait(false);
-                user.Pass = model.AddPass;
-                await db.Users.AddAsync(user).ConfigureAwait(false);
-                await db.SaveChangesAsync().ConfigureAwait(false);
+                Users user = new Users();
+                try
+                {
+                    user = await db.Users.FirstOrDefaultAsync(u => u.Name == model.Name).ConfigureAwait(false);
+                    user.Pass = model.AddPass;
+                    await db.Users.AddAsync(user).ConfigureAwait(false);
+                    await db.SaveChangesAsync().ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    ex.Message.ToString();
+                }
+                if (user != null)
+                {
+
+
+
+                    await Authenticate(model.Name).ConfigureAwait(false); // аутентификация
+                    return RedirectToAction("Index", "Home");
+
+                }
+
+
+                ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+
+
+                return View(model);
             }
-            catch (Exception ex)
-            {
-                ex.Message.ToString();
-            }
-            if (user != null)
-            {
-
-
-
-                await Authenticate(model.Name).ConfigureAwait(false); // аутентификация
-                return RedirectToAction("Index", "Home");
-
-            }
-
-
-            ModelState.AddModelError("", "Некорректные логин и(или) пароль");
-
-
-            return View(model);
-        }
-
+            */
 
         private async Task Authenticate(string userName)
         {

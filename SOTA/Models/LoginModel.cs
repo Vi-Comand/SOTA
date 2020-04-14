@@ -12,11 +12,14 @@ namespace SOTA.Models
         public string Pass { get; set; }
 
         [Required(ErrorMessage = "Не указан пароль")]
-       // [DataType(DataType.Password)]
+        // [DataType(DataType.Password)]
         public string AddPass { get; set; }
 
         [Required(ErrorMessage = "Не указан пароль")]
-       // [DataType(DataType.Password)]
+        // [DataType(DataType.Password)]
         public string AddPass2 { get; set; }
+
+        [Required(ErrorMessage = "Не подтверждено согласие")]
+        public bool Sogl { get; set; }
     }
 }

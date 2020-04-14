@@ -17,7 +17,7 @@ namespace SOTA.Models
     public class Otvet
     {
         public int Id { get; set; }
-        public int IdZadan{ get; set; }
+        public int IdZadan { get; set; }
         public int Verno { get; set; }
         public double Param1 { get; set; }
         public string Text { get; set; }
@@ -36,8 +36,12 @@ namespace SOTA.Models
         public string Name { get; set; }
         public string Pass { get; set; }
         public string Mail { get; set; }
-        public int New { get; set; }
+        public int Sogl { get; set; }
         public DateTime DateReg { get; set; }
+        public string F { get; set; }
+        public string I { get; set; }
+        public string O { get; set; }
+
     }
 
     public class Oo

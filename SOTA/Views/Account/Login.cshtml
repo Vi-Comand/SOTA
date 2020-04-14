@@ -9,7 +9,7 @@
         <section class="portfolio-block hire-me">
             <div class="container">
                 <br />
-                <form asp-action="Login" asp-controller="Account" asp-anti-forgery="true" class="text-center was-validated mx-auto" style="width: 400px;" method="post">
+                <form  asp-controller="Account" asp-anti-forgery="true" class="text-center was-validated mx-auto" style="width: 400px;" method="post">
                     <div class="validation center" asp-validation-summary="ModelOnly" />
                     <div class="form-row  rounded col-md-12 shadow-lg p-3 mb-5 bg-white-80 rounded">
 
@@ -44,12 +44,12 @@
                                             <i class="fas fa-lock"></i>
                                         </div>
                                     </div>
-                                    <input type="password" asp-for="Pass" class="form-control pwstrength input100" id="validationPass" placeholder="Пароль" pattern="[A-Za-zА-Яа-яЁё0-9]{6,}"  />
+                                    <input type="password" asp-for="Pass" class="form-control pwstrength input100" id="validationPass" placeholder="Пароль" pattern="[A-Za-zА-Яа-яЁё0-9]{6,}" />
                                     <span asp-validation-for="Pass" class="focus-input100"></span>
 
                                 </div>
                             </div>
-
+                            <label class="form-group d-none alert-warning" id="lab_pass">Логин не существует</label>
                             <div class="form-group d-none" id="div_add_pass">
                                 <label for="validationPass">Создайте пароль</label>
                                 <div class="input-group wrap-input100 validate-input">
@@ -58,7 +58,7 @@
                                             <i class="fas fa-lock"></i>
                                         </div>
                                     </div>
-                                    <input type="password" asp-for="AddPass" class="form-control pwstrength input100" id="AddPass" placeholder="Пароль" pattern="[A-Za-zА-Яа-яЁё0-9]{6,}"  />
+                                    <input type="password" asp-for="AddPass" class="form-control pwstrength input100" id="AddPass" placeholder="Пароль" pattern="[A-Za-zА-Яа-яЁё0-9]{6,}" oninput=" sravn();" />
                                     <span asp-validation-for="AddPass" class="focus-input100"></span>
 
                                 </div>
@@ -70,24 +70,32 @@
                                             <i class="fas fa-lock"></i>
                                         </div>
                                     </div>
-                                    <input type="password" asp-for="AddPass2" class="form-control pwstrength input100" id="AddPass2" placeholder="Пароль" pattern="[A-Za-zА-Яа-яЁё0-9]{6,}"  />
+                                    <input type="password" asp-for="AddPass2" class="form-control pwstrength input100" id="AddPass2" placeholder="Пароль" pattern="[A-Za-zА-Яа-яЁё0-9]{6,}" oninput=" sravn();" />
                                     <span asp-validation-for="AddPass2" class="focus-input100"></span>
 
+                                </div>
+                                <div class="input-group wrap-input100 validate-input">
+                                    <label class="custom-switch mt-2" style="padding-left: 0px; font-size:10px">
+
+                                        <input type="checkbox" asp-for="Sogl" name="Sogl" id="Sogl" class="custom-switch-input" oninput=" sravn();">
+                                        <span class="custom-switch-indicator"></span>
+                                        <span class="custom-switch-description">Согласие на обработку персональных данных</span>
+                                    </label>
                                 </div>
                             </div>
 
                             <div class="form-group d-none" id="div_vhod">
                                 <button id="KolvoLoad" class="btn btn-icon icon-left btn-outline-success col-12" asp-controller="AccountConrtroller" asp-action="Login">
                                     Войти
-                                    <i class="far fa-lock"></i>
+                                   
                                 </button>
 
                             </div>
 
                             <div class="form-group d-none" id="div_save">
-                                <button id="NewPass" class="btn btn-icon icon-left btn-outline-success col-12" asp-controller="AccountConrtroller" asp-action="NewPass">
+                                <button id="NewPass" class="btn btn-icon icon-left btn-outline-success col-12" asp-controller="AccountConrtroller" asp-action="Login">
                                     Сохранить и войти
-                                    <i class="fal fa-lock"></i>
+                                   
                                 </button>
 
                             </div>
@@ -108,83 +116,70 @@
     </script>
     <script>
 
-       
-   
-            var input=document.getElementById('validationLog');
+
+
+        var input = document.getElementById('validationLog');
+        var AddPass = document.getElementById('AddPass');
+        var AddPass2 = document.getElementById('AddPass2');
         var div_pass = document.getElementById('div_pass');
         var div_add_pass = document.getElementById('div_add_pass');
         var div_vhod = document.getElementById('div_vhod');
         var div_save = document.getElementById('div_save');
         var lab_log = document.getElementById('lab_log');
-           // input.addEventListener("focusout", function () {
+        var sogl = document.getElementById('Sogl');
+        // input.addEventListener("focusout", function () {
         function qwe() {
-            var login=input.value;
-          
-           
-            //$.ajax({
-            // type: 'POST' ,
-            // dataType: 'json' ,
-            // url: $form.attr('action'),
-            // xhrFields: {
-            // withCredentials: true
-            // },
-            // data: $form.serializeObject(),
-            // beforeSend: function () {
-            // //disable submit button to prevent double-click
-            // },
-            // success: function (data) {
-            // res=data;
-            // },
-            // error: function (jqXHR, textStatus, errorThrown) {
-            // res.message='Request failed: ' + errorThrown;
-            // },
-            // complete: function () {
-            // if (res.success) {
-            // // all good, user is logged-in
-            // // do callbacks if needed
-            // // close dialog
-            // } else {
-            // // no luck, show returned errors (res.message) in the summary (".validation-summary")
-            // }
-            // }
-            //});
+            var login = input.value;
             $.ajax({
-            url: '/Account/CheckLog/' ,
-            type: "POST" ,
-            dataType: "json" ,
-            data: { "name" : login },
-            success: function (nalich) {
-            //var pr=document.getElementById('prog');
-            //pr.innerText =g_load + '%' ;
-            //$('#prog').attr('aria-valuenow', g_load).css('width', g_load + '%' ).text=g_load;
-            //load =g_load;
-                //alert(nalich);
-                if (nalich == 1) {
-                    div_pass.classList.remove('d-none');
-                    div_vhod.classList.remove('d-none');
+                url: '/Account/CheckLog/',
+                type: "POST",
+                dataType: "json",
+                data: { "name": login },
+                success: function (nalich) {
+                    //var pr=document.getElementById('prog');
+                    //pr.innerText =g_load + '%' ;
+                    //$('#prog').attr('aria-valuenow', g_load).css('width', g_load + '%' ).text=g_load;
+                    //load =g_load;
+                    //alert(nalich);
+                    if (nalich == 1) {
+                        div_pass.classList.remove('d-none');
+                        div_vhod.classList.remove('d-none');
+                    }
+                    else {
+                        div_pass.classList.add('d-none');
+                        div_vhod.classList.add('d-none');
+                    }
+                    if (nalich == 0) {
+                        div_add_pass.classList.remove('d-none');
+
+
+                    }
+                    else {
+                        div_add_pass.classList.add('d-none');
+
+                    }
+                    if (nalich == 9) {
+                        lab_log.classList.remove('d-none');
+                    }
+                    else {
+                        lab_log.classList.add('d-none');
+                    }
                 }
-                else {
-                    div_pass.classList.add('d-none');
-                    div_vhod.classList.add('d-none');
-                }
-                if (nalich == 0) {
-                    div_add_pass.classList.remove('d-none');
-                    div_save.classList.remove('d-none');
-                    
-                }
-                else {
-                    div_add_pass.classList.add('d-none');
-                    div_save.classList.add('d-none');
-                }
-                if (nalich == 9) {
-                    lab_log.classList.remove('d-none');
-                }
-                else {
-                    lab_log.classList.add('d-none');
-                }
-            }
             });
-            };
+        };
+
+        function sravn() {
+            var Pass = AddPass.value;
+            var Pass2 = AddPass2.value;
+            
+           
+            if (Pass == Pass2 && sogl.checked) {
+                div_save.classList.remove('d-none');
+            }
+            else {
+                div_save.classList.add('d-none');
+            }
+        };
     </script>
 
 </body>
