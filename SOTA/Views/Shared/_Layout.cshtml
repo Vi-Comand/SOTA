@@ -13,7 +13,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-light bg-custom-2 navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-light  navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                     <img src="~/favicon.png" width="30" height="30" alt="logo">
@@ -24,8 +24,8 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1 nav-pills">
+                <div class="navbar-collapse collapse d-sm-inline-flex">
+                    <ul class="nav navbar-nav flex-grow-1 nav-pills">
                         <li class="nav-item active">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Главная</a>
                         </li>
@@ -44,9 +44,11 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Пользователи</a>
                         </li>
+                    </ul>
+                    <ul class="nav navbar-nav flex-grow-1 nav-pills  navbar-right">
                         @if (User.Identity.IsAuthenticated == false)
                         {
-                            <li class="nav-item" style="margin:5px; margin-left:auto;">
+                            <li class="nav-item " style="margin:5px; margin-left:auto;">
                                 <a asp-controller="Account" class="nav-link text-dark" asp-action="Login">Войти </a>
                             </li>
 
@@ -61,6 +63,10 @@
                 </div>
             </div>
         </nav>
+
+     
+
+
     </header>
     <div class="container">
         <partial name="_CookieConsentPartial" />

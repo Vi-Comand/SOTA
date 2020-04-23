@@ -1616,9 +1616,11 @@ h6 .badge {
         line-height: 35px;
         text-align: center;
         border-radius: 50%; }
-  .navbar .active .nav-link {
-    color: #fff;
-    font-weight: 700; }
+    .navbar .active .nav-link {
+        color: #fff;
+        font-weight: 700;
+        background-color: #fbce5d;
+    }
   .navbar .navbar-text {
     color: #fff; }
   .navbar .nav-link {
