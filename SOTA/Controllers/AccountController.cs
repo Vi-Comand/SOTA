@@ -132,7 +132,7 @@ namespace SOTA.Controllers
             }
             if (user != null)
             {
-                if (user.Pass == "")
+                if (user.Pass == null)
                 {
                     return Json(0);
                 }

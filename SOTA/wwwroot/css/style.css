@@ -144,7 +144,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 700; }
 
 p, ul:not(.list-unstyled), ol {
-  line-height: 28px; }
+  line-height: 48px; }
 
 .shadow {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03); }
@@ -1024,14 +1024,20 @@ table tr:hover .table-links {
   margin-top: -1px; }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #6777ef; }
+    color: #fff;
+    background-color: #6777ef;
+    border: 1px solid #fff;
+}
 .nav-pills .nav-item .nav-link {
-  color: #6777ef;
-  padding-left: 15px !important;
-  padding-right: 15px !important; }
-  .nav-pills .nav-item .nav-link:hover {
-    background-color: #f6f7fe; }
+    color: #6777ef;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+    border: 1px solid #fff;
+}
+    .nav-pills .nav-item .nav-link:hover {
+        background-color: #fbce5d;
+        border: 1px solid #fff;
+    }
   .nav-pills .nav-item .nav-link.active {
     box-shadow: 0 2px 6px #acb5f6;
     color: #fff;
@@ -1527,11 +1533,12 @@ h6 .badge {
 
 .navbar {
   align-items: center; }
-  .navbar .navbar-brand {
-    color: #fff;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    font-weight: 700; }
+    .navbar .navbar-brand {
+        color: #fbce5d;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        font-weight: 700;
+    }
   .navbar .form-inline .form-control {
     background-color: #fff;
     border-color: transparent;
@@ -1620,6 +1627,7 @@ h6 .badge {
         color: #fff;
         font-weight: 700;
         background-color: #fbce5d;
+        border: 1px solid #fff;
     }
   .navbar .navbar-text {
     color: #fff; }

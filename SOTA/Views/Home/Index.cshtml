@@ -24,13 +24,20 @@
         <td></td>
     </tr>
     @*@foreach (var Zadan in Model)
-    {
-        <tr>
-            <td>@Zadan.Name</td>
-            <td>@Zadan.Id</td>
-            <td>@Html.Raw(Zadan.Text)</td>
-            <td><a href="~/Home/Buy/@Zadan.Id">Купить</a></td>
-        </tr>
-        
-    }*@
+        {
+            <tr>
+                <td>@Zadan.Name</td>
+                <td>@Zadan.Id</td>
+                <td>@Html.Raw(Zadan.Text)</td>
+                <td><a href="~/Home/Buy/@Zadan.Id">Купить</a></td>
+            </tr>
+
+        }*@
 </table>
+@*<div class="Mqqexn">*@
+<div class="_32KZel">
+    <button class="bg-yel-but" type="submit">
+        <span class="bg-yel-span">Подобрать номер</span>
+    </button>
+</div>
+@*  </div>*@
