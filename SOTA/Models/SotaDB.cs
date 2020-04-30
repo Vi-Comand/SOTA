@@ -33,7 +33,9 @@ namespace SOTA.Models
         public int Class { get; set; }
         public int Predm { get; set; }
 
+        public double Ball { get; set; }
     }
+
     public class Otvet
     {
         public int Id { get; set; }
@@ -43,5 +45,46 @@ namespace SOTA.Models
         public string Text { get; set; }
         public double Ball { get; set; }
 
+    }
+
+    public class Users
+    {
+        public int Id { get; set; }
+        public int IdKlass { get; set; }
+        public int IdOo { get; set; }
+        public int IdMo { get; set; }
+        public string Kod { get; set; }
+        public int Role { get; set; }
+        public string Name { get; set; }
+        public string Pass { get; set; }
+        public string Mail { get; set; }
+        public int Sogl { get; set; }
+        public DateTime DateReg { get; set; }
+        public string F { get; set; }
+        public string I { get; set; }
+        public string O { get; set; }
+
+    }
+
+    public class Oo
+    {
+        public int Id { get; set; }
+        public int IdOo { get; set; }
+        public string Name { get; set; }
+        public int Tip { get; set; }
+    }
+
+    public class Mo
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
+
+    public class Klass
+    {
+        public int Id { get; set; }
+        public int IdOo { get; set; }
+        public string Kod { get; set; }
+        public int KlassNom { get; set; }
     }
 }

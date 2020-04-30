@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SOTA.Models;
 using System;
 using System.Collections.Generic;
@@ -11,14 +12,14 @@ namespace SOTA.Controllers
     public class HomeController : Controller
     {
 
-
+       
         SotaContext db;
 
         public HomeController(SotaContext context)
         {
             db = context;
         }
-
+         [Authorize]
         public IActionResult Index()
         {
             return View();

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -35,6 +36,12 @@ namespace SOTA
 
             });
 
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+               .AddCookie(options => //CookieAuthenticationOptions
+                {
+                   options.LoginPath = new PathString("/Account/Login");
+               });
+
             string connection = Configuration.GetConnectionString("DefaultConnection");
             /*services.AddDbContext<SotaContext>(options => options.UseMySql(Configuration["ConnectionStrings:DefaultConnection"]));*/
             services.AddDbContext<SotaContext>(options =>
@@ -59,7 +66,7 @@ namespace SOTA
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
+            app.UseAuthentication();    // аутентификация
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
