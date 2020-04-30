@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Sota.Models;
+using SOTA.Models;
 
 namespace SOTA
 {
@@ -31,14 +31,14 @@ namespace SOTA
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
-                
-             
+
+
             });
 
             string connection = Configuration.GetConnectionString("DefaultConnection");
             /*services.AddDbContext<SotaContext>(options => options.UseMySql(Configuration["ConnectionStrings:DefaultConnection"]));*/
-           services.AddDbContext<SotaContext>(options =>
-        options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<SotaContext>(options =>
+         options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

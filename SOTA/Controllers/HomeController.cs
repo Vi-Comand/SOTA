@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Sota.Models;
 using SOTA.Models;
 using System;
 using System.Collections.Generic;
