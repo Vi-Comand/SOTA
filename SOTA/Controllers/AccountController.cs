@@ -92,6 +92,7 @@ namespace SOTA.Controllers
 
                         user.Pass = hashed;
                         user.Sogl = 1;
+                        user.DateReg = DateTime.Now;
                         await db.SaveChangesAsync().ConfigureAwait(false);
                     }
                 }

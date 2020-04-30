@@ -1,0 +1,84 @@
+﻿@using System.Linq
+@model SOTA.Models.ListMo
+@{
+    ViewData["Title"] = "Пользователи";
+}
+
+<h1>Пользователи</h1>
+
+<div class="col-12 col-md-12 col-lg-12">
+
+    <div class="card-body">
+        <ul class="nav nav-tabs" id="myTab3" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="uo-tab" data-toggle="tab" href="#uo" role="tab" aria-controls="uo" aria-selected="true">УО</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="mo-tab" data-toggle="tab" href="#mo" role="tab" aria-controls="mo" aria-selected="false">МО</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="oo-tab" data-toggle="tab" href="#oo" role="tab" aria-controls="oo" aria-selected="false">ОО</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="search-tab" data-toggle="tab" href="#search" role="tab" aria-controls="search" aria-selected="false">Поиск</a>
+            </li>
+        </ul>
+        <div class="tab-content tab-bordered" id="myTabContent2">
+            <div class="tab-pane fade show active" id="uo" role="tabpanel" aria-labelledby="uo-tab">
+
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-md">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>#</th>
+                                    <th>ФИО</th>
+                                    <th>Логин</th>
+                                    <th>Дата регистрации</th>
+                                    <th>Управление</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+
+                                @for (int i = 0; i < Model.ListUsersMo.Count; i++)
+                                {
+                                    <tr>
+                                        <td>@Model.ListUsersMo[i].Id </td>
+                                        <td>@Model.ListUsersMo[i].F @Model.ListUsersMo[i].I @Model.ListUsersMo[i].O</td>
+                                        <td>@Model.ListUsersMo[i].Name</td>
+                                        <td>@Model.ListUsersMo[i].DateReg</td>
+                                        <td>
+                                            @if (@Model.ListUsersMo[i].Pass != null)
+                                            {
+                                                <a asp-area="" asp-controller="Admin" asp-action="CleanPass" asp-route-idDel="@Model.ListUsersMo[i].Id" class="btn btn-danger">Сбросить пароль</a>
+                                            }
+                                        </td>
+
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot class=" ">
+                                <tr>
+                                    <td>Всего </td>
+                                    <td>@Model.ListUsersMo.Count</td>
+                                    @*<td>@ViewBag.SumTest</td>*@
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="mo" role="tabpanel" aria-labelledby="mo-tab">
+                mo
+            </div>
+            <div class="tab-pane fade" id="oo" role="tabpanel" aria-labelledby="oo-tab">
+                oo
+            </div>
+            <div class="tab-pane fade" id="search" role="tabpanel" aria-labelledby="search-tab">
+                search
+            </div>
+        </div>
+    </div>
+
+</div>
