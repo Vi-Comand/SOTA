@@ -32,8 +32,8 @@ namespace SOTA
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
-                
-             
+
+
             });
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -44,8 +44,8 @@ namespace SOTA
 
             string connection = Configuration.GetConnectionString("DefaultConnection");
             /*services.AddDbContext<SotaContext>(options => options.UseMySql(Configuration["ConnectionStrings:DefaultConnection"]));*/
-           services.AddDbContext<SotaContext>(options =>
-        options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<SotaContext>(options =>
+         options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

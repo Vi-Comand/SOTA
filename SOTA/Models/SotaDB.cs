@@ -13,6 +13,28 @@ namespace SOTA.Models
         public int Nomer { get; set; }
         public double Ball { get; set; }
     }
+    public class Predm
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
+    public class TipSpec
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
+
+
+    public class Specific
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int Tip { get; set; }
+        public int Class { get; set; }
+        public int Predm { get; set; }
+
+        public double Ball { get; set; }
+    }
 
     public class Otvet
     {

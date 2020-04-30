@@ -13,6 +13,9 @@ namespace SOTA.Models
         public DbSet<Users> Users { get; set; }
         public DbSet<Klass> Klass { get; set; }
 
+        public DbSet<Specific> Specific { get; set; }
+        public DbSet<Predm> Predm { get; set; }
+        public DbSet<TipSpec> TipSpec { get; set; }
         public SotaContext(DbContextOptions<SotaContext> options)
             : base(options)
         {

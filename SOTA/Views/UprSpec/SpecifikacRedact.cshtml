@@ -1,0 +1,264 @@
+﻿@model SOTA.Models.SpecifikacRedactModel
+@{
+    ViewData["Title"] = "Добавление спецификации";
+}
+<form method="post">
+    <div class="col-12">
+        <div class="container">
+            <div class="row">
+                <div class="input-group wrap-input100 validate-input col-10">
+
+                    <div class="input-group-prepend ">
+                        <div class="input-group-text">
+                            <i class="fas fa-comment-alt"></i>
+                        </div>
+                    </div>
+
+                    <input type="hidden" class="form-control input100" id="id_spec" asp-for=@Model.Spec.Id />
+                    <input type="text" class="form-control input100" id="nazv" asp-for=@Model.Spec.Name placeholder="Название" pattern="[A-Za-zА-Яа-яЁё0-9@@]{6,}" required />
+                    <span class="focus-input100"></span>
+                </div>
+
+                <div class="input-group wrap-input100 validate-input col-5">
+
+                    <div class="input-group-prepend ">
+                        <div class="input-group-text">
+                            <i class="fas fa-list-alt"></i>
+                        </div>
+                    </div>
+                    <select id="tip" class="form-control input100" asp-for=@Model.Spec.Tip required>
+
+                        @foreach (TipSpec tipspec in Model.TipSpecs)
+                        {
+                            <option value=@tipspec.Id>@tipspec.Name</option>
+                        }
+
+
+                    </select>
+                    <span class="focus-input100"></span>
+                </div>
+
+                <div class="input-group wrap-input100 validate-input col-5 ">
+
+                    <div class="input-group-prepend ">
+                        <div class="input-group-text">
+                            <i class="fas fa-list-ul"></i>
+                        </div>
+                    </div>
+                    <select id="predmet" class="form-control input100" asp-for=@Model.Spec.Predm required>
+
+                        @foreach (Predm predm in Model.Predms)
+                        {
+                            <option value=@predm.Id>
+                                @predm.Name
+                            </option>;
+                        }
+                    </select>
+                    <span class="focus-input100"></span>
+                </div>
+                <input type="text" class="form-control input100" asp-for=@Model.Spec.Class placeholder="Класс" required />
+                <div class="input-group wrap-input100 validate-input col-2">
+
+                    <div class="input-group-prepend ">
+                        <div class="input-group-text">
+                            <i class="fas fa-list-ol"></i>
+                        </div>
+                    </div>
+                    <input type="number" class="form-control input100" id="var" asp-for=@Model.KolVar placeholder="Количество вариантов" pattern="[0-9]{6,}" required />
+                    <span class="focus-input100"></span>
+                </div>
+
+                <div class="input-group wrap-input100 validate-input col-2">
+
+                    <div class="input-group-prepend ">
+                        <div class="input-group-text">
+                            <i class="fas fa-list-ol"></i>
+                        </div>
+                    </div>
+                    <input type="number" class="form-control input100" asp-for=@Model.KolZad id="zadan" placeholder="Количество заданий" pattern="[0-9]{6,}" required />
+                    <span class="focus-input100"></span>
+                </div>
+
+                <div class="input-group wrap-input100 validate-input col-3">
+
+                    <button href="#" class="btn btn-success input100 btn-icon icon-left" asp-controller="UprSpec" asp-action="IzmKolZadans" id="AddTabel">
+                        <i class="far fa-user"></i>
+                        <ya-tr-span data-index="147-0" data-value=" Default" data-translation="Сформировать" data-type="trSpan">Сформировать</ya-tr-span>
+                    </button>
+
+                    <span class="focus-input100"></span>
+                </div>
+
+                <div id="TableCreate">
+
+
+                </div>
+
+                <table class="table table-hover table-sm table-bordered col-10">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th colspan="2">Вариант 1</th>
+                            <th colspan="2">Вариант 2</th>
+                            <th colspan="2">Вариант 3</th>
+                            <th colspan="2">Вариант 4</th>
+                            <th width="150px">Кол. балов</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="text-center">
+                            <td><input type="checkbox" /></td>
+                            <td><a href="#" class="btn btn-icon btn-sm btn-success">Задание 1</a></td>
+                            <td><a href="#" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td>
+                            <td>Создать</td>
+                            <td><a asp-area="" asp-controller="UprSpec" asp-action="Zadanie" asp-route-spec="123" asp-route-idZadan="r1c1idfgКДРРусский язык13.03.2020" class="btn btn-icon btn-sm btn-warning text-center"><i class="fas fa-plus"></i></a></td>
+                            <td>Создать</td>
+                            <td><a href="#" class="btn btn-icon btn-sm btn-warning text-center"><i class="fas fa-plus"></i></a></td>
+                            <td>Создать</td>
+                            <td><a href="#" class="btn btn-icon btn-sm btn-warning"><i class="fas fa-plus"></i></a></td>
+                            <td class=" wrap-input100 validate-input ">
+                                <input type="number" class="form-control-sm input100 " value="1" pattern="[0-9]{6,}" required />
+                                <span class="focus-input100"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    window.onload = function () {
+        generateTable();
+    }
+    function generateTable() {
+
+        row = document.getElementById("zadan").value;
+        coll = document.getElementById("var").value;
+
+        n_spec = document.getElementById("id_spec").value;
+
+
+        //nazv = document.getElementById("nazv").value;
+        //tip = document.getElementById("tip").value;
+        //predmet = document.getElementById("predmet").value;
+        var model = '@Html.Raw(Json.Serialize(Model.Zadanies))';
+        let Zadanies = new Array();
+        Zadanies = JSON.parse(model);
+        let numbers = new Map();
+
+
+        for (var i = 0; i < Zadanies.length; i++)
+            if (Zadanies[i].text != null) {
+
+                numbers.set(Zadanies[i].variant + "," + Zadanies[i].nomer, 1);
+                numbers.set( Zadanies[i].nomer + "b", Zadanies[i].ball);
+            }
+    else
+            {
+
+                numbers.set(Zadanies[i].variant + "," + Zadanies[i].nomer, 0);
+                numbers.set(Zadanies[i].nomer + "b", Zadanies[i].ball);
+            }
+
+        console.log(numbers);
+        var d = new Date();
+        var options = {
+            year: 'numeric',
+            month: 'numeric',
+            day: 'numeric'
+        };
+        date = d.toLocaleString("ru", options);
+        collf = parseInt(coll) + 1;
+        idz = nazv + tip + predmet + date;
+        if (nazv == "" || tip == "" || predmet == "") {
+            alert("Не заполненны поля" + date);
+        }
+        else {
+            var elem = document.getElementById("TabelOtvet");
+            if (elem) {
+                var zamen = confirm("Удалить и заменить таблицу? Все связи и задания будут удалены");
+            }
+            if (zamen == false) {
+
+            }
+            else {
+
+                if (elem) {
+                    elem.remove();
+                }
+                var table = '<table class="table table-hover table-sm table-bordered col-10" id=\"TabelOtvet\">';
+                table += '<thead><tr><th></th>';
+                for (var i = 1; i <= coll; i++) {
+                    table += '<th colspan="2">Вариант ' + i + '</th>';
+                }
+
+
+
+                table += ' <th width="150px">Кол. балов</th></tr></thead> <tbody>';
+
+
+
+                for (var i = 1; i <= row; i++) {
+
+                    table += '<tr class="text-center">';
+
+                    for (var j = 1; j <= collf; j++) {
+                        if (j == 1) {
+                            table += "<td>" + i + "</td>";
+                        }
+                        if (j != collf) {
+
+                            if (numbers.get(j + "," +i ) == 1)
+                            {
+                                table += "<td> Изменить</td > ";
+                                table += "<td> <a href=/UprSpec/Zadanie?id_spec=" + n_spec+"&n_var="+j+"&n_zad="+i+" class='btn btn-icon btn-sm btn-warning text-center'><i class='fas fa-plus'></i></a></td>";
+                            }
+                                else {
+                                table += "<td>Создать</td>";
+                                table += "<td> <a href=/UprSpec/Zadanie?id_spec=" + n_spec + "&n_var=" + j + "&n_zad=" + i +" class='btn btn-icon btn-sm btn-warning text-center'><i class='fas fa-plus'></i></a></td>";
+                            }
+                        }
+                        else {
+                            if (numbers.get(i + "b") != null) {
+
+
+                                table += ' <td class=" wrap-input100 validate-input "><input type="number" class="form-control-sm input100 " id=Ball' + i + ' value=' + numbers.get(i + "b") + ' pattern="[0-9]{6,}" required  onchange="changedball(' + i + ',Ball' + i + ')" /><span class="focus-input100"></span></td>';
+                            }
+                            else {
+
+                                table += ' <td class=" wrap-input100 validate-input "><input type="number" class="form-control-sm input100 " id=Ball' + i + ' value="1" pattern="[0-9]{6,}" required  onchange="changedball(' + i + ',Ball' + i + ')" /><span class="focus-input100"></span></td>';
+                            }
+                        }
+                    }
+
+                    table += '</tr>';
+
+                }
+                table += ' </tbody></table>';
+                // document.getElementById('table').innerHTML = table;
+                var div = document.createElement("div");
+                var TableCreate = document.getElementById("TableCreate");
+                div.innerHTML = table;
+                TableCreate.after(div);
+            }
+        }
+
+    }
+
+
+    function changedball(n_zad, ball) {
+        n_spec = document.getElementById("id_spec").value;
+
+        jQuery.ajax({
+            url: '/UprSpec/ChangedBallAjax/',
+            type: "POST",
+            dataType: "json",
+            data: { n_zad: n_zad, n_spec: n_spec, ball:ball.value },
+            success: function (data) {
+                console.log(data);
+
+            }
+        });
+    }
+</script>
