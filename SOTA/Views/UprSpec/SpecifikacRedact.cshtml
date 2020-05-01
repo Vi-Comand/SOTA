@@ -3,7 +3,15 @@
     ViewData["Title"] = "Добавление спецификации";
 }
 <form method="post">
-    <div class="col-12">
+    <div class="col-12 shadow p-3 mb-5 bg-white rounded">
+
+
+
+
+
+
+
+
         <div class="container">
             <div class="row">
                 <div class="input-group wrap-input100 validate-input col-10">
@@ -15,7 +23,7 @@
                     </div>
 
                     <input type="hidden" class="form-control input100" id="id_spec" asp-for=@Model.Spec.Id />
-                    <input type="text" class="form-control input100" id="nazv" asp-for=@Model.Spec.Name placeholder="Название" pattern="[A-Za-zА-Яа-яЁё0-9@@]{6,}" required />
+                    <input type="text" class="form-control input100" id="nazv" asp-for=@Model.Spec.Name placeholder="Название" required />
                     <span class="focus-input100"></span>
                 </div>
 
@@ -51,7 +59,8 @@
                         {
                             <option value=@predm.Id>
                                 @predm.Name
-                            </option>;
+                            </option>
+                            ;
                         }
                     </select>
                     <span class="focus-input100"></span>
