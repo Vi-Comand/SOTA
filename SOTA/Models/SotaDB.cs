@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace SOTA.Models
 {
@@ -86,5 +87,19 @@ namespace SOTA.Models
         public int IdOo { get; set; }
         public string Kod { get; set; }
         public int KlassNom { get; set; }
+    }
+
+    public class Rabota
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int IdSpec { get; set; }
+        public int Dliteln { get; set; }
+        public int UrovenRabot { get; set; }
+        public DateTime Nachalo { get; set; }
+        public DateTime Konec { get; set; }
+        public string ListUchasn { get; set; }
+        public DateTime Sozd { get; set; }
+
     }
 }

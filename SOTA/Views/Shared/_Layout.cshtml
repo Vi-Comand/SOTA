@@ -13,6 +13,13 @@
     <link rel="stylesheet" href="~/css/all.css" />
     <link rel="stylesheet" href="~/css/main.css" />
     <link rel="stylesheet" href="~/css/daterangepicker.css" />
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/moment.min.js" asp-append-version="true"></script>
+    <script src="~/js/daterangepicker.js" asp-append-version="true"></script>
+    @* <script src="~/js/package.js" asp-append-version="true"></script>*@
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
@@ -33,7 +40,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Главная</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Rabota" asp-action="RabotaAdd">Работы</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Rabota" asp-action="RabotaList">Работы</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="SpecList" asp-action="SpecifikacList">Спецификации</a>
@@ -85,10 +92,10 @@
     </footer>
 
 
-    <environment include="Development">
+    @*<environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
-    </environment>
+    </environment>*@
     @* <environment exclude="Development">
                  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
                         asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
@@ -103,18 +110,15 @@
                         integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o">
                 </script>
         </environment>*@
-    <script src="~/lib/jquery/dist/jquery.js"></script>
-    <scripttype ="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js">
-        > </script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
-        <script src="~/js/daterangepicker.js" asp-append-version="true"></script>
-        @* <script src="~/js/package.js" asp-append-version="true"></script>*@
-        <script src="~/js/moment.min.js" asp-append-version="true"></script>
-        @*<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
+    @*<scripttype ="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js">
+        > </script>*@
+
+    @*<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
             <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
             <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
-            <script>$(document).ready(function () { $('body').bootstrapMaterialDesign(); });</script>*@
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-        @RenderSection("Scripts", required: false)
+            <script>$(document).ready(function () { $('body').bootstrapMaterialDesign(); });</script>
+
+        @RenderSection("Scripts", required: false)*@
 </body>
 </html>

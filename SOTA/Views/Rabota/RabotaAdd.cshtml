@@ -1,127 +1,142 @@
-﻿
+﻿@model SOTA.Models.Rabota
 @{
-    ViewData["Title"] = "RabotaAdd";
+    ViewData["Title"] = "Создание работы";
+    var listT = ViewData["TipSpecs"] as IEnumerable<SOTA.Models.TipSpec>;
+    var listP = ViewData["Predms"] as IEnumerable<SOTA.Models.Predm>;
 }
+<form method="post">
+    <h1>Назначение работы</h1>
 
-<h1>Назначение работы</h1>
-
-<div class="col-12 shadow p-3 mb-5 bg-white rounded">
-    <div class="container">
-        <div class="row">
-            <div class="input-group wrap-input100 validate-input col-12 group">
-                <div class="input-group-prepend ">
-                    <div class="input-group-text">
-                        <i class="fas fa-comment-alt"></i>
+    <div class="col-12 shadow p-3 mb-5 bg-white rounded">
+        <div class="container">
+            <div class="row">
+                <div class="input-group wrap-input100 validate-input col-12 group">
+                    <div class="input-group-prepend ">
+                        <div class="input-group-text">
+                            <i class="fas fa-comment-alt"></i>
+                        </div>
                     </div>
-                </div>
-                <input type="text" class="form-control input100" id="nazv" @*asp-for=@Model.Spec.Name*@ required />
-                <span class="focus-input100 "></span>
-                <label class="label">Название работы</label>
-            </div>
 
-            <div class="input-group wrap-input100 validate-input col-12 group">
-                <div class="input-group-prepend ">
-                    <div class="input-group-text">
-                        <i class="fas fa-list-alt"></i>
+                    <input type="hidden" class="form-control input100" id="nazv" asp-for=@Model.Id required />
+                    <input type="text" class="form-control input100" id="nazv" asp-for=@Model.Name required />
+                    <span class="focus-input100 "></span>
+                    <label class="label">Название работы</label>
+                </div>
+
+                <div class="input-group wrap-input100 validate-input col-12 group">
+                    <div class="input-group-prepend ">
+                        <div class="input-group-text">
+                            <i class="fas fa-list-alt"></i>
+                        </div>
                     </div>
-                </div>
-                <select class="form-control input100" @*asp-for=@Model.Spec.Tip*@ required>
-                    <option value="">Выберите спецификацию</option>
-                    @*@foreach (TipSpec tipspec in Model.TipSpecs)
-                {
-                    <option value=@tipspec.Id>@tipspec.Name</option>
-                }*@
-                </select>
-                <span class="focus-input100"></span>
-                <label class="label">Спецификация</label>
-            </div>
-
-            <div class="input-group wrap-input100 validate-input col-3 group">
-                <div class="input-group-prepend ">
-                    <div class="input-group-text">
-                        <i class="fas fa-list-alt"></i>
-                    </div>
-                </div>
-                <select class="form-control input100" @*asp-for=@Model.Spec.Tip*@ required>
-                    <option value="">Выберите уровень</option>
-
-                    <option value="1">Край</option>
-                    <option value="2">МО</option>
-                    <option value="3">Школа</option>
-                    <option value="4">Класс</option>
-                </select>
-                <span class="focus-input100"></span>
-                <label class="label">Уровень организации</label>
-            </div>
-
-            <div class="input-group wrap-input100 validate-input col-3 group">
-                <div class="input-group-prepend ">
-                    <div class="input-group-text">
-                        <i class="fas fa-comment-alt"></i>
-                    </div>
-                </div>
-                <input type="text" class="form-control input100" id="dateN" @*asp-for=@Model.Spec.Name*@ required />
-                <span class="focus-input100 "></span>
-                <label class="label">Дата начала</label>
-            </div>
-            <script>
-                jQuery(function () {
-                    $('#dateN').daterangepicker({
-                        singleDatePicker: true,
-                        showDropdowns: true,
-                        minYear: 1980,
-
-                        "autoApply": true,
-                        "applyLabel": "Выбрать",
-                        "cancelLabel": "Отменить",
-                        locale: {
-                            format: 'DD.MM.YYYY',
-                            "firstDay": 1
+                    <select class="form-control input100" asp-for=@Model.IdSpec required>
+                        <option value="">Выберите спецификацию</option>
+                        @foreach (Specific spec in ViewData["SpisSpec"] as IEnumerable<SOTA.Models.Specific>)
+                        {
+                            <option value=@spec.Id>@spec.Name Тип:@listT.Where(x => x.Id == spec.Tip).First().Name Предмет:@listP.Where(x => x.Id == spec.Predm).First().Name</option>
                         }
+                    </select>
+                    <span class="focus-input100"></span>
+                    <label class="label">Спецификация</label>
+                </div>
+
+                <div class="input-group wrap-input100 validate-input col-3 group">
+                    <div class="input-group-prepend ">
+                        <div class="input-group-text">
+                            <i class="fas fa-list-alt"></i>
+                        </div>
+                    </div>
+                    <select class="form-control input100" asp-for=@Model.UrovenRabot required>
+                        <option value="">Выберите уровень</option>
+
+                        <option value="1">Край</option>
+                        <option value="2">МО</option>
+                        <option value="3">Школа</option>
+                        <option value="4">Класс</option>
+                    </select>
+                    <span class="focus-input100"></span>
+                    <label class="label">Уровень организации</label>
+                </div>
+
+                <div class="input-group wrap-input100 validate-input col-3 group">
+                    <div class="input-group-prepend ">
+                        <div class="input-group-text">
+                            <i class="fas fa-comment-alt"></i>
+                        </div>
+                    </div>
+                    <input type="text" class="form-control input100" id="dateN" asp-for=@Model.Nachalo required />
+                    <span class="focus-input100 "></span>
+                    <label class="label">Дата начала</label>
+                </div>
+                <script>
+                    jQuery(function () {
+                        $('#dateN').daterangepicker({
+                            singleDatePicker: true,
+                            showDropdowns: true,
+                            minYear: 2020,
+                            "timePicker": true,
+                            "timePicker24Hour": true,
+                            "autoApply": true,
+
+                            locale: {
+                                format: 'DD.MM.YYYY HH:mm',
+                                "applyLabel": "Выбрать",
+                                "cancelLabel": "Отменить",
+                                "firstDay": 1
+                            }
+                        });
                     });
-                });
-            </script>
-            <div class="input-group wrap-input100 validate-input col-3 group">
-                <div class="input-group-prepend ">
-                    <div class="input-group-text">
-                        <i class="fas fa-comment-alt"></i>
+                </script>
+                <div class="input-group wrap-input100 validate-input col-3 group">
+                    <div class="input-group-prepend ">
+                        <div class="input-group-text">
+                            <i class="fas fa-comment-alt"></i>
+                        </div>
                     </div>
+                    <input type="datetime" class="form-control input100" id="dateK" asp-for=@Model.Konec required />
+                    <span class="focus-input100 "></span>
+                    <label class="label">Дата окончания</label>
                 </div>
-                <input type="datetime" class="form-control input100" id="nazv" @*asp-for=@Model.Spec.Name*@ required />
-                <span class="focus-input100 "></span>
-                <label class="label">Дата окончания</label>
-            </div>
+                <script>
+                    jQuery(function () {
+                        $('#dateK').daterangepicker({
+                            singleDatePicker: true,
+                            showDropdowns: true,
+                            minYear: 2020,
+                            "timePicker": true,
+                            "timePicker24Hour": true,
+                            "autoApply": true,
+
+                            locale: {
+                                format: 'DD.MM.YYYY HH:mm',
+                                "applyLabel": "Выбрать",
+                                "cancelLabel": "Отменить",
+                                "firstDay": 1
+                            }
+                        });
+                    });
+                </script>
 
 
-            <input type= "text" name= "daterange" value= "01/01/2018-01/15/2018" />
-
-            <script>
-            $(function( ) {
-            $('input[name="daterange"]').daterangepicker({
-            opens: 'left'
-            },  function(start,  end,  label) {
-            console.log("A new date selection was made: " +  start.format('YYYY-MM-DD')  +  ' to ' +  end.format('YYYY-MM-DD') );
-            });
-            });
-            </script>
 
 
-            <div class="input-group wrap-input100 validate-input col-3 group">
-                <div class="input-group-prepend ">
-                    <div class="input-group-text">
-                        <i class="fas fa-comment-alt"></i>
+                <div class="input-group wrap-input100 validate-input col-3 group" style="margin-bottom:10px;">
+                    <div class="input-group-prepend ">
+                        <div class="input-group-text">
+                            <i class="fas fa-comment-alt"></i>
+                        </div>
                     </div>
+                    <input type="number" class="form-control input100" id="nazv" asp-for=@Model.Dliteln required />
+                    <span class="focus-input100 "></span>
+                    <label class="label">Длительность работы</label>
                 </div>
-                <input type="number" class="form-control input100" id="nazv" @*asp-for=@Model.Spec.Name*@ required />
-                <span class="focus-input100 "></span>
-                <label class="label">Длительность работы</label>
+
+                <button id="NewRabota" class="btn btn-icon icon-left btn-outline-success col-3" asp-controller="Rabota" asp-action="AddRabota">
+                    Сохранить и войти
+
+                </button>
             </div>
-
-            <button id="NewSpecifikac" class="btn btn-icon icon-left btn-outline-success col-12" asp-controller="UprSpec" asp-action="SpecifikacCreate">
-                Сохранить и войти
-
-            </button>
         </div>
+
     </div>
-
-        </div>
+</form>

@@ -12,10 +12,10 @@ namespace SOTA.Models
         public DbSet<Mo> Mo { get; set; }
         public DbSet<Users> Users { get; set; }
         public DbSet<Klass> Klass { get; set; }
-
         public DbSet<Specific> Specific { get; set; }
         public DbSet<Predm> Predm { get; set; }
         public DbSet<TipSpec> TipSpec { get; set; }
+        public DbSet<Rabota> Rabota { get; set; }
         public SotaContext(DbContextOptions<SotaContext> options)
             : base(options)
         {
