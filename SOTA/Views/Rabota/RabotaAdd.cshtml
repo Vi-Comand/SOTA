@@ -33,7 +33,7 @@
                         <option value="">Выберите спецификацию</option>
                         @foreach (Specific spec in ViewData["SpisSpec"] as IEnumerable<SOTA.Models.Specific>)
                         {
-                            <option value=@spec.Id>@spec.Name Тип:@listT.Where(x => x.Id == spec.Tip).First().Name Предмет:@listP.Where(x => x.Id == spec.Predm).First().Name</option>
+                            <option value=@spec.Id>@spec.Name Тип: @listT.Where(x => x.Id == spec.Tip).First().Name Предмет: @listP.Where(x => x.Id == spec.Predm).First().Name</option>
                         }
                     </select>
                     <span class="focus-input100"></span>
@@ -132,8 +132,7 @@
                 </div>
 
                 <button id="NewRabota" class="btn btn-icon icon-left btn-outline-success col-3" asp-controller="Rabota" asp-action="AddRabota">
-                    Сохранить и войти
-
+                    <i class='fas fa-save'></i>Сохранить и войти
                 </button>
             </div>
         </div>

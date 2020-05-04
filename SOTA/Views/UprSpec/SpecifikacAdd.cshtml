@@ -1,23 +1,16 @@
 ﻿@model SOTA.Models.SpecifikacAddModel
 @{
-    ViewData["Title"] = "Добавление спецификации";
+    ViewData["Title"] = "Создание спецификации";
 }
 
 
 
 <form method="POST">
-
+    <h4>Создание спецификации</h4>
 
     <div class="col-12 shadow p-3 mb-5 bg-white rounded">
-        <h4>Создание спецификации</h4>
-
-
-
-
         <div class="container ">
             <div class="row ">
-                
-
                 <div class="input-group wrap-input100 validate-input col-12 group">
                     <div class="input-group-prepend ">
                         <div class="input-group-text">
@@ -113,9 +106,8 @@
                 </div>*@
 
 
-                <button id="NewSpecifikac" class="btn btn-icon icon-left btn-outline-success col-12" asp-controller="UprSpec" asp-action="SpecifikacCreate">
-                    Сохранить и войти
-
+                <button id="NewSpecifikac" class="btn btn-icon icon-left btn-outline-success col-4" asp-controller="UprSpec" asp-action="SpecifikacCreate">
+                    <i class='fas fa-save'></i>Сохранить и войти
                 </button>
 
 

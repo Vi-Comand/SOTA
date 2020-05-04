@@ -8,13 +8,13 @@
 
 
 <div class="col-12 shadow p-3 mb-5 bg-white rounded">
-    <div class="col-8">
-        <a id="AddSpec" class="btn btn-outline-success col-4" asp-area="" asp-controller="Rabota" asp-action="RabotaAdd">Назначить</a>
-        <a id="AddSpec" class="btn btn-outline-success col-4">Удалить</a>
-    </div>
     <div class="col-12">
-        <table class="table table-hover table-sm table-bordered">
-            <thead>
+        <a id="AddSpec" class="btn btn-outline-success col-3" asp-area="" asp-controller="Rabota" asp-action="RabotaAdd"><i class='fas fa-plus-circle'></i>    Назначить</a>
+        <a id="AddSpec" class="btn btn-outline-danger col-3" asp-area="" asp-controller="Rabota" asp-action="RabotaDel"><i class='fas fa-trash'></i>     Удалить</a>
+    </div>
+    <div class="col-12 table-responsive-lg">
+        <table class="table table-hover  table-sm table-bordered">
+            <thead class="table-yel">
                 <tr>
                     <th></th>
                     <th>Название</th>
@@ -34,8 +34,8 @@
                 {
 
                     <tr>
-                        <td><input type="checkbox" /></td>
-                        <td><a href="/Rabota/RabotaAdd?IdRabota=@row.Id" class='btn btn-icon btn-sm btn-outline-info text-center btn-block'>@row.Name <i class='fas fa-pencil-alt'></i></a></td>
+                        <td><input type="checkbox" value="@row.Id"/></td>
+                        <td><a href="/Rabota/RabotaAdd?IdRabota=@row.Id" class='btn btn-icon btn-sm btn-outline-yel text-left btn-block'><i class='fas fa-pencil-alt'></i>@row.Name </a></td>
                         <td>@Model.Specs.Where(x => x.Id == row.IdSpec).First().Name</td>
                         <td>@Model.Predms.Where(x => x.Id == Model.Specs.Where(y => y.Id == row.IdSpec).First().Predm).First().Name</td>
                         <td>@row.UrovenRabot</td>
