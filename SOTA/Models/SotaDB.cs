@@ -12,6 +12,7 @@ namespace SOTA.Models
         public int Variant { get; set; }
         public int Nomer { get; set; }
         public double Ball { get; set; }
+        public double Ball { get; set; }
     }
     public class Predm
     {
@@ -33,7 +34,6 @@ namespace SOTA.Models
         public int Class { get; set; }
         public int Predm { get; set; }
 
-        public double Ball { get; set; }
     }
 
     public class Otvet
