@@ -37,4 +37,7 @@ namespace SOTA.Models
         public List<Predm> Predms { get; set; }
         public List<TipSpec> TipSpecs { get; set; }
     }
+
+
+
 }

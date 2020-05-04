@@ -73,7 +73,9 @@ a:not(.btn-social-icon):not(.btn-social):not(.page-link) .fas,
 a:not(.btn-social-icon):not(.btn-social):not(.page-link) .far,
 a:not(.btn-social-icon):not(.btn-social):not(.page-link) .fal,
 a:not(.btn-social-icon):not(.btn-social):not(.page-link) .fab {
-  margin-left: 4px; }
+  margin-left: 4px; 
+  margin-right:10px;
+}
 
 .hiden {
     opacity: 0;
@@ -1210,9 +1212,9 @@ h6 .badge {
     font-size: 12px; }
   .btn.btn-icon .ion, .btn.btn-icon .fas, .btn.btn-icon .far, .btn.btn-icon .fab, .btn.btn-icon .fal {
     margin-left: 0 !important;
-    font-size: 12px; }
+    font-size: 14px; }
   .btn.btn-icon.icon-left .ion, .btn.btn-icon.icon-left .fas, .btn.btn-icon.icon-left .far, .btn.btn-icon.icon-left .fab, .btn.btn-icon.icon-left .fal {
-    margin-right: 3px; }
+    margin-right: 10px; }
   .btn.btn-icon.icon-right .ion, .btn.btn-icon.icon-right .fas, .btn.btn-icon.icon-right .far, .btn.btn-icon.icon-right .fab, .btn.btn-icon.icon-right .fal {
     margin-left: 3px !important; }
 
@@ -1308,6 +1310,11 @@ h6 .badge {
   color: #fff; }
   .btn-info:hover, .btn-info:focus, .btn-info:active, .btn-info.disabled:hover, .btn-info.disabled:focus, .btn-info.disabled:active {
     background-color: #0da8ee !important; }
+
+.btn-outline-yel:hover, .btn-outline-yel:focus, .btn-outline-yel:active, .btn-outline-yel.disabled:hover, .btn-outline-yel.disabled:focus, .btn-outline-yel.disabled:active {
+    background-color: rgb(251, 206, 93) !important;
+    color: #212529 !important;
+}
 
 .btn-outline-info:hover, .btn-outline-info:focus, .btn-outline-info:active, .btn-outline-info.disabled:hover, .btn-outline-info.disabled:focus, .btn-outline-info.disabled:active {
   background-color: #0da8ee !important;
@@ -1676,7 +1683,7 @@ h6 .badge {
 
 .nav-collapse {
   display: flex; }
-
+/*
 @media (max-width: 575.98px) {
   body.search-show .navbar .form-inline .search-element {
     display: block; }
@@ -2102,7 +2109,7 @@ blockquote {
   font-size: 15px; }
 
 .fas, .far, .fab, .fal {
-  font-size: 13px; }
+  font-size: 15px; }
 
 #visitorMap {
   height: 210px; }

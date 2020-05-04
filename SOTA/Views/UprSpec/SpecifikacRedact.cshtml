@@ -1,130 +1,116 @@
 ﻿@model SOTA.Models.SpecifikacRedactModel
 @{
-    ViewData["Title"] = "Добавление спецификации";
+    ViewData["Title"] = "Создание спецификации";
 }
+
 <form method="post">
-    <div class="col-12">
+    <h3>Создание спецификации</h3>
+    <div class="col-12 shadow p-3 mb-5 bg-white rounded">
         <div class="container">
             <div class="row">
-                <div class="input-group wrap-input100 validate-input col-10">
+                <div class="input-group wrap-input100 validate-input col-12 group">
 
                     <div class="input-group-prepend ">
                         <div class="input-group-text">
                             <i class="fas fa-comment-alt"></i>
                         </div>
                     </div>
-
                     <input type="hidden" class="form-control input100" id="id_spec" asp-for=@Model.Spec.Id />
-                    <input type="text" class="form-control input100" id="nazv" asp-for=@Model.Spec.Name placeholder="Название" pattern="[A-Za-zА-Яа-яЁё0-9@@]{6,}" required />
+                    <input type="text" class="form-control input100" id="nazv" asp-for=@Model.Spec.Name required />
                     <span class="focus-input100"></span>
+                    <label class="label">Название спецификации</label>
                 </div>
 
-                <div class="input-group wrap-input100 validate-input col-5">
-
+                <div class="input-group wrap-input100 validate-input col-4 group">
                     <div class="input-group-prepend ">
                         <div class="input-group-text">
                             <i class="fas fa-list-alt"></i>
                         </div>
                     </div>
                     <select id="tip" class="form-control input100" asp-for=@Model.Spec.Tip required>
-
                         @foreach (TipSpec tipspec in Model.TipSpecs)
                         {
                             <option value=@tipspec.Id>@tipspec.Name</option>
                         }
-
-
                     </select>
                     <span class="focus-input100"></span>
+                    <label class="label">Тип работы</label>
                 </div>
 
-                <div class="input-group wrap-input100 validate-input col-5 ">
-
+                <div class="input-group wrap-input100 validate-input col-4 group ">
                     <div class="input-group-prepend ">
                         <div class="input-group-text">
                             <i class="fas fa-list-ul"></i>
                         </div>
                     </div>
                     <select id="predmet" class="form-control input100" asp-for=@Model.Spec.Predm required>
-
                         @foreach (Predm predm in Model.Predms)
                         {
                             <option value=@predm.Id>
                                 @predm.Name
-                            </option>;
+                            </option>
+                            ;
                         }
                     </select>
                     <span class="focus-input100"></span>
+                    <label class="label">Предмет</label>
                 </div>
-                <input type="text" class="form-control input100" asp-for=@Model.Spec.Class placeholder="Класс" required />
-                <div class="input-group wrap-input100 validate-input col-2">
+
+
+                <div class="input-group wrap-input100 validate-input col-2 group">
 
                     <div class="input-group-prepend ">
                         <div class="input-group-text">
-                            <i class="fas fa-list-ol"></i>
+                            <i class="fas fa-graduation-cap"></i>
                         </div>
                     </div>
-                    <input type="number" class="form-control input100" id="var" asp-for=@Model.KolVar placeholder="Количество вариантов" pattern="[0-9]{6,}" required />
+                    <input type="text" class="form-control input100" asp-for=@Model.Spec.Class pattern="[0-9]{1-2}" required />
                     <span class="focus-input100"></span>
+                    <label class="label">Класс</label>
                 </div>
 
-                <div class="input-group wrap-input100 validate-input col-2">
+                <div class="input-group wrap-input100 validate-input col-3 group">
 
                     <div class="input-group-prepend ">
                         <div class="input-group-text">
-                            <i class="fas fa-list-ol"></i>
+                            <i class="fas fa-calculator"></i>
                         </div>
                     </div>
-                    <input type="number" class="form-control input100" asp-for=@Model.KolZad id="zadan" placeholder="Количество заданий" pattern="[0-9]{6,}" required />
+                    <input type="number" class="form-control input100" id="var" asp-for=@Model.KolVar pattern="[0-9]{6,}" required />
                     <span class="focus-input100"></span>
+                    <label class="label">Количество вариантов</label>
                 </div>
 
-                <div class="input-group wrap-input100 validate-input col-3">
+                <div class="input-group wrap-input100 validate-input col-3 group">
 
-                    <button href="#" class="btn btn-success input100 btn-icon icon-left" asp-controller="UprSpec" asp-action="IzmKolZadans" id="AddTabel">
-                        <i class="far fa-user"></i>
-                        <ya-tr-span data-index="147-0" data-value=" Default" data-translation="Сформировать" data-type="trSpan">Сформировать</ya-tr-span>
-                    </button>
-
+                    <div class="input-group-prepend ">
+                        <div class="input-group-text">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                    </div>
+                    <input type="number" class="form-control input100" asp-for=@Model.KolZad id="zadan" pattern="[0-9]{6,}" required />
                     <span class="focus-input100"></span>
+                    <label class="label">Количество заданий</label>
                 </div>
+           
+                    <div class="input-group wrap-input100 validate-input col-3" style="height: 42px;">
 
-                <div id="TableCreate">
+                        <button href="#" class="btn btn-outline-success input100 btn-icon icon-left" asp-controller="UprSpec" asp-action="IzmKolZadans" id="AddTabel">
+                            <i class="fas fa-square-root-alt"></i>
+                            <ya-tr-span data-index="147-0" data-value=" Default" data-translation="Сформировать" data-type="trSpan">Сформировать</ya-tr-span>
+                        </button>
+
+                        <span class="focus-input100"></span>
+                    </div>
+
+                    <div id="TableCreate" class="col-12 table-responsive-xl">
+
+
+                    </div>
 
 
                 </div>
-
-                <table class="table table-hover table-sm table-bordered col-10">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th colspan="2">Вариант 1</th>
-                            <th colspan="2">Вариант 2</th>
-                            <th colspan="2">Вариант 3</th>
-                            <th colspan="2">Вариант 4</th>
-                            <th width="150px">Кол. балов</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="text-center">
-                            <td><input type="checkbox" /></td>
-                            <td><a href="#" class="btn btn-icon btn-sm btn-success">Задание 1</a></td>
-                            <td><a href="#" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td>
-                            <td>Создать</td>
-                            <td><a asp-area="" asp-controller="UprSpec" asp-action="Zadanie" asp-route-spec="123" asp-route-idZadan="r1c1idfgКДРРусский язык13.03.2020" class="btn btn-icon btn-sm btn-warning text-center"><i class="fas fa-plus"></i></a></td>
-                            <td>Создать</td>
-                            <td><a href="#" class="btn btn-icon btn-sm btn-warning text-center"><i class="fas fa-plus"></i></a></td>
-                            <td>Создать</td>
-                            <td><a href="#" class="btn btn-icon btn-sm btn-warning"><i class="fas fa-plus"></i></a></td>
-                            <td class=" wrap-input100 validate-input ">
-                                <input type="number" class="form-control-sm input100 " value="1" pattern="[0-9]{6,}" required />
-                                <span class="focus-input100"></span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
-        </div>
     </div>
 </form>
 <script>
@@ -187,10 +173,10 @@
                 if (elem) {
                     elem.remove();
                 }
-                var table = '<table class="table table-hover table-sm table-bordered col-10" id=\"TabelOtvet\">';
-                table += '<thead><tr><th></th>';
+                var table = '<table class="table table-hover table-sm table-bordered" id=\"TabelOtvet\">';
+                table += '<thead class="table-yel"><tr><th></th>';
                 for (var i = 1; i <= coll; i++) {
-                    table += '<th colspan="2">Вариант ' + i + '</th>';
+                    table += '<th >Вариант ' + i + '</th>';
                 }
 
 
@@ -211,12 +197,12 @@
 
                             if (numbers.get(j + "," +i ) == 1)
                             {
-                                table += "<td> Изменить</td > ";
-                                table += "<td> <a href=/UprSpec/Zadanie?id_spec=" + n_spec+"&n_var="+j+"&n_zad="+i+" class='btn btn-icon btn-sm btn-warning text-center'><i class='fas fa-plus'></i></a></td>";
+                                
+                                table += "<td> <a href=/UprSpec/Zadanie?id_spec=" + n_spec + "&n_var=" + j + "&n_zad=" + i +" class='btn btn-icon btn-sm btn-outline-yel text-center btn-block ' style='wight:100%'>  <i class='fas fa-pencil-alt'></i>Изменить</a></td>";
                             }
                                 else {
-                                table += "<td>Создать</td>";
-                                table += "<td> <a href=/UprSpec/Zadanie?id_spec=" + n_spec + "&n_var=" + j + "&n_zad=" + i +" class='btn btn-icon btn-sm btn-warning text-center'><i class='fas fa-plus'></i></a></td>";
+                                //table += "<td>Создать</td>";
+                                table += "<td> <a href=/UprSpec/Zadanie?id_spec=" + n_spec + "&n_var=" + j + "&n_zad=" + i +" class='btn btn-icon btn-sm btn-outline-yel text-center btn-block '><i class='fas fa-plus'></i>Создать</a></td>";
                             }
                         }
                         else {
@@ -239,7 +225,8 @@
                 // document.getElementById('table').innerHTML = table;
                 var div = document.createElement("div");
                 var TableCreate = document.getElementById("TableCreate");
-                div.innerHTML = table;
+
+                TableCreate.innerHTML = table;
                 TableCreate.after(div);
             }
         }

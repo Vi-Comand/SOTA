@@ -1,0 +1,68 @@
+﻿@model SOTA.Models.RabotaList
+
+@{
+    ViewData["Title"] = "Список работ";
+}
+
+<h1>Список работ</h1>
+
+
+<div class="col-12 shadow p-3 mb-5 bg-white rounded">
+    <div class="col-12">
+        <a id="AddSpec" class="btn btn-outline-success col-3" asp-area="" asp-controller="Rabota" asp-action="RabotaAdd"><i class='fas fa-plus-circle'></i>    Назначить</a>
+        <a id="AddSpec" class="btn btn-outline-danger col-3" asp-area="" asp-controller="Rabota" asp-action="RabotaDel"><i class='fas fa-trash'></i>     Удалить</a>
+    </div>
+    <div class="col-12 table-responsive-lg">
+        <table class="table table-hover  table-sm table-bordered">
+            <thead class="table-yel">
+                <tr>
+                    <th></th>
+                    <th>Название</th>
+                    <th>Спецификация</th>
+                    <th>Предмет</th>
+                    <th>Уровень организации</th>
+                    <th>Время начала</th>
+                    <th>Время окончания</th>
+                    <th>Продолжительность</th>
+                    <th>Дата создания</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var row in Model.Rabotas)
+
+                {
+
+                    <tr>
+                        <td><input type="checkbox" value="@row.Id"/></td>
+                        <td><a href="/Rabota/RabotaAdd?IdRabota=@row.Id" class='btn btn-icon btn-sm btn-outline-yel text-left btn-block'><i class='fas fa-pencil-alt'></i>@row.Name </a></td>
+                        <td>@Model.Specs.Where(x => x.Id == row.IdSpec).First().Name</td>
+                        <td>@Model.Predms.Where(x => x.Id == Model.Specs.Where(y => y.Id == row.IdSpec).First().Predm).First().Name</td>
+                        <td>@row.UrovenRabot</td>
+                        <td>@row.Nachalo</td>
+                        <td>@row.Konec</td>
+                        <td>@row.Dliteln</td>
+                        <td>@row.Sozd</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class=" text-right">
+            <nav class="d-inline-block">
+                <ul class="pagination mb-0">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1"><i class="fas fa-chevron-left"></i></a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#"><ya-tr-span data-index="156-0" data-value="1 " data-translation="1 " data-type="trSpan">1 </ya-tr-span><span class="sr-only"><ya-tr-span data-index="156-0" data-value="(current)" data-translation="(ток)" data-type="trSpan">(ток)</ya-tr-span></span></a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">2</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
