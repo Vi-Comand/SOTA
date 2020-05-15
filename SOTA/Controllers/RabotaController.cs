@@ -11,11 +11,13 @@ namespace SOTA.Controllers
     public class RabotaController : Controller
     {
         SotaContext db;
-
+        string error;
         public RabotaController(SotaContext context)
         {
             db = context;
         }
+        // [HttpGet]
+        //[Route("Rabota/RabotaAdd/")]
         public IActionResult RabotaAdd()
         {
             ViewData["Predms"] = db.Predm.ToList();
@@ -25,6 +27,7 @@ namespace SOTA.Controllers
         }
 
         [Route("Rabota/RabotaAdd/{IdRabota?}")]
+        //  [HttpPost]
         public IActionResult RabotaAdd(int IdRabota)
         {
             Rabota rabota = db.Rabota.Find(IdRabota);
@@ -32,7 +35,15 @@ namespace SOTA.Controllers
             ViewData["Predms"] = db.Predm.ToList();
             ViewData["TipSpecs"] = db.TipSpec.ToList();
             ViewData["SpisSpec"] = db.Specific;
+            //if (error == "")
+            //{
             return View(rabota);
+            //}
+            //else
+            //{
+            //    ViewData["Error"] = "В данной спецификации не заполнены все задания";
+            //    return View(rabota);
+            //}
         }
         public IActionResult RabotaList()
         {
@@ -45,26 +56,39 @@ namespace SOTA.Controllers
         public async Task<IActionResult> AddRabota(Rabota rabota)
         {
             Rabota AddRabota = new Rabota();
-            AddRabota.Name = rabota.Name;
-            AddRabota.IdSpec = Convert.ToInt32(rabota.IdSpec);
-            AddRabota.Dliteln = Convert.ToInt32(rabota.Dliteln);
-            AddRabota.UrovenRabot = Convert.ToInt32(rabota.UrovenRabot);
-            AddRabota.Nachalo = Convert.ToDateTime(rabota.Nachalo);
-            AddRabota.Konec = Convert.ToDateTime(rabota.Konec);
-            AddRabota.ListUchasn = rabota.ListUchasn;
-            if (rabota.Id == 0)
+            List<Zadanie> pustZadan = db.Zadanie.Where(x => x.IdSpec == rabota.IdSpec && x.Text == null).ToList();
+
+            if (pustZadan.Count == 0)
             {
-                AddRabota.Sozd = DateTime.Now;
-                await db.Rabota.AddAsync(AddRabota).ConfigureAwait(false);
+                AddRabota.Name = rabota.Name;
+                AddRabota.IdSpec = Convert.ToInt32(rabota.IdSpec);
+                AddRabota.Dliteln = Convert.ToInt32(rabota.Dliteln);
+                AddRabota.UrovenRabot = Convert.ToInt32(rabota.UrovenRabot);
+                AddRabota.Nachalo = Convert.ToDateTime(rabota.Nachalo);
+                AddRabota.Konec = Convert.ToDateTime(rabota.Konec);
+                AddRabota.ListUchasn = rabota.ListUchasn;
+                if (rabota.Id == 0)
+                {
+                    AddRabota.Sozd = DateTime.Now;
+                    await db.Rabota.AddAsync(AddRabota).ConfigureAwait(false);
+                }
+                else
+                {
+
+                    AddRabota.Id = rabota.Id;
+                    db.Update(AddRabota).State = EntityState.Modified;
+                    //db.Rabota.Update(AddRabota);
+                }
+                await db.SaveChangesAsync().ConfigureAwait(false);
+                error = "";
+                return RedirectToAction("RabotaList");
             }
             else
             {
-                AddRabota.Id = rabota.Id;
-                db.Update(AddRabota).State = EntityState.Modified;
-                //db.Rabota.Update(AddRabota);
+                error = "В данной спецификации не заполнены все задания";
+                ViewData["Error"] = error;
+                return RedirectPreserveMethod("RabotaAdd");
             }
-            await db.SaveChangesAsync().ConfigureAwait(false);
-            return RedirectToAction("RabotaList");
         }
     }
 }
