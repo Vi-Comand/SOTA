@@ -165,11 +165,11 @@ namespace SOTA.Controllers
         {
             ZadanVivod Zadan = new ZadanVivod();
             List<Otvet> ListOtv = new List<Otvet>();
-            Zadan.Zadan = db.Zadanie.Find(1);
+            Zadan.Zadan = db.Zadanie.Find(idZadania);
             try
             {
                 if (Zadan.Zadan.Tip == 2)
-                    Zadan.Otv = db.Otvet.Where(x => x.IdZadan == 1).ToList();
+                    Zadan.Otv = db.Otvet.Where(x => x.IdZadan == idZadania&& x.Ustar!=1).ToList();
                 if (Zadan.Zadan.Tip == 4)
                     Zadan.Otv = ListTableOtv(idZadania);
             }
@@ -181,115 +181,295 @@ namespace SOTA.Controllers
         }
         public List<Otvet> ListTableOtv(int idZadan)
         {
-            List<Otvet> Otv = db.Otvet.Where(x => x.IdZadan == 1 && x.Param1 < 2).ToList();
+            List<Otvet> AllOtv = db.Otvet.Where(x => x.IdZadan == idZadan && x.Ustar != 1).ToList();
+            List<Otvet> Otv=new List<Otvet>();
+            foreach (var row in AllOtv)
+            {
+                double val = Math.Round(row.Param1 - (int) row.Param1, 2);
+                if (val==0.1)
+                {
+                    Otv.Add(row);
+                }
+
+            }
+
             return Otv;
         }
 
+        private bool NeNuzniStarOtv(int idSpec)
+        {
+            List<Rabota> SpisokRabot = db.Rabota.Where(x => x.IdSpec == idSpec).ToList();
+            bool UdalitStarOtv = true;
+            foreach (Rabota rabota in SpisokRabot)
+                if (rabota.Nachalo <= DateTime.Now.Date)
+                {
+                    UdalitStarOtv = false;
+                    break;
+                }
 
-        public async Task<IActionResult> SaveOtveti(int tip, int idZadania, string[] arr, string[] arr1, int obshBall)
+            return UdalitStarOtv;
+
+
+
+
+        }
+        private void UdalitStarOtv(int idZadania)
         {
             List<Otvet> OldOtv = db.Otvet.Where(x => x.IdZadan == idZadania).ToList();
             db.Otvet.RemoveRange(OldOtv);
-            await db.SaveChangesAsync().ConfigureAwait(false);
+            db.SaveChanges();
+        }
+        #region IzmenenjaOtvets
+        private List<Otvet> PoiskIzmen(List<Otvet> UserOtvets, int idZadania, int tip)
+        {
+            var OtvVBD = db.Otvet.Where(x => x.IdZadan == idZadania && x.Ustar != 1);
+            if (OtvVBD != null)
+            {
+                if (tip == 1)
+                    IzmenOtvTip1(OtvVBD, UserOtvets);
+                if (tip == 2)
+                    IzmenOtvTip2(OtvVBD, UserOtvets);
+                if (tip == 4)
+                    IzmenOtvTip4(OtvVBD, UserOtvets);
+                if (tip == 5)
+                    IzmenOtvTip5(OtvVBD, UserOtvets);
+            }
+            return UserOtvets;
+        }
+
+        private List<Otvet> IzmenOtvTip1(IQueryable<Otvet> OtvVBD, List<Otvet> UserOtvets)
+        {
+            foreach (var otv in OtvVBD)
+            {
+                var EstOtv = UserOtvets.Where(x => x.Text == otv.Text).FirstOrDefault();
+                if (EstOtv == null)
+                {
+                    otv.Ustar = 1;
+                    otv.DataIzm = DateTime.Now;
+                }
+                UserOtvets.Remove(EstOtv);
+
+            }
+            db.UpdateRange(OtvVBD);
+            db.SaveChanges();
+
+            return UserOtvets;
+
+        }
+
+        private List<Otvet> IzmenOtvTip2(IQueryable<Otvet> OtvVBD, List<Otvet> userOtvets)
+        {
+            foreach (var otv in OtvVBD)
+            {
+                var EstOtv = userOtvets.FirstOrDefault(x => x.Text == otv.Text);
+                if (EstOtv == null)
+                {
+                    otv.Ustar = 1;
+                    otv.DataIzm = DateTime.Now;
+                }
+                else
+                {
+                    otv.Verno = EstOtv.Verno;
+                    otv.Ball = EstOtv.Ball;
+                }
+                userOtvets.Remove(EstOtv);
+
+            }
+            db.UpdateRange(OtvVBD);
+            db.SaveChanges();
+
+            return userOtvets;
+
+        }
+
+        private List<Otvet> IzmenOtvTip4(IQueryable<Otvet> OtvVBD, List<Otvet> userOtvets)
+        {
+            foreach (var otv in OtvVBD)
+            {
+                var EstOtv = userOtvets.FirstOrDefault(x => x.Text == otv.Text);
+                if (EstOtv == null)
+                {
+                    otv.Ustar = 1;
+                    otv.DataIzm = DateTime.Now;
+                }
+                else
+                {
+                    otv.Param1 = EstOtv.Param1;
+                    otv.Ball = EstOtv.Ball;
+                    otv.DataIzm = DateTime.Now;
+                }
+                userOtvets.Remove(EstOtv);
+
+            }
+            db.UpdateRange(OtvVBD);
+            db.SaveChanges();
+
+            return userOtvets;
+
+        }
+        private List<Otvet> IzmenOtvTip5(IQueryable<Otvet> OtvVBD, List<Otvet> UserOtvets)
+        {
+            foreach (var otv in OtvVBD)
+            {
+                var EstOtv = UserOtvets.Where(x => x.Text == otv.Text).FirstOrDefault();
+                if (EstOtv == null)
+                {
+                    otv.Ustar = 1;
+                    otv.DataIzm = DateTime.Now;
+                }
+                else
+                {
+                    
+                    otv.Ball = EstOtv.Ball;
+                    otv.DataIzm = DateTime.Now;
+                }
+                UserOtvets.Remove(EstOtv);
+
+            }
+            db.UpdateRange(OtvVBD);
+            db.SaveChanges();
+
+            return UserOtvets;
+
+        }
+        #endregion
+
+        #region FomirListOtvetov
+        private List<Otvet> FomirListOtv(int tip, int idZadania, string[] arr, string[] arr1, int obshBall)
+        {
+            List<Otvet> Otvets = new List<Otvet>();
+            if (tip == 1)
+                Otvets = OtvTip1(arr, idZadania);
+            if (tip == 2)
+                Otvets = OtvTip2(arr, arr1, idZadania, obshBall);
+            if (tip == 4)
+                Otvets = OtvTip4(arr, arr1, idZadania, obshBall);
+            if (tip == 5)
+                Otvets = OtvTip5(arr, arr1, idZadania);
+
+            return Otvets;
+        }
+
+        private List<Otvet> OtvTip1(string[] arr, int idZadania)
+        {
+            List<Otvet> Otvets = new List<Otvet>();
+            foreach (var row in arr)
+            {
+                Otvet Otv = new Otvet();
+                Otv.IdZadan = idZadania;
+                Otv.Verno = 1;
+                Otv.Text = row;
+                Otv.DataIzm = DateTime.Now;
+                Otvets.Add(Otv);
+
+            }
+            return Otvets;
+        }
+
+
+        private List<Otvet> OtvTip2(string[] arr, string[] arr1, int idZadania, int obshBall)
+        {
+            List<Otvet> Otvets = new List<Otvet>();
+
+            for (int i = 0; i < arr.Length; i++)
+            {
+                Otvet Otv = new Otvet();
+                Otv.IdZadan = idZadania;
+                if (Convert.ToInt32(arr1[i]) > 0)
+                {
+                    if (obshBall == 0)
+                        Otv.Ball = Convert.ToInt32(arr1[i]);
+
+                    Otv.Verno = 1;
+                }
+                else
+                    Otv.Verno = 0;
+                Otv.Text = arr[i];
+                Otv.DataIzm = DateTime.Now;
+                Otvets.Add(Otv);
+
+            }
+
+            Otvets.Reverse();
+            return Otvets;
+        }
+        private List<Otvet> OtvTip4(string[] arr, string[] arr1, int idZadania,int obshBall)
+        {
+            List<Otvet> Otvets = new List<Otvet>();
+            Otvet Otv = new Otvet();
+            int j = 0;
+            for (int i=0;i<arr.Length;i++)
+            {
+                if (i % 2 == 0)
+                {
+                     Otv = new Otvet();
+                    Otv.Param1 = Convert.ToDouble(arr[i]);
+                    //if (obshBall == 1 && Otv.Param1 == 1.1)
+                    //{
+                    //    Otv.Ball = Convert.ToDouble(arr1[i]);
+                    //}
+                    
+
+                    if (obshBall==0 && Math.Round(Otv.Param1 - (int)Otv.Param1, 1) == 0.1)
+                    {
+                        Otv.Ball = Convert.ToDouble(arr1[j]);
+                        j++;
+                    }
+
+                }
+                else
+                {
+                    Otv.IdZadan = idZadania;
+                    Otv.Text = arr[i];
+                    Otv.Verno = 1;
+                    Otv.DataIzm = DateTime.Now;
+                    Otvets.Add(Otv);
+                }
+
+            }
+            return Otvets;
+        }
+
+        private List<Otvet> OtvTip5(string[] arr, string[] arr1, int idZadania)
+        {
+            
+            List<Otvet> Otvets = new List<Otvet>();
+            for (int i = 0; i < arr.Length; i++)
+            {
+                Otvet Otv = new Otvet();
+                Otv.IdZadan = idZadania;
+                Otv.Verno = 1;
+                Otv.Text = arr[i];
+                Otv.Ball = Convert.ToDouble(arr1[i]);
+                Otv.DataIzm = DateTime.Now;
+                Otvets.Add(Otv);
+
+            }
+            Otvets.Reverse();
+            return Otvets;
+        }
+
+        #endregion
+        public async Task<IActionResult> SaveOtveti(int tip, int idZadania, string[] arr, string[] arr1, int obshBall)
+        {
+            List<Otvet> ListOtvets = new List<Otvet>();
+
             Zadanie EditZadanie = new Zadanie();
             EditZadanie = db.Zadanie.Find(idZadania);
             EditZadanie.Tip = tip;
-
-            if (obshBall == 0)
+            if (NeNuzniStarOtv(EditZadanie.IdSpec))
             {
-                EditZadanie.Ball = Convert.ToDouble(arr1[0]);
+                UdalitStarOtv(idZadania);
+                ListOtvets = FomirListOtv(tip, idZadania, arr, arr1, obshBall);
+                
             }
             else
             {
-                EditZadanie.Ball = 0;
+                ListOtvets = PoiskIzmen(FomirListOtv(tip, idZadania, arr, arr1, obshBall), idZadania, tip);
+
             }
-            if (tip == 4)
-            {
-                List<Otvet> ListOtvets = new List<Otvet>();
-                Otvet AddOtvet = new Otvet();
-                for (int i = 0; i < arr.Count(); i++)
-                {
-
-                    if (i % 2 == 0)
-                    {
-                        AddOtvet = new Otvet();
-                        AddOtvet.Param1 = Convert.ToDouble(arr[i]);
-                        if (obshBall == 1 && AddOtvet.Param1 == 1.1)
-                        {
-                            AddOtvet.Ball = Convert.ToDouble(arr1[i]);
-                        }
-
-
-                    }
-                    else
-                    {
-                        AddOtvet.IdZadan = idZadania;
-                        AddOtvet.Text = arr[i];
-
-                        ListOtvets.Add(AddOtvet);
-                    }
-
-                }
-                await db.Otvet.AddRangeAsync(ListOtvets).ConfigureAwait(false);
-                await db.SaveChangesAsync().ConfigureAwait(false);
-            }
-            else
-            {
-                try
-                {
-                    List<Otvet> ListOtvets = new List<Otvet>();
-                    for (int i = 0; i < arr.Count(); i++)
-                    {
-                        Otvet AddOtvet = new Otvet();
-                        AddOtvet.IdZadan = idZadania;
-
-                        if (tip == 2)
-                        {
-
-                            AddOtvet.Text = arr[i];
-
-
-
-                            if (obshBall == 0)
-                            {
-                                AddOtvet.Ball = 0;
-                                if (Convert.ToDouble(arr1[i]) != 0)
-                                    AddOtvet.Verno = 1;
-                            }
-                            else
-                            {
-                                if (Convert.ToDouble(arr1[i]) > 0)
-                                {
-                                    AddOtvet.Ball = Convert.ToDouble(arr1[i]);
-                                    AddOtvet.Verno = 1;
-                                }
-                                else
-                                {
-                                    AddOtvet.Ball = 0;
-                                    AddOtvet.Verno = 0;
-                                }
-                            }
-
-                        }
-                        else
-                        {
-                            AddOtvet.Text = arr[i];
-                            AddOtvet.Verno = 1;
-                        }
-                        if (tip == 5)
-                        {
-                            AddOtvet.Ball = Convert.ToDouble(arr1[i]);
-                        }
-                        ListOtvets.Add(AddOtvet);
-                    }
-                    await db.Otvet.AddRangeAsync(ListOtvets).ConfigureAwait(false);
-                    await db.SaveChangesAsync().ConfigureAwait(false);
-                }
-                catch (Exception ex)
-                { return Json(ex); }
-            }
-
-
+            
+           db.Otvet.AddRangeAsync(ListOtvets).ConfigureAwait(false);
             db.SaveChanges();
 
 
@@ -375,8 +555,16 @@ namespace SOTA.Controllers
 
         public IActionResult Zadanie(int n_var, int n_zad, int id_spec)
         {
-
-            return View();
+            ZadanieRedact model = new ZadanieRedact();
+            var Zadan = db.Zadanie.Where(x => x.IdSpec == id_spec && x.Nomer == n_zad && x.Variant == n_var).First();
+            model.Id = Zadan.Id;
+            model.Text = Zadan.Text;
+            model.Tip = Zadan.Tip;
+            model.Ball = Zadan.Ball;
+            model.Otvets = db.Otvet.Where(x => x.IdZadan == Zadan.Id && x.Ustar != 1).ToList();
+            if (Zadan.Tip==4 && model.Otvets!=null)
+                model.KolStrTabOtv= (int)model.Otvets.Max(x=>x.Param1);
+            return View("Zadanie", model);
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
