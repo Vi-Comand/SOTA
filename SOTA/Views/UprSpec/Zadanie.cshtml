@@ -191,27 +191,7 @@
 
 
 
-        jQuery("#SaveZadanie").click(function () {
-
-
-
-            jQuery('#ViewSource').click();
-
-            alert(document.getElementById("wysiwygtextarea1").contentWindow.document.body.innerHTML);
-            document.getElementById('text').innerHTML = document.getElementById("wysiwygtextarea1").contentWindow.document.body.innerHTML;
-
-            jQuery.ajax({
-                url: '/UprSpec/SaveWysiwygText/',
-                type: "POST",
-                dataType: "json",
-                data: { Name: "1", IdSpec: "1", Text: document.getElementById("wysiwygtextarea1").contentWindow.document.body.innerHTML, Variant: "1", Nomer: "1" },
-                success: function (query) {
-                    alert(query);
-                }
-
-            });
-
-        });
+        
 
         function prover() {
             alert("proverka chebox");
@@ -1375,7 +1355,7 @@
 
 
     @*<script src="~/lib/jquery/dist/jquery.js"></script>*@
-    <script>
+<script>
 
         //$(document).ready(function () {
         //    alert('Ваша версия jQuery ' + jQuery.fn.jquery);
@@ -1415,7 +1395,7 @@
                     (column - 1) +
                     ");\"  >-</button> ";
                 if (document.getElementById('BallTabOtv[' + row + ']') != null)
-                document.getElementById('BallTabOtv[' + row + ']').value = ValTabBall;
+                    document.getElementById('BallTabOtv[' + row + ']').value = ValTabBall;
             }
         }
 
@@ -1431,15 +1411,39 @@
             but = document.getElementById('but[' + row + ']');
             var ValTabBall = 0;
             if (document.getElementById('BallTabOtv[' + row + ']') != null)
-            var ValTabBall = document.getElementById('BallTabOtv[' + row + ']').value;
+                var ValTabBall = document.getElementById('BallTabOtv[' + row + ']').value;
 
-            but.innerHTML = but.innerHTML + " <button type=\"button\" name=\"addAlternativeTable[" + row + "]\" id=\"addAlternativeTable[" + row + "]\" class=\"classAddAlternativeTable\"  OnClick=\"addInput(" + row + "," + (column + 1) + ");\"  >+</button> <button type=\"button\" name=\"delAlternativeTable[" + row + "]\" id=\"delAlternativeTable[" + row + "]\" class=\"classDelAlternativeTable\"  OnClick=\"delInput(" + row + "," + (column + 1) + ");\"  >-</button> ";
-           
-             
-            
-            trArray[row - 1].insertCell(column + 1).innerHTML = "<input name= \"ach" + row + "," + (column + 1) + "\" id= \"ach" + row + "," + (column + 1) + "\"/> ";
+            but.innerHTML = but.innerHTML +
+                " <button type=\"button\" name=\"addAlternativeTable[" +
+                row +
+                "]\" id=\"addAlternativeTable[" +
+                row +
+                "]\" class=\"classAddAlternativeTable\"  OnClick=\"addInput(" +
+                row +
+                "," +
+                (column + 1) +
+                ");\"  >+</button> <button type=\"button\" name=\"delAlternativeTable[" +
+                row +
+                "]\" id=\"delAlternativeTable[" +
+                row +
+                "]\" class=\"classDelAlternativeTable\"  OnClick=\"delInput(" +
+                row +
+                "," +
+                (column + 1) +
+                ");\"  >-</button> ";
+
+
+            trArray[row - 1].insertCell(column + 1).innerHTML = "<input name= \"ach" +
+                row +
+                "," +
+                (column + 1) +
+                "\" id= \"ach" +
+                row +
+                "," +
+                (column + 1) +
+                "\"/> ";
             if (document.getElementById('BallTabOtv[' + row + ']') != null)
-            document.getElementById('BallTabOtv[' + row + ']').value = ValTabBall;
+                document.getElementById('BallTabOtv[' + row + ']').value = ValTabBall;
 
         }
 
@@ -1449,11 +1453,33 @@
                 jQuery("#otvet_collaps").removeClass("collapsed");
                 // $("#uslov_collaps").addClass("collapsed");
                 document.getElementById("otvet_collaps").setAttribute("aria-expanded", "true");
+
                 jQuery("#collapseTwo").addClass("show");
                 jQuery("#collapseOne").removeClass("show");
+
+               
+               
+                    SaveTextZadania();
+                
             }
         }
-    </script>
+
+        function SaveTextZadania() {
+            var idZadania = document.getElementById("idZadania").value;
+            var textZadania = document.getElementById("wysiwygtextarea1").contentWindow.document.body.innerHTML;
+            jQuery.ajax({
+                url: '/UprSpec/SaveWysiwygText/',
+                type: "POST",
+                dataType: "json",
+                data: { idZadania: idZadania, text: textZadania },
+                success: function (query) {
+                    console.log(query);
+                }
+
+            });
+        }
+
+</script>
 
 
 </body>
