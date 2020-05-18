@@ -12,6 +12,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SOTA.Models;
+using System.IO;
+using Microsoft.AspNetCore.Identity;
+using System.Text;
+//using LinqToDB;
 
 namespace SOTA
 {
@@ -22,11 +26,22 @@ namespace SOTA
             Configuration = configuration;
         }
 
+
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory())
+                 .AddJsonFile("appsettings.json");
+            var configuration = builder.Build();
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            services.AddDbContext<SotaContext>(options => options.UseMySql(configuration["ConnectionStrings:DefaultConnection"]));
+
+            /*  Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+              services.AddDbContext<DataContext>(options => options.UseMySql(configuration["ConnectionStrings:DefaultConnection"]));*/
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -39,18 +54,20 @@ namespace SOTA
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                .AddCookie(options => //CookieAuthenticationOptions
                 {
-                   options.LoginPath = new PathString("/Account/Login");
-               });
+                    options.LoginPath = new PathString("/Account/Login");
+                });
 
             string connection = Configuration.GetConnectionString("DefaultConnection");
-            /*services.AddDbContext<SotaContext>(options => options.UseMySql(Configuration["ConnectionStrings:DefaultConnection"]));*/
+            /*было закоменчено*/
+            services.AddDbContext<SotaContext>(options => options.UseMySql(Configuration["ConnectionStrings:DefaultConnection"]));/**/
             services.AddDbContext<SotaContext>(options =>
          options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public static void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -67,6 +84,7 @@ namespace SOTA
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();    // аутентификация
+            //app.UseAuthorization();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

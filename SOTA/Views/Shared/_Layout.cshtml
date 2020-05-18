@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@ViewBag.rl;
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -36,24 +37,35 @@
                 </button>
                 <div class="navbar-collapse navbar-expand-lg collapse ">
                     <ul class="nav navbar-nav flex-grow-1 nav-pills">
-                        <li class="nav-item active">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Главная</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Rabota" asp-action="RabotaList">Работы</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="SpecList" asp-action="SpecifikacList">Спецификации</a>
-                        </li>
-                        @*<li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Задания</a>
-                            </li>*@
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Test" asp-action="Test">Отчеты</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Users">Пользователи</a>
-                        </li>
+                        @if (ViewBag.rl == 1)
+                        {
+                            <li class="nav-item active">
+
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Главная</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Rabota" asp-action="RabotaList">Работы</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="SpecList" asp-action="SpecifikacList">Спецификации</a>
+                            </li>
+                            @*<li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Задания</a>
+                                </li>*@
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Test" asp-action="Test">Отчеты</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Users">Пользователи</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item active">
+
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Uchen" asp-action="NaznacRabotaList">Главная</a>
+                            </li>
+                        }
                     </ul>
                     <ul class="nav navbar-nav flex-grow-1 nav-pills  navbar-right">
                         @if (User.Identity.IsAuthenticated == false)

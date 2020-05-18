@@ -117,6 +117,7 @@
 
 
         var input = document.getElementById('validationLog');
+        var pass = document.getElementById('validationPass');
         var AddPass = document.getElementById('AddPass');
         var AddPass2 = document.getElementById('AddPass2');
         var div_pass = document.getElementById('div_pass');
@@ -142,6 +143,8 @@
                     if (nalich == 1) {
                         div_pass.classList.remove('d-none');
                         div_vhod.classList.remove('d-none');
+                        AddPass.value = "";
+                        AddPass2.value = "";
                     }
                     else {
                         div_pass.classList.add('d-none');
@@ -149,7 +152,7 @@
                     }
                     if (nalich == 0) {
                         div_add_pass.classList.remove('d-none');
-
+                        pass.value = "";
 
                     }
                     else {
@@ -158,6 +161,9 @@
                     }
                     if (nalich == 9) {
                         lab_log.classList.remove('d-none');
+                        AddPass.value = "";
+                        AddPass2.value = "";
+                        pass.value = "";
                     }
                     else {
                         lab_log.classList.add('d-none');

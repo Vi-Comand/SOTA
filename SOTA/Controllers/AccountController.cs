@@ -11,6 +11,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using SOTA.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace SOTA.Controllers
 {
@@ -34,15 +35,10 @@ namespace SOTA.Controllers
         public async Task<IActionResult> Login(LoginModel model)
         {
 
-
-
-
-
             string remoteIpAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
             Users user = new Users();
-            if (model.AddPass == null)
+            if (ModelState.IsValid)
             {
-
                 try
                 {
                     string password = model.Pass;
@@ -109,12 +105,23 @@ namespace SOTA.Controllers
 
 
                 await Authenticate(model.Name).ConfigureAwait(false); // аутентификация
-                return RedirectToAction("Index", "Home");
-
+                //string login = HttpContext.User.Identity.Name;
+                Users user1 = db.Users.Where(p => p.Name == model.Name).First();
+                ViewBag.rl = user1.Role;
+                if (user.Role == 1)
+                {
+                    ViewBag.rl = user.Role;
+                    return RedirectToAction("Index", "Home");
+                }
+                if (user.Role == 0)
+                {
+                    ViewBag.rl = user.Role;
+                    return RedirectToAction("NaznacRabotaList", "Uchen");
+                }
             }
 
 
-            //  ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+            ModelState.AddModelError("", "Некорректные логин и(или) пароль");
 
 
             return View(model);
@@ -190,21 +197,18 @@ namespace SOTA.Controllers
 
             ViewData["Message"] = remoteIpAddress;
             /* if (remoteIpAddress == "193.242.149.177" || remoteIpAddress == "193.242.149.14" || remoteIpAddress == "::1")
-             {
-
-
-
-     */
-
+             {     */
             // создаем один claim
             var claims = new[]
- {
-    new Claim("name", userName)
-};
-
-            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-            HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-                new ClaimsPrincipal(identity));
+            {
+                new Claim(ClaimsIdentity.DefaultNameClaimType, userName )
+                //new Claim("name", userName)
+            };
+            ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType,
+                 ClaimsIdentity.DefaultRoleClaimType);
+            // var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(id)).ConfigureAwait(false);
             //  }
 
 
@@ -220,6 +224,7 @@ namespace SOTA.Controllers
 
         public async Task<IActionResult> Logout()
         {
+            var email = HttpContext.User.Identity.Name;
             string remoteIpAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme).ConfigureAwait(false);
             return RedirectToAction("Index", "Home");
