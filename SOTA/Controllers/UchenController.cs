@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using SOTA.Models;
+using System;
+using System.Linq;
 
 namespace SOTA.Controllers
 {
@@ -25,7 +22,7 @@ namespace SOTA.Controllers
             // var login = HttpContext.User.Claims.First().Value;
             var login = HttpContext.User.Identity.Name;
             Users user = db.Users.Where(p => p.Name == login).First();
-            // ViewBag.rl = user.Role;
+            ViewBag.rl = user.Role;
             RabotaTablList rabotaList = new RabotaTablList();
             /* rabotaList.Id=RabotaList
 
@@ -60,6 +57,7 @@ namespace SOTA.Controllers
                                     Sozd = rab.Sozd,
                                     SpecN = SK.Name,
                                     PredmN = db.Predm.Where(x => x.Id == SK.Predm).First().Name,
+                                    TipN = db.TipSpec.Where(x => x.Id == SK.Tip).First().Name,
                                     KlassR = SK.Class
                                 }).ToList();
 

@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SOTA.Models;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace SOTA.Controllers
 {
@@ -38,15 +35,15 @@ namespace SOTA.Controllers
             return View();
         }
 
-        public IActionResult SpecifikacList()
-        {
-            return View();
-        }
+        /*   public IActionResult SpecifikacList()
+           {
+               return View();
+           }
 
-        public IActionResult SpecifikacAdd()
-        {
-            return View();
-        }
+           public IActionResult SpecifikacAdd()
+           {
+               return View();
+           }*/
         public IActionResult Privacy()
         {
             return View();

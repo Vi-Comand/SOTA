@@ -1,4 +1,4 @@
-/*!
+ï»¿/*!
  * Bootstrap v4.4.1 (https://getbootstrap.com/)
  * Copyright 2011-2019 The Bootstrap Authors
  * Copyright 2011-2019 Twitter, Inc.
@@ -635,7 +635,7 @@ pre {
     width: 100%;
     margin: 10px;
     /*padding-right: 15px;
-  padding-left: 15px;   ïðàâêà*/
+  padding-left: 15px;   Ð¿Ñ€Ð°Ð²ÐºÐ°*/
 }
 
 .col {
@@ -716,7 +716,7 @@ pre {
 .col-5 {
     -ms-flex: 0 0 41.666667%;
     flex: 0 0 40.7%;
-    max-width: 40.7%; /*áûëî 41.666667%*/
+    max-width: 40.7%; /*Ð±Ñ‹Ð»Ð¾ 41.666667%*/
 }
 
 .col-6 {
@@ -1881,12 +1881,12 @@ pre {
     .table th,
     .table td {
         padding: 0.75rem;
-        vertical-align: top;
+        vertical-align: middle;
         border-top: 1px solid #dee2e6;
     }
 
     .table thead th {
-        vertical-align: bottom;
+        vertical-align: middle;
         border-bottom: 2px solid #dee2e6;
     }
 
@@ -2086,7 +2086,8 @@ pre {
 .table-yel,
 .table-yel > th,
 .table-yel > td {
-    background-color: #fbce5d;
+    background-color: #fbce5d75;
+    border: solid 2px #fbce5d;
 }
 
     .table-yel th,
@@ -3143,6 +3144,7 @@ fieldset:disabled a.btn {
 .btn-outline-success {
     color: #28a745;
     border-color: #28a745;
+    background-color: #83ff2f33;
 }
 
     .btn-outline-success:hover {
@@ -3281,6 +3283,7 @@ fieldset:disabled a.btn {
 .btn-outline-danger {
     color: #dc3545;
     border-color: #dc3545;
+    background-color: #ff040412;
 }
 
     .btn-outline-danger:hover {
@@ -3842,7 +3845,7 @@ input[type="button"].btn-block {
     flex-wrap: wrap;
     -ms-flex-align: stretch;
     align-items: stretch;
-    /*width: 100%;*/ /*ïðàâêà*/
+    /*width: 100%;*/ /*Ð¿Ñ€Ð°Ð²ÐºÐ°*/
 }
 
     .input-group > .form-control,

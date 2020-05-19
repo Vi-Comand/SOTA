@@ -2,62 +2,63 @@
 @{
     ViewData["Title"] = "Спецификации";
 }
+<h1>Спецификации</h1>
 <div class="col-12 shadow p-3 mb-5 bg-white rounded">
-<div class="col-12">
-    <a id="AddSpec" class="btn btn-outline-success   col-3" asp-area="" asp-controller="UprSpec" asp-action="SpecifikacAdd"><i class='fas fa-plus-circle'></i> Создать</a>
-    <a id="AddSpec" class="btn btn-outline-danger  col-3 "><i class='fas fa-trash'></i> Удалить</a>
-</div>
-<div class="col-12 table-responsive-lg">
-    <table class="table table-hover table-sm table-bordered">
-        <thead class="table-yel">
-            <tr>
-                <th></th>
-                <th>Название</th>
-                <th>ТИП</th>
-                <th>Предмет</th>
-                <th>Кол. заданий</th>
-                <th>Дата создания</th>
-                
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var row in Model.Spec)
-
-            {
-
+    <div class="col-12">
+        <a id="AddSpec" class="btn btn-outline-success shadow  col-3" asp-area="" asp-controller="UprSpec" asp-action="SpecifikacAdd"><i class='fas fa-plus-circle'></i> Создать</a>
+        <a id="AddSpec" class="btn btn-outline-danger shadow col-3 "><i class='fas fa-trash'></i> Удалить</a>
+    </div>
+    <div class="col-12 table-responsive-lg">
+        <table class="table table-hover table-sm table-bordered shadow">
+            <thead class="table-yel">
                 <tr>
-                    <td><input type="checkbox" /></td>
-                    <td> <a href="/UprSpec/SpecifikacRedact?id_spec=@row.Id" class='btn btn-icon btn-sm btn-outline-yel text-left btn-block'><i class='fas fa-plus'></i>@row.Name</a></td>
-                    <td>@Model.TipSpecs.Where(x => x.Id == row.Tip).First().Name</td>
-                    <td>@Model.Predms.Where(x => x.Id == row.Tip).First().Name</td>
-                    <td>
-                        @if (Model.KolZadVSpec.Count != 0)
-                        {
-                            @Model.KolZadVSpec.Where(x => x.Id == row.Id).First().kolZad
-                        }
-                    </td>
-                    <td>10.03.2020</td>
-                    
+                    <th></th>
+                    <th>Название спецификации</th>
+                    <th>ТИП</th>
+                    <th>Предмет</th>
+                    <th>Количество заданий</th>
+                    <th>Дата создания</th>
+
                 </tr>
-            }
-        </tbody>
-    </table>
-    <div class=" text-right">
-        <nav class="d-inline-block">
-            <ul class="pagination mb-0">
-                <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1"><i class="fas fa-chevron-left"></i></a>
-                </li>
-                <li class="page-item active"><a class="page-link" href="#"><ya-tr-span data-index="156-0" data-value="1 " data-translation="1 " data-type="trSpan">1 </ya-tr-span><span class="sr-only"><ya-tr-span data-index="156-0" data-value="(current)" data-translation="(ток)" data-type="trSpan">(ток)</ya-tr-span></span></a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#">2</a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a>
-                </li>
-            </ul>
-        </nav>
+            </thead>
+            <tbody>
+                @foreach (var row in Model.Spec)
+
+                {
+
+                    <tr>
+                        <td><input type="checkbox" /></td>
+                        <td> <a href="/UprSpec/SpecifikacRedact?id_spec=@row.Id" class='btn btn-icon btn-sm btn-outline-yel text-left btn-block'><i class='fas fa-plus'></i>@row.Name</a></td>
+                        <td>@Model.TipSpecs.Where(x => x.Id == row.Tip).First().Name</td>
+                        <td>@Model.Predms.Where(x => x.Id == row.Tip).First().Name</td>
+                        <td>
+                            @if (Model.KolZadVSpec.Count != 0)
+                            {
+                                @Model.KolZadVSpec.Where(x => x.Id == row.Id).First().kolZad
+                            }
+                        </td>
+                        <td>10.03.2020</td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class=" text-right">
+            <nav class="d-inline-block">
+                <ul class="pagination mb-0">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1"><i class="fas fa-chevron-left"></i></a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#"><ya-tr-span data-index="156-0" data-value="1 " data-translation="1 " data-type="trSpan">1 </ya-tr-span><span class="sr-only"><ya-tr-span data-index="156-0" data-value="(current)" data-translation="(ток)" data-type="trSpan">(ток)</ya-tr-span></span></a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">2</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </div>
 </div>
-    </div>

@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 
 
@@ -41,11 +40,17 @@ namespace SOTA.Controllers
 
         public IActionResult SpecifikacList()
         {
+            string login = HttpContext.User.Identity.Name;
+            Users user = db.Users.Where(p => p.Name == login).First();
+            ViewBag.rl = user.Role;
             return View();
         }
 
         public IActionResult SpecifikacAdd()
         {
+            string login = HttpContext.User.Identity.Name;
+            Users user = db.Users.Where(p => p.Name == login).First();
+            ViewBag.rl = user.Role;
             SpecifikacAddModel model = new SpecifikacAddModel();
             model.Spec = new Specific();
             model.Predms = db.Predm.ToList();
@@ -169,7 +174,7 @@ namespace SOTA.Controllers
             try
             {
                 if (Zadan.Zadan.Tip == 2)
-                    Zadan.Otv = db.Otvet.Where(x => x.IdZadan == idZadania&& x.Ustar!=1).ToList();
+                    Zadan.Otv = db.Otvet.Where(x => x.IdZadan == idZadania && x.Ustar != 1).ToList();
                 if (Zadan.Zadan.Tip == 4)
                     Zadan.Otv = ListTableOtv(idZadania);
             }
@@ -182,11 +187,11 @@ namespace SOTA.Controllers
         public List<Otvet> ListTableOtv(int idZadan)
         {
             List<Otvet> AllOtv = db.Otvet.Where(x => x.IdZadan == idZadan && x.Ustar != 1).ToList();
-            List<Otvet> Otv=new List<Otvet>();
+            List<Otvet> Otv = new List<Otvet>();
             foreach (var row in AllOtv)
             {
-                double val = Math.Round(row.Param1 - (int) row.Param1, 2);
-                if (val==0.1)
+                double val = Math.Round(row.Param1 - (int)row.Param1, 2);
+                if (val == 0.1)
                 {
                     Otv.Add(row);
                 }
@@ -319,7 +324,7 @@ namespace SOTA.Controllers
                 }
                 else
                 {
-                    
+
                     otv.Ball = EstOtv.Ball;
                     otv.DataIzm = DateTime.Now;
                 }
@@ -393,24 +398,24 @@ namespace SOTA.Controllers
             Otvets.Reverse();
             return Otvets;
         }
-        private List<Otvet> OtvTip4(string[] arr, string[] arr1, int idZadania,int obshBall)
+        private List<Otvet> OtvTip4(string[] arr, string[] arr1, int idZadania, int obshBall)
         {
             List<Otvet> Otvets = new List<Otvet>();
             Otvet Otv = new Otvet();
             int j = 0;
-            for (int i=0;i<arr.Length;i++)
+            for (int i = 0; i < arr.Length; i++)
             {
                 if (i % 2 == 0)
                 {
-                     Otv = new Otvet();
+                    Otv = new Otvet();
                     Otv.Param1 = Convert.ToDouble(arr[i]);
                     //if (obshBall == 1 && Otv.Param1 == 1.1)
                     //{
                     //    Otv.Ball = Convert.ToDouble(arr1[i]);
                     //}
-                    
 
-                    if (obshBall==0 && Math.Round(Otv.Param1 - (int)Otv.Param1, 1) == 0.1)
+
+                    if (obshBall == 0 && Math.Round(Otv.Param1 - (int)Otv.Param1, 1) == 0.1)
                     {
                         Otv.Ball = Convert.ToDouble(arr1[j]);
                         j++;
@@ -432,7 +437,7 @@ namespace SOTA.Controllers
 
         private List<Otvet> OtvTip5(string[] arr, string[] arr1, int idZadania)
         {
-            
+
             List<Otvet> Otvets = new List<Otvet>();
             for (int i = 0; i < arr.Length; i++)
             {
@@ -461,15 +466,15 @@ namespace SOTA.Controllers
             {
                 UdalitStarOtv(idZadania);
                 ListOtvets = FomirListOtv(tip, idZadania, arr, arr1, obshBall);
-                
+
             }
             else
             {
                 ListOtvets = PoiskIzmen(FomirListOtv(tip, idZadania, arr, arr1, obshBall), idZadania, tip);
 
             }
-            
-           db.Otvet.AddRangeAsync(ListOtvets).ConfigureAwait(false);
+
+            db.Otvet.AddRangeAsync(ListOtvets).ConfigureAwait(false);
             db.SaveChanges();
 
 
@@ -486,6 +491,9 @@ namespace SOTA.Controllers
         //}
         public IActionResult SpecifikacRedact(int id_spec)
         {
+            string login = HttpContext.User.Identity.Name;
+            Users user = db.Users.Where(p => p.Name == login).First();
+            ViewBag.rl = user.Role;
             SpecifikacRedactModel model = new SpecifikacRedactModel();
             model.Spec = db.Specific.Find(id_spec);
             model.KolZad = !db.Zadanie.Any(x => x.Variant == 1) ? 0 : db.Zadanie.Count(x => x.Variant == 1 && x.IdSpec == id_spec);
@@ -562,8 +570,8 @@ namespace SOTA.Controllers
             model.Tip = Zadan.Tip;
             model.Ball = Zadan.Ball;
             model.Otvets = db.Otvet.Where(x => x.IdZadan == Zadan.Id && x.Ustar != 1).ToList();
-            if (Zadan.Tip==4 && model.Otvets!=null)
-                model.KolStrTabOtv= (int)model.Otvets.Max(x=>x.Param1);
+            if (Zadan.Tip == 4 && model.Otvets != null)
+                model.KolStrTabOtv = (int)model.Otvets.Max(x => x.Param1);
             return View("Zadanie", model);
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

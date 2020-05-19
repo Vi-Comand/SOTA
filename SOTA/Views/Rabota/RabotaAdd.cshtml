@@ -49,10 +49,10 @@
                     <select class="form-control input100" asp-for=@Model.UrovenRabot required>
                         <option value="">Выберите уровень</option>
 
-                        <option value="1">Край</option>
-                        <option value="2">МО</option>
-                        <option value="3">Школа</option>
-                        <option value="4">Класс</option>
+                        <option value="Край">Край</option>
+                        <option value="МО">МО</option>
+                        <option value="Школа">Школа</option>
+                        <option value="Класс">Класс</option>
                     </select>
                     <span class="focus-input100"></span>
                     <label class="label">Уровень организации</label>
@@ -128,11 +128,11 @@
                     </div>
                     <input type="number" class="form-control input100" id="nazv" asp-for=@Model.Dliteln required />
                     <span class="focus-input100 "></span>
-                    <label class="label">Длительность работы</label>
+                    <label class="label">Длительность работы, мин.</label>
                 </div>
                 <div class="alert-danger col-12">@ViewData["Error"]</div>
-                <button id="NewRabota" class="btn btn-icon icon-left btn-outline-success col-3" asp-controller="Rabota" asp-action="AddRabota">
-                    <i class='fas fa-save'></i>Сохранить и войти
+                <button id="NewRabota" class="btn btn-icon icon-left btn-outline-success col-3 shadow" asp-controller="Rabota" asp-action="AddRabota">
+                    <i class='fas fa-save'></i>Назначить работу
                 </button>
             </div>
         </div>

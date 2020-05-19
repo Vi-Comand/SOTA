@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using SOTA.Models;
+using System;
+using System.Linq;
 
 namespace SOTA.Controllers
 {
@@ -18,6 +15,9 @@ namespace SOTA.Controllers
 
         public IActionResult Users()
         {
+            string login = HttpContext.User.Identity.Name;
+            Users user = db.Users.Where(p => p.Name == login).First();
+            ViewBag.rl = user.Role;
             ListMo listMo = new ListMo();
             listMo.ListUsersMo = db.Users.Where(p => p.Role == 1).ToList();
             return View("Users", listMo);

@@ -12,11 +12,13 @@
         <div class="container ">
             <div class="row ">
                 <div class="input-group wrap-input100 validate-input col-12 group">
-                    <div class="input-group-prepend ">
-                        <div class="input-group-text">
-                            <i class="fas fa-comment-alt"></i>
+                    <label for="nazv" class="m-b-0">
+                        <div class="input-group-prepend ">
+                            <div class="input-group-text">
+                                <i class="fas fa-comment-alt"></i>
+                            </div>
                         </div>
-                    </div>
+                    </label>
                     <input type="text" class="form-control input100" id="nazv" asp-for=@Model.Spec.Name  required />
                     <span class="focus-input100 "></span>
                     <label class="label">Название спецификации</label>
@@ -28,55 +30,57 @@
 
 
                 <div class="input-group wrap-input100 validate-input col-4 group">
-
-                    <div class="input-group-prepend ">
-                        <div class="input-group-text">
-                            <i class="fas fa-list-alt"></i>
+                    <label for="Spec_Tip" class="m-b-0">
+                        <div class="input-group-prepend ">
+                            <div class="input-group-text">
+                                <i class="fas fa-list-alt"></i>
+                            </div>
                         </div>
-                    </div>
-                    <select class="form-control input100" asp-for=@Model.Spec.Tip required>
-                        <option value="">Выберите тип</option>
-                        @foreach (TipSpec tipspec in Model.TipSpecs)
-                        {
-                            <option value=@tipspec.Id>@tipspec.Name</option>
-                        }
+                    </label>
+                        <select class="form-control input100" asp-for=@Model.Spec.Tip required>
+                            <option value="">Выберите тип</option>
+                            @foreach (TipSpec tipspec in Model.TipSpecs)
+                            {
+                                <option value=@tipspec.Id>@tipspec.Name</option>
+                            }
 
 
-                    </select>
-                    <span class="focus-input100"></span>
-                    <label class="label">Тип работы</label>
+                        </select>
+                        <span class="focus-input100"></span>
+                        <label class="label">Тип работы</label>
                 </div>
 
                 <div class="input-group wrap-input100 validate-input col-4 group">
-
-                    <div class="input-group-prepend ">
-                        <div class="input-group-text">
-                            <i class="fas fa-list-ul"></i>
+                    <label for="Spec_Predm" class="m-b-0">
+                        <div class="input-group-prepend ">
+                            <div class="input-group-text">
+                                <i class="fas fa-list-ul"></i>
+                            </div>
                         </div>
-                    </div>
-                    <select class="form-control input100" asp-for=@Model.Spec.Predm required>
-                        <option value="">Выберите предмет</option>
-                        @foreach (Predm predm in Model.Predms)
-                        {
-                            <option value=@predm.Id>
-                                @predm.Name
-                            </option>
-                            ;
-                        }
-                    </select>
-                    <span class="focus-input100"></span>
-                    <label class="label">Предмет</label>
+                    </label>
+                        <select class="form-control input100" asp-for=@Model.Spec.Predm required>
+                            <option value="">Выберите предмет</option>
+                            @foreach (Predm predm in Model.Predms)
+                            {
+                                <option value=@predm.Id>
+                                    @predm.Name
+                                </option>
+                                ;
+                            }
+                        </select>
+                        <span class="focus-input100"></span>
+                        <label class="label">Предмет</label>
                 </div>
 
                 <div class="input-group wrap-input100 validate-input col-2 group">
-
-                    <div class="input-group-prepend ">
-                        <div class="input-group-text">
-                            <i class="fas fa-list-ol"></i>
+                    <label for="Spec_Class" class="m-b-0">
+                        <div class="input-group-prepend ">
+                            <div class="input-group-text">
+                                <i class="fas fa-list-ol"></i>
+                            </div>
                         </div>
-                    </div>
-                    
-                        <input type="number" class="form-control input100" asp-for=@Model.Spec.Class  pattern="[0-9]{1-2}" required />
+                    </label>
+                        <input type="number" class="form-control input100" asp-for=@Model.Spec.Class pattern="[0-9]{1-2}" required />
                         <span class="focus-input100"></span>
                         <label class="label">Класс</label>
                 </div>
@@ -106,7 +110,7 @@
                 </div>*@
 
 
-                <button id="NewSpecifikac" class="btn btn-icon icon-left btn-outline-success col-4" asp-controller="UprSpec" asp-action="SpecifikacCreate">
+                <button id="NewSpecifikac" class="btn btn-icon icon-left btn-outline-success col-4 shadow" asp-controller="UprSpec" asp-action="SpecifikacCreate">
                     <i class='fas fa-save'></i>Сохранить и войти
                 </button>
 

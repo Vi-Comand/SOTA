@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using SOTA.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using SOTA.Models;
 
 namespace SOTA.Controllers
 {
@@ -20,6 +20,9 @@ namespace SOTA.Controllers
         //[Route("Rabota/RabotaAdd/")]
         public IActionResult RabotaAdd()
         {
+            string login = HttpContext.User.Identity.Name;
+            Users user = db.Users.Where(p => p.Name == login).First();
+            ViewBag.rl = user.Role;
             ViewData["Predms"] = db.Predm.ToList();
             ViewData["TipSpecs"] = db.TipSpec.ToList();
             ViewData["SpisSpec"] = db.Specific;
@@ -30,6 +33,9 @@ namespace SOTA.Controllers
         //  [HttpPost]
         public IActionResult RabotaAdd(int IdRabota)
         {
+            string login = HttpContext.User.Identity.Name;
+            Users user = db.Users.Where(p => p.Name == login).First();
+            ViewBag.rl = user.Role;
             Rabota rabota = db.Rabota.Find(IdRabota);
 
             ViewData["Predms"] = db.Predm.ToList();
@@ -47,6 +53,9 @@ namespace SOTA.Controllers
         }
         public IActionResult RabotaList()
         {
+            string login = HttpContext.User.Identity.Name;
+            Users user = db.Users.Where(p => p.Name == login).First();
+            ViewBag.rl = user.Role;
             RabotaList rabotaList = new RabotaList();
             rabotaList.Predms = db.Predm.ToList();
             rabotaList.Rabotas = db.Rabota.ToList();
@@ -55,6 +64,9 @@ namespace SOTA.Controllers
         }
         public async Task<IActionResult> AddRabota(Rabota rabota)
         {
+            string login = HttpContext.User.Identity.Name;
+            Users user = db.Users.Where(p => p.Name == login).First();
+            ViewBag.rl = user.Role;
             Rabota AddRabota = new Rabota();
             List<Zadanie> pustZadan = db.Zadanie.Where(x => x.IdSpec == rabota.IdSpec && x.Text == null).ToList();
 
@@ -63,13 +75,14 @@ namespace SOTA.Controllers
                 AddRabota.Name = rabota.Name;
                 AddRabota.IdSpec = Convert.ToInt32(rabota.IdSpec);
                 AddRabota.Dliteln = Convert.ToInt32(rabota.Dliteln);
-                AddRabota.UrovenRabot = Convert.ToInt32(rabota.UrovenRabot);
+                AddRabota.UrovenRabot = rabota.UrovenRabot;
                 AddRabota.Nachalo = Convert.ToDateTime(rabota.Nachalo);
                 AddRabota.Konec = Convert.ToDateTime(rabota.Konec);
                 AddRabota.ListUchasn = rabota.ListUchasn;
+                AddRabota.Sozd = DateTime.Now;
                 if (rabota.Id == 0)
                 {
-                    AddRabota.Sozd = DateTime.Now;
+
                     await db.Rabota.AddAsync(AddRabota).ConfigureAwait(false);
                 }
                 else
