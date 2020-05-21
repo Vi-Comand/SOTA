@@ -30,9 +30,12 @@ namespace SOTA.Models
 
     public class RabotaList
     {
+        public Rabota Rabot { get; set; }
         public List<Rabota> Rabotas { get; set; }
         public List<Specific> Specs { get; set; }
         public List<Predm> Predms { get; set; }
+        public List<Oo> Oos { get; set; }
+        public List<Mo> Mos { get; set; }
     }
 
 

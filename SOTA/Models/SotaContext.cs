@@ -1,6 +1,4 @@
-using Microsoft.EntityFrameworkCore;
-using SOTA.Models;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace SOTA.Models
 {
@@ -16,6 +14,8 @@ namespace SOTA.Models
         public DbSet<Predm> Predm { get; set; }
         public DbSet<TipSpec> TipSpec { get; set; }
         public DbSet<Rabota> Rabota { get; set; }
+        public DbSet<NaznachMo> NaznachMo { get; set; }
+        public DbSet<NaznachOo> NaznachOo { get; set; }
         public SotaContext(DbContextOptions<SotaContext> options)
             : base(options)
         {

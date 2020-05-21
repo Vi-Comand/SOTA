@@ -1,8 +1,7 @@
-﻿@model SOTA.Models.Rabota
+﻿@model SOTA.Models.RabotaList
 @{
     ViewData["Title"] = "Создание работы";
     var listT = ViewData["TipSpecs"] as IEnumerable<SOTA.Models.TipSpec>;
-    var listP = ViewData["Predms"] as IEnumerable<SOTA.Models.Predm>;
 }
 <form method="post">
     <h1>Назначение работы</h1>
@@ -17,8 +16,8 @@
                         </div>
                     </div>
 
-                    <input type="hidden" class="form-control input100" id="nazv" asp-for=@Model.Id required />
-                    <input type="text" class="form-control input100" id="nazv" asp-for=@Model.Name required />
+                    <input type="hidden" class="form-control input100" id="nazv" asp-for=@Model.Rabot.Id required />
+                    <input type="text" class="form-control input100" id="nazv" asp-for=@Model.Rabot.Name required />
                     <span class="focus-input100 "></span>
                     <label class="label">Название работы</label>
                 </div>
@@ -29,11 +28,11 @@
                             <i class="fas fa-list-alt"></i>
                         </div>
                     </div>
-                    <select class="form-control input100" asp-for=@Model.IdSpec required>
+                    <select class="form-control input100" asp-for=@Model.Rabot.IdSpec required>
                         <option value="">Выберите спецификацию</option>
-                        @foreach (Specific spec in ViewData["SpisSpec"] as IEnumerable<SOTA.Models.Specific>)
+                        @foreach (Specific spec in Model.Specs)
                         {
-                            <option value=@spec.Id>@spec.Name Тип: @listT.Where(x => x.Id == spec.Tip).First().Name Предмет: @listP.Where(x => x.Id == spec.Predm).First().Name</option>
+                            <option value=@spec.Id>@spec.Name Тип: @listT.Where(x => x.Id == spec.Tip).First().Name Предмет: @Model.Predms.Where(x => x.Id == spec.Predm).First().Name</option>
                         }
                     </select>
                     <span class="focus-input100"></span>
@@ -43,28 +42,10 @@
                 <div class="input-group wrap-input100 validate-input col-3 group">
                     <div class="input-group-prepend ">
                         <div class="input-group-text">
-                            <i class="fas fa-list-alt"></i>
-                        </div>
-                    </div>
-                    <select class="form-control input100" asp-for=@Model.UrovenRabot required>
-                        <option value="">Выберите уровень</option>
-
-                        <option value="Край">Край</option>
-                        <option value="МО">МО</option>
-                        <option value="Школа">Школа</option>
-                        <option value="Класс">Класс</option>
-                    </select>
-                    <span class="focus-input100"></span>
-                    <label class="label">Уровень организации</label>
-                </div>
-
-                <div class="input-group wrap-input100 validate-input col-3 group">
-                    <div class="input-group-prepend ">
-                        <div class="input-group-text">
                             <i class="fas fa-comment-alt"></i>
                         </div>
                     </div>
-                    <input type="text" class="form-control input100" id="dateN" asp-for=@Model.Nachalo required />
+                    <input type="text" class="form-control input100" id="dateN" asp-for=@Model.Rabot.Nachalo required />
                     <span class="focus-input100 "></span>
                     <label class="label">Дата начала</label>
                 </div>
@@ -93,7 +74,7 @@
                             <i class="fas fa-comment-alt"></i>
                         </div>
                     </div>
-                    <input type="datetime" class="form-control input100" id="dateK" asp-for=@Model.Konec required />
+                    <input type="datetime" class="form-control input100" id="dateK" asp-for=@Model.Rabot.Konec required />
                     <span class="focus-input100 "></span>
                     <label class="label">Дата окончания</label>
                 </div>
@@ -117,19 +98,40 @@
                     });
                 </script>
 
-
-
-
-                <div class="input-group wrap-input100 validate-input col-3 group" style="margin-bottom:10px;">
+                <div class="input-group wrap-input100 validate-input col-3 group">
                     <div class="input-group-prepend ">
                         <div class="input-group-text">
                             <i class="fas fa-comment-alt"></i>
                         </div>
                     </div>
-                    <input type="number" class="form-control input100" id="nazv" asp-for=@Model.Dliteln required />
+                    <input type="number" class="form-control input100" id="nazv" asp-for=@Model.Rabot.Dliteln required />
                     <span class="focus-input100 "></span>
                     <label class="label">Длительность работы, мин.</label>
                 </div>
+
+                <div class="input-group wrap-input100 validate-input col-3 group">
+                    <div class="input-group-prepend ">
+                        <div class="input-group-text">
+                            <i class="fas fa-list-alt"></i>
+                        </div>
+                    </div>
+                    <select class="form-control input100" asp-for=@Model.Rabot.UrovenRabot id="reg" required onchange="getValue(this.value);">
+                        <option value="">Выберите уровень</option>
+                        <option value="Край">Край</option>
+                        <option value="МО">МО</option>
+                        <option value="ОО">ОО</option>
+
+                    </select>
+                    <span class="focus-input100"></span>
+                    <label class="label">Уровень организации</label>
+                </div>
+
+                <button id="ViborMo" form="0" style="height: 42px;" class="btn btn-icon icon-left btn-outline-warning col-3 shadow d-none" data-toggle="modal" data-target="#spisNaznachMo">
+                    <i class='fas fa-list-ul'></i>Выбрать МО
+                </button>
+                <button id="ViborOo" form="0" style="height: 42px;" class="btn btn-icon icon-left btn-outline-warning col-3 shadow d-none" data-toggle="modal" data-target="#spisNaznachOo">
+                    <i class='fas fa-list-ul'></i>Выбрать OO
+                </button>
                 <div class="alert-danger col-12">@ViewData["Error"]</div>
                 <button id="NewRabota" class="btn btn-icon icon-left btn-outline-success col-3 shadow" asp-controller="Rabota" asp-action="AddRabota">
                     <i class='fas fa-save'></i>Назначить работу
@@ -138,4 +140,120 @@
         </div>
 
     </div>
+
+    <script>
+        function getValue(value) {
+            // alert(value);
+            if (value == "ОО") {
+                document.getElementById("ViborOo").classList.remove('d-none');
+            }
+            else {
+                document.getElementById("ViborOo").classList.add('d-none');
+            }
+            if (value == "МО") {
+                document.getElementById("ViborMo").classList.remove('d-none');
+            }
+            else {
+                document.getElementById("ViborMo").classList.add('d-none');
+            }
+        }
+    </script>
 </form>
+<!-- Modal -->
+<div class="modal fade" id="spisNaznachMo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Выберите МО</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @for (int i = 0; i < Model.Mos.Count(); i++)
+                {
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input MO" id="@Model.Mos[i].Id" value="@Model.Mos[i].Id">
+                        <label class="custom-control-label " for="@Model.Mos[i].Id">@Model.Mos[i].Name</label>
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                <button type="button" class="btn btn-primary" form="0" onclick="mMO()" data-dismiss="modal">Сохранить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade  bd-example-modal-xl" id="spisNaznachOo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Выберите ОО</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-3">
+                        <div id="list-example" class="list-group">
+                            @for (int i = 0; i < Model.Mos.Count(); i++)
+                            {
+                                <a class="list-group-item list-group-item-action p-1" href="#mo_@Model.Mos[i].Id">@Model.Mos[i].Name</a>
+
+                            }
+                        </div>
+                    </div>
+                    <div class="col-8 ">
+                        <div data-spy="scroll" data-target="#list-example" data-offset="0" style="position: relative; height: 800px; margin-top: .5rem; overflow: auto;">
+                            @for (int i = 0; i < Model.Mos.Count(); i++)
+                            {
+                                <h4 id="mo_@Model.Mos[i].Id"> @Model.Mos[i].Name</h4>
+                                foreach (Oo row in Model.Oos.Where(x => x.IdMo == Model.Mos[i].Id))
+                                {
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input OO" id="@(row.Id+1000)" value="@row.Id">
+                                        <label class="custom-control-label" for="@(row.Id+1000)">@row.Name</label>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                <button type="button" class="btn btn-primary" onclick="mOO()" data-dismiss="modal">Сохранить</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function mMO() {
+        var a = document.querySelectorAll('input.MO:checked');
+        var outMO = []; //выходной массив
+        for (var x = 0; x < a.length; x++) { //перебераем все объекты
+            outMO.push(a[x].value); //добавляем значения в выходной массив
+        }
+        console.log(outMO);
+        if (outMO.length > 0) {
+            document.getElementById('ViborMo').classList.remove('btn-outline-warning');
+            document.getElementById('ViborMo').classList.add('btn-outline-success');
+        }
+    }
+
+    function mOO() {
+        var oo = document.querySelectorAll('input.OO:checked');
+        var outOO = []; //выходной массив
+        for (var x = 0; x < oo.length; x++) { //перебераем все объекты
+            outOO.push(oo[x].value); //добавляем значения в выходной массив
+        }
+        console.log(outOO);
+        if (outOO.length > 0) {
+            document.getElementById('ViborOo').classList.remove('btn-outline-warning');
+            document.getElementById('ViborOo').classList.add('btn-outline-success');
+        }
+    }
+</script>

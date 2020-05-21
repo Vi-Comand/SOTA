@@ -70,7 +70,7 @@ namespace SOTA.Models
     public class Oo
     {
         public int Id { get; set; }
-        public int IdOo { get; set; }
+        public int IdMo { get; set; }
         public string Name { get; set; }
         public int Tip { get; set; }
     }
@@ -101,5 +101,18 @@ namespace SOTA.Models
         public string ListUchasn { get; set; }
         public DateTime Sozd { get; set; }
 
+    }
+
+    public class NaznachMo
+    {
+        public int Id { get; set; }
+        public int IdRab { get; set; }
+        public int IdMo { get; set; }
+    }
+    public class NaznachOo
+    {
+        public int Id { get; set; }
+        public int IdRab { get; set; }
+        public int IdOo { get; set; }
     }
 }
