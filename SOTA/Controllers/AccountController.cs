@@ -12,10 +12,14 @@ using System.Text;
 using System.Threading.Tasks;
 using SOTA.Models;
 
+
+
 namespace SOTA.Controllers
 {
+
     public class AccountController : Controller
     {
+       
         private SotaContext db;
 
         public AccountController(SotaContext context)
@@ -36,46 +40,14 @@ namespace SOTA.Controllers
 
 
 
-
-
-            string remoteIpAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
-            Users user = new Users();
-            if (model.AddPass == null)
-            {
-
-                try
+                string remoteIpAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+                Users user = new Users();
+                if (model.AddPass == null)
                 {
-                    string password = model.Pass;
 
-                    //generate a 128 - bit salt using a secure PRNG
-                    string a = "ПерестройкаИАЦ";
-
-                    byte[] salt = Encoding.Default.GetBytes(a);
-
-                    // derive a 256-bit subkey (use HMACSHA1 with 10,000 iterations)
-                    string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                        password: password,
-                        salt: salt,
-                        prf: KeyDerivationPrf.HMACSHA1,
-                        iterationCount: 10000,
-                        numBytesRequested: 256 / 8));
-
-                    user = await db.Users.FirstOrDefaultAsync(u => u.Name == model.Name && u.Pass == hashed).ConfigureAwait(false);
-                }
-                catch (Exception ex)
-                {
-                    ex.Message.ToString();
-                }
-
-            }
-            else
-            {
-                try
-                {
-                    if (model.AddPass == model.AddPass2 && model.Sogl == true)
+                    try
                     {
-                        user = await db.Users.FirstOrDefaultAsync(u => u.Name == model.Name).ConfigureAwait(false);
-                        string password = model.AddPass;
+                        string password = model.Pass;
 
                         //generate a 128 - bit salt using a secure PRNG
                         string a = "ПерестройкаИАЦ";
@@ -90,31 +62,64 @@ namespace SOTA.Controllers
                             iterationCount: 10000,
                             numBytesRequested: 256 / 8));
 
-                        user.Pass = hashed;
-                        user.Sogl = 1;
-                        user.DateReg = DateTime.Now;
-                        await db.SaveChangesAsync().ConfigureAwait(false);
+                        user = await db.Users.FirstOrDefaultAsync(u => u.Name == model.Name && u.Pass == hashed)
+                            .ConfigureAwait(false);
+                    }
+                    catch (Exception ex)
+                    {
+                        ex.Message.ToString();
+                    }
+
+                }
+                else
+                {
+                    try
+                    {
+                        if (model.AddPass == model.AddPass2 && model.Sogl == true)
+                        {
+                            user = await db.Users.FirstOrDefaultAsync(u => u.Name == model.Name).ConfigureAwait(false);
+                            string password = model.AddPass;
+
+                            //generate a 128 - bit salt using a secure PRNG
+                            string a = "ПерестройкаИАЦ";
+
+                            byte[] salt = Encoding.Default.GetBytes(a);
+
+                            // derive a 256-bit subkey (use HMACSHA1 with 10,000 iterations)
+                            string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                                password: password,
+                                salt: salt,
+                                prf: KeyDerivationPrf.HMACSHA1,
+                                iterationCount: 10000,
+                                numBytesRequested: 256 / 8));
+
+                            user.Pass = hashed;
+                            user.Sogl = 1;
+                            user.DateReg = DateTime.Now;
+                            await db.SaveChangesAsync().ConfigureAwait(false);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        ex.Message.ToString();
                     }
                 }
-                catch (Exception ex)
+
+
+
+                if (user != null)
                 {
-                    ex.Message.ToString();
+
+
+                    await Authenticate(model.Name); // аутентификация
+
+                    return RedirectToAction("Index", "Home");
+
                 }
-            }
 
 
+                //  ModelState.AddModelError("", "Некорректные логин и(или) пароль");
 
-            if (user != null)
-            {
-
-
-                await Authenticate(model.Name).ConfigureAwait(false); // аутентификация
-                return RedirectToAction("Index", "Home");
-
-            }
-
-
-            //  ModelState.AddModelError("", "Некорректные логин и(или) пароль");
 
 
             return View(model);
@@ -197,10 +202,10 @@ namespace SOTA.Controllers
      */
 
             // создаем один claim
-            var claims = new[]
- {
-    new Claim("name", userName)
-};
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimsIdentity.DefaultNameClaimType, userName)
+            };
 
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
             HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,

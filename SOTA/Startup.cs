@@ -44,9 +44,13 @@ namespace SOTA
 
             string connection = Configuration.GetConnectionString("DefaultConnection");
             /*services.AddDbContext<SotaContext>(options => options.UseMySql(Configuration["ConnectionStrings:DefaultConnection"]));*/
+
+
+
             services.AddDbContext<SotaContext>(options =>
          options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,6 +71,7 @@ namespace SOTA
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();    // аутентификация
+       
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

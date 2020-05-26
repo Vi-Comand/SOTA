@@ -134,6 +134,9 @@
                 <button id="NewRabota" class="btn btn-icon icon-left btn-outline-success col-3" asp-controller="Rabota" asp-action="AddRabota">
                     <i class='fas fa-save'></i>Сохранить и войти
                 </button>
+                <button id="ProsmotrVariants" class="btn btn-icon icon-left btn-outline-success col-3"  asp-route-idRabota="@Model.Id" asp-controller="Rabota" asp-action="Variants">
+                    <i class='fas fa-save'></i>Посмотреть варианты
+                </button>
             </div>
         </div>
 

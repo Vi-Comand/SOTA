@@ -9,10 +9,12 @@ using System.Threading.Tasks;
 
 
 
+
 namespace SOTA.Controllers
 {
     public class UprSpec : Controller
     {
+
         SotaContext db;
 
         public UprSpec(SotaContext context)

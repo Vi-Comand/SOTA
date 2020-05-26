@@ -2,19 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SOTA.Models;
 
+
 namespace SOTA.Controllers
 {
+   
+
     public class RabotaController : Controller
     {
         SotaContext db;
         string error;
         public RabotaController(SotaContext context)
         {
+            
             db = context;
+            
         }
         // [HttpGet]
         //[Route("Rabota/RabotaAdd/")]
@@ -53,6 +59,7 @@ namespace SOTA.Controllers
             rabotaList.Specs = db.Specific.ToList();
             return View(rabotaList);
         }
+
         public async Task<IActionResult> AddRabota(Rabota rabota)
         {
             Rabota AddRabota = new Rabota();
@@ -79,6 +86,7 @@ namespace SOTA.Controllers
                     db.Update(AddRabota).State = EntityState.Modified;
                     //db.Rabota.Update(AddRabota);
                 }
+
                 await db.SaveChangesAsync().ConfigureAwait(false);
                 error = "";
                 return RedirectToAction("RabotaList");
@@ -90,5 +98,18 @@ namespace SOTA.Controllers
                 return RedirectPreserveMethod("RabotaAdd");
             }
         }
+
+        public async Task<IActionResult> Variants(int idRabota)
+            {
+             Variants model=new Variants(idRabota,db);
+                return View("Variants",model);
+            }
+        public async Task<IActionResult> Variant(int nVar,int idSpec)
+        {
+            Variant variant = new Variant(idSpec,nVar,db);
+           
+
+            return View("Variant",variant);
+        }
     }
-}
+    }
