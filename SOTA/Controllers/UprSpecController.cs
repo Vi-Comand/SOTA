@@ -32,17 +32,17 @@ namespace SOTA.Controllers
             if (Text != RedactZandan.Text)
             {
                 RedactZandan.Text = Text;
-            
 
-            await db.SaveChangesAsync().ConfigureAwait(false);
-            return Json("Изменения внесены");
+
+                await db.SaveChangesAsync().ConfigureAwait(false);
+                return Json("Изменения внесены");
             }
             else
             {
                 return Json("Изменения нет");
             }
 
-        return Json("ok");
+            return Json("ok");
         }
 
         public IActionResult SpecifikacList()
@@ -549,6 +549,11 @@ namespace SOTA.Controllers
                     {
                         NeOdinakov = true;
                         break;
+                    }
+                    //Сомнительный костыль
+                    if (zadan.Text != null)
+                    {
+                        zadan.Text = "1";
                     }
                 }
 

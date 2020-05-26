@@ -133,6 +133,9 @@
                     <i class='fas fa-list-ul'></i>Выбрать OO
                 </button>
                 <div class="alert-danger col-12">@ViewData["Error"]</div>
+                <button id="ProsmotrVariants" class="btn btn-icon icon-left btn-outline-success col-3" asp-route-idRabota="@Model.Rabot.Id" asp-controller="Rabota" asp-action="Variants">
+                    <i class='fas fa-save'></i>Посмотреть варианты
+                </button>
                 <button id="NewRabota" class="btn btn-icon icon-left btn-outline-success col-3 shadow" asp-controller="Rabota" asp-action="AddRabota">
                     <i class='fas fa-save'></i>Назначить работу
                 </button>
@@ -168,9 +171,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <button id="ProsmotrVariants" class="btn btn-icon icon-left btn-outline-success col-3"  asp-route-idRabota="@Model.Id" asp-controller="Rabota" asp-action="Variants">
-                    <i class='fas fa-save'></i>Посмотреть варианты
-                </button>
+
             </div>
             <div class="modal-body">
                 @for (int i = 0; i < Model.Mos.Count(); i++)
