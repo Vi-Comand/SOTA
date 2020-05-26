@@ -190,29 +190,18 @@
 
 
 
-        jQuery("#SaveZadanie").click(function () {
+        
 
-
-
-            jQuery('#ViewSource').click();
-
-            alert(document.getElementById("wysiwygtextarea1").contentWindow.document.body.innerHTML);
-            document.getElementById('text').innerHTML = document.getElementById("wysiwygtextarea1").contentWindow.document.body.innerHTML;
-
-            jQuery.ajax({
-                url: '/UprSpec/SaveWysiwygText/',
-                type: "POST",
-                dataType: "json",
-                data: { Name: "1", IdSpec: "1", Text: document.getElementById("wysiwygtextarea1").contentWindow.document.body.innerHTML, Variant: "1", Nomer: "1" },
-                success: function (query) {
-                    alert(query);
-                }
-
-            });
-
-        });
-
-
+        function prover() {
+            alert("proverka chebox");
+            var Chs = document.getElementById("check[1]");
+            if (Chs.checked) {
+                alert("checked");
+            }
+            else {
+                alert("unchecked");
+            }
+        }
         function predprosmotr() {
 
 
@@ -1420,28 +1409,28 @@
                     if (document.getElementById('BallTabOtv[' + row + ']') != null)
                         var ValTabBall = document.getElementById('BallTabOtv[' + row + ']').value;
 
-                    but.innerHTML = but.innerHTML +
-                        "<button type=\"button\" name=\"addAlternativeTable[" +
-                        row +
-                        "]\" id=\"addAlternativeTable[" +
-                        row +
-                        "]\" class=\"classAddAlternativeTable\"  OnClick=\"addInput(" +
-                        row +
-                        "," +
-                        (column - 1) +
-                        ");\"  >+</button> <button type=\"button\" name=\"delAlternativeTable[" +
-                        row +
-                        "]\" id=\"delAlternativeTable[" +
-                        row +
-                        "]\" class=\"classDelAlternativeTable\"  OnClick=\"delInput(" +
-                        row +
-                        "," +
-                        (column - 1) +
-                        ");\"  >-</button> ";
-                    if (document.getElementById('BallTabOtv[' + row + ']') != null)
-                        document.getElementById('BallTabOtv[' + row + ']').value = ValTabBall;
-                }
+                but.innerHTML = but.innerHTML +
+                    "<button type=\"button\" name=\"addAlternativeTable[" +
+                    row +
+                    "]\" id=\"addAlternativeTable[" +
+                    row +
+                    "]\" class=\"classAddAlternativeTable\"  OnClick=\"addInput(" +
+                    row +
+                    "," +
+                    (column - 1) +
+                    ");\"  >+</button> <button type=\"button\" name=\"delAlternativeTable[" +
+                    row +
+                    "]\" id=\"delAlternativeTable[" +
+                    row +
+                    "]\" class=\"classDelAlternativeTable\"  OnClick=\"delInput(" +
+                    row +
+                    "," +
+                    (column - 1) +
+                    ");\"  >-</button> ";
+                if (document.getElementById('BallTabOtv[' + row + ']') != null)
+                    document.getElementById('BallTabOtv[' + row + ']').value = ValTabBall;
             }
+        }
 
             function addInput(row, column) {
 
@@ -1452,34 +1441,78 @@
                 var table = document.getElementById('TabelOtvet');
                 var trArray = table.getElementsByTagName('tr');
 
-                but = document.getElementById('but[' + row + ']');
-                var ValTabBall = 0;
-                if (document.getElementById('BallTabOtv[' + row + ']') != null)
-                    var ValTabBall = document.getElementById('BallTabOtv[' + row + ']').value;
+            but = document.getElementById('but[' + row + ']');
+            var ValTabBall = 0;
+            if (document.getElementById('BallTabOtv[' + row + ']') != null)
+                var ValTabBall = document.getElementById('BallTabOtv[' + row + ']').value;
 
-                but.innerHTML = but.innerHTML + " <button type=\"button\" name=\"addAlternativeTable[" + row + "]\" id=\"addAlternativeTable[" + row + "]\" class=\"classAddAlternativeTable\"  OnClick=\"addInput(" + row + "," + (column + 1) + ");\"  >+</button> <button type=\"button\" name=\"delAlternativeTable[" + row + "]\" id=\"delAlternativeTable[" + row + "]\" class=\"classDelAlternativeTable\"  OnClick=\"delInput(" + row + "," + (column + 1) + ");\"  >-</button> ";
+            but.innerHTML = but.innerHTML +
+                " <button type=\"button\" name=\"addAlternativeTable[" +
+                row +
+                "]\" id=\"addAlternativeTable[" +
+                row +
+                "]\" class=\"classAddAlternativeTable\"  OnClick=\"addInput(" +
+                row +
+                "," +
+                (column + 1) +
+                ");\"  >+</button> <button type=\"button\" name=\"delAlternativeTable[" +
+                row +
+                "]\" id=\"delAlternativeTable[" +
+                row +
+                "]\" class=\"classDelAlternativeTable\"  OnClick=\"delInput(" +
+                row +
+                "," +
+                (column + 1) +
+                ");\"  >-</button> ";
 
 
-
-                trArray[row - 1].insertCell(column + 1).innerHTML = "<input name= \"ach" + row + "," + (column + 1) + "\" id= \"ach" + row + "," + (column + 1) + "\"/> ";
-                if (document.getElementById('BallTabOtv[' + row + ']') != null)
-                    document.getElementById('BallTabOtv[' + row + ']').value = ValTabBall;
+            trArray[row - 1].insertCell(column + 1).innerHTML = "<input name= \"ach" +
+                row +
+                "," +
+                (column + 1) +
+                "\" id= \"ach" +
+                row +
+                "," +
+                (column + 1) +
+                "\"/> ";
+            if (document.getElementById('BallTabOtv[' + row + ']') != null)
+                document.getElementById('BallTabOtv[' + row + ']').value = ValTabBall;
 
             }
 
-            function continueButton() {
-                if (document.getElementById("wysiwygtextarea1").contentWindow.document.body.innerHTML != "") {
-                    document.getElementById("otvet_collaps").removeAttribute("disabled");
-                    jQuery("#otvet_collaps").removeClass("collapsed");
-                    document.getElementById("pb-1").setAttribute("aria-expanded", "false");
-                    document.getElementById("pb-2").setAttribute("aria-expanded", "true");
-                    jQuery("#pb-2").data("target", '#panel-body-2').attr('data-target', '#panel-body-2');
+        function continueButton() {
+            if (document.getElementById("wysiwygtextarea1").contentWindow.document.body.innerHTML != "") {
+                document.getElementById("otvet_collaps").removeAttribute("disabled");
+                jQuery("#otvet_collaps").removeClass("collapsed");
+                // $("#uslov_collaps").addClass("collapsed");
+                document.getElementById("otvet_collaps").setAttribute("aria-expanded", "true");
 
-                    jQuery("#panel-body-2").addClass("show");
-                    jQuery("#panel-body-1").removeClass("show");
+                jQuery("#collapseTwo").addClass("show");
+                jQuery("#collapseOne").removeClass("show");
+
+               
+               
+                    SaveTextZadania();
+                
+            }
+        }
+
+        function SaveTextZadania() {
+            var idZadania = document.getElementById("idZadania").value;
+            var textZadania = document.getElementById("wysiwygtextarea1").contentWindow.document.body.innerHTML;
+            jQuery.ajax({
+                url: '/UprSpec/SaveWysiwygText/',
+                type: "POST",
+                dataType: "json",
+                data: { idZadania: idZadania, text: textZadania },
+                success: function (query) {
+                    console.log(query);
                 }
-            }
-        </script>
+
+            });
+        }
+
+</script>
 
 
 </body>

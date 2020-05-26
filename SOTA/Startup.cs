@@ -84,7 +84,7 @@ namespace SOTA
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();    // аутентификация
-            //app.UseAuthorization();
+       
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

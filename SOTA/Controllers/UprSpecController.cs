@@ -8,10 +8,12 @@ using System.Threading.Tasks;
 
 
 
+
 namespace SOTA.Controllers
 {
     public class UprSpec : Controller
     {
+
         SotaContext db;
 
         public UprSpec(SotaContext context)
@@ -22,20 +24,25 @@ namespace SOTA.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> SaveWysiwygText(string Name, string IdSpec, string Text, string Variant, string Nomer)
+
+        public async Task<IActionResult> SaveWysiwygText(int idZadania, string Text)
         {
-            Zadanie AddZadanie = new Zadanie();
-            AddZadanie.Name = Name;
-            AddZadanie.IdSpec = Convert.ToInt32(IdSpec);
-            AddZadanie.Text = Text;
-            AddZadanie.Variant = Convert.ToInt32(Variant);
-            AddZadanie.Nomer = Convert.ToInt32(Nomer);
+            Zadanie RedactZandan = db.Zadanie.Find(idZadania);
 
+            if (Text != RedactZandan.Text)
+            {
+                RedactZandan.Text = Text;
+            
 
-
-            await db.Zadanie.AddAsync(AddZadanie).ConfigureAwait(false);
             await db.SaveChangesAsync().ConfigureAwait(false);
-            return Json("ok");
+            return Json("Изменения внесены");
+            }
+            else
+            {
+                return Json("Изменения нет");
+            }
+
+        return Json("ok");
         }
 
         public IActionResult SpecifikacList()
