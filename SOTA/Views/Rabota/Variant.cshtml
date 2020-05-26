@@ -75,15 +75,19 @@
         {
             @: AddTextZadan(@row.Zadan.Nomer, "@row.Zadan.Text");
 
+            if (row.Zadan.Tip == 1)
+            {
+                @:AddZOtvTip1(@row.Zadan.Nomer);
+            }
             if (row.Zadan.Tip == 2)
             {
                 int i = 0;
                 @:var MyArray = new Array();
                 bool Chekbox = false;
-                int kol_verno =0;
+                int kol_verno = 0;
                 foreach (var str in row.Otveti)
                 {
-                    @:MyArray[@i] = ObjVibOtv(id, text);
+                    @:MyArray[@i] = ObjVibOtv(@str.Id, "@str.Text");
                     i++;
                     if (!Chekbox)
                     {
@@ -98,14 +102,16 @@
                     }
                 }
 
-               @:var Checkbox = @Chekbox;
-                    @:AddZOtvTip2(MyArray, Checkbox);
+                @:var Checkbox = "@Chekbox";
+                @:AddZOtvTip2(MyArray, Checkbox,@row.Zadan.Nomer);
 
 
             }
 
         }
-    function  ObjVibOtv(id,text ) {
+    }
+
+    function ObjVibOtv(id, text) {
         var MyObj = new Object();
         MyObj.id = id;
         MyObj.text = text;
@@ -116,32 +122,49 @@
 
         document.getElementById('TextZadan[' + i + ']').innerHTML = text;
     }
-    function AddZOtvTip1(id) {
 
-        document.getElementById('TextZadan[' + i + ']').innerHTML = "<input type=\"text\" class=\"form-control input100\" id=\""+id+"\"/>";
+    function AddZOtvTip1(i) {
+
+        document.getElementById('OtvetZadan[' + i + ']').innerHTML = "<input type='text' class='form-control input100' />";
     }
-        function AddZOtvTip2(MyArray, Checkbox) {
-            if (Checkbox)
-                AddOtvCheckBox(MyArray);
-            else
-                ddOtvRadioButton(MyArray);
+
+    function AddZOtvTip2(MyArray, Checkbox, nZad) {
+   
+        if (Checkbox=="True")
+            AddOtvCheckBox(MyArray,nZad);
+        else
+            AddOtvRadioButton(MyArray, nZad);
+    }
+
+    function AddOtvCheckBox(MyArray, nZad) {
+        
+        for (i = 0; i < MyArray.length; i++) {
+            document.getElementById('OtvetZadan[' + nZad+']').innerHTML +=
+                "<label class=\"custom-switch mt-2\" style=\"height:28px\"><input type=\"checkbox\" name=\"id1ch[" +
+            MyArray[i].id +
+                "]\" id=\"id1ch[" +
+                MyArray[i].id +
+                "]\" value=\"1\"  class=\"custom-switch-input\"><span class=\"custom-switch-indicator\"> </span >" +
+            MyArray[i].text +
+                "</label></br>";
         }
+    }
 
-        function AddOtvCheckBox(MyArray) {
-            for (i = 0; i < MyArray.length; i++) {
-                OtvetZadan.innerHTML += "<label class=\"custom-switch mt-2\" style=\"height:28px\"><input type=\"checkbox\" name=\"id1ch[" + i + "]\" id=\"id1ch[" + i + "]\" value=\"1\"  class=\"custom-switch-input\"><span class=\"custom-switch-indicator\"> </span >" + arrOtvBD[i].text + "</label></br>";
-            }
+    function AddOtvRadioButton(MyArray, nZad) {
+        for (i = 0; i < MyArray.length; i++) {
+            document.getElementById('OtvetZadan[' + nZad+']').innerHTML +=
+                ' <div class="custom-control custom-radio custom-control-inline" ><input type="radio" id="id1rad[' +
+            MyArray[i].id +
+                ']" name="customRadio" class="custom-control-input"><label class="custom-control-label" for="id1rad[' +
+                MyArray[i].id +
+                ']">' +
+            MyArray[i].text +
+                '</label></div ></br> ';
+
+
         }
-        function AddOtvRadioButton(MyArray) {
-            for (i = 0; i < MyArray.length; i++) {
-                OtvetZadan.innerHTML += ' <div class="custom-control custom-radio custom-control-inline" ><input type="radio" id="id1rad[' + i + ']" name="customRadio" class="custom-control-input"><label class="custom-control-label" for="id1rad[' + i + ']">' + arrOtvBD[i].text + '</label></div ></br> ';
+    }
 
-
-
-
-
-            }
-            }
     function AddTabForZadan(i) {
 
         var TabForZadan = document.getElementById('TabForZadan');
