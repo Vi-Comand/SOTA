@@ -12,12 +12,12 @@
     <ul class="nav nav-pills" id="TabForZadan" role="tablist">
 
         @*<li class="nav-item">
-            <a class="nav-link active" id="uo-tab" data-toggle="tab" href="#uo" role="tab" aria-controls="uo" aria-selected="true">
+                <a class="nav-link active" id="uo-tab" data-toggle="tab" href="#uo" role="tab" aria-controls="uo" aria-selected="true">
 
 
 
-            </a>
-        </li>*@
+                </a>
+            </li>*@
     </ul>
     <div class="tab-content tab-bordered " id="Zadans">
         @* <div class="tab-pane fade show active" id="uo" role="tabpanel" aria-labelledby="uo-tab">
@@ -118,9 +118,40 @@
         return MyObj;
     }
 
-    function AddTextZadan(i, text) {
+    (function(window){
+    window.htmlentities = {
+        /**
+         * Converts a string to its html characters completely.
+         *
+         * param {String} str String with unescaped HTML characters
+         **/
+        encode : function(str) {
+            var buf = [];
 
-        document.getElementById('TextZadan[' + i + ']').innerHTML = text;
+            for (var i=str.length-1;i>=0;i--) {
+                buf.unshift(['&#', str[i].charCodeAt(), ';'].join(''));
+            }
+
+            return buf.join('');
+        },
+        /**
+         * Converts an html characterSet into its original character.
+         *
+         * param {String} str htmlSet entities
+         **/
+        decode : function(str) {
+            return str.replace(/&#(\d+);/g, function(match, dec) {
+                return String.fromCharCode(dec);
+            });
+        }
+    };
+})(window);
+
+
+    function AddTextZadan(i, text) {
+        var divText = document.getElementById('TextZadan[' + i + ']');
+        divText.innerHTML = text;
+        divText.innerHTML = divText.textContent;
     }
 
     function AddZOtvTip1(i) {
@@ -129,7 +160,7 @@
     }
 
     function AddZOtvTip2(MyArray, Checkbox, nZad) {
-   
+
         if (Checkbox=="True")
             AddOtvCheckBox(MyArray,nZad);
         else
@@ -137,7 +168,7 @@
     }
 
     function AddOtvCheckBox(MyArray, nZad) {
-        
+
         for (i = 0; i < MyArray.length; i++) {
             document.getElementById('OtvetZadan[' + nZad+']').innerHTML +=
                 "<label class=\"custom-switch mt-2\" style=\"height:28px\"><input type=\"checkbox\" name=\"id1ch[" +

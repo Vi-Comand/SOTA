@@ -5,10 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using SOTA.Models;
 
 
 namespace SOTA.Controllers
@@ -19,9 +15,9 @@ namespace SOTA.Controllers
         string error;
         public RabotaController(SotaContext context)
         {
-            
+
             db = context;
-            
+
         }
         // [HttpGet]
         //[Route("Rabota/RabotaAdd/")]
@@ -115,16 +111,16 @@ namespace SOTA.Controllers
         }
 
         public async Task<IActionResult> Variants(int idRabota)
-            {
-             Variants model=new Variants(idRabota,db);
-                return View("Variants",model);
-            }
-        public async Task<IActionResult> Variant(int nVar,int idSpec)
         {
-            Variant variant = new Variant(idSpec,nVar,db);
-           
+            Variants model = new Variants(idRabota, db);
+            return View("Variants", model);
+        }
+        public async Task<IActionResult> Variant(int nVar, int idSpec)
+        {
+            Variant variant = new Variant(idSpec, nVar, db);
 
-            return View("Variant",variant);
+
+            return View("Variant", variant);
         }
     }
 }
