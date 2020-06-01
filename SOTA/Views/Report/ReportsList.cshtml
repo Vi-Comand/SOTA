@@ -1,10 +1,10 @@
 ﻿@model SOTA.Models.RabotaTablList
 
 @{
-    ViewData["Title"] = "Назначенные работы";
+    ViewData["Title"] = "Отчеты по работам";
 }
 
-<h1>Список работ</h1>
+<h1>Список отчетов</h1>
 <form method="post">
 
     <div class="col-12 shadow p-3 mb-5 bg-white rounded">
@@ -19,39 +19,23 @@
                         <th>Название работы</th>
                         <th>Предмет</th>
                         <th>Тип</th>
-                        <th>Время начала</th>
-                        <th>Время окончания</th>
-                        <th>Продолжительность, мин.</th>
-                        <th>Начать тестирование</th>
+                        <th>Дата проведения</th>
+                        <th>Скачать</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var row in Model.RabotaTabls)
-
                     {
-
                         <tr>
                             <td>@row.Name</td>
                             <td>@row.PredmN</td>
                             <td>@row.TipN</td>
-                            <td>@row.Nachalo</td>
                             <td>@row.Konec</td>
-                            <td>@row.Dliteln</td>
-                            <td>
-                                @if (row.Nachalo > DateTime.Now)
-                                {
-                                    <a href="" class='btn btn-icon btn-sm btn-outline-yel text-left btn-block disabled'><i class='fas fa-square-root-alt'></i>Начать тестирование</a>
-                                }
-                                else
-                                {
-                                    <a asp-route-idRabota="@row.Id" asp-controller="Rabota" asp-action="Variants" class='btn btn-icon btn-sm btn-outline-yel text-left btn-block'><i class='fas fa-square-root-alt'></i>Начать тестирование</a>
-                                }
-                            </td>
+                            <td><a href="~/Reports/Отчет.xls" class='btn btn-icon btn-sm btn-outline-yel text-left btn-block '><i class='far fa-file-excel'></i>Скачать</a></td>
                         </tr>
                     }
                 </tbody>
             </table>
-
         </div>
     </div>
 </form>

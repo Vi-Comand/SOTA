@@ -37,47 +37,47 @@
 
                             @if (ViewBag.rl == 1)
                             {
-                                <li class="nav-item ">
+                            <li class="nav-item ">
 
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Главная</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Rabota" asp-action="RabotaList">Работы</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="SpecList" asp-action="SpecifikacList">Спецификации</a>
-                                </li>
-                                @*<li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Задания</a>
-                                    </li>*@
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Test" asp-action="Test">Отчеты</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Users">Пользователи</a>
-                                </li>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Главная</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Rabota" asp-action="RabotaList">Работы</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="SpecList" asp-action="SpecifikacList">Спецификации</a>
+                            </li>
+                            @*<li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Задания</a>
+                                </li>*@
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Test" asp-action="Test">Отчеты</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Users">Пользователи</a>
+                            </li>
                             }
                             else
                             {
-                                <li class="nav-item active">
+                            <li class="nav-item active">
 
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Uchen" asp-action="NaznacRabotaList">Главная</a>
-                                </li>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Uchen" asp-action="NaznacRabotaList">Главная</a>
+                            </li>
                             }
                         </ul>
                         <ul class="nav navbar-nav flex-grow-1 nav-pills  navbar-right">
                             @if (User.Identity.IsAuthenticated == false)
                             {
-                                <li class="nav-item " style="margin:5px; margin-left:auto;">
-                                    <a asp-controller="Account" class="nav-link text-dark" asp-action="Login">Войти </a>
-                                </li>
+                            <li class="nav-item " style="margin:5px; margin-left:auto;">
+                                <a asp-controller="Account" class="nav-link text-dark" asp-action="Login">Войти </a>
+                            </li>
 
                             }
                             else
                             {
-                                <li class="nav-item" style="margin:5px; margin-left:auto;">
-                                    <a asp-controller="Account" class="nav-link text-dark" asp-action="Logout">Выйти </a>
-                                </li>
+                            <li class="nav-item" style="margin:5px; margin-left:auto;">
+                                <a asp-controller="Account" class="nav-link text-dark" asp-action="Logout">Выйти </a>
+                            </li>
                             }
                         </ul>
                     </div>
@@ -98,11 +98,11 @@
         </div>
     </footer>
 
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    @*<environment include="Development">
+            <script type="text/javascript" src="~/UprSpec/scripts/jquery-2.x-git.js"></script>
 
-    <environment include="Development">
-        @*<script type="text/javascript" src="~/UprSpec/scripts/jquery-2.x-git.js"></script>*@
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
-    </environment>
+        </environment>*@
     @* <environment exclude="Development">
                  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
                         asp-fallback-src="~/lib/jquery/dist/jquery.min.js"

@@ -135,8 +135,8 @@
                 <div class="alert-danger col-12">@ViewData["Error"]</div>
                 @if (Model.Rabot != null)
                 {
-                    <button id="ProsmotrVariants" class="btn btn-icon icon-left btn-outline-success col-3" asp-route-idRabota="@Model.Rabot.Id" asp-controller="Rabota" asp-action="Variants">
-                        <i class='fas fa-save'></i>Посмотреть варианты
+                    <button id="ProsmotrVariants" class="btn btn-icon icon-left btn-outline-info col-3" asp-route-idRabota="@Model.Rabot.Id" asp-controller="Rabota" asp-action="Variants">
+                        <i class='fas fa-search'></i>Посмотреть варианты
                     </button>
                 }
                 <button id="NewRabota" class="btn btn-icon icon-left btn-outline-success col-3 shadow" asp-controller="Rabota" asp-action="AddRabota">

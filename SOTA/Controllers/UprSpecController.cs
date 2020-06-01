@@ -175,6 +175,7 @@ namespace SOTA.Controllers
         }
         public async Task<IActionResult> VivodZadaniaAjax(int idZadania)
         {
+            System.Threading.Thread.Sleep(100);
             ZadanVivod Zadan = new ZadanVivod();
             List<Otvet> ListOtv = new List<Otvet>();
             Zadan.Zadan = db.Zadanie.Find(idZadania);
@@ -575,6 +576,9 @@ namespace SOTA.Controllers
 
         public IActionResult Zadanie(int n_var, int n_zad, int id_spec)
         {
+            string login = HttpContext.User.Identity.Name;
+            Users user = db.Users.Where(p => p.Name == login).First();
+            ViewBag.rl = user.Role;
             ZadanieRedact model = new ZadanieRedact();
             var Zadan = db.Zadanie.Where(x => x.IdSpec == id_spec && x.Nomer == n_zad && x.Variant == n_var).First();
             model.Id = Zadan.Id;

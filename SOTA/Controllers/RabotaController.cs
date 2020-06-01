@@ -112,11 +112,17 @@ namespace SOTA.Controllers
 
         public async Task<IActionResult> Variants(int idRabota)
         {
+            string login = HttpContext.User.Identity.Name;
+            Users user = db.Users.Where(p => p.Name == login).First();
+            ViewBag.rl = user.Role;
             Variants model = new Variants(idRabota, db);
             return View("Variants", model);
         }
         public async Task<IActionResult> Variant(int nVar, int idSpec)
         {
+            string login = HttpContext.User.Identity.Name;
+            Users user = db.Users.Where(p => p.Name == login).First();
+            ViewBag.rl = user.Role;
             Variant variant = new Variant(idSpec, nVar, db);
 
 

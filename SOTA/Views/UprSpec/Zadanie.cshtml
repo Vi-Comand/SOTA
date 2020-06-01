@@ -208,7 +208,7 @@
 
 
             var idZadan = document.getElementById("idZadania").value;
-            alert(idZadan);
+           // alert(idZadan);
 
             jQuery.ajax({
                 url: '/UprSpec/VivodZadaniaAjax/',
@@ -247,7 +247,7 @@
         function PredTextZadan(Zadan) {
             var TextZadan = document.getElementById("TextZadanPredprosmotr");
             TextZadan.innerHTML = Zadan.text;
-            alert(Zadan.text);
+            //alert(Zadan.text);
         }
         function PredStrOtv() {
             var OtvetZadan = document.getElementById("OtvetiZadanPredprosmotr");

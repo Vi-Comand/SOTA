@@ -6,52 +6,53 @@
 
 
 
+<div class="container col-12 shadow p-3 mb-5 bg-white rounded h-100">
+
+    <div class="card-body">
+        <ul class="nav nav-pills" id="TabForZadan" role="tablist">
+
+            @*<li class="nav-item">
+                    <a class="nav-link active" id="uo-tab" data-toggle="tab" href="#uo" role="tab" aria-controls="uo" aria-selected="true">
 
 
-<div class="card-body">
-    <ul class="nav nav-pills" id="TabForZadan" role="tablist">
 
-        @*<li class="nav-item">
-                <a class="nav-link active" id="uo-tab" data-toggle="tab" href="#uo" role="tab" aria-controls="uo" aria-selected="true">
+                    </a>
+                </li>*@
+        </ul>
+        <div class="tab-content  " id="Zadans">
+            @* <div class="tab-pane fade show active" id="uo" role="tabpanel" aria-labelledby="uo-tab">
 
+                <div class="container col-12 shadow p-3 mb-5 bg-white rounded h-100">
 
+                    <div class="row row-cols-3">
+                        <div class="col-1"><a class="btn btn-icon btn-sm btn-outline-yel text-left btn-block h-100" href="#"><</a></div>
+                        <div class="col-9 shadow p-4 mb-4 bg-white rounded">
 
-                </a>
-            </li>*@
-    </ul>
-    <div class="tab-content tab-bordered " id="Zadans">
-        @* <div class="tab-pane fade show active" id="uo" role="tabpanel" aria-labelledby="uo-tab">
-
-            <div class="container col-12 shadow p-3 mb-5 bg-white rounded h-100">
-
-                <div class="row row-cols-3">
-                    <div class="col-1"><a class="btn btn-icon btn-sm btn-outline-yel text-left btn-block h-100" href="#"><</a></div>
-                    <div class="col-9 shadow p-4 mb-4 bg-white rounded">
-
-                        <div class="row"><h5>Название задания</h5> <h5 class="m-l-auto">1 из 12</h5></div>
-                        <div class="col-12">Задание</div>
-                        <div class="col-12">Ответ</div>
+                            <div class="row"><h5>Название задания</h5> <h5 class="m-l-auto">1 из 12</h5></div>
+                            <div class="col-12">Задание</div>
+                            <div class="col-12">Ответ</div>
+                        </div>
+                        <div class="col-1 text-right"><a class="btn btn-icon btn-sm btn-outline-yel text-left btn-block h-100" href="#">></a></div>
                     </div>
-                    <div class="col-1 text-right"><a class="btn btn-icon btn-sm btn-outline-yel text-left btn-block h-100" href="#">></a></div>
+
+                </div>*@
+
+
+        </div>
+        <div class="tab-content  " id="Zadans">
+            @*<div class="tab-pane fade" id="mo" role="tabpanel" aria-labelledby="mo-tab">
+                    mo
                 </div>
-
-            </div>*@
-
-
+                <div class="tab-pane fade" id="oo" role="tabpanel" aria-labelledby="oo-tab">
+                    oo
+                </div>
+                <div class="tab-pane fade" id="search" role="tabpanel" aria-labelledby="search-tab">
+                    search
+                </div>*@
+        </div>
     </div>
-    <div class="tab-content tab-bordered " id="Zadans">
-        @*<div class="tab-pane fade" id="mo" role="tabpanel" aria-labelledby="mo-tab">
-                mo
-            </div>
-            <div class="tab-pane fade" id="oo" role="tabpanel" aria-labelledby="oo-tab">
-                oo
-            </div>
-            <div class="tab-pane fade" id="search" role="tabpanel" aria-labelledby="search-tab">
-                search
-            </div>*@
-    </div>
+    <a id="Konec" class="btn btn-outline-success col-3 shadow" asp-controller="Home" asp-action="Index"><i class='fas fa-check'></i>    Завершить работу</a>
 </div>
-
 
 
 
@@ -102,10 +103,15 @@
                     }
                 }
 
+
                 @:var Checkbox = "@Chekbox";
                 @:AddZOtvTip2(MyArray, Checkbox,@row.Zadan.Nomer);
 
 
+            }
+             if (row.Zadan.Tip == 5)
+            {
+                @:AddZOtvTip5(@row.Zadan.Nomer);
             }
 
         }
@@ -156,7 +162,7 @@
 
     function AddZOtvTip1(i) {
 
-        document.getElementById('OtvetZadan[' + i + ']').innerHTML = "<input type='text' class='form-control input100' />";
+        document.getElementById('OtvetZadan[' + i + ']').innerHTML = "<input type='text' class='form-control input100' /><span class='focus - input100 '></span><label class='label' style='left:10px;'>Ответ</label>";
     }
 
     function AddZOtvTip2(MyArray, Checkbox, nZad) {
@@ -167,6 +173,10 @@
             AddOtvRadioButton(MyArray, nZad);
     }
 
+    function AddZOtvTip5(i) {
+
+        document.getElementById('OtvetZadan[' + i + ']').innerHTML = "<textarea rows='5' cols='100' ></textarea><span class='focus - input100 '></span><label class='label' style='left:10px;'>Ответ</label>";
+    }
     function AddOtvCheckBox(MyArray, nZad) {
 
         for (i = 0; i < MyArray.length; i++) {
@@ -232,16 +242,16 @@
         div.setAttribute("role", "tabpanel");
         div.setAttribute("aria-labelledby", "Zad" + i);
         div.innerHTML = i;
-
+    /*<div class="row row-cols-3"><div class="col-1"><a class="btn btn-icon btn-sm btn-outline-yel text-left btn-block h-100" href="#"><</a></div>    <div class="col-9 shadow p-4 mb-4 bg-white rounded">*/
 
         div.innerHTML =
-            '<div class="container col-12 shadow p-3 mb-5 bg-white rounded h-100"><div class="row row-cols-3"><div class="col-1"><a class="btn btn-icon btn-sm btn-outline-yel text-left btn-block h-100" href="#"><</a></div><div class="col-9 shadow p-4 mb-4 bg-white rounded"><div class="col-12" id="TextZadan[' +
+            '<div class="container col-12 shadow p-3 mb-5 bg-whitesmoke rounded h-100"><div class="col-12" style="min-height: 200px;" id="TextZadan[' +
             i +
-            ']"></div><div class="col-12"  id="OtvetZadan[' +
+            ']"></div><div class="col-12" style="margin-top: 30px;"  id="OtvetZadan[' +
             i +
-            ']"></div></div><div class="col-1 text-right"><a class="btn btn-icon btn-sm btn-outline-yel text-left btn-block h-100" href="#">></a></div></div></div>';
+            ']"></div></div></div>';
 
-
+    /*<div class="col-1 text-right"><a class="btn btn-icon btn-sm btn-outline-yel text-left btn-block h-100" href="#">></a></div></div>*/
         var Zadans = document.getElementById("Zadans");
 
         Zadans.appendChild(div);
