@@ -6,7 +6,7 @@
 <div class="col-12 shadow p-3 mb-5 bg-white rounded">
     <div class="col-12">
         <a id="AddSpec" class="btn btn-outline-success shadow  col-3" asp-area="" asp-controller="UprSpec" asp-action="SpecifikacAdd"><i class='fas fa-plus-circle'></i> Создать</a>
-        <a id="AddSpec" class="btn btn-outline-danger shadow col-3 "><i class='fas fa-trash'></i> Удалить</a>
+        <a id="AddSpec" class="btn btn-outline-danger shadow col-3 " onclick="Del()"><i class='fas fa-trash'></i> Удалить</a>
     </div>
     <div class="col-12 table-responsive-lg">
         <table class="table table-hover table-sm table-bordered shadow">
@@ -27,7 +27,7 @@
                 {
 
                     <tr>
-                        <td><input type="checkbox" /></td>
+                        <td><input type="checkbox" class="DEL" value="@row.Id" /></td>
                         <td> <a href="/UprSpec/SpecifikacRedact?id_spec=@row.Id" class='btn btn-icon btn-sm btn-outline-yel text-left btn-block'><i class='fas fa-plus'></i>@row.Name</a></td>
                         <td>@Model.TipSpecs.Where(x => x.Id == row.Tip).First().Name</td>
                         <td>@Model.Predms.Where(x => x.Id == row.Tip).First().Name</td>
@@ -62,3 +62,24 @@
         </div>
     </div>
 </div>
+<script>
+    function Del() {
+        var a = document.querySelectorAll('input.DEL:checked');
+        var outMO = []; //выходной массив
+        for (var x = 0; x < a.length; x++) { //перебераем все объекты
+            outMO.push(a[x].value); //добавляем значения в выходной массив
+        }
+        console.log(outMO);
+
+        jQuery.ajax({
+            url: '/SpecList/SpecDel/',
+            type: "POST",
+            dataType: "json",
+            data: { Id: outMO },
+            success: function (query) {
+                //          alert(query);
+            }
+
+        });
+    }
+</script>

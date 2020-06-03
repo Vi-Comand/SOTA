@@ -16,7 +16,7 @@
                         </div>
                     </div>
 
-                    <input type="hidden" class="form-control input100" id="nazv" asp-for=@Model.Rabot.Id required />
+                    <input type="hidden" class="form-control input100" id="id" asp-for=@Model.Rabot.Id required />
                     <input type="text" class="form-control input100" id="nazv" asp-for=@Model.Rabot.Name required />
                     <span class="focus-input100 "></span>
                     <label class="label">Название работы</label>
@@ -115,7 +115,7 @@
                             <i class="fas fa-list-alt"></i>
                         </div>
                     </div>
-                    <select class="form-control input100" asp-for=@Model.Rabot.UrovenRabot id="reg" required onchange="getValue(this.value);">
+                    <select class="form-control input100" asp-for=@Model.Rabot.UrovenRabot id="reg" required onchange="getValue(this.value);" onload="foo(this.value);">
                         <option value="">Выберите уровень</option>
                         <option value="Край">Край</option>
                         <option value="МО">МО</option>
@@ -139,7 +139,7 @@
                         <i class='fas fa-search'></i>Посмотреть варианты
                     </button>
                 }
-                <button id="NewRabota" class="btn btn-icon icon-left btn-outline-success col-3 shadow" asp-controller="Rabota" asp-action="AddRabota">
+                <button id="NewRabota" class="btn btn-icon icon-left btn-outline-success col-3 shadow" asp-controller="Rabota" asp-action="RabotaNaznach">
                     <i class='fas fa-save'></i>Назначить работу
                 </button>
             </div>
@@ -148,6 +148,23 @@
     </div>
 
     <script>
+        $(document).ready(function () {
+            var value = document.getElementById("reg").value;
+            if (value == "ОО") {
+                document.getElementById("ViborOo").classList.remove('d-none');
+            }
+            else {
+                document.getElementById("ViborOo").classList.add('d-none');
+            }
+            if (value == "МО") {
+                document.getElementById("ViborMo").classList.remove('d-none');
+            }
+            else {
+                document.getElementById("ViborMo").classList.add('d-none');
+            }
+        });
+
+
         function getValue(value) {
             // alert(value);
             if (value == "ОО") {
@@ -177,11 +194,11 @@
 
             </div>
             <div class="modal-body">
-                @for (int i = 0; i < Model.Mos.Count(); i++)
+                @foreach (var Mo in Model.NaznachMos)
                 {
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input MO" id="@Model.Mos[i].Id" value="@Model.Mos[i].Id">
-                        <label class="custom-control-label " for="@Model.Mos[i].Id">@Model.Mos[i].Name</label>
+                        <input type="checkbox" class="custom-control-input MO" id="@Mo.MO.Id" value="@Mo.MO.Id" checked="@Mo.Chec">
+                        <label class="custom-control-label " for="@Mo.MO.Id">@Mo.MO.Name</label>
                     </div>
                 }
             </div>
@@ -215,16 +232,17 @@
                     </div>
                     <div class="col-8 ">
                         <div data-spy="scroll" data-target="#list-example" data-offset="0" style="position: relative; height: 800px; margin-top: .5rem; overflow: auto;">
-                            @for (int i = 0; i < Model.Mos.Count(); i++)
-                            {
-                                <h4 id="mo_@Model.Mos[i].Id"> @Model.Mos[i].Name</h4>
-                                foreach (Oo row in Model.Oos.Where(x => x.IdMo == Model.Mos[i].Id))
-                                {
+                          @foreach(var Mo in Model.NaznachMos)
+                          { 
+                                <h4 id="mo_@Mo.MO.Id"> @Mo.MO.Name</h4>
+                                foreach (var OO in Mo.OO )
+                                        {
+                                         //   row.OO.Where(x => x.IdMo == Model.Mos[i].Id);
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input OO" id="@(row.Id+1000)" value="@row.Id">
-                                        <label class="custom-control-label" for="@(row.Id+1000)">@row.Name</label>
+                                        <input type="checkbox" class="custom-control-input OO" id="@(OO.OO.Id+1000)" value="@OO.OO.Id" checked="@OO.Chec">
+                                        <label class="custom-control-label" for="@(OO.OO.Id+1000)">@OO.OO.Name</label>
                                     </div>
-                                }
+                                                    }
                             }
                         </div>
                     </div>
@@ -239,12 +257,25 @@
 </div>
 <script>
     function mMO() {
+        var id = document.getElementById("id").value;
         var a = document.querySelectorAll('input.MO:checked');
         var outMO = []; //выходной массив
         for (var x = 0; x < a.length; x++) { //перебераем все объекты
             outMO.push(a[x].value); //добавляем значения в выходной массив
         }
         console.log(outMO);
+
+        jQuery.ajax({
+            url: '/Rabota/NaznachMO/',
+            type: "POST",
+            dataType: "json",
+            data: { naz: outMO, id: id },
+            success: function (query) {
+                //          alert(query);
+            }
+
+        });
+
         if (outMO.length > 0) {
             document.getElementById('ViborMo').classList.remove('btn-outline-warning');
             document.getElementById('ViborMo').classList.add('btn-outline-success');
@@ -252,12 +283,25 @@
     }
 
     function mOO() {
+        var id = document.getElementById("id").value;
         var oo = document.querySelectorAll('input.OO:checked');
         var outOO = []; //выходной массив
         for (var x = 0; x < oo.length; x++) { //перебераем все объекты
             outOO.push(oo[x].value); //добавляем значения в выходной массив
         }
         console.log(outOO);
+
+        jQuery.ajax({
+            url: '/Rabota/NaznachOO/',
+            type: "POST",
+            dataType: "json",
+            data: { naz: outOO, id: id },
+            success: function (query) {
+                //          alert(query);
+            }
+
+        });
+
         if (outOO.length > 0) {
             document.getElementById('ViborOo').classList.remove('btn-outline-warning');
             document.getElementById('ViborOo').classList.add('btn-outline-success');
