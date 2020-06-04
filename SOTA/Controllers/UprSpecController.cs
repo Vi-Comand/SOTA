@@ -68,13 +68,18 @@ namespace SOTA.Controllers
 
         public IActionResult SpecifikacCreate(SpecifikacAddModel model)
         {
-
             db.Specific.Add(model.Spec);
             db.SaveChanges();
-
             return RedirectToAction("SpecifikacRedact", new { id_spec = model.Spec.Id });
-
         }
+
+        public IActionResult SpecifikacIzmen(SpecifikacAddModel model)
+        {
+            db.Specific.Update(model.Spec);
+            db.SaveChanges();
+            return RedirectToAction("SpecifikacList");
+        }
+
         public IActionResult IzmKolZadans(SpecifikacRedactModel model)
         {
             int n_spec = model.Spec.Id;
