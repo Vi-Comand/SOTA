@@ -1,7 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using SOTA.Models;
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace SOTA.Controllers
 {
@@ -32,5 +36,23 @@ namespace SOTA.Controllers
             db.SaveChanges();
             return Redirect("Users");
         }
+
+        public async Task<IActionResult> LoadUsers(IList<IFormFile> uploadedFile)
+        {
+
+
+
+            if (uploadedFile != null)
+            {
+                foreach (var file in uploadedFile)
+                {
+                    ReadExcel readExcel = new ReadExcel(file);
+                    var _ListExcel = readExcel.ListExcel();
+                }
+            }
+
+            return RedirectToAction("Index");
+        }
+
     }
 }

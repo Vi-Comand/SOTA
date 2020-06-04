@@ -8,6 +8,14 @@
 
 <div class="col-12 col-md-12 col-lg-12 shadow p-3 mb-5 bg-white rounded">
 
+
+
+    <form method="post" enctype="multipart/form-data" asp-controller="Admin" asp-action="LoadUsers">
+        <input type="file" name="uploadedFile" multiple /><br>
+
+        <input class="btn btn-outline-success" type="submit" id="inputGroupFileAddon04" value="Загрузить" />
+        @* <a id="AddSpec" class="btn btn-outline-success shadow  col-3" asp-area="" asp-controller="Admin" asp-action="LoadUsers"><i class='fas fa-plus-circle'></i> Загрузить</a>*@
+    </form>
     <div class="card-body">
         <ul class="nav nav-tabs" id="myTab3" role="tablist">
             <li class="nav-item">
