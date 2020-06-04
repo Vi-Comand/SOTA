@@ -25,14 +25,18 @@ namespace SOTA.Controllers
             if (user.Role == 1)
             {
                 ViewBag.rl = user.Role;
-                return View();
+                return RedirectToAction("RabotaList", "Rabota");
             }
             if (user.Role == 0)
             {
                 ViewBag.rl = user.Role;
                 return RedirectToAction("NaznacRabotaList", "Uchen");
             }
-            return View();
+            else
+            {
+                ViewBag.rl = user.Role;
+                return RedirectToAction("RabotaList", "Rabota");
+            }
         }
 
         /*   public IActionResult SpecifikacList()

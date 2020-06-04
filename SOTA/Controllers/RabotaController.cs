@@ -15,9 +15,7 @@ namespace SOTA.Controllers
         string error;
         public RabotaController(SotaContext context)
         {
-
             db = context;
-
         }
         // [HttpGet]
         //[Route("Rabota/RabotaAdd/")]
@@ -32,9 +30,21 @@ namespace SOTA.Controllers
             return View();
         }
 
-        [Route("Rabota/RabotaAdd/{IdRabota?}")]
+        //[Route("Rabota/RabotaAdd/{IdRabota?}")]
         //  [HttpPost]
-        public IActionResult RabotaAdd(int IdRabota)
+
+
+
+        public IActionResult RabotaSozdan()
+        {
+            Rabota rabota = new Rabota();
+            db.Rabota.Add(rabota);
+            db.SaveChanges();
+            int IdRabota = rabota.Id;
+            return RedirectToAction("RabotaRedact", new { IdRabota });
+        }
+
+        public IActionResult RabotaRedact(int IdRabota)
         {
             string login = HttpContext.User.Identity.Name;
             Users user = db.Users.Where(p => p.Name == login).First();
@@ -43,6 +53,10 @@ namespace SOTA.Controllers
             rabota.Rabot = db.Rabota.Find(IdRabota);
             rabota.Oos = db.Oo.ToList();
             rabota.Mos = db.Mo.ToList();
+            ListSchecMO ListMO = new ListSchecMO();
+            rabota.NaznachMos = ListMO.SChecNaznachMo(db, IdRabota);
+
+            // rabota.NaznachOos = ListOO.SChecNaznachOo(db, IdRabota);
             rabota.Predms = db.Predm.ToList();
             ViewData["TipSpecs"] = db.TipSpec.ToList();
             rabota.Specs = db.Specific.ToList();
@@ -67,14 +81,13 @@ namespace SOTA.Controllers
             rabotaList.Specs = db.Specific.ToList();
             return View(rabotaList);
         }
-        public async Task<IActionResult> AddRabota(RabotaList rabota)
+        public async Task<IActionResult> RabotaNaznach(RabotaList rabota)
         {
             string login = HttpContext.User.Identity.Name;
             Users user = db.Users.Where(p => p.Name == login).First();
             ViewBag.rl = user.Role;
             Rabota AddRabota = new Rabota();
             List<Zadanie> pustZadan = db.Zadanie.Where(x => x.IdSpec == rabota.Rabot.IdSpec && x.Text == null).ToList();
-
             if (pustZadan.Count == 0)
             {
                 AddRabota.Name = rabota.Rabot.Name;
@@ -85,20 +98,12 @@ namespace SOTA.Controllers
                 AddRabota.Konec = Convert.ToDateTime(rabota.Rabot.Konec);
                 AddRabota.ListUchasn = rabota.Rabot.ListUchasn;
                 AddRabota.Sozd = DateTime.Now;
-                if (rabota.Rabot.Id == 0)
-                {
-
-                    await db.Rabota.AddAsync(AddRabota).ConfigureAwait(false);
-                }
-                else
-                {
-
-                    AddRabota.Id = rabota.Rabot.Id;
-                    db.Update(AddRabota).State = EntityState.Modified;
-                    //db.Rabota.Update(AddRabota);
-                }
+                AddRabota.Id = rabota.Rabot.Id;
+                db.Update(AddRabota).State = EntityState.Modified;
+                //db.Rabota.Update(AddRabota);
 
                 await db.SaveChangesAsync().ConfigureAwait(false);
+
                 error = "";
                 return RedirectToAction("RabotaList");
             }
@@ -106,7 +111,7 @@ namespace SOTA.Controllers
             {
                 error = "В данной спецификации не заполнены все задания";
                 ViewData["Error"] = error;
-                return RedirectPreserveMethod("RabotaAdd");
+                return RedirectPreserveMethod("RabotaRedact");
             }
         }
 
@@ -124,9 +129,55 @@ namespace SOTA.Controllers
             Users user = db.Users.Where(p => p.Name == login).First();
             ViewBag.rl = user.Role;
             Variant variant = new Variant(idSpec, nVar, db);
-
-
             return View("Variant", variant);
+        }
+
+        public IActionResult RabotaDel(int[] Id)
+        {
+            for (int i = 0; i < Id.Length; i++)
+            {
+                Rabota rabota = new Rabota { Id = Id[i] };
+                db.Rabota.Remove(rabota);
+            }
+            db.SaveChanges();
+            return RedirectToRoute("RabotaList");
+        }
+
+        public void DelNaznach(int id)
+        {
+            List<NaznachMo> Naznac = db.NaznachMo.Where(x => x.IdRab == id).ToList();
+            db.NaznachMo.RemoveRange(Naznac);
+            List<NaznachOo> NaznacOO = db.NaznachOo.Where(x => x.IdRab == id).ToList();
+            db.NaznachOo.RemoveRange(NaznacOO);
+        }
+
+
+        public IActionResult NaznachOO(int[] naz, int id)
+        {
+            DelNaznach(id);
+            for (int i = 0; i < naz.Length; i++)
+            {
+                NaznachOo naznachOo = new NaznachOo();
+                naznachOo.IdOo = naz[i];
+                naznachOo.IdRab = id;
+                db.NaznachOo.Add(naznachOo);
+            }
+            db.SaveChanges();
+            return Json("Ok");
+        }
+
+        public IActionResult NaznachMO(int[] naz, int id)
+        {
+            DelNaznach(id);
+            for (int i = 0; i < naz.Length; i++)
+            {
+                NaznachMo naznachMo = new NaznachMo();
+                naznachMo.IdMo = naz[i];
+                naznachMo.IdRab = id;
+                db.NaznachMo.Add(naznachMo);
+            }
+            db.SaveChanges();
+            return Json("Ok");
         }
     }
 }
