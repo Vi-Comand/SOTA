@@ -48,6 +48,8 @@ namespace SOTA.Controllers
                 {
                     ReadExcel readExcel = new ReadExcel(file);
                     var _ListExcel = readExcel.ListExcel();
+                    LoadVBD loadVBD = new LoadVBD(_ListExcel, db);
+                    loadVBD.CreateMO();
                 }
             }
 
