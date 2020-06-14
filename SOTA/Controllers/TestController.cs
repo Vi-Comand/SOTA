@@ -10,12 +10,12 @@ namespace SOTA.Controllers
         {
             db = context;
         }
-        public IActionResult Test()
+        public IActionResult Test(int idRabota)
         {
-            string login = HttpContext.User.Identity.Name;
-            Users user = db.Users.Where(p => p.Name == login).First();
-            ViewBag.rl = user.Role;
-            return View();
+         
+          VarintTest Test= new VarintTest(idRabota, 1,db);
+          
+            return View("Test",Test);
         }
     }
 }

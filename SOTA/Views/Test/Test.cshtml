@@ -1,4 +1,4 @@
-﻿@model SOTA.Models.Test;
+﻿@model SOTA.Models.VarintTest;
 @{
     ViewData["Title"] = "Тестирование";
 }
@@ -37,52 +37,60 @@
 
     function VivodZadan() {
 
-        for (var i = 1; i <= @Model.Zadans.Count; i++) {
+        for (var i = 1; i <= @Model._Zadan.Count; i++) {
 
             AddTabForZadan(i);
         }
 
 
-        @foreach (var row in Model.Zadans)
+        @foreach (var row in Model._Zadan)
         {
-            @: AddTextZadan(@row.Zadan.Nomer, "@row.Zadan.Text");
+            @: AddTextZadan(@row._nomer, "@row._text");
 
-            if (row.Zadan.Tip == 1)
+            if (row._tip == 1)
             {
-                @:AddZOtvTip1(@row.Zadan.Nomer);
+                @:AddZOtvTip1(@row._nomer);
             }
-            if (row.Zadan.Tip == 2)
+            if (row._tip == 2)
             {
                 int i = 0;
                 @:var MyArray = new Array();
-                bool Chekbox = false;
-                int kol_verno = 0;
-                foreach (var str in row.Otveti)
+
+               
+                foreach (var str in row._Otv)
                 {
-                    @:MyArray[@i] = ObjVibOtv(@str.Id, "@str.Text");
+                    @:MyArray[@i] = ObjVibOtv(@str._id, "@str._text");
                     i++;
-                    if (!Chekbox)
-                    {
-                        if (str.Verno == 1)
-                        {
-                            kol_verno++;
-                        }
-                        if (kol_verno > 1)
-                        {
-                            Chekbox = true;
-                        }
-                    }
+
                 }
 
 
-                @:var Checkbox = "@Chekbox";
-                @:AddZOtvTip2(MyArray, Checkbox,@row.Zadan.Nomer);
+                @:AddZOtvTip2(MyArray,@row._nomer);
+
 
 
             }
-             if (row.Zadan.Tip == 5)
+               if (row._tip == 3)
             {
-                @:AddZOtvTip5(@row.Zadan.Nomer);
+                int i = 0;
+                @:var MyArray = new Array();
+
+               
+                foreach (var str in row._Otv)
+                {
+                    @:MyArray[@i] = ObjVibOtv(@str._id, "@str._text");
+                    i++;
+
+                }
+
+
+                @:AddZOtvTip3(MyArray,@row._nomer);
+
+
+            }
+             if (row._tip == 5)
+            {
+                @:AddZOtvTip5(@row._nomer);
             }
 
         }
@@ -107,7 +115,7 @@
 
             return buf.join('');
         },
-   
+
         decode : function(str) {
             return str.replace(/&#(\d+);/g, function(match, dec) {
                 return String.fromCharCode(dec);
@@ -128,14 +136,19 @@
         document.getElementById('OtvetZadan[' + i + ']').innerHTML = "<input type='text' class='form-control input100' /><span class='focus - input100 '></span><label class='label' style='left:10px;'>Ответ</label>";
     }
 
-    function AddZOtvTip2(MyArray, Checkbox, nZad) {
+    function AddZOtvTip2(MyArray, nZad) {
 
-        if (Checkbox=="True")
+
             AddOtvCheckBox(MyArray,nZad);
-        else
-            AddOtvRadioButton(MyArray, nZad);
+       
     }
 
+    function AddZOtvTip3(MyArray, nZad) {
+
+       
+     
+            AddOtvRadioButton(MyArray, nZad);
+    }
     function AddZOtvTip5(i) {
 
         document.getElementById('OtvetZadan[' + i + ']').innerHTML = "<textarea rows='5' cols='100' ></textarea><span class='focus - input100 '></span><label class='label' style='left:10px;'>Ответ</label>";
@@ -205,7 +218,7 @@
         div.setAttribute("role", "tabpanel");
         div.setAttribute("aria-labelledby", "Zad" + i);
         div.innerHTML = i;
- 
+
 
         div.innerHTML =
             '<div class="container col-12 shadow p-3 mb-5 bg-whitesmoke rounded h-100"><div class="col-12" style="min-height: 200px;" id="TextZadan[' +
@@ -310,7 +323,7 @@
 
         }
         table += '</table>';
-    
+
         var div = document.createElement("div");
         var TableCreate = document.getElementById("OtvetiZadanPredprosmotr");
         div.innerHTML = table;

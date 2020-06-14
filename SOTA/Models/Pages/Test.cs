@@ -19,15 +19,17 @@ namespace SOTA.Models
     {
        public int _id{ get; set; }
         public string _text { get; set; }
+        public int _verno { get; set; }
 
     }
     public class ZadanTest 
     {
-        int _idZadan { get; }
-        int _tip { get;  }
-        string _text { get;  }
+       public  int _idZadan { get; }
+       public  int _tip { get;  }
+       public string _text { get;  }
+       public int _nomer { get; }
         private Zadanie Zadan;
-        List<OtvTest> _Otv { get; set; }
+       public List<OtvTest> _Otv { get; set; }
         private SotaContext _db;
         public ZadanTest(int id,SotaContext db)
         {
@@ -37,24 +39,48 @@ namespace SOTA.Models
                 Zadan = db.Zadanie.Find(id);
                 _tip = Zadan.Tip;
                 _text = Zadan.Text;
-                _Otv = LoadOtvet(id);
                 _db = db;
+                
+                _nomer = Zadan.Nomer;
+             
             }
-            LoadOtvet(_idZadan);
+            if(Zadan.Tip==2)
+            LoadOtvetTip2(_idZadan);
+            if(Zadan.Tip==4)
+                LoadOtvetTip4(_idZadan);
         }
-        private List<OtvTest> LoadOtvet(int idZadan)
+
+        private void LoadOtvetTip4(int idZadan)
         {
-            _Otv = _db.Otvet.Where(x => x.IdZadan == idZadan && x.Ustar == 0).Select((q) => new OtvTest { _id = q.Id, _text = q.Text }).ToList() ;
-            return _Otv;
+            _Otv = _db.Otvet.Where(x => x.IdZadan == idZadan &&x.Param1<2 && x.Ustar == 0).Select((q) => new OtvTest
+            {
+                _id = q.Id,
+                _text = q.Text,
+               
+
+            }).ToList();
+
+        }
+
+        private void LoadOtvetTip2(int idZadan)
+        {
+            _Otv = _db.Otvet.Where(x => x.IdZadan == idZadan && x.Ustar == 0).Select((q) => new OtvTest
+            {
+                _id = q.Id, _text = q.Text
+
+            }).ToList() ;
+            int kol_verno = _db.Otvet.Where(x => x.IdZadan == idZadan && x.Ustar == 0 && x.Verno == 1).Count();
+            if (kol_verno == 1)
+                Zadan.Tip = 3;
         }
 
 
     }
     public class VarintTest
     {
-        int _idRabota { get;  }
-        int _variant { get;  }
-        List<ZadanTest> _Zadan { get; set; }
+      public int _idRabota { get;  }
+       public  int _variant { get;  }
+        public List<ZadanTest> _Zadan { get;  }
         private int[] _idZadans;
         private SotaContext _db;
         int _idSpec;
@@ -66,13 +92,14 @@ namespace SOTA.Models
             _db = db;
             if(_db!=null)
             _idSpec = _db.Rabota.Where(x => x.Id == idRabota).First().IdSpec;
+            GetListZadan();
         }
         private void SpisokIdZadan()
         {
-            _idZadans = _db.Zadanie.Where(x => x.IdSpec == _idSpec).Select(g => g.Id).ToArray();
+            _idZadans = _db.Zadanie.Where(x => x.IdSpec == _idSpec&& x.Variant==_variant).Select(g => g.Id).ToArray();
 
         }
-        public List<ZadanTest> GetListZadan()     
+        private void GetListZadan()     
         {
             SpisokIdZadan();
             for (int i = 0; i < _idZadans.Length; i++)
@@ -80,7 +107,7 @@ namespace SOTA.Models
                 ZadanTest Zadan = new ZadanTest(_idZadans[i],_db);
                 _Zadan.Add(Zadan);
             }
-            return _Zadan;
+            
         }
       
 
