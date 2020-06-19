@@ -3,34 +3,38 @@
     ViewData["Title"] = "Тестирование";
 }
 <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-
+<script src="~/js/Test/ZagruzkaVigruzka.js"></script>
 
 
 <div class="container col-12 shadow p-3 mb-5 bg-white rounded h-100">
-
+    <input type="text" id="VibranniiLI" value="1">
     <div class="card-body">
         <ul class="nav nav-pills" id="TabForZadan" role="tablist">
-
-       
         </ul>
         <div class="tab-content  " id="Zadans">
-       
+
 
 
         </div>
         <div class="tab-content  " id="Zadans">
-       
+
         </div>
     </div>
+
     <a id="Konec" class="btn btn-outline-success col-3 shadow" asp-controller="Home" asp-action="Index"><i class='fas fa-check'></i>    Завершить работу</a>
 </div>
 
 
 
 
-
-
 <script>
+
+$("#TabForZadan").on("click", function () {
+
+    GetPredActiveLI();
+    setTimeout(() => GetActiveLI(), 1000);
+
+});
     window.onload = function() {
         VivodZadan();
     }
@@ -45,7 +49,7 @@
 
         @foreach (var row in Model._Zadan)
         {
-            @: AddTextZadan(@row._nomer, "@row._text");
+            @: AddTextZadan(@row._nomer, "@row._text",@row._tip,@row._idZadan);
 
             if (row._tip == 1)
             {
@@ -56,7 +60,7 @@
                 int i = 0;
                 @:var MyArray = new Array();
 
-               
+
                 foreach (var str in row._Otv)
                 {
                     @:MyArray[@i] = ObjVibOtv(@str._id, "@str._text");
@@ -75,7 +79,7 @@
                 int i = 0;
                 @:var MyArray = new Array();
 
-               
+
                 foreach (var str in row._Otv)
                 {
                     @:MyArray[@i] = ObjVibOtv(@str._id, "@str._text");
@@ -103,50 +107,54 @@
         return MyObj;
     }
 
-    (function(window){
-    window.htmlentities = {
+//    (function(window){
+//    window.htmlentities = {
 
-        encode : function(str) {
-            var buf = [];
+//        encode : function(str) {
+//            var buf = [];
 
-            for (var i=str.length-1;i>=0;i--) {
-                buf.unshift(['&#', str[i].charCodeAt(), ';'].join(''));
-            }
+//            for (var i=str.length-1;i>=0;i--) {
+//                buf.unshift(['&#', str[i].charCodeAt(), ';'].join(''));
+//            }
 
-            return buf.join('');
-        },
+//            return buf.join('');
+//        },
 
-        decode : function(str) {
-            return str.replace(/&#(\d+);/g, function(match, dec) {
-                return String.fromCharCode(dec);
-            });
-        }
-    };
-})(window);
+//        decode : function(str) {
+//            return str.replace(/&#(\d+);/g, function(match, dec) {
+//                return String.fromCharCode(dec);
+//            });
+//        }
+//    };
+//})(window);
 
 
-    function AddTextZadan(i, text) {
+    function AddTextZadan(i, text,tip,id) {
         var divText = document.getElementById('TextZadan[' + i + ']');
+       
         divText.innerHTML = text;
         divText.innerHTML = divText.textContent;
+        divText.innerHTML += "<input type='hidden' id='Zad" + i + "Tip' value=" + tip + "  />"
+          divText.innerHTML+="<input type='hidden' id='Zad"+i+"ID' value="+id+"  />"
+
     }
 
     function AddZOtvTip1(i) {
-
-        document.getElementById('OtvetZadan[' + i + ']').innerHTML = "<input type='text' class='form-control input100' /><span class='focus - input100 '></span><label class='label' style='left:10px;'>Ответ</label>";
+        
+        document.getElementById('OtvetZadan[' + i + ']').innerHTML = "<input type='text' id='Zad"+i+"Otvet'class='form-control input100' /><span class='focus - input100 '></span><label class='label' style='left:10px;'>Ответ</label>";
     }
 
     function AddZOtvTip2(MyArray, nZad) {
 
 
             AddOtvCheckBox(MyArray,nZad);
-       
+
     }
 
     function AddZOtvTip3(MyArray, nZad) {
 
-       
-     
+
+
             AddOtvRadioButton(MyArray, nZad);
     }
     function AddZOtvTip5(i) {

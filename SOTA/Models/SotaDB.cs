@@ -88,8 +88,17 @@ namespace SOTA.Models
         public string Kod { get; set; }
         public int KlassNom { get; set; }
     }
+    public class AnswerUser
+    {
+        public int Id { get; set; }
+        public int IdUser { get; set; }
+        public int IdZadan { get; set; }
+        public string TextOtv { get; set; }
+        public DateTime Date { get; set; }
 
-    public class Rabota
+    }
+
+        public class Rabota
     {
         public int Id { get; set; }
         public string Name { get; set; }
