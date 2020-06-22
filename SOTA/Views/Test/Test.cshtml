@@ -107,26 +107,7 @@ $("#TabForZadan").on("click", function () {
         return MyObj;
     }
 
-//    (function(window){
-//    window.htmlentities = {
 
-//        encode : function(str) {
-//            var buf = [];
-
-//            for (var i=str.length-1;i>=0;i--) {
-//                buf.unshift(['&#', str[i].charCodeAt(), ';'].join(''));
-//            }
-
-//            return buf.join('');
-//        },
-
-//        decode : function(str) {
-//            return str.replace(/&#(\d+);/g, function(match, dec) {
-//                return String.fromCharCode(dec);
-//            });
-//        }
-//    };
-//})(window);
 
 
     function AddTextZadan(i, text,tip,id) {
@@ -165,11 +146,11 @@ $("#TabForZadan").on("click", function () {
 
         for (i = 0; i < MyArray.length; i++) {
             document.getElementById('OtvetZadan[' + nZad+']').innerHTML +=
-                "<label class=\"custom-switch mt-2\" style=\"height:28px\"><input type=\"checkbox\" name=\"id1ch[" +
-            MyArray[i].id +
-                "]\" id=\"id1ch[" +
-                MyArray[i].id +
-                "]\" value=\"1\"  class=\"custom-switch-input\"><span class=\"custom-switch-indicator\"> </span >" +
+                "<label class=\"custom-switch mt-2\" style=\"height:28px\"><input type=\"checkbox\" name=\"nZad" + nZad+"ch" +
+            i +
+            "\" id=\"nZad" + nZad + "ch" +
+            i +
+                "\" value="+MyArray[i].id+"  class=\"custom-switch-input\"><span class=\"custom-switch-indicator\"> </span >" +
             MyArray[i].text +
                 "</label></br>";
         }

@@ -16,26 +16,44 @@ function podgotovkaKSave(nZad) {
     
     if (tip == 1)
         text = document.getElementById("Zad" + nZad + "Otvet").value;
-    alert(text);
+    if (tip == 2)
+    {
+        text = TextOtvTip2(nZad);
+    }
     if (id != null && text != null)
         vbd(id, text);
     
 }
+function TextOtvTip2(nZad) {
+    var text="";
+    for (i = 0; ; i++) {
+        if (document.getElementById("nZad" + nZad + "ch" + i) != null ) {
+            if (document.getElementById("nZad" + nZad + "ch" + i).checked == true)
+            {
+                text += document.getElementById("nZad" + nZad + "ch" + i).value + ";";
+                alert(text);
+            }
+        }
+        else
+            break;
+    }
+    return text;
+}
 
 
 function vbd(id, text) {
-    alert("dasd");
-    
-    jQuery.ajax({
-        url: '/Test/SaveOtvet/',
-        type: "POST",
-        dataType: "json",
-        data: { id: id, text: text },
-        success: function (query) {
-           
-        }
+  
+        jQuery.ajax({
+            url: '/Test/SaveOtvet/',
+            type: "POST",
+            dataType: "json",
+            data: { id: id, text: text },
+            success: function (query) {
 
-    });
+            }
+
+        });
+    
   
 }
 

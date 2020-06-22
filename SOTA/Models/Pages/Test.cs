@@ -112,6 +112,37 @@ namespace SOTA.Models
       
 
     }
+    public class SaveOtvUser
+    {
+        AnswerUser answer;
+        AnswerUser answer1;
 
+        SotaContext db;
+        public SaveOtvUser(int _id,string _text,SotaContext _db,int _idUser)
+        {
+            if(_id!=0 && _text!= null&& _db!=null && _idUser!=0)
+            {
+                answer = new AnswerUser();
+                answer.IdZadan = _id;
+                answer.TextOtv = _text;
+                answer.IdUser = _idUser;
+           
+                db = _db;
+                SaveVBD();
+
+
+            }
+
+        }
+        public void SaveVBD()
+        {
+          
+            answer.Date = DateTime.Now;
+            db.AnswerUser.AddAsync(answer);
+            db.SaveChangesAsync();
+
+        }
+
+    }
 
 }
