@@ -53,7 +53,7 @@ $("#TabForZadan").on("click", function () {
 
             if (row._tip == 1)
             {
-                @:AddZOtvTip1(@row._nomer);
+                @:AddZOtvTip1(@row._nomer,"@row._otvVBD");
             }
             if (row._tip == 2)
             {
@@ -100,10 +100,11 @@ $("#TabForZadan").on("click", function () {
         }
     }
 
-    function ObjVibOtv(id, text) {
+    function ObjVibOtv(id, text, otvVBD) {
         var MyObj = new Object();
         MyObj.id = id;
         MyObj.text = text;
+        MyObj.otvVBD = otvVBD;
         return MyObj;
     }
 
@@ -120,56 +121,49 @@ $("#TabForZadan").on("click", function () {
 
     }
 
-    function AddZOtvTip1(i) {
+    function AddZOtvTip1(i,text) {
         
-        document.getElementById('OtvetZadan[' + i + ']').innerHTML = "<input type='text' id='Zad"+i+"Otvet'class='form-control input100' /><span class='focus - input100 '></span><label class='label' style='left:10px;'>Ответ</label>";
+        document.getElementById('OtvetZadan[' + i + ']').innerHTML = "<input type='text' id='Zad"+i+"Otvet'class='form-control input100' value="+text+" /><span class='focus - input100 '></span><label class='label' style='left:10px;'>Ответ</label>";
     }
 
     function AddZOtvTip2(MyArray, nZad) {
 
-
-            AddOtvCheckBox(MyArray,nZad);
+        for (i = 0; i < MyArray.length; i++) {
+            document.getElementById('OtvetZadan[' + nZad + ']').innerHTML +=
+                "<label class=\"custom-switch mt-2\" style=\"height:28px\"><input type=\"checkbox\" name=\"nZad" + nZad + "ch" +
+                i +
+                "\" id=\"nZad" + nZad + "ch" +
+                i +
+                "\" value=" + MyArray[i].id + "  class=\"custom-switch-input\"><span class=\"custom-switch-indicator\"> </span >" +
+                MyArray[i].text +
+                "</label></br>";
+        }
 
     }
 
     function AddZOtvTip3(MyArray, nZad) {
 
 
-
-            AddOtvRadioButton(MyArray, nZad);
-    }
-    function AddZOtvTip5(i) {
-
-        document.getElementById('OtvetZadan[' + i + ']').innerHTML = "<textarea rows='5' cols='100' ></textarea><span class='focus - input100 '></span><label class='label' style='left:10px;'>Ответ</label>";
-    }
-    function AddOtvCheckBox(MyArray, nZad) {
-
         for (i = 0; i < MyArray.length; i++) {
-            document.getElementById('OtvetZadan[' + nZad+']').innerHTML +=
-                "<label class=\"custom-switch mt-2\" style=\"height:28px\"><input type=\"checkbox\" name=\"nZad" + nZad+"ch" +
-            i +
-            "\" id=\"nZad" + nZad + "ch" +
-            i +
-                "\" value="+MyArray[i].id+"  class=\"custom-switch-input\"><span class=\"custom-switch-indicator\"> </span >" +
-            MyArray[i].text +
-                "</label></br>";
-        }
-    }
-
-    function AddOtvRadioButton(MyArray, nZad) {
-        for (i = 0; i < MyArray.length; i++) {
-            document.getElementById('OtvetZadan[' + nZad+']').innerHTML +=
-                ' <div class="custom-control custom-radio custom-control-inline" ><input type="radio" id="id1rad[' +
-            MyArray[i].id +
-                ']" name="customRadio" class="custom-control-input"><label class="custom-control-label" for="id1rad[' +
-                MyArray[i].id +
-                ']">' +
-            MyArray[i].text +
+            document.getElementById('OtvetZadan[' + nZad + ']').innerHTML +=
+                ' <div class="custom-control custom-radio custom-control-inline" ><input type="radio" id=\"nZad' + nZad + 'rb' +
+                i +
+                '\" name="customRadio" value=\"' + MyArray[i].id + '\" class="custom-control-input"><label class="custom-control-label" for=\"nZad' + nZad + 'rb' +
+                i +
+                '\">' +
+                MyArray[i].text +
                 '</label></div ></br> ';
 
 
         }
     }
+    function AddZOtvTip5(i) {
+
+        document.getElementById('OtvetZadan[' + i + ']').innerHTML = "<textarea rows='5' cols='100' ></textarea><span class='focus - input100 '></span><label class='label' style='left:10px;'>Ответ</label>";
+    }
+    
+
+   
 
     function AddTabForZadan(i) {
 

@@ -25,11 +25,14 @@ namespace SOTA.Models
     public class ZadanTest 
     {
        public  int _idZadan { get; }
-       public  int _tip { get;  }
+       public  int _tip { get; set; }
        public string _text { get;  }
-       public int _nomer { get; }
+        public string _otvVBD { get; set; }
+        public int _nomer { get; }
+
         private Zadanie Zadan;
        public List<OtvTest> _Otv { get; set; }
+
         private SotaContext _db;
         public ZadanTest(int id,SotaContext db)
         {
@@ -45,14 +48,24 @@ namespace SOTA.Models
              
             }
             if(Zadan.Tip==2)
-            LoadOtvetTip2(_idZadan);
+            LoadOtvetTip2();
             if(Zadan.Tip==4)
-                LoadOtvetTip4(_idZadan);
-        }
+                LoadOtvetTip4();
+            LoadOtvVBD();
 
-        private void LoadOtvetTip4(int idZadan)
+        }
+        private void LoadOtvVBD()
         {
-            _Otv = _db.Otvet.Where(x => x.IdZadan == idZadan &&x.Param1<2 && x.Ustar == 0).Select((q) => new OtvTest
+            try
+            {
+                _otvVBD = _db.AnswerUser.Where(x => x.IdZadan == _idZadan).First().TextOtv;
+            }
+            catch { }
+                      
+           }
+            private void LoadOtvetTip4()
+        {
+            _Otv = _db.Otvet.Where(x => x.IdZadan == _idZadan && x.Param1<2 && x.Ustar == 0).Select((q) => new OtvTest
             {
                 _id = q.Id,
                 _text = q.Text,
@@ -62,16 +75,16 @@ namespace SOTA.Models
 
         }
 
-        private void LoadOtvetTip2(int idZadan)
+        private void LoadOtvetTip2()
         {
-            _Otv = _db.Otvet.Where(x => x.IdZadan == idZadan && x.Ustar == 0).Select((q) => new OtvTest
+            _Otv = _db.Otvet.Where(x => x.IdZadan == _idZadan && x.Ustar == 0).Select((q) => new OtvTest
             {
                 _id = q.Id, _text = q.Text
 
             }).ToList() ;
-            int kol_verno = _db.Otvet.Where(x => x.IdZadan == idZadan && x.Ustar == 0 && x.Verno == 1).Count();
+            int kol_verno = _db.Otvet.Where(x => x.IdZadan == _idZadan && x.Ustar == 0 && x.Verno == 1).Count();
             if (kol_verno == 1)
-                Zadan.Tip = 3;
+                _tip = 3;
         }
 
 
@@ -115,8 +128,7 @@ namespace SOTA.Models
     public class SaveOtvUser
     {
         AnswerUser answer;
-        AnswerUser answer1;
-
+      
         SotaContext db;
         public SaveOtvUser(int _id,string _text,SotaContext _db,int _idUser)
         {

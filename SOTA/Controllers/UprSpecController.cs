@@ -592,7 +592,12 @@ namespace SOTA.Controllers
             model.Ball = Zadan.Ball;
             model.Otvets = db.Otvet.Where(x => x.IdZadan == Zadan.Id && x.Ustar != 1).ToList();
             if (Zadan.Tip == 4 && model.Otvets != null)
-                model.KolStrTabOtv = (int)model.Otvets.Max(x => x.Param1);
+                try
+                {
+                    model.KolStrTabOtv = (int)model.Otvets.Max(x => x.Param1);
+                }
+                catch
+                { }
             return View("Zadanie", model);
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

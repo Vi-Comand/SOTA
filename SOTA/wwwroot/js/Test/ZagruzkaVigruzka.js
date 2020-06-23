@@ -20,6 +20,10 @@ function podgotovkaKSave(nZad) {
     {
         text = TextOtvTip2(nZad);
     }
+    if (tip == 3)
+    {
+        text = TextOtvTip3(nZad);
+    }
     if (id != null && text != null)
         vbd(id, text);
     
@@ -40,6 +44,20 @@ function TextOtvTip2(nZad) {
     return text;
 }
 
+function TextOtvTip3(nZad) {
+    var text = "";
+    for (i = 0; ; i++) {
+        if (document.getElementById("nZad" + nZad + "rb" + i) != null) {
+            if (document.getElementById("nZad" + nZad + "rb" + i).checked == true) {
+                text += document.getElementById("nZad" + nZad + "rb" + i).value;
+                break;
+            }
+        }
+        else
+            break;
+    }
+    return text;
+}
 
 function vbd(id, text) {
   
