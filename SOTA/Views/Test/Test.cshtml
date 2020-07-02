@@ -1,173 +1,206 @@
-﻿@model SOTA.Models.Test;
+﻿@model SOTA.Models.VarintTest;
 @{
     ViewData["Title"] = "Тестирование";
 }
 <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-
+<script src="~/js/Test/ZagruzkaVigruzka.js"></script>
 
 
 <div class="container col-12 shadow p-3 mb-5 bg-white rounded h-100">
-
+    <input type="text" id="VibranniiLI" value="1">
     <div class="card-body">
         <ul class="nav nav-pills" id="TabForZadan" role="tablist">
-
-       
         </ul>
         <div class="tab-content  " id="Zadans">
-       
+
 
 
         </div>
         <div class="tab-content  " id="Zadans">
-       
+
         </div>
     </div>
+
     <a id="Konec" class="btn btn-outline-success col-3 shadow" asp-controller="Home" asp-action="Index"><i class='fas fa-check'></i>    Завершить работу</a>
 </div>
 
 
 
 
-
-
 <script>
+    var OtvVBDMass = new Map();
+$("#TabForZadan").on("click", function () {
+
+    GetPredActiveLI();
+    setTimeout(() => GetActiveLI(), 1000);
+
+});
     window.onload = function() {
         VivodZadan();
     }
 
     function VivodZadan() {
 
-        for (var i = 1; i <= @Model.Zadans.Count; i++) {
+        for (var i = 1; i <= @Model._Zadan.Count; i++) {
 
             AddTabForZadan(i);
         }
 
-
-        @foreach (var row in Model.Zadans)
+      
+        @foreach (var row in Model._Zadan)
         {
-            @: AddTextZadan(@row.Zadan.Nomer, "@row.Zadan.Text");
 
-            if (row.Zadan.Tip == 1)
+             @:OtvVBDMass.set(@row._idZadan, "@row._otvVBD")
+
+            @: AddTextZadan(@row._nomer, "@row._text",@row._tip,@row._idZadan);
+
+            if (row._tip == 1)
             {
-                @:AddZOtvTip1(@row.Zadan.Nomer);
+                @:AddZOtvTip1(@row._nomer,"@row._otvVBD");
             }
-            if (row.Zadan.Tip == 2)
+            if (row._tip == 2)
             {
+
+
                 int i = 0;
                 @:var MyArray = new Array();
-                bool Chekbox = false;
-                int kol_verno = 0;
-                foreach (var str in row.Otveti)
+
+
+                foreach (var str in row._Otv)
                 {
-                    @:MyArray[@i] = ObjVibOtv(@str.Id, "@str.Text");
+                    @:MyArray[@i] = ObjVibOtv(@str._id, "@str._text");
                     i++;
-                    if (!Chekbox)
-                    {
-                        if (str.Verno == 1)
-                        {
-                            kol_verno++;
-                        }
-                        if (kol_verno > 1)
-                        {
-                            Chekbox = true;
-                        }
-                    }
+
                 }
 
 
-                @:var Checkbox = "@Chekbox";
-                @:AddZOtvTip2(MyArray, Checkbox,@row.Zadan.Nomer);
+            //     @:razborCheck(MyArray, "@row._otvVBD");
+
+                @:AddZOtvTip2(MyArray,@row._nomer);
+
 
 
             }
-             if (row.Zadan.Tip == 5)
+               if (row._tip == 3)
             {
-                @:AddZOtvTip5(@row.Zadan.Nomer);
+                int i = 0;
+                @:var MyArray = new Array();
+
+
+                foreach (var str in row._Otv)
+                {
+                    @:MyArray[@i] = ObjVibOtv(@str._id, "@str._text");
+                    i++;
+
+                }
+
+
+                @:AddZOtvTip3(MyArray,@row._nomer);
+
+
+            }
+             if (row._tip == 5)
+            {
+                @:AddZOtvTip5(@row._nomer);
             }
 
         }
+        console.log(OtvVBDMass);
     }
 
-    function ObjVibOtv(id, text) {
+    function ObjVibOtv(id, text, otvVBD) {
         var MyObj = new Object();
         MyObj.id = id;
         MyObj.text = text;
+        MyObj.otvVBD = otvVBD;
         return MyObj;
     }
 
-    (function(window){
-    window.htmlentities = {
+    function razborCheck(MyArray, otvVDB) {
 
-        encode : function(str) {
-            var buf = [];
+      
+      //  alert(" b: "+b);
+      //  while (b!="") {
+      //      alert(b);
+      //      var a = b.split(';')[0];
+      //    b = b.split(';')[1];
 
-            for (var i=str.length-1;i>=0;i--) {
-                buf.unshift(['&#', str[i].charCodeAt(), ';'].join(''));
-            }
 
-            return buf.join('');
-        },
-   
-        decode : function(str) {
-            return str.replace(/&#(\d+);/g, function(match, dec) {
-                return String.fromCharCode(dec);
-            });
+      //      users.push(a);
+
+      //  }
+      //  console.log(users);
+      //  // возвращает массив, состоящий из двух первых пользователей
+      ////  let someUsers = users.filter(item => item.id < 3);
+
+
+
+        for (i = 0; MyArray.length; i++) {
+
         }
-    };
-})(window);
 
+    }
 
-    function AddTextZadan(i, text) {
+    function AddTextZadan(i, text,tip,id) {
         var divText = document.getElementById('TextZadan[' + i + ']');
+
         divText.innerHTML = text;
         divText.innerHTML = divText.textContent;
+        divText.innerHTML += "<input type='hidden' id='Zad" + i + "Tip' value=" + tip + "  />"
+          divText.innerHTML+="<input type='hidden' id='Zad"+i+"ID' value="+id+"  />"
+
+
+
+
+
+
+
+
     }
 
-    function AddZOtvTip1(i) {
+    function AddZOtvTip1(i,text) {
 
-        document.getElementById('OtvetZadan[' + i + ']').innerHTML = "<input type='text' class='form-control input100' /><span class='focus - input100 '></span><label class='label' style='left:10px;'>Ответ</label>";
+        document.getElementById('OtvetZadan[' + i + ']').innerHTML = "<input type='text' id='Zad"+i+"Otvet'class='form-control input100' value="+text+" /><span class='focus - input100 '></span><label class='label' style='left:10px;'>Ответ</label>";
     }
 
-    function AddZOtvTip2(MyArray, Checkbox, nZad) {
-
-        if (Checkbox=="True")
-            AddOtvCheckBox(MyArray,nZad);
-        else
-            AddOtvRadioButton(MyArray, nZad);
-    }
-
-    function AddZOtvTip5(i) {
-
-        document.getElementById('OtvetZadan[' + i + ']').innerHTML = "<textarea rows='5' cols='100' ></textarea><span class='focus - input100 '></span><label class='label' style='left:10px;'>Ответ</label>";
-    }
-    function AddOtvCheckBox(MyArray, nZad) {
+    function AddZOtvTip2(MyArray, nZad) {
 
         for (i = 0; i < MyArray.length; i++) {
-            document.getElementById('OtvetZadan[' + nZad+']').innerHTML +=
-                "<label class=\"custom-switch mt-2\" style=\"height:28px\"><input type=\"checkbox\" name=\"id1ch[" +
-            MyArray[i].id +
-                "]\" id=\"id1ch[" +
-                MyArray[i].id +
-                "]\" value=\"1\"  class=\"custom-switch-input\"><span class=\"custom-switch-indicator\"> </span >" +
-            MyArray[i].text +
+            document.getElementById('OtvetZadan[' + nZad + ']').innerHTML +=
+                "<label class=\"custom-switch mt-2\" style=\"height:28px\"><input type=\"checkbox\" name=\"nZad" + nZad + "ch" +
+                i +
+                "\" id=\"nZad" + nZad + "ch" +
+                i +
+                "\" value=" + MyArray[i].id + "  class=\"custom-switch-input\"><span class=\"custom-switch-indicator\"> </span >" +
+                MyArray[i].text +
                 "</label></br>";
         }
+
     }
 
-    function AddOtvRadioButton(MyArray, nZad) {
+    function AddZOtvTip3(MyArray, nZad) {
+
+
         for (i = 0; i < MyArray.length; i++) {
-            document.getElementById('OtvetZadan[' + nZad+']').innerHTML +=
-                ' <div class="custom-control custom-radio custom-control-inline" ><input type="radio" id="id1rad[' +
-            MyArray[i].id +
-                ']" name="customRadio" class="custom-control-input"><label class="custom-control-label" for="id1rad[' +
-                MyArray[i].id +
-                ']">' +
-            MyArray[i].text +
+            document.getElementById('OtvetZadan[' + nZad + ']').innerHTML +=
+                ' <div class="custom-control custom-radio custom-control-inline" ><input type="radio" id=\"nZad' + nZad + 'rb' +
+                i +
+                '\" name="customRadio" value=\"' + MyArray[i].id + '\" class="custom-control-input"><label class="custom-control-label" for=\"nZad' + nZad + 'rb' +
+                i +
+                '\">' +
+                MyArray[i].text +
                 '</label></div ></br> ';
 
 
         }
     }
+    function AddZOtvTip5(i) {
+
+        document.getElementById('OtvetZadan[' + i + ']').innerHTML = "<textarea rows='5' cols='100' ></textarea><span class='focus - input100 '></span><label class='label' style='left:10px;'>Ответ</label>";
+    }
+
+
+
 
     function AddTabForZadan(i) {
 
@@ -205,7 +238,7 @@
         div.setAttribute("role", "tabpanel");
         div.setAttribute("aria-labelledby", "Zad" + i);
         div.innerHTML = i;
- 
+
 
         div.innerHTML =
             '<div class="container col-12 shadow p-3 mb-5 bg-whitesmoke rounded h-100"><div class="col-12" style="min-height: 200px;" id="TextZadan[' +
@@ -310,7 +343,7 @@
 
         }
         table += '</table>';
-    
+
         var div = document.createElement("div");
         var TableCreate = document.getElementById("OtvetiZadanPredprosmotr");
         div.innerHTML = table;

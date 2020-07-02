@@ -1,0 +1,100 @@
+function GetPredActiveLI() {
+    var d = document.getElementsByClassName("nav-link active");
+    alert("dfasf1");
+
+
+
+    var nZad = d[0].id.substr(3);
+    nZad = nZad.substr(0, nZad.length - 4);
+ 
+    podgotovkaKSave(nZad);
+}
+function podgotovkaKSave(nZad) {
+
+    var id = document.getElementById("Zad" + nZad + "ID").value;
+   
+    var tip = document.getElementById("Zad" + nZad + "Tip").value;
+    var text;
+    
+    if (tip == 1)
+        text = document.getElementById("Zad" + nZad + "Otvet").value;
+    if (tip == 2)
+    {
+        text = TextOtvTip2(nZad);
+    }
+    if (tip == 3)
+    {
+        text = TextOtvTip3(nZad);
+    }
+    console.log(text);
+    if (id != null && text != "" && text != null)
+    {
+        alert("kkk");
+        vbd(id, text);
+    }
+    
+}
+function TextOtvTip2(nZad) {
+    var text="";
+    for (i = 0; ; i++) {
+        if (document.getElementById("nZad" + nZad + "ch" + i) != null ) {
+            if (document.getElementById("nZad" + nZad + "ch" + i).checked == true)
+            {
+                text += document.getElementById("nZad" + nZad + "ch" + i).value + ";";
+                alert(text);
+            }
+        }
+        else
+            break;
+    }
+    return text;
+}
+
+function TextOtvTip3(nZad) {
+    var text = "";
+    for (i = 0; ; i++) {
+        if (document.getElementById("nZad" + nZad + "rb" + i) != null) {
+            if (document.getElementById("nZad" + nZad + "rb" + i).checked == true) {
+                text += document.getElementById("nZad" + nZad + "rb" + i).value;
+                break;
+            }
+        }
+        else
+            break;
+    }
+    return text;
+}
+
+function vbd(id, text) {
+   
+    console.log(OtvVBDMass);
+   
+    alert("kk2");
+    if (text != OtvVBDMass.get(parseInt(id))) {
+        jQuery.ajax({
+            url: '/Test/SaveOtvet/',
+            type: "POST",
+            dataType: "json",
+            data: { id: id, text: text },
+            success: function (query) {
+
+            }
+
+        });
+    }
+    
+  
+}
+
+
+
+
+function GetActiveLI() {
+    var d = document.getElementsByClassName("nav-link active");
+
+   
+    var nZad = d[0].id.substr(3);
+    nZad = nZad.substr(0, nZad.length - 4);
+   
+    
+}

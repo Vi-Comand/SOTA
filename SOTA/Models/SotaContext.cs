@@ -16,10 +16,11 @@ namespace SOTA.Models
         public DbSet<Rabota> Rabota { get; set; }
         public DbSet<NaznachMo> NaznachMo { get; set; }
         public DbSet<NaznachOo> NaznachOo { get; set; }
+        public DbSet<AnswerUser> AnswerUser { get; set; }
         public SotaContext(DbContextOptions<SotaContext> options)
             : base(options)
         {
-            Database.EnsureCreated();
+            //Database.EnsureCreated();
         }
     }
 }
