@@ -72,7 +72,7 @@ function vbd(id, text) {
     alert("kk2");
     if (text != OtvVBDMass.get(parseInt(id))) {
         jQuery.ajax({
-            url: '/Test/SaveOtvet/',
+            url: '/Test/SaveOtvet2/',
             type: "POST",
             dataType: "json",
             data: { id: id, text: text },

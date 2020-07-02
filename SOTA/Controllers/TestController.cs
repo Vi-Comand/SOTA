@@ -12,22 +12,25 @@ namespace SOTA.Controllers
         {
             db = context;
         }
-        public  async Task<IActionResult> SaveOtvet(int id,string text)
+        //public  IActionResult SaveOtvet(int id,string text)
+        //{
+        //    var login = HttpContext.User.Identity.Name;
+        //    int idUser = db.Users.Where(p => p.Name == login).First().Id;
+
+        //    SaveOtvUser save=new SaveOtvUser(id, text, db, idUser);
+
+        //   return Json ("ok");
+        //}
+        public IActionResult SaveOtvet(int id, string text)
         {
             var login = HttpContext.User.Identity.Name;
             int idUser = db.Users.Where(p => p.Name == login).First().Id;
 
-            SaveOtvUser save=new SaveOtvUser(id, text, db, idUser);
+            SaveOtvUser save = new SaveOtvUser(id, text, db, idUser);
 
-            
-
-
-
-
-        
-            return Json ("ok");
+            return Json("ok");
         }
-            public IActionResult Test(int idRabota)
+        public IActionResult Test(int idRabota)
         {
          
           VarintTest Test= new VarintTest(idRabota, 1,db);
