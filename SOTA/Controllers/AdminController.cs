@@ -34,6 +34,32 @@ namespace SOTA.Controllers
             return View("Users", usersPage);
         }
 
+        public IActionResult UO()
+        {
+            string login = HttpContext.User.Identity.Name;
+            Users user = db.Users.Where(p => p.Name == login).First();
+            int ImO = user.IdMo;
+            ViewBag.rl = user.Role;
+            ListUsersAdmin listUsersAdmin = new ListUsersAdmin(db);
+            listUsersAdmin.LisrUsersA();
+            UsersPage usersPage = new UsersPage();
+            usersPage.LisrUsersOO = listUsersAdmin.LisrUsersAdm.Where(x => x.Role == 2 && x.IdMo == ImO).OrderBy(x => x.IdMo).ToList();
+            return View("UO", usersPage);
+        }
+
+        public IActionResult OO()
+        {
+            string login = HttpContext.User.Identity.Name;
+            Users user = db.Users.Where(p => p.Name == login).First();
+            int IoO = user.IdOo;
+            ViewBag.rl = user.Role;
+            ListUsersAdmin listUsersAdmin = new ListUsersAdmin(db);
+            listUsersAdmin.LisrUsersA();
+            UsersPage usersPage = new UsersPage();
+            usersPage.LisrUsersKlass = listUsersAdmin.LisrUsersAdm.Where(x => x.Role == 1 && x.IdOo == IoO).OrderBy(x => x.IdOo).ToList();
+            return View("OO", usersPage);
+        }
+
         public IActionResult CleanPass(int idDel)
         {
             Users user = new Users();
