@@ -22,9 +22,16 @@ namespace SOTA.Controllers
             string login = HttpContext.User.Identity.Name;
             Users user = db.Users.Where(p => p.Name == login).First();
             ViewBag.rl = user.Role;
-            ListMo listMo = new ListMo();
-            listMo.ListUsersMo = db.Users.Where(p => p.Role == 1).ToList();
-            return View("Users", listMo);
+            ListUsersAdmin listUsersAdmin = new ListUsersAdmin(db);
+            listUsersAdmin.LisrUsersA();
+            UsersPage usersPage = new UsersPage();
+            usersPage.LisrUsersMO = listUsersAdmin.LisrUsersAdm.Where(x => x.Role == 3).OrderBy(x => x.IdMo).ToList();
+            usersPage.LisrUsersOO = listUsersAdmin.LisrUsersAdm.Where(x => x.Role == 2).OrderBy(x => x.IdMo).ToList();
+            usersPage.LisrUsersKlass = listUsersAdmin.LisrUsersAdm.Where(x => x.Role == 1).OrderBy(x => x.IdMo).ThenBy(x => x.IdOo).ToList();
+            usersPage.LisrUsersTest = listUsersAdmin.LisrUsersAdm.Where(x => x.Role == 0).ToList();
+            // LisrUsersA listMo = new ListUsersMo();
+            //listMo.UsersMo = db.Users.Where(p => p.Role == 3).ToList();
+            return View("Users", usersPage);
         }
 
         public IActionResult CleanPass(int idDel)
@@ -53,7 +60,7 @@ namespace SOTA.Controllers
                 }
             }
 
-            return RedirectToAction("Index");
+            return Redirect("Users");
         }
 
     }

@@ -1,5 +1,5 @@
 ﻿@using System.Linq
-@model SOTA.Models.ListMo
+@model SOTA.Models.UsersPage
 @{
     ViewData["Title"] = "Пользователи";
 }
@@ -22,13 +22,13 @@
                 <a class="nav-link active" id="uo-tab" data-toggle="tab" href="#uo" role="tab" aria-controls="uo" aria-selected="true">УО</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="mo-tab" data-toggle="tab" href="#mo" role="tab" aria-controls="mo" aria-selected="false">МО</a>
+                <a class="nav-link" id="mo-tab" data-toggle="tab" href="#mo" role="tab" aria-controls="mo" aria-selected="false">ОО</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="oo-tab" data-toggle="tab" href="#oo" role="tab" aria-controls="oo" aria-selected="false">ОО</a>
+                <a class="nav-link" id="oo-tab" data-toggle="tab" href="#oo" role="tab" aria-controls="oo" aria-selected="false">Классы</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="search-tab" data-toggle="tab" href="#search" role="tab" aria-controls="search" aria-selected="false">Поиск</a>
+                <a class="nav-link" id="search-tab" data-toggle="tab" href="#search" role="tab" aria-controls="search" aria-selected="false">Учащиеся</a>
             </li>
         </ul>
         <div class="tab-content tab-bordered " id="myTabContent2">
@@ -40,7 +40,7 @@
                             <thead class="table-yel">
                                 <tr>
                                     <th>#</th>
-                                    <th>ФИО</th>
+                                    <th>МО</th>
                                     <th>Логин</th>
                                     <th>Дата регистрации</th>
                                     <th>Управление</th>
@@ -49,17 +49,18 @@
                             <tbody>
 
 
-                                @for (int i = 0; i < Model.ListUsersMo.Count; i++)
+                                @for (int i = 0; i < Model.LisrUsersMO.Count; i++)
                                 {
                                     <tr>
-                                        <td>@Model.ListUsersMo[i].Id </td>
-                                        <td>@Model.ListUsersMo[i].F @Model.ListUsersMo[i].I @Model.ListUsersMo[i].O</td>
-                                        <td>@Model.ListUsersMo[i].Name</td>
-                                        <td>@Model.ListUsersMo[i].DateReg</td>
+                                        <td>@Model.LisrUsersMO[i].Id </td>
+                                        <td>@Model.LisrUsersMO[i].MO</td>
+                                        <td>@Model.LisrUsersMO[i].Name</td>
+                                        <td>@Model.LisrUsersMO[i].DateReg</td>
+                                        
                                         <td>
-                                            @if (@Model.ListUsersMo[i].Pass != null)
+                                            @if (@Model.LisrUsersMO[i].Pass != null)
                                             {
-                                                <a asp-area="" asp-controller="Admin" asp-action="CleanPass" asp-route-idDel="@Model.ListUsersMo[i].Id" class="btn btn-danger">Сбросить пароль</a>
+                                                <a asp-area="" asp-controller="Admin" asp-action="CleanPass" asp-route-idDel="@Model.LisrUsersMO[i].Id" class="btn btn-danger">Сбросить пароль</a>
                                             }
                                         </td>
 
@@ -69,7 +70,7 @@
                             <tfoot class=" ">
                                 <tr>
                                     <td>Всего </td>
-                                    <td>@Model.ListUsersMo.Count</td>
+                                    <td>@Model.LisrUsersMO.Count</td>
                                     @*<td>@ViewBag.SumTest</td>*@
                                 </tr>
                             </tfoot>
@@ -78,10 +79,163 @@
                 </div>
             </div>
             <div class="tab-pane fade" id="mo" role="tabpanel" aria-labelledby="mo-tab">
-                mo
-            </div>
+                <div class="card-body p-0">
+                    <div class="row">
+                        <div class="col-3">
+                            <div id="list-example" class="list-group">
+                                @for (int i = 0; i < Model.LisrUsersOO.Count; i++)
+                                {
+                                    if (i == 0 || Model.LisrUsersOO[i - 1].IdMo != Model.LisrUsersOO[i].IdMo)
+                                    {
+                                        <a class="list-group-item list-group-item-action p-1" href="#mo_@Model.LisrUsersOO[i].IdMo">@Model.LisrUsersOO[i].MO</a>
+                                    }
+
+
+                                }
+                            </div>
+                        </div>
+                        <div class="col-8 ">
+                            <div data-spy="scroll" data-target="#list-example" data-offset="0" style="position: relative; height: 800px; margin-top: .5rem; overflow: auto;">
+                                <table class="table  table-sm table-bordered mb-0">
+                                    @for (int i = 0; i < Model.LisrUsersOO.Count; i++)
+                                    {
+                                        if (i == 0 || Model.LisrUsersOO[i - 1].IdMo != Model.LisrUsersOO[i].IdMo)
+                                        {
+                                            <thead class="table-yel">
+                                                <tr>
+                                                    <td colspan="6">
+                                                        <h4 id="mo_@Model.LisrUsersOO[i].IdMo"> @Model.LisrUsersOO[i].MO</h4>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>МО</th>
+                                                    <th>ОО</th>
+                                                    <th>Логин</th>
+                                                    <th>Дата регистрации</th>
+                                                    <th>Управление</th>
+                                                </tr>
+                                            </thead>
+                                        }
+
+                                            <tr>
+                                                <td>@Model.LisrUsersOO[i].Id </td>
+                                                <td>@Model.LisrUsersOO[i].MO</td>
+                                                <td>@Model.LisrUsersOO[i].OO</td>
+                                                <td>@Model.LisrUsersOO[i].Name</td>
+                                                <td>@Model.LisrUsersOO[i].DateReg</td>
+
+                                                <td>
+                                                    @if (@Model.LisrUsersOO[i].Pass != null)
+                                                    {
+                                                        <a asp-area="" asp-controller="Admin" asp-action="CleanPass" asp-route-idDel="@Model.LisrUsersOO[i].Id" class="btn btn-danger">Сбросить пароль</a>
+                                                    }
+                                                </td>
+
+                                            </tr>
+
+                                        //   row.OO.Where(x => x.IdMo == Model.Mos[i].Id);
+
+
+                                    }
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    </div>
+                </div>
             <div class="tab-pane fade" id="oo" role="tabpanel" aria-labelledby="oo-tab">
-                oo
+                <div id="accordion">
+
+                    @for (int j = 0; j < Model.LisrUsersKlass.Count; j++)
+                    {
+                        if (j == 0 || Model.LisrUsersKlass[j - 1].IdMo != Model.LisrUsersKlass[j].IdMo)
+                        {
+                            <div class="accordion">
+                                <div class="accordion-header" role="button" data-toggle="collapse" data-target="#panel-body-@j" aria-expanded="true">
+                                    <h4>@Model.LisrUsersKlass[j].MO</h4>
+                                </div>
+                                <div class="accordion-body collapse " id="panel-body-@j" data-parent="#accordion">
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <div id="list-example" class="list-group">
+                                                @for (int i = 0; i < Model.LisrUsersKlass.Count; i++)
+                                                {
+                                                    if (i == 0 || Model.LisrUsersKlass[i - 1].IdOo != Model.LisrUsersKlass[i].IdOo)
+                                                    {
+                                                        <a class="list-group-item list-group-item-action p-1" href="#oo_@Model.LisrUsersKlass[i].IdOo mo_@Model.LisrUsersKlass[i].IdMo">@Model.LisrUsersKlass[i].OO</a>
+                                                    }
+
+
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-8 ">
+                                            <div data-spy="scroll" data-target="#list-example" data-offset="0" style="position: relative; height: 800px; margin-top: .5rem; overflow: auto;">
+                                                <table class="table  table-sm table-bordered mb-0">
+                                                    @for (int i = 0; i < Model.LisrUsersKlass.Count; i++)
+                                                    {
+                                                        if (i == 0 || Model.LisrUsersKlass[i - 1].IdOo != Model.LisrUsersKlass[i].IdOo)
+                                                        {
+                                                            <thead class="table-yel">
+                                                                <tr>
+                                                                    <td colspan="6">
+                                                                        <h4 id="oo_@Model.LisrUsersKlass[i].IdOo mo_@Model.LisrUsersKlass[i].IdMo"> @Model.LisrUsersKlass[i].OO</h4>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <th>#</th>
+                                                                    <th>МО</th>
+                                                                    <th>ОО</th>
+                                                                    <th>Логин</th>
+                                                                    <th>Дата регистрации</th>
+                                                                    <th>Управление</th>
+                                                                </tr>
+                                                            </thead>
+                                                        }
+
+                                                        <tr>
+                                                            <td>@Model.LisrUsersKlass[i].Id </td>
+                                                            <td>@Model.LisrUsersKlass[i].MO</td>
+                                                            <td>@Model.LisrUsersKlass[i].OO</td>
+                                                            <td>@Model.LisrUsersKlass[i].Name</td>
+                                                            <td>@Model.LisrUsersKlass[i].DateReg</td>
+
+                                                            <td>
+                                                                @if (@Model.LisrUsersKlass[i].Pass != null)
+                                                                {
+                                                                    <a asp-area="" asp-controller="Admin" asp-action="CleanPass" asp-route-idDel="@Model.LisrUsersKlass[i].Id" class="btn btn-danger">Сбросить пароль</a>
+                                                                }
+                                                            </td>
+
+                                                        </tr>
+
+                                                        //   row.OO.Where(x => x.IdMo == Model.Mos[i].Id);
+
+
+                                                    }
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                                }
+                        }
+
+
+
+                                
+                           
+                        </div>
+                 
             </div>
             <div class="tab-pane fade" id="search" role="tabpanel" aria-labelledby="search-tab">
                 search

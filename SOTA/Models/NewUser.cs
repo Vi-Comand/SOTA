@@ -224,8 +224,10 @@ namespace SOTA.Models
                 for (int i = 0; i < ListKlass.Count; i++)
                 {
                     Users usersKl = new Users();
+                    usersKl.IdMo = ListKlass[i].IdOo;
                     usersKl.IdOo = ListKlass[i].IdOo;
                     usersKl.IdKlass = ListKlass[i].Id;
+                    usersKl.IdMo = ListOO.Where(x => x.Id == ListKlass[i].IdOo).First().IdMo;
                     usersKl.Role = 1;
                     usersKl.Name = "Класс " + ListKlass[i].Id;
                     usersKl.DateReg = Convert.ToDateTime("0001-01-01 00:00:00");
