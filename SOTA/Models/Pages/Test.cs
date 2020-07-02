@@ -150,8 +150,8 @@ namespace SOTA.Models
         {
           
             answer.Date = DateTime.Now;
-            db.AnswerUser.AddAsync(answer);
-            db.SaveChangesAsync();
+            db.AnswerUser.Add(answer);
+            db.SaveChanges();
 
         }
 

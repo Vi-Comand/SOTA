@@ -1,16 +1,18 @@
 function GetPredActiveLI() {
     var d = document.getElementsByClassName("nav-link active");
-
+    alert("dfasf1");
 
 
 
     var nZad = d[0].id.substr(3);
     nZad = nZad.substr(0, nZad.length - 4);
-   // alert(nZad);
+ 
     podgotovkaKSave(nZad);
 }
 function podgotovkaKSave(nZad) {
-    var id = document.getElementById("Zad" + nZad + "ID").value
+
+    var id = document.getElementById("Zad" + nZad + "ID").value;
+   
     var tip = document.getElementById("Zad" + nZad + "Tip").value;
     var text;
     
@@ -24,8 +26,12 @@ function podgotovkaKSave(nZad) {
     {
         text = TextOtvTip3(nZad);
     }
-    if (id != null && text != null)
+    console.log(text);
+    if (id != null && text != "" && text != null)
+    {
+        alert("kkk");
         vbd(id, text);
+    }
     
 }
 function TextOtvTip2(nZad) {
@@ -60,7 +66,11 @@ function TextOtvTip3(nZad) {
 }
 
 function vbd(id, text) {
-  
+   
+    console.log(OtvVBDMass);
+   
+    alert("kk2");
+    if (text != OtvVBDMass.get(parseInt(id))) {
         jQuery.ajax({
             url: '/Test/SaveOtvet/',
             type: "POST",
@@ -71,6 +81,7 @@ function vbd(id, text) {
             }
 
         });
+    }
     
   
 }
@@ -84,6 +95,6 @@ function GetActiveLI() {
    
     var nZad = d[0].id.substr(3);
     nZad = nZad.substr(0, nZad.length - 4);
-    alert(nZad);
+   
     
 }

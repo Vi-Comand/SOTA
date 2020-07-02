@@ -28,7 +28,7 @@
 
 
 <script>
-
+    var OtvVBDMass = new Map();
 $("#TabForZadan").on("click", function () {
 
     GetPredActiveLI();
@@ -46,9 +46,12 @@ $("#TabForZadan").on("click", function () {
             AddTabForZadan(i);
         }
 
-
+      
         @foreach (var row in Model._Zadan)
         {
+
+             @:OtvVBDMass.set(@row._idZadan, "@row._otvVBD")
+
             @: AddTextZadan(@row._nomer, "@row._text",@row._tip,@row._idZadan);
 
             if (row._tip == 1)
@@ -57,6 +60,8 @@ $("#TabForZadan").on("click", function () {
             }
             if (row._tip == 2)
             {
+
+
                 int i = 0;
                 @:var MyArray = new Array();
 
@@ -68,6 +73,8 @@ $("#TabForZadan").on("click", function () {
 
                 }
 
+
+            //     @:razborCheck(MyArray, "@row._otvVBD");
 
                 @:AddZOtvTip2(MyArray,@row._nomer);
 
@@ -98,6 +105,7 @@ $("#TabForZadan").on("click", function () {
             }
 
         }
+        console.log(OtvVBDMass);
     }
 
     function ObjVibOtv(id, text, otvVBD) {
@@ -108,21 +116,50 @@ $("#TabForZadan").on("click", function () {
         return MyObj;
     }
 
+    function razborCheck(MyArray, otvVDB) {
+
+      
+      //  alert(" b: "+b);
+      //  while (b!="") {
+      //      alert(b);
+      //      var a = b.split(';')[0];
+      //    b = b.split(';')[1];
 
 
+      //      users.push(a);
+
+      //  }
+      //  console.log(users);
+      //  // возвращает массив, состоящий из двух первых пользователей
+      ////  let someUsers = users.filter(item => item.id < 3);
+
+
+
+        for (i = 0; MyArray.length; i++) {
+
+        }
+
+    }
 
     function AddTextZadan(i, text,tip,id) {
         var divText = document.getElementById('TextZadan[' + i + ']');
-       
+
         divText.innerHTML = text;
         divText.innerHTML = divText.textContent;
         divText.innerHTML += "<input type='hidden' id='Zad" + i + "Tip' value=" + tip + "  />"
           divText.innerHTML+="<input type='hidden' id='Zad"+i+"ID' value="+id+"  />"
 
+
+
+
+
+
+
+
     }
 
     function AddZOtvTip1(i,text) {
-        
+
         document.getElementById('OtvetZadan[' + i + ']').innerHTML = "<input type='text' id='Zad"+i+"Otvet'class='form-control input100' value="+text+" /><span class='focus - input100 '></span><label class='label' style='left:10px;'>Ответ</label>";
     }
 
@@ -161,9 +198,9 @@ $("#TabForZadan").on("click", function () {
 
         document.getElementById('OtvetZadan[' + i + ']').innerHTML = "<textarea rows='5' cols='100' ></textarea><span class='focus - input100 '></span><label class='label' style='left:10px;'>Ответ</label>";
     }
-    
 
-   
+
+
 
     function AddTabForZadan(i) {
 
