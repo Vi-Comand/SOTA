@@ -2086,7 +2086,7 @@ pre {
 .table-yel,
 .table-yel > th,
 .table-yel > td {
-    background-color: #fbce5d75;
+    background-color: rgba(251, 206, 93, 0.45);
     border: solid 2px #fbce5d;
 }
 
