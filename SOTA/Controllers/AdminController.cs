@@ -56,7 +56,8 @@ namespace SOTA.Controllers
             ListUsersAdmin listUsersAdmin = new ListUsersAdmin(db);
             listUsersAdmin.LisrUsersA();
             UsersPage usersPage = new UsersPage();
-            usersPage.LisrUsersKlass = listUsersAdmin.LisrUsersAdm.Where(x => x.Role == 1 && x.IdOo == IoO).OrderBy(x => x.IdOo).ToList();
+            usersPage.LisrUsersKlass = listUsersAdmin.LisrUsersAdm.Where(x => x.Role == 1 && x.IdOo == IoO).OrderBy(x => x.Klass).ToList();
+            usersPage.LisrUsersTest = listUsersAdmin.LisrUsersAdm.Where(x => x.Role == 0 && x.IdOo == IoO).OrderBy(x => x.Klass).ThenBy(x => x.F).ToList();
             return View("OO", usersPage);
         }
 
