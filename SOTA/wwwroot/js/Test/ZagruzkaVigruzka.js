@@ -1,6 +1,6 @@
 function GetPredActiveLI() {
     var d = document.getElementsByClassName("nav-link active");
-    alert("dfasf1");
+ 
 
 
 
@@ -29,7 +29,7 @@ function podgotovkaKSave(nZad) {
     console.log(text);
     if (id != null && text != "" && text != null)
     {
-        alert("kkk");
+       
         vbd(id, text);
     }
     
@@ -41,7 +41,7 @@ function TextOtvTip2(nZad) {
             if (document.getElementById("nZad" + nZad + "ch" + i).checked == true)
             {
                 text += document.getElementById("nZad" + nZad + "ch" + i).value + ";";
-                alert(text);
+            
             }
         }
         else
@@ -69,16 +69,14 @@ function vbd(id, text) {
    
     console.log(OtvVBDMass);
    
-    alert("kk2");
+   // alert("text " + text);
+    //alert("vbd " + OtvVBDMass.get(parseInt(id)));
     if (text != OtvVBDMass.get(parseInt(id))) {
         jQuery.ajax({
-            url: '/Test/SaveOtvet2/',
+            url: '/Test/SaveOtvet/',
             type: "POST",
             dataType: "json",
-            data: { id: id, text: text },
-            success: function (query) {
-
-            }
+            data: { id: id, text: text }
 
         });
     }
