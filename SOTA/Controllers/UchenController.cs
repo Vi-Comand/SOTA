@@ -6,6 +6,7 @@ using System.Linq;
 
 namespace SOTA.Controllers
 {
+    [Authorize]
     public class UchenController : Controller
     {
         SotaContext db;

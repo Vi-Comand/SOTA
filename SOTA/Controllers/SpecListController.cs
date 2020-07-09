@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SOTA.Models;
 using System;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace SOTA.Controllers
 {
+    [Authorize]
     public class SpecList : Controller
     {
         SotaContext db;
@@ -35,7 +37,7 @@ namespace SOTA.Controllers
             for (int i = 0; i < Id.Length; i++)
             {
                 Specific specific = new Specific { Id = Id[i] };
-                 db.Specific.Remove(specific);
+                db.Specific.Remove(specific);
                 var zadanie = db.Zadanie.Where(p => p.IdSpec == Id[i]).ToList();
                 // int[] ZadansListDel = zadanie.Id.;
                 for (int j = 0; j < zadanie.Count; j++)
@@ -48,7 +50,7 @@ namespace SOTA.Controllers
                         var otvet = db.Otvet.Where(p => p.IdZadan == zadanie[i].Id).ToList();
                         for (int k = 0; k < otvet.Count; k++)
                         {
-                            
+
                             db.Otvet.Remove(otvet[k]);
                         }
                     }

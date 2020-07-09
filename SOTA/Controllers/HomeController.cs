@@ -6,6 +6,7 @@ using System.Linq;
 
 namespace SOTA.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
 
@@ -16,7 +17,6 @@ namespace SOTA.Controllers
         {
             db = context;
         }
-        [Authorize]
         public IActionResult Index()
         {
             string login = HttpContext.User.Identity.Name;

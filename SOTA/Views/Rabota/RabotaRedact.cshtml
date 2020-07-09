@@ -225,24 +225,24 @@
                         <div id="list-example" class="list-group">
                             @for (int i = 0; i < Model.Mos.Count(); i++)
                             {
-                                <a class="list-group-item list-group-item-action p-1" href="#mo_@Model.Mos[i].Id">@Model.Mos[i].Name</a>
+                                <a class="list-group-item list-group-item-action  p-1" href="#mo_@Model.Mos[i].Id">@Model.Mos[i].Name</a>
 
                             }
                         </div>
                     </div>
                     <div class="col-8 ">
                         <div data-spy="scroll" data-target="#list-example" data-offset="0" style="position: relative; height: 800px; margin-top: .5rem; overflow: auto;">
-                          @foreach(var Mo in Model.NaznachMos)
-                          { 
+                            @foreach (var Mo in Model.NaznachMos)
+                            {
                                 <h4 id="mo_@Mo.MO.Id"> @Mo.MO.Name</h4>
-                                foreach (var OO in Mo.OO )
-                                        {
-                                         //   row.OO.Where(x => x.IdMo == Model.Mos[i].Id);
+                                foreach (var OO in Mo.OO)
+                                {
+                                    //   row.OO.Where(x => x.IdMo == Model.Mos[i].Id);
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input OO" id="@(OO.OO.Id+1000)" value="@OO.OO.Id" checked="@OO.Chec">
                                         <label class="custom-control-label" for="@(OO.OO.Id+1000)">@OO.OO.Name</label>
                                     </div>
-                                                    }
+                                }
                             }
                         </div>
                     </div>
