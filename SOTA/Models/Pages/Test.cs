@@ -64,8 +64,9 @@ namespace SOTA.Models
                       
            }
             private void LoadOtvetTip4()
-        {
-            _Otv = _db.Otvet.Where(x => x.IdZadan == _idZadan && x.Param1<2 && x.Ustar == 0).Select((q) => new OtvTest
+            {
+                
+            _Otv = _db.Otvet.Where(x => x.IdZadan == _idZadan && Math.Round(x.Param1- Math.Truncate(x.Param1),1) ==0.1 && x.Ustar == 0).Select((q) => new OtvTest
             {
                 _id = q.Id,
                 _text = q.Text,
@@ -127,26 +128,49 @@ namespace SOTA.Models
     }
     public class SaveOtvUser
     {
-        AnswerUser answer;
+        AnswerUser answer=new AnswerUser();
       
         SotaContext db;
         public SaveOtvUser(int _id,string _text,SotaContext _db,int _idUser)
         {
-            if(_id!=0 && _text!= null&& _db!=null && _idUser!=0)
+            if (_id != 0 && _text != null && _db != null && _idUser != 0)
             {
-                answer = new AnswerUser();
-                answer.IdZadan = _id;
-                answer.TextOtv = _text;
-                answer.IdUser = _idUser;
-           
                 db = _db;
-                SaveVBD();
+                if (db.AnswerUser.FirstOrDefault(x => x.IdZadan == _id) != null)
+                {
+                    answer = db.AnswerUser.First(x => x.IdZadan == _id);
+                
+
+                answer.TextOtv = _text;
+                SaveChange();
+                }
+            else
+                {
+                    answer.IdZadan = _id;
+
+                    answer.TextOtv = _text;
+
+                    answer.IdUser = _idUser;
+
+                    SaveVBD();
+                }
+              
+              
+           
+               
 
 
             }
 
         }
-        public void SaveVBD()
+
+        private void SaveChange()
+        {
+            answer.Date = DateTime.Now;
+           
+            db.SaveChanges();
+        }
+        private void SaveVBD()
         {
           
             answer.Date = DateTime.Now;

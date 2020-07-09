@@ -32,12 +32,12 @@
 $("#TabForZadan").on("click", function () {
 
     GetPredActiveLI();
-    setTimeout(() => GetActiveLI(), 1000);
+   // setTimeout(() => GetActiveLI(), 1000);
 
 });
-    window.onload = function() {
-        VivodZadan();
-    }
+   window.onload = function() {
+       VivodZadan();
+   }
 
     function VivodZadan() {
 
@@ -46,11 +46,11 @@ $("#TabForZadan").on("click", function () {
             AddTabForZadan(i);
         }
 
-      
+
         @foreach (var row in Model._Zadan)
         {
 
-             @:OtvVBDMass.set(@row._idZadan, "@row._otvVBD")
+             @:OtvVBDMass.set(@row._idZadan, "@row._otvVBD");
 
             @: AddTextZadan(@row._nomer, "@row._text",@row._tip,@row._idZadan);
 
@@ -74,9 +74,9 @@ $("#TabForZadan").on("click", function () {
                 }
 
 
-            //     @:razborCheck(MyArray, "@row._otvVBD");
+               // @:razborCheck("@row._otvVBD", MyArray);
 
-                @:AddZOtvTip2(MyArray,@row._nomer);
+                @:AddZOtvTip2(MyArray,@row._nomer,"@row._otvVBD");
 
 
 
@@ -95,10 +95,31 @@ $("#TabForZadan").on("click", function () {
                 }
 
 
-                @:AddZOtvTip3(MyArray,@row._nomer);
+                @:AddZOtvTip3(MyArray,@row._nomer,"@row._otvVBD");
 
 
             }
+
+              if (row._tip == 4)
+            {
+                int i = 0;
+                @:var MyArray = new Array();
+
+
+                foreach (var str in row._Otv)
+                {
+                    @:MyArray[@i] = ObjVibOtv(@str._id, "@str._text");
+                    i++;
+
+                }
+
+
+                @:AddZOtvTip4(MyArray,@row._nomer);
+
+
+            }
+
+
              if (row._tip == 5)
             {
                 @:AddZOtvTip5(@row._nomer);
@@ -116,30 +137,20 @@ $("#TabForZadan").on("click", function () {
         return MyObj;
     }
 
-    function razborCheck(MyArray, otvVDB) {
-
-      
-      //  alert(" b: "+b);
-      //  while (b!="") {
-      //      alert(b);
-      //      var a = b.split(';')[0];
-      //    b = b.split(';')[1];
+    //function razborCheck(StrOtv,MyArray) {
 
 
-      //      users.push(a);
+    //    var MassIDOtv = StrOtv.split(";");
+    //    for (i = 0; i < MyArray.count;i++){
 
-      //  }
-      //  console.log(users);
-      //  // возвращает массив, состоящий из двух первых пользователей
-      ////  let someUsers = users.filter(item => item.id < 3);
+    //        if (MyArray[i].id in MassIDOtv) {
+    //            alert("fdsfs");
+    //            MyArray[i].Otv
 
+    //        }
+    //    }
 
-
-        for (i = 0; MyArray.length; i++) {
-
-        }
-
-    }
+    //}
 
     function AddTextZadan(i, text,tip,id) {
         var divText = document.getElementById('TextZadan[' + i + ']');
@@ -163,29 +174,46 @@ $("#TabForZadan").on("click", function () {
         document.getElementById('OtvetZadan[' + i + ']').innerHTML = "<input type='text' id='Zad"+i+"Otvet'class='form-control input100' value="+text+" /><span class='focus - input100 '></span><label class='label' style='left:10px;'>Ответ</label>";
     }
 
-    function AddZOtvTip2(MyArray, nZad) {
+    function AddZOtvTip2(MyArray, nZad,StrOtv) {
 
         for (i = 0; i < MyArray.length; i++) {
+            var est = null;
+            var cheked = "";
+            est = StrOtv.indexOf(MyArray[i].id + ";");
+
+            if (est != -1) {
+                cheked = "checked";
+            }
             document.getElementById('OtvetZadan[' + nZad + ']').innerHTML +=
                 "<label class=\"custom-switch mt-2\" style=\"height:28px\"><input type=\"checkbox\" name=\"nZad" + nZad + "ch" +
                 i +
                 "\" id=\"nZad" + nZad + "ch" +
                 i +
-                "\" value=" + MyArray[i].id + "  class=\"custom-switch-input\"><span class=\"custom-switch-indicator\"> </span >" +
+            "\" value=" + MyArray[i].id + "  class=\"custom-switch-input\" " + cheked +"><span class=\"custom-switch-indicator\"  > </span >" +
                 MyArray[i].text +
                 "</label></br>";
         }
 
     }
 
-    function AddZOtvTip3(MyArray, nZad) {
+    var kolRadioButtonName = 0;
+    function AddZOtvTip3(MyArray, nZad, StrOtv) {
 
 
+        kolRadioButtonName++;
         for (i = 0; i < MyArray.length; i++) {
+
+            var cheked = "";
+
+
+            if (MyArray[i].id == StrOtv) {
+
+                cheked = "checked";
+            }
             document.getElementById('OtvetZadan[' + nZad + ']').innerHTML +=
                 ' <div class="custom-control custom-radio custom-control-inline" ><input type="radio" id=\"nZad' + nZad + 'rb' +
                 i +
-                '\" name="customRadio" value=\"' + MyArray[i].id + '\" class="custom-control-input"><label class="custom-control-label" for=\"nZad' + nZad + 'rb' +
+            '\" name="customRadio' + kolRadioButtonName+'" value=\"' + MyArray[i].id + '\" class="custom-control-input" ' + cheked+'><label class="custom-control-label" for=\"nZad' + nZad + 'rb' +
                 i +
                 '\">' +
                 MyArray[i].text +
@@ -194,6 +222,29 @@ $("#TabForZadan").on("click", function () {
 
         }
     }
+
+
+
+
+    function AddZOtvTip4(MyArray, nZad) {
+
+        for (i = 0; i < MyArray.length; i++) {
+           
+            document.getElementById('OtvetZadan[' + nZad + ']').innerHTML +=
+                "<label  style=\"height:28px\" >" + MyArray[i].text + "</label><input type='text' name=\"nZad" + nZad + "tab" +
+                i +
+                "\" id=\"nZad" + nZad + "tab" +
+                i +
+                "\"  ></br>";
+        }
+
+    }
+
+
+
+
+
+
     function AddZOtvTip5(i) {
 
         document.getElementById('OtvetZadan[' + i + ']').innerHTML = "<textarea rows='5' cols='100' ></textarea><span class='focus - input100 '></span><label class='label' style='left:10px;'>Ответ</label>";
@@ -299,6 +350,7 @@ $("#TabForZadan").on("click", function () {
     }
 
     function PredVibOtvRadio(arrOtvBD) {
+
         var OtvetZadan = document.getElementById("OtvetiZadanPredprosmotr");
         OtvetZadan.innerHTML = '';
         for (i = 0; i < arrOtvBD.length; i++) {
