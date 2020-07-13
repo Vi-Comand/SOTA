@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SOTA.Models;
 using System;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace SOTA.Controllers
 {
+    [Authorize]
     public class RabotaController : Controller
     {
         SotaContext db;
@@ -88,7 +90,7 @@ namespace SOTA.Controllers
             ViewBag.rl = user.Role;
             Rabota AddRabota = new Rabota();
             List<Zadanie> pustZadan = db.Zadanie.Where(x => x.IdSpec == rabota.Rabot.IdSpec && x.Text == null).ToList();
-            if (pustZadan.Count == 0)
+            if (pustZadan.Count != 0)
             {
                 AddRabota.Name = rabota.Rabot.Name;
                 AddRabota.IdSpec = Convert.ToInt32(rabota.Rabot.IdSpec);
@@ -138,9 +140,11 @@ namespace SOTA.Controllers
             {
                 Rabota rabota = new Rabota { Id = Id[i] };
                 db.Rabota.Remove(rabota);
+                DelNaznach(Id[i]);
             }
             db.SaveChanges();
-            return RedirectToRoute("RabotaList");
+
+            return RedirectToAction("RabotaList");
         }
 
         public void DelNaznach(int id)

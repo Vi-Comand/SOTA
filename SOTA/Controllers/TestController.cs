@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SOTA.Models;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace SOTA.Controllers
 {
+    [Authorize]
     public class TestController : Controller
     {
         SotaContext db;

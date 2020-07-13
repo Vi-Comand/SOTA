@@ -138,7 +138,7 @@ namespace SOTA.Models
                     Users usersMo = new Users();
                     usersMo.IdMo = ListMO[i].Id;
                     usersMo.Role = 3;
-                    usersMo.Name = ListMO[i].Name + " администратор";
+                    usersMo.Name = ListMO[i].Name + "_администратор";
                     usersMo.DateReg = Convert.ToDateTime("0001-01-01 00:00:00");
 
                     ListUserMO.Add(usersMo);
@@ -184,7 +184,7 @@ namespace SOTA.Models
                     usersOo.IdMo = ListOO[i].IdMo;
                     usersOo.IdOo = ListOO[i].Id;
                     usersOo.Role = 2;
-                    usersOo.Name = "Директор " + ListOO[i].Id;
+                    usersOo.Name = "Директор_" + ListOO[i].Id;
                     usersOo.DateReg = Convert.ToDateTime("0001-01-01 00:00:00");
                     ListUserOO.Add(usersOo);
                 }
@@ -229,7 +229,7 @@ namespace SOTA.Models
                     usersKl.IdKlass = ListKlass[i].Id;
                     usersKl.IdMo = ListOO.Where(x => x.Id == ListKlass[i].IdOo).First().IdMo;
                     usersKl.Role = 1;
-                    usersKl.Name = "Класс " + ListKlass[i].Id;
+                    usersKl.Name = "Класс_" + ListKlass[i].Id;
                     usersKl.DateReg = Convert.ToDateTime("0001-01-01 00:00:00");
                     ListUserKlass.Add(usersKl);
                 }
