@@ -23,6 +23,13 @@ namespace SOTA.Controllers
 
         //   return Json ("ok");
         //}
+        public IActionResult KonecRabot( int idRabota)
+        {
+            var login = HttpContext.User.Identity.Name;
+            int idUser = db.Users.Where(p => p.Name == login).First().Id;
+
+            return Json("ok");
+        }
         public IActionResult SaveOtvet(int id, string text, int idRabota)
         {
             var login = HttpContext.User.Identity.Name;

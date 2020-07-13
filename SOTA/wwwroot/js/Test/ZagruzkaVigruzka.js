@@ -92,7 +92,7 @@ function TextOtvTip4(nZad) {
 function vbd(id, text) {
 
     var idRabota = document.getElementById("idRabota").value;
-    alert(idRabota);
+
    // alert("text " + text);
     //alert("vbd " + OtvVBDMass.get(parseInt(id)));
     if (text != OtvVBDMass.get(parseInt(id))) {

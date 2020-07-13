@@ -110,7 +110,17 @@ namespace SOTA.Models
 
 
     }
+    public class UsersBalls
+    {
+        public int Id { get; set; }
+        public int IdRabota { get; set; }
+        public int IdUser { get; set; }
+        public int IdZadania { get; set; }
+        public int Ball { get; set; }
+        public DateTime Date { get; set; }
 
+
+    }
     public class Rabota
     {
         public int Id { get; set; }
