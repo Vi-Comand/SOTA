@@ -7,12 +7,12 @@
 
 
 <div class="container col-12 shadow p-3 mb-5 bg-white rounded h-100">
-    <input type="text" id="VibranniiLI" value="1">
+    <input type="text" id="idRabota" asp-for="@Model._idRabota"/>
+   
     <div class="card-body">
         <ul class="nav nav-pills" id="TabForZadan" role="tablist">
         </ul>
         <div class="tab-content  " id="Zadans">
-
 
 
         </div>
@@ -21,7 +21,7 @@
         </div>
     </div>
 
-    <a id="Konec" class="btn btn-outline-success col-3 shadow" asp-controller="Home" asp-action="Index"><i class='fas fa-check'></i>    Завершить работу</a>
+    <a id="Konec" class="btn btn-outline-success col-3 shadow" asp-controller="Home" asp-action="Index"><i class='fas fa-check'></i> Завершить работу</a>
 </div>
 
 
@@ -114,7 +114,7 @@ $("#TabForZadan").on("click", function () {
                 }
 
 
-                @:AddZOtvTip4(MyArray,@row._nomer);
+                @:AddZOtvTip4(MyArray,@row._nomer,"@row._otvVBD");
 
 
             }
@@ -122,7 +122,7 @@ $("#TabForZadan").on("click", function () {
 
              if (row._tip == 5)
             {
-                @:AddZOtvTip5(@row._nomer);
+                @:AddZOtvTip5(@row._nomer,"@row._otvVBD");
             }
 
         }
@@ -136,7 +136,7 @@ $("#TabForZadan").on("click", function () {
         MyObj.otvVBD = otvVBD;
         return MyObj;
     }
-
+  
     //function razborCheck(StrOtv,MyArray) {
 
 
@@ -171,7 +171,7 @@ $("#TabForZadan").on("click", function () {
 
     function AddZOtvTip1(i,text) {
 
-        document.getElementById('OtvetZadan[' + i + ']').innerHTML = "<input type='text' id='Zad"+i+"Otvet'class='form-control input100' value="+text+" /><span class='focus - input100 '></span><label class='label' style='left:10px;'>Ответ</label>";
+        document.getElementById('OtvetZadan[' + i + ']').innerHTML = "<input type='text' id='Zad"+i+"Otvet'class='form-control input100' value="+text+" ><span class='focus - input100 '></span><label class='label' style='left:10px;'>Ответ</label>";
     }
 
     function AddZOtvTip2(MyArray, nZad,StrOtv) {
@@ -226,16 +226,18 @@ $("#TabForZadan").on("click", function () {
 
 
 
-    function AddZOtvTip4(MyArray, nZad) {
-
+    function AddZOtvTip4(MyArray, nZad,StrOtv) {
         for (i = 0; i < MyArray.length; i++) {
-           
+            var search = ("ID" + MyArray[i].id + "{=|");
+            StrOtv = StrOtv.substring(StrOtv.indexOf(search) + search.length);
+            var text = StrOtv.substring(StrOtv.indexOf('|=}'), -(StrOtv.indexOf('|=}')));
+            StrOtv = StrOtv.substring(StrOtv.indexOf('|=}'));
+
             document.getElementById('OtvetZadan[' + nZad + ']').innerHTML +=
-                "<label  style=\"height:28px\" >" + MyArray[i].text + "</label><input type='text' name=\"nZad" + nZad + "tab" +
-                i +
+                "<label  style=\"height:28px\" >" + MyArray[i].text + "</label><input type='text' name=\"ID" + MyArray[i].id+
                 "\" id=\"nZad" + nZad + "tab" +
                 i +
-                "\"  ></br>";
+            "\" value=" + text+" ></br>";
         }
 
     }
@@ -245,9 +247,9 @@ $("#TabForZadan").on("click", function () {
 
 
 
-    function AddZOtvTip5(i) {
+    function AddZOtvTip5(nZad,StrOtv) {
 
-        document.getElementById('OtvetZadan[' + i + ']').innerHTML = "<textarea rows='5' cols='100' ></textarea><span class='focus - input100 '></span><label class='label' style='left:10px;'>Ответ</label>";
+        document.getElementById('OtvetZadan[' + nZad + ']').innerHTML = "<textarea rows='5'  cols='100' id='nZad" + nZad + "Svb' >" + StrOtv+"</textarea>";
     }
 
 

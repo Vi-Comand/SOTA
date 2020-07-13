@@ -26,6 +26,12 @@ function podgotovkaKSave(nZad) {
     {
         text = TextOtvTip3(nZad);
     }
+    if (tip == 4) {
+        text = TextOtvTip4(nZad);
+    }
+    if (tip == 5) {
+        text = document.getElementById("nZad" + nZad + "Svb").value;
+    }
     console.log(text);
     if (id != null && text != "" && text != null)
     {
@@ -35,6 +41,7 @@ function podgotovkaKSave(nZad) {
     
 }
 function TextOtvTip2(nZad) {
+
     var text="";
     for (i = 0; ; i++) {
         if (document.getElementById("nZad" + nZad + "ch" + i) != null ) {
@@ -65,10 +72,27 @@ function TextOtvTip3(nZad) {
     return text;
 }
 
+function TextOtvTip4(nZad) {
+    var text = "";
+    for (i = 0; ; i++) {
+        if (document.getElementById("nZad" + nZad + "tab" + i) != null) {
+           
+            text += document.getElementById("nZad" + nZad + "tab" + i).name+"{=|"+ document.getElementById("nZad" + nZad + "tab" + i).value+"|=}";
+           
+            
+        }
+        else
+            break;
+    }
+    return text;
+}
+
+
+
 function vbd(id, text) {
-   
-    console.log(OtvVBDMass);
-   
+
+    var idRabota = document.getElementById("idRabota").value;
+    alert(idRabota);
    // alert("text " + text);
     //alert("vbd " + OtvVBDMass.get(parseInt(id)));
     if (text != OtvVBDMass.get(parseInt(id))) {
@@ -76,12 +100,13 @@ function vbd(id, text) {
             url: '/Test/SaveOtvet/',
             type: "POST",
             dataType: "json",
-            data: { id: id, text: text }
+            data: { id: id, text: text, idRabota: idRabota}
 
         });
     }
-    
-  
+    OtvVBDMass.set(parseInt(id), text);
+    console.log(OtvVBDMass);
+
 }
 
 

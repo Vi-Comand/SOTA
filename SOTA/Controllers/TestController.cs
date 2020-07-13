@@ -21,19 +21,21 @@ namespace SOTA.Controllers
 
         //   return Json ("ok");
         //}
-        public IActionResult SaveOtvet(int id, string text)
+        public IActionResult SaveOtvet(int id, string text, int idRabota)
         {
             var login = HttpContext.User.Identity.Name;
             int idUser = db.Users.Where(p => p.Name == login).First().Id;
 
-            SaveOtvUser save = new SaveOtvUser(id, text, db, idUser);
+            SaveOtvUser save = new SaveOtvUser(id, text, db, idUser,idRabota);
 
             return Json("ok");
         }
         public IActionResult Test(int idRabota)
         {
-         
-          VarintTest Test= new VarintTest(idRabota, 1,db);
+            var login = HttpContext.User.Identity.Name;
+            int idUser = db.Users.Where(p => p.Name == login).First().Id;
+            OpredelenieVariant Var=new OpredelenieVariant(idRabota,idUser,db);
+          VarintTest Test= new VarintTest(idRabota, Var.GetVariant(),db);
           
             return View("Test",Test);
         }

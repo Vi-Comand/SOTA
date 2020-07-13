@@ -17,6 +17,7 @@ namespace SOTA.Models
         public DbSet<NaznachMo> NaznachMo { get; set; }
         public DbSet<NaznachOo> NaznachOo { get; set; }
         public DbSet<AnswerUser> AnswerUser { get; set; }
+        public DbSet<VariantUser> VariantUser { get; set; }
         public SotaContext(DbContextOptions<SotaContext> options)
             : base(options)
         {

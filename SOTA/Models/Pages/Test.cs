@@ -29,12 +29,12 @@ namespace SOTA.Models
        public string _text { get;  }
         public string _otvVBD { get; set; }
         public int _nomer { get; }
-
+        private int _idRabota;
         private Zadanie Zadan;
        public List<OtvTest> _Otv { get; set; }
 
         private SotaContext _db;
-        public ZadanTest(int id,SotaContext db)
+        public ZadanTest(int id,SotaContext db,int idRabota)
         {
             _idZadan = id;
             if (id != 0 && db!=null) 
@@ -43,7 +43,7 @@ namespace SOTA.Models
                 _tip = Zadan.Tip;
                 _text = Zadan.Text;
                 _db = db;
-                
+                _idRabota = idRabota;
                 _nomer = Zadan.Nomer;
              
             }
@@ -58,7 +58,7 @@ namespace SOTA.Models
         {
             try
             {
-                _otvVBD = _db.AnswerUser.Where(x => x.IdZadan == _idZadan).First().TextOtv;
+                _otvVBD = _db.AnswerUser.Where(x => x.IdZadan == _idZadan&& x.IdRabota==_idRabota).First().TextOtv;
             }
             catch { }
                       
@@ -118,7 +118,7 @@ namespace SOTA.Models
             SpisokIdZadan();
             for (int i = 0; i < _idZadans.Length; i++)
             {
-                ZadanTest Zadan = new ZadanTest(_idZadans[i],_db);
+                ZadanTest Zadan = new ZadanTest(_idZadans[i],_db,_idRabota);
                 _Zadan.Add(Zadan);
             }
             
@@ -131,14 +131,14 @@ namespace SOTA.Models
         AnswerUser answer=new AnswerUser();
       
         SotaContext db;
-        public SaveOtvUser(int _id,string _text,SotaContext _db,int _idUser)
+        public SaveOtvUser(int _id,string _text,SotaContext _db,int _idUser,int _idRabota)
         {
-            if (_id != 0 && _text != null && _db != null && _idUser != 0)
+            if (_id != 0 && _text != null && _db != null && _idUser != 0&& _idRabota!=0)
             {
                 db = _db;
-                if (db.AnswerUser.FirstOrDefault(x => x.IdZadan == _id) != null)
+                if (db.AnswerUser.FirstOrDefault(x => x.IdZadan == _id&&x.IdRabota== _idRabota) != null)
                 {
-                    answer = db.AnswerUser.First(x => x.IdZadan == _id);
+                    answer = db.AnswerUser.First(x => x.IdZadan == _id && x.IdRabota == _idRabota);
                 
 
                 answer.TextOtv = _text;
@@ -149,7 +149,7 @@ namespace SOTA.Models
                     answer.IdZadan = _id;
 
                     answer.TextOtv = _text;
-
+                    answer.IdRabota = _idRabota;
                     answer.IdUser = _idUser;
 
                     SaveVBD();
@@ -180,5 +180,74 @@ namespace SOTA.Models
         }
 
     }
+
+    public class OpredelenieVariant
+    {
+        private int idRabota;
+        private int Variant;
+        private int idUser;
+        private SotaContext db;
+
+        public OpredelenieVariant(int _idRabota,int _idUser,SotaContext _db)
+        {
+            if (_idRabota != 0)
+            {
+                idRabota = _idRabota;
+                Variant = 0;
+                idUser = _idUser;
+                db = _db;
+            }
+        }
+
+        private void VBD()
+        {
+            Variant = !db.VariantUser.Where(x => x.IdRabota == idRabota && x.IdUser == idUser).Any() ? 0:db.VariantUser.Where(x => x.IdRabota == idRabota && x.IdUser == idUser).FirstOrDefault().Variant;
+        }
+        public int GetVariant()
+        {
+            VBD();
+            if (Variant == 0)
+            {
+                
+                    PrisvoitVariant();
+              
+            }
+
+            return Variant;
+        }
+
+        private void PrisvoitVariant()
+        {
+            int IdSpec = db.Rabota.Find(idRabota).IdSpec;
+
+            int KolVar = db.Zadanie.Where(x => x.IdSpec == IdSpec).OrderByDescending(x => x.Variant).First().Variant;
+            if (KolVar != 0)
+            {
+               
+                    Random rnd = new Random();
+
+                    //Получить случайное число (в диапазоне от 0 до 10)
+                    Variant = rnd.Next(1, KolVar+1);
+                  
+               
+
+                ZapisVBD();
+            }
+    }
+
+        private void ZapisVBD()
+        {
+            VariantUser newStr = new VariantUser
+            {
+                Variant = Variant,
+                IdRabota = idRabota,
+                IdUser = idUser,
+                Date = DateTime.Now
+            };
+            db.Add(newStr);
+            db.SaveChanges();
+        }
+    }
+
 
 }

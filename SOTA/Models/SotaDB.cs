@@ -93,12 +93,25 @@ namespace SOTA.Models
         public int Id { get; set; }
         public int IdUser { get; set; }
         public int IdZadan { get; set; }
+        public int IdRabota { get; set; }
         public string TextOtv { get; set; }
+
         public DateTime Date { get; set; }
 
     }
 
-        public class Rabota
+    public class VariantUser
+    {
+        public int Id { get; set; }
+        public int IdRabota { get; set; }
+        public int IdUser { get; set; }
+        public int Variant { get; set; }
+        public DateTime Date { get; set; }
+
+
+    }
+
+    public class Rabota
     {
         public int Id { get; set; }
         public string Name { get; set; }
