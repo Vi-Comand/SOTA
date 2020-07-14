@@ -5,10 +5,10 @@
 <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
 <script src="~/js/Test/ZagruzkaVigruzka.js"></script>
 
-
+<form method="post">
 <div class="container col-12 shadow p-3 mb-5 bg-white rounded h-100">
-    <input type="hidden" id="idRabota" asp-for="@Model._idRabota"/>
-    <input type="button" asp-controller="Test" asp-action="KonecRabot"asp-for="@Model._idRabota"/>
+    <input type="text" id="idRabota"  asp-controller="Test" asp-action="KonecRabot"  asp-for="@Model._idRabota" />
+ 
     <div class="card-body">
         <ul class="nav nav-pills" id="TabForZadan" role="tablist">
         </ul>
@@ -21,10 +21,9 @@
         </div>
     </div>
 
-    <a id="Konec" class="btn btn-outline-success col-3 shadow" asp-controller="Home" asp-action="Index"><i class='fas fa-check'></i> Завершить работу</a>
+    <a id="Konec" class="btn btn-outline-success col-3 shadow"  asp-controller="Test" asp-action="KonecRabot" asp-route-idRabota="@Model._idRabota" asp-for="@Model._idRabota"><i class='fas fa-check'></i> Завершить работу</a>
 </div>
-
-
+</form>
 
 
 <script>

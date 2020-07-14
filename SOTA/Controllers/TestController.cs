@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SOTA.Models;
 using System.Linq;
 using System.Threading.Tasks;
+using SOTA.Models.Pages.TestRaschet;
 
 namespace SOTA.Controllers
 {
@@ -27,7 +28,7 @@ namespace SOTA.Controllers
         {
             var login = HttpContext.User.Identity.Name;
             int idUser = db.Users.Where(p => p.Name == login).First().Id;
-
+            IRaschetBallsUser raschet=new RaschetBallsUser(db, idRabota, idUser);
             return Json("ok");
         }
         public IActionResult SaveOtvet(int id, string text, int idRabota)

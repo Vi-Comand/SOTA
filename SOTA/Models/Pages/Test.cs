@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace SOTA.Models
 {
+    interface IRaschetBallsUser
+    {
+    }
 
     public class Test
     {
