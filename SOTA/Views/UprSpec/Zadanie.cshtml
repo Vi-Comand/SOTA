@@ -1,8 +1,6 @@
 ﻿@model SOTA.Models.ZadanieRedact
 
-@{
-    Layout = "~/Views/UprSpec/_Layout1.cshtml";
-}
+@{ Layout = "~/Views/UprSpec/_Layout1.cshtml"; }
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <script type="text/javascript" src="~/UprSpec/scripts/jquery-2.x-git.js"></script>
 
@@ -340,7 +338,7 @@
                                     <br>
                                     <form name="exampleForm" action="example.html" method="post">
                                         <input type="hidden" asp-for="@Model.Id" id="idZadania" />
-                                        <textarea id="textarea1" name="test1" style="width:560px;height:200px;">
+                                        <textarea id="textarea1" name="test1" style="width:800px;height:400px;">
                                             @if(Model.Text!=null)
                                                 {
                                                     @Model.Text;

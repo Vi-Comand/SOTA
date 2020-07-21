@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SOTA.Models;
 using System;
@@ -578,7 +579,25 @@ namespace SOTA.Controllers
         }
 
 
+        public async Task<IActionResult> LoadNaServAjax(IFormFile Image)
+        {
+            if (Image != null)
+            {
+                // путь к папке Files
+                string path = "/Img/" + Image.FileName;
+                // сохраняем файл в папку Files в каталоге wwwroot
+                //using (var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
+                //{
+                //    await uploadedFile.CopyToAsync(fileStream);
+                //}
+                //FileModel file = new FileModel { Name = uploadedFile.FileName, Path = path };
+                //_context.Files.Add(file);
+                //_context.SaveChanges();
+            }
 
+
+            return Json("Ok");
+        }
 
 
         public IActionResult Zadanie(int n_var, int n_zad, int id_spec)
