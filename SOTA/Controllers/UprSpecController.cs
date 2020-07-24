@@ -5,7 +5,9 @@ using SOTA.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 
@@ -579,26 +581,36 @@ namespace SOTA.Controllers
         }
 
 
-        public async Task<IActionResult> LoadNaServAjax(IFormFile Image)
+
+
+        [HttpPost]
+        public async Task<IActionResult> LoadNaServAjaxTo(IList<IFormFile> files)
         {
-            if (Image != null)
+            foreach (IFormFile source in files)
             {
-                // путь к папке Files
-                string path = "/Img/" + Image.FileName;
-                // сохраняем файл в папку Files в каталоге wwwroot
-                //using (var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
-                //{
-                //    await uploadedFile.CopyToAsync(fileStream);
-                //}
-                //FileModel file = new FileModel { Name = uploadedFile.FileName, Path = path };
-                //_context.Files.Add(file);
-                //_context.SaveChanges();
+                string filename = ContentDispositionHeaderValue.Parse(source.ContentDisposition).FileName.Trim('"');
+                filename = this.EnsureCorrectFilename(filename);
+                using (var fileStream = new FileStream(Directory.GetCurrentDirectory() + "\\wwwroot\\Img\\" + filename, FileMode.Create))
+                {
+                    await source.CopyToAsync(fileStream).ConfigureAwait(false);
+                }
             }
 
-
-            return Json("Ok");
+            return this.View();
         }
 
+        private string EnsureCorrectFilename(string filename)
+        {
+            if (filename.Contains("\\"))
+                filename = filename.Substring(filename.LastIndexOf("\\") + 1);
+
+            return filename;
+        }
+
+        private string GetPathAndFilename(string filename)
+        {
+            return "\\wwwroot\\Img\\" + filename;
+        }
 
         public IActionResult Zadanie(int n_var, int n_zad, int id_spec)
         {

@@ -116,9 +116,9 @@
                     <table width="380" border="0" cellpadding="0" cellspacing="0" style="background-color: #F7F7F7; border: 2px solid #FFFFFF; padding: 5px;">
 
                         <tr>
-
-                            <td style="padding-bottom: 2px; padding-top: 0px;" width="300"><input type="file" name="file" id="file" value="" style="font-size: 10px; width: 100%;"></td>
-                            <td style="padding-bottom: 2px; padding-top: 0px;" width="80"><input type="button" onClick="loadNaServ();" name="submit" id="loadServ" value="Загрузить на сервер" style="font-size: 10px; width: 100%;"></td>
+                           <!--<td> <input id="files2" name="files2" type="file" size="1" multiple onchange="uploadFiles('files2');" /></td>-->
+                            <td style="padding-bottom: 2px; padding-top: 0px;" width="300"><input type="file" id="files" name="files" size="1" onchange="uploadFiles('files');" style="font-size: 10px; width: 100%;"></td>
+                            <td style="padding-bottom: 2px; padding-top: 0px;" width="80"><input type="button" onClick="loadNaServ();" name="submit" id="loadServ" value="Загрузить на сервер2" style="font-size: 10px; width: 100%;"></td>
 
                         </tr>
 
@@ -197,6 +197,36 @@
             </tr>
         </table>
     </form>
+
+
+    <script>
+        function uploadFiles(inputId) {
+            alert("ok");
+            var input = document.getElementById(inputId);
+            var files = input.files;
+            var formData = new FormData();
+
+            for (var i = 0; i != files.length; i++) {
+                formData.append("files", files[i]);
+            }
+
+            $.ajax(
+                {
+                    url: "/UprSpec/LoadNaServAjaxTo/",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    type: "POST",
+                    success: function (data) {
+                        alert("Files Uploaded!");
+                    }
+                }
+            );
+        }
+    </script>
+
+
+
     <script>
         var files; // переменная. будет содержать данные файлов
 
