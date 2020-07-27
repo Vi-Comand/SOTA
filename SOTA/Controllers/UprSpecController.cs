@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using SOTA.Models;
 using System;
@@ -586,17 +587,28 @@ namespace SOTA.Controllers
         [HttpPost]
         public async Task<IActionResult> LoadNaServAjaxTo(IList<IFormFile> files)
         {
+            int lastId = db.SaveImg.Max(x => x.Id) + 1;
+            string data = "";
             foreach (IFormFile source in files)
             {
                 string filename = ContentDispositionHeaderValue.Parse(source.ContentDisposition).FileName.Trim('"');
                 filename = this.EnsureCorrectFilename(filename);
+                string tip = "." + filename.Substring(filename.LastIndexOf(".") + 1);
+
+                filename = lastId.ToString() + tip;
+                SaveImg saveImg = new SaveImg();
+                saveImg.Name = lastId.ToString();
+                saveImg.Tip = tip;
+                db.SaveImg.Add(saveImg);
+                db.SaveChanges();
                 using (var fileStream = new FileStream(Directory.GetCurrentDirectory() + "\\wwwroot\\Img\\" + filename, FileMode.Create))
                 {
                     await source.CopyToAsync(fileStream).ConfigureAwait(false);
                 }
+                data = "https://" + Request.Host.ToUriComponent() + "\\Img\\" + filename;
             }
 
-            return this.View();
+            return Json(data);
         }
 
         private string EnsureCorrectFilename(string filename)
@@ -607,10 +619,7 @@ namespace SOTA.Controllers
             return filename;
         }
 
-        private string GetPathAndFilename(string filename)
-        {
-            return "\\wwwroot\\Img\\" + filename;
-        }
+
 
         public IActionResult Zadanie(int n_var, int n_zad, int id_spec)
         {

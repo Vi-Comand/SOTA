@@ -2506,13 +2506,13 @@ var WYSIWYG_ContextMenu = {
 		this.html += '<table class="wysiwyg-context-menu" border="0" cellpadding="0" cellspacing="0">';
 		
 		// Add items
-		this.addItem(n, 'Copy', iconCopy, 'Copy', sel);
-		this.addItem(n, 'Cut', iconCut, 'Cut', sel);
-		this.addItem(n, 'Paste', iconPaste, 'Paste', true);
+		this.addItem(n, 'Copy', iconCopy, 'Копировать', sel);
+		this.addItem(n, 'Cut', iconCut, 'Вырезать', sel);
+		this.addItem(n, 'Paste', iconPaste, 'Вставить', true);
 		this.addSeperator();
-		this.addItem(n, 'InsertImage', iconImage, 'Modify Image Properties...', isImg);
-		this.addItem(n, 'CreateLink', iconLink, 'Create or Modify Link...', sel || isLink);
-		this.addItem(n, 'RemoveNode', iconDelete, 'Remove', true);
+		this.addItem(n, 'InsertImage', iconImage, 'Изменить изображение...', isImg);
+		this.addItem(n, 'CreateLink', iconLink, 'Вставить или изменить ссылку...', sel || isLink);
+		this.addItem(n, 'RemoveNode', iconDelete, 'Удалить', true);
 		
 		this.html += '</table>';
 		this.contextMenuDiv.innerHTML = this.html;

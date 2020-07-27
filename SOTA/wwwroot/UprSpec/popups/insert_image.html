@@ -107,102 +107,102 @@
     </script>
 </head>
 <body bgcolor="#EEEEEE" marginwidth="0" marginheight="0" topmargin="0" leftmargin="0" onLoad="loadImage();">
-    <form name="uploader" enctype="multipart/form-data" method="POST">
-        <table border="0" cellpadding="0" cellspacing="0" style="padding: 10px;">
-            <tr>
-                <td>
 
-                    <span style="font-family: arial, verdana, helvetica; font-size: 11px; font-weight: bold;">Вставить/загрузить изображение:</span>
-                    <table width="380" border="0" cellpadding="0" cellspacing="0" style="background-color: #F7F7F7; border: 2px solid #FFFFFF; padding: 5px;">
+    <table border="0" cellpadding="0" cellspacing="0" style="padding: 10px;">
+        <tr>
+            <td>
 
+                <span style="font-family: arial, verdana, helvetica; font-size: 11px; font-weight: bold;">Вставить/загрузить изображение:</span>
+                <table width="380" border="0" cellpadding="0" cellspacing="0" style="background-color: #F7F7F7; border: 2px solid #FFFFFF; padding: 5px;">
+                    <form name="uploader" enctype="multipart/form-data" method="POST">
                         <tr>
-                           <!--<td> <input id="files2" name="files2" type="file" size="1" multiple onchange="uploadFiles('files2');" /></td>-->
+                            <!--<td> <input id="files2" name="files2" type="file" size="1" multiple onchange="uploadFiles('files2');" /></td>-->
                             <td style="padding-bottom: 2px; padding-top: 0px;" width="300"><input type="file" id="files" name="files" size="1" onchange="uploadFiles('files');" style="font-size: 10px; width: 100%;"></td>
                             <td style="padding-bottom: 2px; padding-top: 0px;" width="80"><input type="button" onClick="loadNaServ();" name="submit" id="loadServ" value="Загрузить на сервер2" style="font-size: 10px; width: 100%;"></td>
 
                         </tr>
+                    </form>
+                    <tr>
+                        <td style="padding-bottom: 2px; padding-top: 0px; font-family: arial, verdana, helvetica; font-size: 11px;" width="80">Ссылка изображения:</td>
+                        <td style="padding-bottom: 2px; padding-top: 0px;" width="300"><input type="text" readonly class="srcId" name="src" id="src" value="" style="font-size: 10px; width: 100%;"></td>
+                    </tr>
+                    <tr>
+                        <td style="padding-bottom: 2px; padding-top: 0px; font-family: arial, verdana, helvetica; font-size: 11px;">Альтернативный текст:</td>
+                        <td style="padding-bottom: 2px; padding-top: 0px;"><input type="text" name="alt" id="alt" value="" style="font-size: 10px; width: 100%;"></td>
+                    </tr>
+                </table>
 
-                        <tr>
-                            <td style="padding-bottom: 2px; padding-top: 0px; font-family: arial, verdana, helvetica; font-size: 11px;" width="80">Ссылка изображения:</td>
-                            <td style="padding-bottom: 2px; padding-top: 0px;" width="300"><input type="text" name="src" id="src" value="" style="font-size: 10px; width: 100%;"></td>
-                        </tr>
-                        <tr>
-                            <td style="padding-bottom: 2px; padding-top: 0px; font-family: arial, verdana, helvetica; font-size: 11px;">Альтернативный текст:</td>
-                            <td style="padding-bottom: 2px; padding-top: 0px;"><input type="text" name="alt" id="alt" value="" style="font-size: 10px; width: 100%;"></td>
-                        </tr>
-                    </table>
 
 
+                <table width="380" border="0" cellpadding="0" cellspacing="0" style="margin-top: 10px;">
+                    <tr>
+                        <td style="vertical-align:top;">
 
-                    <table width="380" border="0" cellpadding="0" cellspacing="0" style="margin-top: 10px;">
-                        <tr>
-                            <td style="vertical-align:top;">
+                            <span style="font-family: arial, verdana, helvetica; font-size: 11px; font-weight: bold;">Характеристики:</span>
+                            <table width="180" border="0" cellpadding="0" cellspacing="0" style="background-color: #F7F7F7; border: 2px solid #FFFFFF; padding: 5px;">
+                                <tr>
+                                    <td style="padding-bottom: 2px; padding-top: 0px; font-family: arial, verdana, helvetica; font-size: 11px;">Ширина:</td>
+                                    <td style="width:60px;padding-bottom: 2px; padding-top: 0px;"><input type="text" name="width" id="width" value="500" style="font-size: 10px; width: 100%;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-bottom: 2px; padding-top: 0px; font-family: arial, verdana, helvetica; font-size: 11px;">Высота:</td>
+                                    <td style="padding-bottom: 2px; padding-top: 0px;"><input type="text" name="height" id="height" value="300" style="font-size: 10px; width: 100%;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-bottom: 2px; padding-top: 0px; font-family: arial, verdana, helvetica; font-size: 11px;">Границы:</td>
+                                    <td style="padding-bottom: 2px; padding-top: 0px;"><input type="text" name="border" id="border" value="0" style="font-size: 10px; width: 100%;"></td>
+                                </tr>
+                            </table>
 
-                                <span style="font-family: arial, verdana, helvetica; font-size: 11px; font-weight: bold;">Характеристики:</span>
-                                <table width="180" border="0" cellpadding="0" cellspacing="0" style="background-color: #F7F7F7; border: 2px solid #FFFFFF; padding: 5px;">
-                                    <tr>
-                                        <td style="padding-bottom: 2px; padding-top: 0px; font-family: arial, verdana, helvetica; font-size: 11px;">Ширина:</td>
-                                        <td style="width:60px;padding-bottom: 2px; padding-top: 0px;"><input type="text" name="width" id="width" value="" style="font-size: 10px; width: 100%;"></td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding-bottom: 2px; padding-top: 0px; font-family: arial, verdana, helvetica; font-size: 11px;">Высота:</td>
-                                        <td style="padding-bottom: 2px; padding-top: 0px;"><input type="text" name="height" id="height" value="" style="font-size: 10px; width: 100%;"></td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding-bottom: 2px; padding-top: 0px; font-family: arial, verdana, helvetica; font-size: 11px;">Границы:</td>
-                                        <td style="padding-bottom: 2px; padding-top: 0px;"><input type="text" name="border" id="border" value="0" style="font-size: 10px; width: 100%;"></td>
-                                    </tr>
-                                </table>
+                        </td>
+                        <td width="10">&nbsp;</td>
+                        <td style="vertical-align:top;">
 
-                            </td>
-                            <td width="10">&nbsp;</td>
-                            <td style="vertical-align:top;">
+                            <span style="font-family: arial, verdana, helvetica; font-size: 11px; font-weight: bold;">&nbsp;</span>
+                            <table width="200" border="0" cellpadding="0" cellspacing="0" style="background-color: #F7F7F7; border: 2px solid #FFFFFF; padding: 5px;">
+                                <tr>
+                                    <td style="width: 115px;padding-bottom: 2px; padding-top: 0px; font-family: arial, verdana, helvetica; font-size: 11px;" width="100">Выравнивание:</td>
+                                    <td style="width: 85px;padding-bottom: 2px; padding-top: 0px;">
+                                        <select name="align" id="align" style="font-family: arial, verdana, helvetica; font-size: 11px; width: 100%;">
+                                            <option value="">Не установленно</option>
+                                            <option value="left">Слева</option>
+                                            <option value="right">Справа</option>
+                                            <option value="texttop">Над текстом</option>
+                                            <option value="absmiddle">Середина сверху</option>
+                                            <option value="baseline">Основание</option>
+                                            <option value="absbottom">Середина снизу</option>
+                                            <option value="bottom">Снизу</option>
+                                            <option value="middle">Середина</option>
+                                            <option value="top">Сверху</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-bottom: 2px; padding-top: 0px; font-family: arial, verdana, helvetica; font-size: 11px;">Горизонтальное пространство:</td>
+                                    <td style="padding-bottom: 2px; padding-top: 0px;"><input type="text" name="hspace" id="hspace" value="" style="font-size: 10px; width: 100%;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-bottom: 2px; padding-top: 0px; font-family: arial, verdana, helvetica; font-size: 11px;">Вертикальное пространство:</td>
+                                    <td style="padding-bottom: 2px; padding-top: 0px;"><input type="text" name="vspace" id="vspace" value="" style="font-size: 10px; width: 100%;"></td>
+                                </tr>
+                            </table>
 
-                                <span style="font-family: arial, verdana, helvetica; font-size: 11px; font-weight: bold;">&nbsp;</span>
-                                <table width="200" border="0" cellpadding="0" cellspacing="0" style="background-color: #F7F7F7; border: 2px solid #FFFFFF; padding: 5px;">
-                                    <tr>
-                                        <td style="width: 115px;padding-bottom: 2px; padding-top: 0px; font-family: arial, verdana, helvetica; font-size: 11px;" width="100">Выравнивание:</td>
-                                        <td style="width: 85px;padding-bottom: 2px; padding-top: 0px;">
-                                            <select name="align" id="align" style="font-family: arial, verdana, helvetica; font-size: 11px; width: 100%;">
-                                                <option value="">Не установленно</option>
-                                                <option value="left">Слева</option>
-                                                <option value="right">Справа</option>
-                                                <option value="texttop">Над текстом</option>
-                                                <option value="absmiddle">Середина сверху</option>
-                                                <option value="baseline">Основание</option>
-                                                <option value="absbottom">Середина снизу</option>
-                                                <option value="bottom">Снизу</option>
-                                                <option value="middle">Середина</option>
-                                                <option value="top">Сверху</option>
-                                            </select>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding-bottom: 2px; padding-top: 0px; font-family: arial, verdana, helvetica; font-size: 11px;">Горизонтальное пространство:</td>
-                                        <td style="padding-bottom: 2px; padding-top: 0px;"><input type="text" name="hspace" id="hspace" value="" style="font-size: 10px; width: 100%;"></td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding-bottom: 2px; padding-top: 0px; font-family: arial, verdana, helvetica; font-size: 11px;">Вертикальное пространство:</td>
-                                        <td style="padding-bottom: 2px; padding-top: 0px;"><input type="text" name="vspace" id="vspace" value="" style="font-size: 10px; width: 100%;"></td>
-                                    </tr>
-                                </table>
+                        </td>
+                    </tr>
+                </table>
 
-                            </td>
-                        </tr>
-                    </table>
+                <div align="right" style="padding-top: 5px;"><input type="submit" value="  Отправить  " onClick="insertImage();" style="font-size: 12px;">&nbsp;<input type="submit" value="  Отмена  " onClick="window.close();" style="font-size: 12px;"></div>
 
-                    <div align="right" style="padding-top: 5px;"><input type="submit" value="  Отправить  " onClick="insertImage();" style="font-size: 12px;">&nbsp;<input type="submit" value="  Отмена  " onClick="window.close();" style="font-size: 12px;"></div>
+            </td>
+        </tr>
+    </table>
 
-                </td>
-            </tr>
-        </table>
-    </form>
 
 
     <script>
         function uploadFiles(inputId) {
-            alert("ok");
             var input = document.getElementById(inputId);
+            var srcN = document.querySelector(".srcId");
             var files = input.files;
             var formData = new FormData();
 
@@ -218,7 +218,9 @@
                     contentType: false,
                     type: "POST",
                     success: function (data) {
-                        alert("Files Uploaded!");
+
+                        srcN.value = data;
+                        alert("Файл загружен. Укажите размеры и нажмите отправить");
                     }
                 }
             );
