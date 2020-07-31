@@ -15,7 +15,7 @@ namespace SOTA.Models
         public int IdKlass { get; set; }
         public int IdOo { get; set; }
         public int IdMo { get; set; }
-        //public string Kod { get; set; }
+        public string Kod { get; set; }
         public int Role { get; set; }
         public string Name { get; set; }
         public string Pass { get; set; }
@@ -77,6 +77,7 @@ namespace SOTA.Models
                                 F = user.F,
                                 I = user.I,
                                 O = user.O,
+                                Kod = user.Kod,
                                 MO = Mo.Name,
                                 OO = Oo.Name,
                                 Klass = Klass.Kod,

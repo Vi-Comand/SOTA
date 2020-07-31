@@ -9,7 +9,7 @@
         <section class="portfolio-block hire-me">
             <div class="container">
                 <br />
-                <form  asp-controller="Account" asp-anti-forgery="true" class="text-center was-validated mx-auto" style="width: 400px;" method="post">
+                <form asp-controller="Account" asp-anti-forgery="true" class="text-center was-validated mx-auto" style="width: 400px;" method="post">
                     <div class="validation center" asp-validation-summary="ModelOnly" />
                     <div class="form-row  rounded col-md-12 shadow-lg p-3 mb-5 bg-white-80 rounded">
 
@@ -29,7 +29,7 @@
                                         <i class="fas fa-at"></i>
                                     </div>
                                 </div>
-                                <input type="text" asp-for="Name" class="form-control input100" id="validationLog" placeholder="Логин" pattern="[A-Za-zА-Яа-яЁё0-9@@_]{6,}" required oninput="if (this.value.length > 4) { qwe(); }" />
+                                <input type="text" asp-for="Name" class="form-control input100" id="validationLog" placeholder="Логин" pattern="[A-Za-zА-Яа-яЁё0-9@@_ ]{6,}" required oninput="if (this.value.length > 4) { qwe(); }" />
                                 <span asp-validation-for="Name" class="focus-input100"></span>
 
 
@@ -77,26 +77,39 @@
                                 <div class="input-group wrap-input100 validate-input">
                                     <label class="custom-switch mt-2" style="padding-left: 0px; font-size:10px">
 
-                                        <input type="checkbox" asp-for="Sogl" name="Sogl" id="Sogl" class="custom-switch-input" oninput=" sravn();">
+                                        <input type="checkbox" asp-for="Sogl" name="Sogl" id="Sogl" class="custom-switch-input" onchange=" sravn();">
                                         <span class="custom-switch-indicator"></span>
                                         <span class="custom-switch-description">Согласие на обработку персональных данных</span>
                                     </label>
                                 </div>
-                            </div>
 
+                                <div class="form-group d-none" id="div_save">
+                                    <button id="NewPass" class="bg-yel-but" asp-controller="AccountConrtroller" asp-action="Login">
+                                        <span class="bg-yel-span"> Сохранить и войти</span>
+                                    </button>
+
+                                </div>
+                            </div>
+                            <div class="form-group d-none alert-warning" id="div_dosr_0">
+                                Логин верен, но необхадима разрешение на регистрацию. Обратитесь к админестратору класса
+                            </div>
+                            <div class="form-group d-none alert-warning" id="div_dosr_1">
+                                Логин верен, но необхадима разрешение на регистрацию. Обратитесь к админестратору школы
+                            </div>
+                            <div class="form-group d-none alert-warning" id="div_dosr_2">
+                                Логин верен, но необхадима разрешение на регистрацию. Обратитесь к админестратору УО
+                            </div>
+                            <div class="form-group d-none alert-warning" id="div_dosr_3">
+                                Логин верен, но необхадима разрешение на регистрацию. Обратитесь к админестратору системы 8(861)232-39-71
+                            </div>
                             <div class="form-group d-none" id="div_vhod">
                                 <button id="KolvoLoad" class="bg-yel-but" asp-controller="AccountConrtroller" asp-action="Login">
                                     <span class="bg-yel-span"> Войти</span>
-                                    </button>
+                                </button>
 
                             </div>
 
-                            <div class="form-group d-none" id="div_save">
-                                <button id="NewPass" class="bg-yel-but" asp-controller="AccountConrtroller" asp-action="Login">
-                                    <span class="bg-yel-span"> Сохранить и войти</span>
-                                    </button>
 
-                            </div>
                         </div>
                     </div>
                 </form>
@@ -124,6 +137,10 @@
         var div_add_pass = document.getElementById('div_add_pass');
         var div_vhod = document.getElementById('div_vhod');
         var div_save = document.getElementById('div_save');
+        var div_dosr_0 = document.getElementById('div_dosr_0');
+        var div_dosr_1 = document.getElementById('div_dosr_1');
+        var div_dosr_2 = document.getElementById('div_dosr_2');
+        var div_dosr_3 = document.getElementById('div_dosr_3');
         var lab_log = document.getElementById('lab_log');
         var sogl = document.getElementById('Sogl');
         // input.addEventListener("focusout", function () {
@@ -159,6 +176,33 @@
                         div_add_pass.classList.add('d-none');
 
                     }
+
+                    if (nalich == 4) {
+                        div_dosr_0.classList.remove('d-none');
+                    }
+                    else {
+                        div_dosr_0.classList.add('d-none');
+                    }
+                    if (nalich == 5) {
+                        div_dosr_1.classList.remove('d-none');
+                    }
+                    else {
+                        div_dosr_1.classList.add('d-none');
+                    }
+                    if (nalich == 6) {
+                        div_dosr_2.classList.remove('d-none');
+                    }
+                    else {
+                        div_dosr_2.classList.add('d-none');
+                    }
+                    if (nalich == 7) {
+                        div_dosr_3.classList.remove('d-none');
+                    }
+                    else {
+                        div_dosr_3.classList.add('d-none');
+                    }
+
+
                     if (nalich == 9) {
                         lab_log.classList.remove('d-none');
                         AddPass.value = "";
@@ -175,8 +219,8 @@
         function sravn() {
             var Pass = AddPass.value;
             var Pass2 = AddPass2.value;
-            
-           
+
+
             if (Pass == Pass2 && sogl.checked) {
                 div_save.classList.remove('d-none');
             }

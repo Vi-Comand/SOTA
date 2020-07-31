@@ -19,6 +19,7 @@ namespace SOTA.Models
         public string I { get; set; }
         public string O { get; set; }
         public string Klass { get; set; }
+        public string Kod { get; set; }
         public int NomKlass { get; set; }
         public string Name { get; set; }
         public int Role { get; set; }
@@ -59,6 +60,7 @@ namespace SOTA.Models
                     rowExcel.Name = workSheet.Cells[i, 9].Value == null ? string.Empty : workSheet.Cells[i, 9].Value.ToString();
                     rowExcel.DateReg = Convert.ToDateTime("0001-01-01 00:00:00");
                     rowExcel.Role = 0;
+                    rowExcel.Kod = "1";
                     rowExcels.Add(rowExcel);
                 }
             }
@@ -140,7 +142,7 @@ namespace SOTA.Models
                     usersMo.Role = 3;
                     usersMo.Name = ListMO[i].Name + "_администратор";
                     usersMo.DateReg = Convert.ToDateTime("0001-01-01 00:00:00");
-
+                    usersMo.Kod = "1";
                     ListUserMO.Add(usersMo);
 
 
@@ -184,6 +186,7 @@ namespace SOTA.Models
                     usersOo.IdMo = ListOO[i].IdMo;
                     usersOo.IdOo = ListOO[i].Id;
                     usersOo.Role = 2;
+                    usersOo.Kod = "1";
                     usersOo.Name = "Директор_" + ListOO[i].Id;
                     usersOo.DateReg = Convert.ToDateTime("0001-01-01 00:00:00");
                     ListUserOO.Add(usersOo);
@@ -229,6 +232,7 @@ namespace SOTA.Models
                     usersKl.IdKlass = ListKlass[i].Id;
                     usersKl.IdMo = ListOO.Where(x => x.Id == ListKlass[i].IdOo).First().IdMo;
                     usersKl.Role = 1;
+                    usersKl.Kod = "1";
                     usersKl.Name = "Класс_" + ListKlass[i].Id;
                     usersKl.DateReg = Convert.ToDateTime("0001-01-01 00:00:00");
                     ListUserKlass.Add(usersKl);
@@ -245,7 +249,7 @@ namespace SOTA.Models
             var load_rows1 = rowExcels.FindAll(w => ListUser.Find(x => w.Name == x.Name) == null);
             var errore_rows1 = rowExcels.FindAll(w => (ListUser.Find(x => w.Name == x.Name) != null));
 
-            load_rows = load_rows1.Select(x => new Users { I = x.I, F = x.F, O = x.O, DateReg = x.DateReg, IdKlass = Convert.ToInt32(x.Klass), IdOo = Convert.ToInt32(x.OO), IdMo = Convert.ToInt32(x.MO), Role = Convert.ToInt32(x.Role), Name = x.Name }).ToList();
+            load_rows = load_rows1.Select(x => new Users { I = x.I, F = x.F, O = x.O, DateReg = x.DateReg, IdKlass = Convert.ToInt32(x.Klass), IdOo = Convert.ToInt32(x.OO), IdMo = Convert.ToInt32(x.MO), Role = Convert.ToInt32(x.Role), Name = x.Name, Kod = x.Kod }).ToList();
 
             db.Users.AddRange(load_rows);
             db.SaveChanges();
