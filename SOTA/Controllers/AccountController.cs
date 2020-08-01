@@ -1,15 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SOTA.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -40,9 +36,10 @@ namespace SOTA.Controllers
         {
 
             string remoteIpAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
-            Users user = new Users();
-            if (ModelState.IsValid)
+            Users user = null;
+            if (model.Name != null && model.Pass != null)
             {
+                user = new Users();
                 try
                 {
                     string password = model.Pass;
@@ -75,6 +72,7 @@ namespace SOTA.Controllers
                 {
                     if (model.AddPass == model.AddPass2 && model.Sogl == true)
                     {
+                        user = new Users();
                         user = await db.Users.FirstOrDefaultAsync(u => u.Name == model.Name).ConfigureAwait(false);
                         string password = model.AddPass;
 
@@ -109,22 +107,22 @@ namespace SOTA.Controllers
             {
 
 
-                await Authenticate(model.Name); // аутентификация
+                // await Authenticate(user.Name).ConfigureAwait(false); // аутентификация
 
-                await Authenticate(model.Name).ConfigureAwait(false); // аутентификация
+                await Authenticate(user.Name).ConfigureAwait(false); // аутентификация
                 //string login = HttpContext.User.Identity.Name;
-                Users user1 = db.Users.Where(p => p.Name == model.Name).First();
-                ViewBag.rl = user1.Role;
+                //Users user1 = db.Users.Where(p => p.Name == model.Name).First();
+                //ViewBag.rl = user1.Role;
                 if (user.Role == 1)
                 {
                     ViewBag.rl = user.Role;
                     return RedirectToAction("Index", "Home");
                 }
-                if (user.Role == 0)
-                {
-                    ViewBag.rl = user.Role;
-                    return RedirectToAction("NaznacRabotaList", "Uchen");
-                }
+                //if (user.Role == 0)
+                //{
+                //    ViewBag.rl = user.Role;
+                //    return RedirectToAction("NaznacRabotaList", "Uchen");
+                //}
             }
 
 
