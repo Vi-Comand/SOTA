@@ -33,15 +33,17 @@ namespace SOTA.Models
         public string _otvVBD { get; set; }
         public int _nomer { get; }
         private int _idRabota;
+        private int _idUser;
         private Zadanie Zadan;
        public List<OtvTest> _Otv { get; set; }
 
         private SotaContext _db;
-        public ZadanTest(int id,SotaContext db,int idRabota)
+        public ZadanTest(int id,SotaContext db,int idRabota, int idUser)
         {
             _idZadan = id;
-            if (id != 0 && db!=null) 
+            if (id != 0 && db!=null)
             {
+                _idUser = idUser;
                 Zadan = db.Zadanie.Find(id);
                 _tip = Zadan.Tip;
                 _text = Zadan.Text;
@@ -61,7 +63,7 @@ namespace SOTA.Models
         {
             try
             {
-                _otvVBD = _db.AnswerUser.Where(x => x.IdZadan == _idZadan&& x.IdRabota==_idRabota).First().TextOtv;
+                _otvVBD = _db.AnswerUser.Where(x => x.IdZadan == _idZadan&& x.IdRabota==_idRabota && x.IdUser==_idUser).First().TextOtv;
             }
             catch { }
                       
@@ -99,12 +101,14 @@ namespace SOTA.Models
        public  int _variant { get;  }
         public List<ZadanTest> _Zadan { get;  }
         private int[] _idZadans;
+        private int _idUser;
         private SotaContext _db;
         int _idSpec;
-        public VarintTest(int idRabota,int variant,SotaContext db)
+        public VarintTest(int idRabota,int variant,SotaContext db, int idUser)
         {
             _idRabota = idRabota;
             _variant = variant;
+            _idUser = idUser;
             _Zadan = new List<ZadanTest>();
             _db = db;
             if(_db!=null)
@@ -121,7 +125,7 @@ namespace SOTA.Models
             SpisokIdZadan();
             for (int i = 0; i < _idZadans.Length; i++)
             {
-                ZadanTest Zadan = new ZadanTest(_idZadans[i],_db,_idRabota);
+                ZadanTest Zadan = new ZadanTest(_idZadans[i],_db,_idRabota, _idUser);
                 _Zadan.Add(Zadan);
             }
             
@@ -139,9 +143,9 @@ namespace SOTA.Models
             if (_id != 0 && _text != null && _db != null && _idUser != 0&& _idRabota!=0)
             {
                 db = _db;
-                if (db.AnswerUser.FirstOrDefault(x => x.IdZadan == _id&&x.IdRabota== _idRabota) != null)
+                if (db.AnswerUser.FirstOrDefault(x => x.IdZadan == _id&&x.IdRabota== _idRabota&& x.IdUser==_idUser) != null)
                 {
-                    answer = db.AnswerUser.First(x => x.IdZadan == _id && x.IdRabota == _idRabota);
+                    answer = db.AnswerUser.First(x => x.IdZadan == _id && x.IdRabota == _idRabota && x.IdUser == _idUser);
                 
 
                 answer.TextOtv = _text;
