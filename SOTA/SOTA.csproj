@@ -53,6 +53,8 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\fonts\" />
+    <Folder Include="wwwroot\UprSpec\uploads\" />
+    <Folder Include="wwwroot\Img\" />
   </ItemGroup>
 
 

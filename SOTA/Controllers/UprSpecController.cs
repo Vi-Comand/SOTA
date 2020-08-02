@@ -1,10 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using SOTA.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 
@@ -578,6 +582,42 @@ namespace SOTA.Controllers
         }
 
 
+
+
+        [HttpPost]
+        public async Task<IActionResult> LoadNaServAjaxTo(IList<IFormFile> files)
+        {
+            int lastId = db.SaveImg.Max(x => x.Id) + 1;
+            string data = "";
+            foreach (IFormFile source in files)
+            {
+                string filename = ContentDispositionHeaderValue.Parse(source.ContentDisposition).FileName.Trim('"');
+                filename = this.EnsureCorrectFilename(filename);
+                string tip = "." + filename.Substring(filename.LastIndexOf(".") + 1);
+
+                filename = lastId.ToString() + tip;
+                SaveImg saveImg = new SaveImg();
+                saveImg.Name = lastId.ToString();
+                saveImg.Tip = tip;
+                db.SaveImg.Add(saveImg);
+                db.SaveChanges();
+                using (var fileStream = new FileStream(Directory.GetCurrentDirectory() + "\\wwwroot\\Img\\" + filename, FileMode.Create))
+                {
+                    await source.CopyToAsync(fileStream).ConfigureAwait(false);
+                }
+                data = "https://" + Request.Host.ToUriComponent() + "\\Img\\" + filename;
+            }
+
+            return Json(data);
+        }
+
+        private string EnsureCorrectFilename(string filename)
+        {
+            if (filename.Contains("\\"))
+                filename = filename.Substring(filename.LastIndexOf("\\") + 1);
+
+            return filename;
+        }
 
 
 

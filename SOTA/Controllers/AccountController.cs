@@ -3,15 +3,11 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SOTA.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using SOTA.Models;
-using Microsoft.AspNetCore.Identity;
 
 
 
@@ -20,7 +16,7 @@ namespace SOTA.Controllers
 
     public class AccountController : Controller
     {
-       
+
         private SotaContext db;
 
         public AccountController(SotaContext context)
@@ -40,12 +36,45 @@ namespace SOTA.Controllers
         {
 
             string remoteIpAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
-            Users user = new Users();
-            if (ModelState.IsValid)
+            Users user = null;
+            if (model.Name != null && model.Pass != null)
             {
+                user = new Users();
                 try
                 {
                     string password = model.Pass;
+
+                    //generate a 128 - bit salt using a secure PRNG
+                    string a = "ПерестройкаИАЦ";
+
+                    byte[] salt = Encoding.Default.GetBytes(a);
+
+                    // derive a 256-bit subkey (use HMACSHA1 with 10,000 iterations)
+                    string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                        password: password,
+                        salt: salt,
+                        prf: KeyDerivationPrf.HMACSHA1,
+                        iterationCount: 10000,
+                        numBytesRequested: 256 / 8));
+
+                    user = await db.Users.FirstOrDefaultAsync(u => u.Name == model.Name && u.Pass == hashed)
+                        .ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    ex.Message.ToString();
+                }
+
+            }
+            else
+            {
+                try
+                {
+                    if (model.AddPass == model.AddPass2 && model.Sogl == true)
+                    {
+                        user = new Users();
+                        user = await db.Users.FirstOrDefaultAsync(u => u.Name == model.Name).ConfigureAwait(false);
+                        string password = model.AddPass;
 
                         //generate a 128 - bit salt using a secure PRNG
                         string a = "ПерестройкаИАЦ";
@@ -60,71 +89,40 @@ namespace SOTA.Controllers
                             iterationCount: 10000,
                             numBytesRequested: 256 / 8));
 
-                        user = await db.Users.FirstOrDefaultAsync(u => u.Name == model.Name && u.Pass == hashed)
-                            .ConfigureAwait(false);
-                    }
-                    catch (Exception ex)
-                    {
-                        ex.Message.ToString();
-                    }
-
-                }
-                else
-                {
-                    try
-                    {
-                        if (model.AddPass == model.AddPass2 && model.Sogl == true)
-                        {
-                            user = await db.Users.FirstOrDefaultAsync(u => u.Name == model.Name).ConfigureAwait(false);
-                            string password = model.AddPass;
-
-                            //generate a 128 - bit salt using a secure PRNG
-                            string a = "ПерестройкаИАЦ";
-
-                            byte[] salt = Encoding.Default.GetBytes(a);
-
-                            // derive a 256-bit subkey (use HMACSHA1 with 10,000 iterations)
-                            string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                                password: password,
-                                salt: salt,
-                                prf: KeyDerivationPrf.HMACSHA1,
-                                iterationCount: 10000,
-                                numBytesRequested: 256 / 8));
-
-                            user.Pass = hashed;
-                            user.Sogl = 1;
-                            user.DateReg = DateTime.Now;
-                            await db.SaveChangesAsync().ConfigureAwait(false);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        ex.Message.ToString();
+                        user.Pass = hashed;
+                        user.Sogl = 1;
+                        user.DateReg = DateTime.Now;
+                        await db.SaveChangesAsync().ConfigureAwait(false);
                     }
                 }
-
-
-
-                if (user != null)
+                catch (Exception ex)
                 {
+                    ex.Message.ToString();
+                }
+            }
 
 
-                    await Authenticate(model.Name); // аутентификация
 
-                await Authenticate(model.Name).ConfigureAwait(false); // аутентификация
+            if (user != null)
+            {
+
+
+                // await Authenticate(user.Name).ConfigureAwait(false); // аутентификация
+
+                await Authenticate(user.Name).ConfigureAwait(false); // аутентификация
                 //string login = HttpContext.User.Identity.Name;
-                Users user1 = db.Users.Where(p => p.Name == model.Name).First();
-                ViewBag.rl = user1.Role;
+                //Users user1 = db.Users.Where(p => p.Name == model.Name).First();
+                //ViewBag.rl = user1.Role;
                 if (user.Role == 1)
                 {
                     ViewBag.rl = user.Role;
                     return RedirectToAction("Index", "Home");
                 }
-                if (user.Role == 0)
-                {
-                    ViewBag.rl = user.Role;
-                    return RedirectToAction("NaznacRabotaList", "Uchen");
-                }
+                //if (user.Role == 0)
+                //{
+                //    ViewBag.rl = user.Role;
+                //    return RedirectToAction("NaznacRabotaList", "Uchen");
+                //}
             }
 
 
@@ -150,7 +148,29 @@ namespace SOTA.Controllers
             {
                 if (user.Pass == null)
                 {
-                    return Json(0);
+                    if (user.Kod == "0")
+                    {
+                        return Json(0);
+                    }
+                    else
+                    {
+                        if (user.Role == 0)
+                        {
+                            return Json(4);
+                        }
+                        if (user.Role == 1)
+                        {
+                            return Json(5);
+                        }
+                        if (user.Role == 2)
+                        {
+                            return Json(6);
+                        }
+                        if (user.Role == 3)
+                        {
+                            return Json(7);
+                        }
+                    }
                 }
                 else
                 {

@@ -2,7 +2,7 @@
 
 <html>
 <head>
-	<title>openWYSIWYG | Create or Modify Link</title>
+	<title>Вставить или изменить ссылку</title>
 </head>
 <script type="text/javascript" src="../scripts/wysiwyg-popup.js"></script>
 
@@ -134,15 +134,15 @@ function selectItemByValue(element, value) {
 	<tr>
 		<td style="padding-bottom: 2px; width: 50px; font-family: arial, verdana, helvetica; font-size: 11px;">Target:</td>
 		<td style="padding-bottom: 2px;" colspan="3">
-			<input type="text" name="linkTarget" id="linkTarget" value="" style="font-size: 10px; width: 65%;">
+			<input type="text" name="linkTarget" id="linkTarget" value="" style="font-size: 10px; width: 35%;">
 			&nbsp;
-			<select name="linkTargetChooser" id="linkTargetChooser" style="font-size: 10px; width: 30%;" onchange="updateTarget(this.value);">
-				<option value="" selected>no target</option>
-				<option value="_blank">_blank</option>
-				<option value="_self">_self</option>
-				<option value="_parent">_parent</option>
-				<option value="_top">_top</option>
-				<option value="">custom</option>
+			<select name="linkTargetChooser" id="linkTargetChooser" style="font-size: 10px; width: 60%;" onchange="updateTarget(this.value);">
+                <option value="" selected>в текущее окно</option>
+                <option value="_blank">в новое окно</option>
+                <option value="_self">в текущее окно</option>
+                <option value="_parent">во фрейм-родитель</option>
+                <option value="_top">в полном окне браузера</option>
+				<option value="">не стоит</option>
 			</select>
 		</td>	
 	</tr>
@@ -165,7 +165,7 @@ function selectItemByValue(element, value) {
  
 </table>	
 
-<div align="right" style="padding-top: 5px;"><input type="submit" value="  Submit  " onClick="insertHyperLink();" style="font-size: 12px;" >&nbsp;<input type="submit" value="  Cancel  " onClick="window.close();" style="font-size: 12px;" ></div>
+<div align="right" style="padding-top: 5px;"><input type="submit" value="  Сохранить  " onClick="insertHyperLink();" style="font-size: 12px;" >&nbsp;<input type="submit" value="  Отмена  " onClick="window.close();" style="font-size: 12px;" ></div>
 
 </td></tr></table>
 

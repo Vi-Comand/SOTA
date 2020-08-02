@@ -22,10 +22,25 @@ namespace SOTA.Controllers
             string login = HttpContext.User.Identity.Name;
             Users user = db.Users.Where(p => p.Name == login).First();
             ViewBag.rl = user.Role;
-            if (user.Role == 1)
+            if (user.Role == 4)
             {
                 ViewBag.rl = user.Role;
                 return RedirectToAction("RabotaList", "Rabota");
+            }
+            if (user.Role == 3)
+            {
+                ViewBag.rl = user.Role;
+                return RedirectToAction("UO", "Admin");
+            }
+            if (user.Role == 2)
+            {
+                ViewBag.rl = user.Role;
+                return RedirectToAction("OO", "Admin");
+            }
+            if (user.Role == 1)
+            {
+                ViewBag.rl = user.Role;
+                return RedirectToAction("Klass", "Admin");
             }
             if (user.Role == 0)
             {

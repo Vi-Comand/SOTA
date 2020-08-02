@@ -1,4 +1,4 @@
-/********************************************************************
+﻿/********************************************************************
  * openWYSIWYG settings file Copyright (c) 2006 openWebWare.com
  * Contact us at devs@openwebware.com
  * This copyright notice MUST stay intact for use.
@@ -13,10 +13,10 @@ var full = new WYSIWYG.Settings();
 //full.ImagesDir = "images/";
 //full.PopupsDir = "popups/";
 //full.CSSFile = "styles/wysiwyg.css";
-full.Width = "85%"; 
-full.Height = "250px";
+full.Width = "100%";
+full.Height = "450px";
 // customize toolbar buttons
-full.addToolbarElement("font", 3, 1); 
+full.addToolbarElement("font", 3, 1);
 full.addToolbarElement("fontsize", 3, 2);
 full.addToolbarElement("headings", 3, 3);
 // openImageLibrary addon implementation

@@ -147,4 +147,11 @@ namespace SOTA.Models
         public int IdRab { get; set; }
         public int IdOo { get; set; }
     }
+
+    public class SaveImg
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Tip { get; set; }
+    }
 }

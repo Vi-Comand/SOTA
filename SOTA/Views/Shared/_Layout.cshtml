@@ -39,14 +39,36 @@
         <div id="topheader">
             <nav class="navbar navbar-light  navbar-expand-lg navbar-light bg-white border-bottom box-shadow mb-3">
                 <div class="container ">
-                    @if (ViewBag.rl == 1)
+
+                    @if (ViewBag.rl == 4)
                     {
                         <a class="navbar-brand" asp-area="" asp-controller="Rabota" asp-action="RabotaList">
                             <img src="~/favicon.png" width="30" height="30" alt="logo">
                             СОТА
                         </a>
                     }
-                    else
+                    @if (ViewBag.rl == 3)
+                    {
+                        <a class="navbar-brand" asp-area="" asp-controller="Admin" asp-action="UO">
+                            <img src="~/favicon.png" width="30" height="30" alt="logo">
+                            СОТА
+                        </a>
+                    }
+                    @if (ViewBag.rl == 2)
+                    {
+                        <a class="navbar-brand" asp-area="" asp-controller="Admin" asp-action="OO">
+                            <img src="~/favicon.png" width="30" height="30" alt="logo">
+                            СОТА
+                        </a>
+                    }
+                    @if (ViewBag.rl == 1)
+                    {
+                        <a class="navbar-brand" asp-area="" asp-controller="Admin" asp-action="Klass">
+                            <img src="~/favicon.png" width="30" height="30" alt="logo">
+                            СОТА
+                        </a>
+                    }
+                    @if (ViewBag.rl == 0)
                     {
                         <a class="navbar-brand" asp-area="" asp-controller="Uchen" asp-action="NaznacRabotaList">
                             <img src="~/favicon.png" width="30" height="30" alt="logo">
@@ -82,11 +104,27 @@
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="UO">Главная</a>
                                 </li>
                             }
-                            else
+                            else if (ViewBag.rl == 2)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="OO">Главная</a>
+                                </li>
+                            }
+                            else if (ViewBag.rl == 1)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Klass">Главная</a>
+                                </li>
+                            }
+                            else if (ViewBag.rl == 0)
                             {
                                 <li class="nav-item active">
 
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Uchen" asp-action="NaznacRabotaList">Главная</a>
+                                </li>
+                                <li class="nav-item active">
+
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Uchen" asp-action="NaznacRabotaList">Результаты</a>
                                 </li>
                             }
                         </ul>
@@ -137,13 +175,13 @@
                 });
             });
 
-                                                                                                                                                    //$('#topheader .navbar-nav a').on('click', function () {
-                                                                                                                                                    //    alert(1);
-                                                                                                                                                    //    $('#topheader .navbar-nav').find('li.active').removeClass('active');
-                                                                                                                                                    //    alert(2);
-                                                                                                                                                    //    $(this).parent('li').addClass('active');
-                                                                                                                                                    //    alert(3);
-                                                                                                                                                    //});</script>
+                                                                                                                                                                    //$('#topheader .navbar-nav a').on('click', function () {
+                                                                                                                                                                    //    alert(1);
+                                                                                                                                                                    //    $('#topheader .navbar-nav').find('li.active').removeClass('active');
+                                                                                                                                                                    //    alert(2);
+                                                                                                                                                                    //    $(this).parent('li').addClass('active');
+                                                                                                                                                                    //    alert(3);
+                                                                                                                                                                    //});</script>
     </footer>
 
 

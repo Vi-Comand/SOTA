@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using SOTA.Models;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -82,6 +81,15 @@ namespace SOTA.Controllers
             user = db.Users.FirstOrDefault(u => u.Id == idDel);
             user.Pass = null;
             user.DateReg = DateTime.MinValue;
+            db.SaveChanges();
+            return Redirect("Users");
+        }
+
+        public IActionResult RazrReg(int idReg)
+        {
+            Users user = new Users();
+            user = db.Users.FirstOrDefault(u => u.Id == idReg);
+            user.Kod = "0";
             db.SaveChanges();
             return Redirect("Users");
         }

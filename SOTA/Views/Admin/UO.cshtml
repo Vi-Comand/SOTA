@@ -1,16 +1,10 @@
 ﻿@using System.Linq
 @model SOTA.Models.UsersPage
-@{
-    ViewData["Title"] = "ЛК управления образования";
-}
+@{ ViewData["Title"] = "ЛК управления образования"; }
 
 <h1>Пользователи</h1>
 
 <div class="col-12 col-md-12 col-lg-12 shadow p-3 mb-5 bg-white rounded">
-
-
-
-
     <div class="card-body">
         <ul class="nav nav-tabs" id="myTab3" role="tablist">
             <li class="nav-item">
@@ -19,10 +13,8 @@
             <li class="nav-item">
                 <a class="nav-link" id="otchet-tab" data-toggle="tab" href="#otchet" role="tab" aria-controls="otchet" aria-selected="false">Отчеты</a>
             </li>
-
         </ul>
         <div class="tab-content tab-bordered " id="myTabContent2">
-
             <div class="tab-pane fade show active" id="oo" role="tabpanel" aria-labelledby="oo-tab">
                 <div class="card-body p-0">
                     <div class="table-responsive">
@@ -38,32 +30,31 @@
                                 </tr>
                             </thead>
                             <tbody>
-
-
                                 @for (int i = 0; i < Model.LisrUsersOO.Count; i++)
                                 {
-                                    <tr>
-                                        <td>@Model.LisrUsersOO[i].Id </td>
-                                        <td>@Model.LisrUsersOO[i].MO</td>
-                                        <td>@Model.LisrUsersOO[i].OO</td>
-                                        <td>@Model.LisrUsersOO[i].Name</td>
-                                        <td>@Model.LisrUsersOO[i].DateReg</td>
+                    <tr>
+                        <td>@Model.LisrUsersOO[i].Id </td>
+                        <td>@Model.LisrUsersOO[i].MO</td>
+                        <td>@Model.LisrUsersOO[i].OO</td>
+                        <td>@Model.LisrUsersOO[i].Name</td>
+                        <td>@Model.LisrUsersOO[i].DateReg</td>
 
-                                        <td>
-                                            @if (@Model.LisrUsersOO[i].Pass != null)
-                                            {
-                                                <a asp-area="" asp-controller="Admin" asp-action="CleanPass" asp-route-idDel="@Model.LisrUsersOO[i].Id" class="btn btn-danger">Сбросить пароль</a>
-                                            }
-                                        </td>
+                        <td>
+                            @if (@Model.LisrUsersOO[i].Pass != null)
+                            {
+            <a asp-area="" asp-controller="Admin" asp-action="CleanPass" asp-route-idDel="@Model.LisrUsersOO[i].Id" class="btn btn-danger">Сбросить пароль</a>}
+                            @if (@Model.LisrUsersOO[i].Kod == "1")
+                            {
+            <a asp-area="" asp-controller="Admin" asp-action="RazrReg" asp-route-idReg="@Model.LisrUsersOO[i].Id" class="btn btn-success">Разрешить регистрацию</a>}
+                        </td>
 
-                                    </tr>
-                                }
+                    </tr>
+}
                             </tbody>
                             <tfoot class=" ">
                                 <tr>
                                     <td>Всего </td>
                                     <td>@Model.LisrUsersOO.Count</td>
-                                    @*<td>@ViewBag.SumTest</td>*@
                                 </tr>
                             </tfoot>
                         </table>
