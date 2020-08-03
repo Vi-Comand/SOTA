@@ -90,24 +90,24 @@ namespace SOTA.Controllers
             ViewBag.rl = user.Role;
             Rabota AddRabota = new Rabota();
             List<Zadanie> pustZadan = db.Zadanie.Where(x => x.IdSpec == rabota.Rabot.IdSpec && x.Text == null).ToList();
-            
-                AddRabota.Name = rabota.Rabot.Name;
-                AddRabota.IdSpec = Convert.ToInt32(rabota.Rabot.IdSpec);
-                AddRabota.Dliteln = Convert.ToInt32(rabota.Rabot.Dliteln);
-                AddRabota.UrovenRabot = rabota.Rabot.UrovenRabot;
-                AddRabota.Nachalo = Convert.ToDateTime(rabota.Rabot.Nachalo);
-                AddRabota.Konec = Convert.ToDateTime(rabota.Rabot.Konec);
-                AddRabota.ListUchasn = rabota.Rabot.ListUchasn;
-                AddRabota.Sozd = DateTime.Now;
-                AddRabota.Id = rabota.Rabot.Id;
-                db.Update(AddRabota).State = EntityState.Modified;
-                //db.Rabota.Update(AddRabota);
 
-                await db.SaveChangesAsync().ConfigureAwait(false);
+            AddRabota.Name = rabota.Rabot.Name;
+            AddRabota.IdSpec = Convert.ToInt32(rabota.Rabot.IdSpec);
+            AddRabota.Dliteln = Convert.ToInt32(rabota.Rabot.Dliteln);
+            AddRabota.UrovenRabot = rabota.Rabot.UrovenRabot;
+            AddRabota.Nachalo = Convert.ToDateTime(rabota.Rabot.Nachalo);
+            AddRabota.Konec = Convert.ToDateTime(rabota.Rabot.Konec);
+            AddRabota.ListUchasn = rabota.Rabot.ListUchasn;
+            AddRabota.Sozd = DateTime.Now;
+            AddRabota.Id = rabota.Rabot.Id;
+            db.Update(AddRabota).State = EntityState.Modified;
+            //db.Rabota.Update(AddRabota);
 
-                error = "";
-                return RedirectToAction("RabotaList");
-        
+            await db.SaveChangesAsync().ConfigureAwait(false);
+
+            error = "";
+            return RedirectToAction("RabotaList");
+
         }
 
         public async Task<IActionResult> Variants(int idRabota)
@@ -137,7 +137,7 @@ namespace SOTA.Controllers
             }
             db.SaveChanges();
 
-            return RedirectToAction("RabotaList");
+            return Json("ok");
         }
 
         public void DelNaznach(int id)

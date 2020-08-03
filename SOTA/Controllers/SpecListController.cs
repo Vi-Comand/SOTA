@@ -59,7 +59,7 @@ namespace SOTA.Controllers
 
             }
             db.SaveChanges();
-            return RedirectToRoute("RabotaList");
+            return Json("ок");
         }
     }
 }
