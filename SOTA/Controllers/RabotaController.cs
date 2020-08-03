@@ -61,7 +61,7 @@ namespace SOTA.Controllers
             // rabota.NaznachOos = ListOO.SChecNaznachOo(db, IdRabota);
             rabota.Predms = db.Predm.ToList();
             ViewData["TipSpecs"] = db.TipSpec.ToList();
-            rabota.Specs = db.Specific.ToList();
+            rabota.Specs = db.Specific.Where(x => db.Zadanie.Where(y => y.IdSpec == x.Id && y.Text == null).Count() == 0).ToList();
             //if (error == "")
             //{
             return View(rabota);
@@ -80,7 +80,7 @@ namespace SOTA.Controllers
             RabotaList rabotaList = new RabotaList();
             rabotaList.Predms = db.Predm.ToList();
             rabotaList.Rabotas = db.Rabota.ToList();
-            rabotaList.Specs = db.Specific.Where(x=>db.Zadanie.Where(y=> y.IdSpec == x.Id && y.Text == null).Count()==0).ToList();
+            rabotaList.Specs = db.Specific.ToList();
             return View(rabotaList);
         }
         public async Task<IActionResult> RabotaNaznach(RabotaList rabota)
