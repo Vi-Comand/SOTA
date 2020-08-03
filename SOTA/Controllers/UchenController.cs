@@ -49,17 +49,11 @@ namespace SOTA.Controllers
                                 {
                                     Id = rab.Id,
                                     Name = rab.Name,
-                                    IdSpec = rab.IdSpec,
                                     Dliteln = rab.Dliteln,
-                                    UrovenRabot = rab.UrovenRabot,
                                     Nachalo = rab.Nachalo,
                                     Konec = rab.Konec,
-                                    ListUchasn = rab.ListUchasn,
-                                    Sozd = rab.Sozd,
-                                    SpecN = SK.Name,
                                     PredmN = db.Predm.Where(x => x.Id == SK.Predm).First().Name,
-                                    TipN = db.TipSpec.Where(x => x.Id == SK.Tip).First().Name,
-                                    KlassR = SK.Class
+                                    TipN = db.TipSpec.Where(x => x.Id == SK.Tip).First().Name
                                 }).ToList();
 
             // list.Filt = new FilterLKTO();
