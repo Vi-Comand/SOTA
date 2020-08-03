@@ -80,7 +80,7 @@ namespace SOTA.Controllers
             RabotaList rabotaList = new RabotaList();
             rabotaList.Predms = db.Predm.ToList();
             rabotaList.Rabotas = db.Rabota.ToList();
-            rabotaList.Specs = db.Specific.ToList();
+            rabotaList.Specs = db.Specific.Where(x=>db.Zadanie.Where(y=> y.IdSpec == x.Id && y.Text == null).Count()==0).ToList();
             return View(rabotaList);
         }
         public async Task<IActionResult> RabotaNaznach(RabotaList rabota)
@@ -90,8 +90,7 @@ namespace SOTA.Controllers
             ViewBag.rl = user.Role;
             Rabota AddRabota = new Rabota();
             List<Zadanie> pustZadan = db.Zadanie.Where(x => x.IdSpec == rabota.Rabot.IdSpec && x.Text == null).ToList();
-            if (pustZadan.Count != 0)
-            {
+            
                 AddRabota.Name = rabota.Rabot.Name;
                 AddRabota.IdSpec = Convert.ToInt32(rabota.Rabot.IdSpec);
                 AddRabota.Dliteln = Convert.ToInt32(rabota.Rabot.Dliteln);
@@ -108,13 +107,7 @@ namespace SOTA.Controllers
 
                 error = "";
                 return RedirectToAction("RabotaList");
-            }
-            else
-            {
-                error = "В данной спецификации не заполнены все задания";
-                ViewData["Error"] = error;
-                return RedirectPreserveMethod("RabotaRedact");
-            }
+        
         }
 
         public async Task<IActionResult> Variants(int idRabota)
