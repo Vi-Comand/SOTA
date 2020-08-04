@@ -51,26 +51,18 @@ namespace SOTA.Controllers
             string login = HttpContext.User.Identity.Name;
             Users user = db.Users.Where(p => p.Name == login).First();
             ViewBag.rl = user.Role;
-            RabotaList rabota = new RabotaList();
-            rabota.Rabot = db.Rabota.Find(IdRabota);
-            rabota.Oos = db.Oo.ToList();
-            rabota.Mos = db.Mo.ToList();
-            ListSchecMO ListMO = new ListSchecMO();
-            rabota.NaznachMos = ListMO.SChecNaznachMo(db, IdRabota);
+            RabotaRedact rabota = new RabotaRedact(db,IdRabota);
+           
+        
+           
 
-            // rabota.NaznachOos = ListOO.SChecNaznachOo(db, IdRabota);
-            rabota.Predms = db.Predm.ToList();
-            ViewData["TipSpecs"] = db.TipSpec.ToList();
-            rabota.Specs = db.Specific.Where(x => db.Zadanie.Where(y => y.IdSpec == x.Id && y.Text == null).Count() == 0).ToList();
-            //if (error == "")
-            //{
+          
+
+           // ViewData["TipSpecs"] = db.TipSpec.ToList();
+          
+          
             return View(rabota);
-            //}
-            //else
-            //{
-            //    ViewData["Error"] = "В данной спецификации не заполнены все задания";
-            //    return View(rabota);
-            //}
+           
         }
         public IActionResult RabotaList()
         {
@@ -78,12 +70,12 @@ namespace SOTA.Controllers
             Users user = db.Users.Where(p => p.Name == login).First();
             ViewBag.rl = user.Role;
             RabotaList rabotaList = new RabotaList();
-            rabotaList.Predms = db.Predm.ToList();
+          
             rabotaList.Rabotas = db.Rabota.ToList();
-            rabotaList.Specs = db.Specific.ToList();
+      
             return View(rabotaList);
         }
-        public async Task<IActionResult> RabotaNaznach(RabotaList rabota)
+        public async Task<IActionResult> RabotaNaznach(RabotaRedact rabota)
         {
             string login = HttpContext.User.Identity.Name;
             Users user = db.Users.Where(p => p.Name == login).First();
