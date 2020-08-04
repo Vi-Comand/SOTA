@@ -14,8 +14,44 @@ namespace SOTA.Models
 
 
     }
+    public class SborkaRabotaRedact
+    {
+        int idRabota;
+        SotaContext db;
 
-    public class RabotaRedact
+        public SborkaRabotaRedact(SotaContext context, int id)
+        {
+            idRabota = id;
+            db = context;
+        }
+        public RabotaRedact GetRabotaRedact()
+        {
+            RabotaRedact RabotaRedact = new RabotaRedact();
+            RabotaRedact.Rabot = db.Rabota.Find(idRabota);
+            RabotaRedact.Specicfikac = (from Spec in db.Specific
+                           join p in db.Predm on Spec.Predm equals p.Id into gj
+                           from Predm in gj.DefaultIfEmpty()
+
+                           join y in db.TipSpec on Spec.Tip equals y.Id into gj1
+                           from Tipspec in gj1.DefaultIfEmpty()
+
+                           select new Spec
+                           {
+                               Id = Spec.Id,
+                               Name = Spec.Name,
+                               Predm = Predm.Name,
+                               Tip = Tipspec.Name
+                           }).ToList();
+            RabotaRedact.Oos = db.Oo.ToList();
+            RabotaRedact.Mos = db.Mo.ToList();
+            ListSchecMO ListMO = new ListSchecMO();
+            RabotaRedact.NaznachMos = ListMO.SChecNaznachMo(db, RabotaRedact.Rabot.Id);
+            return RabotaRedact;
+        }
+    }
+
+
+        public class RabotaRedact
     {
         public Rabota Rabot { get; set; }
 
@@ -24,28 +60,7 @@ namespace SOTA.Models
         public List<Mo> Mos { get; set; }
         public List<SChecNaznachMo> NaznachMos { get; set; }
 
-        public RabotaRedact(SotaContext context, int id)
-        {
-            Rabot = context.Rabota.Find(id);
-            Specicfikac = (from Spec in context.Specific
-                join p in context.Predm on Spec.Predm equals p.Id into gj
-                from Predm in gj.DefaultIfEmpty()
-
-                join y in context.TipSpec on Spec.Tip equals y.Id into gj1
-                from Tipspec in gj1.DefaultIfEmpty()
-
-                select new Spec
-                {
-                    Id = Spec.Id,
-                    Name = Spec.Name,
-                    Predm = Predm.Name,
-                    Tip = Tipspec.Name
-                }).ToList();
-            Oos = context.Oo.ToList();
-            Mos = context.Mo.ToList();
-            ListSchecMO ListMO = new ListSchecMO();
-            NaznachMos = ListMO.SChecNaznachMo(context, Rabot.Id);
-        }
+        
 
 
     }
