@@ -9,7 +9,7 @@
     <div class="col-12 shadow p-3 mb-5 bg-white rounded">
         <div class="container">
             <div class="row">
-                <div class="input-group wrap-input100 validate-input col-12 group">
+                <div class="input-group wrap-input100 validate-input col-9 group">
                     <div class="input-group-prepend ">
                         <div class="input-group-text">
                             <i class="fas fa-comment-alt"></i>
@@ -18,12 +18,24 @@
 
                     <input type="hidden" class="form-control input100" id="id" asp-for=@Model.Rabot.Id required />
                     <input type="text" class="form-control input100" id="nazv" asp-for=@Model.Rabot.Name required />
-                    <input type="text" class="form-control input100" id="klass" asp-for=@Model.Rabot.Klass required />
+                   
                     <span class="focus-input100 "></span>
                     <label class="label">Название работы</label>
                 </div>
+                <div class="input-group wrap-input100 validate-input col-2 group">
+                    <div class="input-group-prepend ">
+                        <div class="input-group-text">
+                            <i class="fas fa-comment-alt"></i>
+                        </div>
+                    </div>
 
-                <div class="input-group wrap-input100 validate-input col-12 group">
+                
+                    <input type="text" class="form-control input100" id="klass" asp-for=@Model.Rabot.Klass required />
+                    <span class="focus-input100 "></span>
+                    <label class="label">Класс</label>
+                </div>
+
+                <div class="input-group wrap-input100 validate-input col-11 group">
                     <div class="input-group-prepend ">
                         <div class="input-group-text">
                             <i class="fas fa-list-alt"></i>

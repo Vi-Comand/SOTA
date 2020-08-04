@@ -51,7 +51,8 @@ namespace SOTA.Controllers
             string login = HttpContext.User.Identity.Name;
             Users user = db.Users.Where(p => p.Name == login).First();
             ViewBag.rl = user.Role;
-            RabotaRedact rabota = new RabotaRedact(db,IdRabota);
+            SborkaRabotaRedact sbor = new SborkaRabotaRedact(db, IdRabota);
+            RabotaRedact rabota = sbor.GetRabotaRedact();
            
         
            
@@ -80,24 +81,16 @@ namespace SOTA.Controllers
             string login = HttpContext.User.Identity.Name;
             Users user = db.Users.Where(p => p.Name == login).First();
             ViewBag.rl = user.Role;
-            Rabota AddRabota = new Rabota();
-            List<Zadanie> pustZadan = db.Zadanie.Where(x => x.IdSpec == rabota.Rabot.IdSpec && x.Text == null).ToList();
+     
+           
             
-                AddRabota.Name = rabota.Rabot.Name;
-                AddRabota.IdSpec = Convert.ToInt32(rabota.Rabot.IdSpec);
-                AddRabota.Dliteln = Convert.ToInt32(rabota.Rabot.Dliteln);
-                AddRabota.UrovenRabot = rabota.Rabot.UrovenRabot;
-                AddRabota.Nachalo = Convert.ToDateTime(rabota.Rabot.Nachalo);
-                AddRabota.Konec = Convert.ToDateTime(rabota.Rabot.Konec);
-                AddRabota.ListUchasn = rabota.Rabot.ListUchasn;
-                AddRabota.Sozd = DateTime.Now;
-                AddRabota.Id = rabota.Rabot.Id;
-                db.Update(AddRabota).State = EntityState.Modified;
+        
+                db.Update(rabota.Rabot).State = EntityState.Modified;
                 //db.Rabota.Update(AddRabota);
 
                 await db.SaveChangesAsync().ConfigureAwait(false);
 
-                error = "";
+                
                 return RedirectToAction("RabotaList");
         
         }
