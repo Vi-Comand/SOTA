@@ -51,10 +51,12 @@ namespace SOTA.Controllers
             string login = HttpContext.User.Identity.Name;
             Users user = db.Users.Where(p => p.Name == login).First();
             ViewBag.rl = user.Role;
-            RabotaList rabota = new RabotaList();
-            rabota.Rabot = db.Rabota.Find(IdRabota);
-            rabota.Oos = db.Oo.ToList();
-            rabota.Mos = db.Mo.ToList();
+            RabotaList rabota = new RabotaList
+            {
+                Rabot = db.Rabota.Find(IdRabota),
+                Oos = db.Oo.ToList(),
+                Mos = db.Mo.ToList()
+            };
             ListSchecMO ListMO = new ListSchecMO();
             rabota.NaznachMos = ListMO.SChecNaznachMo(db, IdRabota);
 
@@ -77,10 +79,12 @@ namespace SOTA.Controllers
             string login = HttpContext.User.Identity.Name;
             Users user = db.Users.Where(p => p.Name == login).First();
             ViewBag.rl = user.Role;
-            RabotaList rabotaList = new RabotaList();
-            rabotaList.Predms = db.Predm.ToList();
-            rabotaList.Rabotas = db.Rabota.ToList();
-            rabotaList.Specs = db.Specific.ToList();
+            RabotaList rabotaList = new RabotaList
+            {
+                Predms = db.Predm.ToList(),
+                Rabotas = db.Rabota.ToList(),
+                Specs = db.Specific.ToList()
+            };
             return View(rabotaList);
         }
         public async Task<IActionResult> RabotaNaznach(RabotaList rabota)
@@ -92,6 +96,7 @@ namespace SOTA.Controllers
             List<Zadanie> pustZadan = db.Zadanie.Where(x => x.IdSpec == rabota.Rabot.IdSpec && x.Text == null).ToList();
             if (pustZadan.Count != 0)
             {
+
                 AddRabota.Name = rabota.Rabot.Name;
                 AddRabota.IdSpec = Convert.ToInt32(rabota.Rabot.IdSpec);
                 AddRabota.Dliteln = Convert.ToInt32(rabota.Rabot.Dliteln);
