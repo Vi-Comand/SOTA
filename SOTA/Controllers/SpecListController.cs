@@ -58,7 +58,7 @@ namespace SOTA.Controllers
 
             }
             db.SaveChanges();
-            return RedirectToAction("SpecifikacList");
+            return Json("ок");
         }
     }
 }

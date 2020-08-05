@@ -39,8 +39,9 @@
                                 <td><input type="checkbox" class="DEL" value="@row.Id" /></td>
                                 <td><a href="/Rabota/RabotaRedact?IdRabota=@row.Id" class='btn btn-icon btn-sm btn-outline-yel text-left btn-block'><i class='fas fa-pencil-alt'></i>@row.Name </a></td>
                                 <td>
-                                    @if (row.IdSpec != 0)
-                                    {@Model.Specs.Where(x => x.Id == row.IdSpec).First().Name;
+                                    @if (row.IdSpec != 0 )
+                                        {
+                                            //@Model.Specs.Where(x => x.Id == row.IdSpec).First().Name;
                                 }
                                 else
                                 { @Html.Raw("Не выбрана спецификация");
@@ -48,7 +49,9 @@
                             </td>
                             <td>
                                 @if (row.IdSpec != 0)
-                                {@Model.Predms.Where(x => x.Id == Model.Specs.Where(y => y.Id == row.IdSpec).First().Predm).First().Name}
+                                {
+                                    //@Model.Predms.Where(x => x.Id == Model.Specs.Where(y => y.Id == row.IdSpec).First().Predm).First().Name
+                                }
                             else
                             { @Html.Raw("<span>Не выбрана спецификация</span>");
                         }
@@ -98,7 +101,8 @@
                 dataType: "json",
                 data: { Id: outMO },
                 success: function (query) {
-                    //          alert(query);
+                    alert("Запись удалена");
+                    location.reload();
                 }
 
             });

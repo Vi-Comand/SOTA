@@ -5,8 +5,11 @@
 <h1>Спецификации</h1>
 <div class="col-12 shadow p-3 mb-5 bg-white rounded">
     <div class="col-12">
-        <a id="AddSpec" class="btn btn-outline-success shadow  col-3" asp-area="" asp-controller="UprSpec" asp-action="SpecifikacAdd"><i class='fas fa-plus-circle'></i> Создать</a>
-        <a id="AddSpec" class="btn btn-outline-danger shadow col-3 " onclick="Del()"><i class='fas fa-trash'></i> Удалить</a>
+      
+            <a id="AddSpec" class="btn btn-outline-success shadow  col-3" asp-area="" asp-controller="UprSpec" asp-action="SpecifikacAdd"><i class='fas fa-plus-circle'></i> Создать</a>
+
+            <a  id="AddSpec" class="btn btn-outline-danger shadow col-3 " onclick="Del()"><i class='fas fa-trash'></i> Удалить</a>
+       
     </div>
     <div class="col-12 table-responsive-lg">
         <table class="table table-hover table-sm table-bordered shadow">
@@ -44,24 +47,24 @@
             </tbody>
         </table>
     </div>
-        <div class=" text-right">
-            <nav class="d-inline-block">
-                <ul class="pagination mb-0">
-                    <li class="page-item disabled">
-                        <a class="page-link" href="#" tabindex="-1"><i class="fas fa-chevron-left"></i></a>
-                    </li>
-                    <li class="page-item active"><a class="page-link" href="#"><ya-tr-span data-index="156-0" data-value="1 " data-translation="1 " data-type="trSpan">1 </ya-tr-span><span class="sr-only"><ya-tr-span data-index="156-0" data-value="(current)" data-translation="(ток)" data-type="trSpan">(ток)</ya-tr-span></span></a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">2</a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-   
+    @*<div class=" text-right">
+        <nav class="d-inline-block">
+            <ul class="pagination mb-0">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1"><i class="fas fa-chevron-left"></i></a>
+                </li>
+                <li class="page-item active"><a class="page-link" href="#"><ya-tr-span data-index="156-0" data-value="1 " data-translation="1 " data-type="trSpan">1 </ya-tr-span><span class="sr-only"><ya-tr-span data-index="156-0" data-value="(current)" data-translation="(ток)" data-type="trSpan">(ток)</ya-tr-span></span></a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#">2</a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a>
+                </li>
+            </ul>
+        </nav>
+    </div>*@
+
 </div>
 <script>
     function Del() {
@@ -78,9 +81,10 @@
             dataType: "json",
             data: { Id: outMO },
             success: function (query) {
-                //          alert(query);
+                alert("Запись удалена");
+                location.reload();         
             }
-
+            
         });
     }
 </script>

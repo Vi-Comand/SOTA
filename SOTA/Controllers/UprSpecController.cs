@@ -83,7 +83,7 @@ namespace SOTA.Controllers
         {
             db.Specific.Update(model.Spec);
             db.SaveChanges();
-            return RedirectToAction("SpecifikacList");
+            return RedirectToAction("SpecifikacList", "SpecList");
         }
 
         public IActionResult IzmKolZadans(SpecifikacRedactModel model)

@@ -132,6 +132,7 @@ namespace SOTA.Models
         public DateTime Konec { get; set; }
         public string ListUchasn { get; set; }
         public DateTime Sozd { get; set; }
+        public int Klass { get; set; }
 
     }
 

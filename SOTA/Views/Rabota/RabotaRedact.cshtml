@@ -1,7 +1,7 @@
-﻿@model SOTA.Models.RabotaList
+﻿@model SOTA.Models.RabotaRedact
 @{
     ViewData["Title"] = "Создание работы";
-    var listT = ViewData["TipSpecs"] as IEnumerable<SOTA.Models.TipSpec>;
+   
 }
 <form method="post">
     <h1>Назначение работы</h1>
@@ -9,7 +9,7 @@
     <div class="col-12 shadow p-3 mb-5 bg-white rounded">
         <div class="container">
             <div class="row">
-                <div class="input-group wrap-input100 validate-input col-12 group">
+                <div class="input-group wrap-input100 validate-input col-9 group">
                     <div class="input-group-prepend ">
                         <div class="input-group-text">
                             <i class="fas fa-comment-alt"></i>
@@ -18,11 +18,24 @@
 
                     <input type="hidden" class="form-control input100" id="id" asp-for=@Model.Rabot.Id required />
                     <input type="text" class="form-control input100" id="nazv" asp-for=@Model.Rabot.Name required />
+                   
                     <span class="focus-input100 "></span>
                     <label class="label">Название работы</label>
                 </div>
+                <div class="input-group wrap-input100 validate-input col-2 group">
+                    <div class="input-group-prepend ">
+                        <div class="input-group-text">
+                            <i class="fas fa-comment-alt"></i>
+                        </div>
+                    </div>
 
-                <div class="input-group wrap-input100 validate-input col-12 group">
+                
+                    <input type="text" class="form-control input100" id="klass" asp-for=@Model.Rabot.Klass required />
+                    <span class="focus-input100 "></span>
+                    <label class="label">Класс</label>
+                </div>
+
+                <div class="input-group wrap-input100 validate-input col-11 group">
                     <div class="input-group-prepend ">
                         <div class="input-group-text">
                             <i class="fas fa-list-alt"></i>
@@ -30,9 +43,12 @@
                     </div>
                     <select class="form-control input100" asp-for=@Model.Rabot.IdSpec required>
                         <option value="">Выберите спецификацию</option>
-                        @foreach (Specific spec in Model.Specs)
+                        @if (Model.Specicfikac != null)
                         {
-                            <option value=@spec.Id>@spec.Name Тип: @listT.Where(x => x.Id == spec.Tip).First().Name Предмет: @Model.Predms.Where(x => x.Id == spec.Predm).First().Name</option>
+                            @foreach (var spec in Model.Specicfikac)
+                            {
+                                <option value=@spec.Id>@spec.Name Тип:@spec.Tip Предмет: @spec.Predm</option>
+                            }
                         }
                     </select>
                     <span class="focus-input100"></span>

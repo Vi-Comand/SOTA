@@ -51,75 +51,48 @@ namespace SOTA.Controllers
             string login = HttpContext.User.Identity.Name;
             Users user = db.Users.Where(p => p.Name == login).First();
             ViewBag.rl = user.Role;
-            RabotaList rabota = new RabotaList
-            {
-                Rabot = db.Rabota.Find(IdRabota),
-                Oos = db.Oo.ToList(),
-                Mos = db.Mo.ToList()
-            };
-            ListSchecMO ListMO = new ListSchecMO();
-            rabota.NaznachMos = ListMO.SChecNaznachMo(db, IdRabota);
+            SborkaRabotaRedact sbor = new SborkaRabotaRedact(db, IdRabota);
+            RabotaRedact rabota = sbor.GetRabotaRedact();
+           
+        
+           
 
-            // rabota.NaznachOos = ListOO.SChecNaznachOo(db, IdRabota);
-            rabota.Predms = db.Predm.ToList();
-            ViewData["TipSpecs"] = db.TipSpec.ToList();
-            rabota.Specs = db.Specific.ToList();
-            //if (error == "")
-            //{
+          
+
+           // ViewData["TipSpecs"] = db.TipSpec.ToList();
+          
+          
             return View(rabota);
-            //}
-            //else
-            //{
-            //    ViewData["Error"] = "В данной спецификации не заполнены все задания";
-            //    return View(rabota);
-            //}
+           
         }
         public IActionResult RabotaList()
         {
             string login = HttpContext.User.Identity.Name;
             Users user = db.Users.Where(p => p.Name == login).First();
             ViewBag.rl = user.Role;
-            RabotaList rabotaList = new RabotaList
-            {
-                Predms = db.Predm.ToList(),
-                Rabotas = db.Rabota.ToList(),
-                Specs = db.Specific.ToList()
-            };
+            RabotaList rabotaList = new RabotaList();
+          
+            rabotaList.Rabotas = db.Rabota.ToList();
+      
             return View(rabotaList);
         }
-        public async Task<IActionResult> RabotaNaznach(RabotaList rabota)
+        public async Task<IActionResult> RabotaNaznach(RabotaRedact rabota)
         {
             string login = HttpContext.User.Identity.Name;
             Users user = db.Users.Where(p => p.Name == login).First();
             ViewBag.rl = user.Role;
-            Rabota AddRabota = new Rabota();
-            List<Zadanie> pustZadan = db.Zadanie.Where(x => x.IdSpec == rabota.Rabot.IdSpec && x.Text == null).ToList();
-            if (pustZadan.Count != 0)
-            {
-
-                AddRabota.Name = rabota.Rabot.Name;
-                AddRabota.IdSpec = Convert.ToInt32(rabota.Rabot.IdSpec);
-                AddRabota.Dliteln = Convert.ToInt32(rabota.Rabot.Dliteln);
-                AddRabota.UrovenRabot = rabota.Rabot.UrovenRabot;
-                AddRabota.Nachalo = Convert.ToDateTime(rabota.Rabot.Nachalo);
-                AddRabota.Konec = Convert.ToDateTime(rabota.Rabot.Konec);
-                AddRabota.ListUchasn = rabota.Rabot.ListUchasn;
-                AddRabota.Sozd = DateTime.Now;
-                AddRabota.Id = rabota.Rabot.Id;
-                db.Update(AddRabota).State = EntityState.Modified;
+     
+           
+            
+        
+                db.Update(rabota.Rabot).State = EntityState.Modified;
                 //db.Rabota.Update(AddRabota);
 
-                await db.SaveChangesAsync().ConfigureAwait(false);
+            await db.SaveChangesAsync().ConfigureAwait(false);
 
-                error = "";
+                
                 return RedirectToAction("RabotaList");
-            }
-            else
-            {
-                error = "В данной спецификации не заполнены все задания";
-                ViewData["Error"] = error;
-                return RedirectPreserveMethod("RabotaRedact");
-            }
+        
         }
 
         public async Task<IActionResult> Variants(int idRabota)
@@ -149,7 +122,7 @@ namespace SOTA.Controllers
             }
             db.SaveChanges();
 
-            return RedirectToAction("RabotaList");
+            return Json("ok");
         }
 
         public void DelNaznach(int id)
