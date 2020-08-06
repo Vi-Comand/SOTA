@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using SOTA.Models;
 using System;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace SOTA.Controllers
 {
@@ -31,7 +30,7 @@ namespace SOTA.Controllers
             return View("SpecifikacList", model);
         }
 
-        public async Task<IActionResult> SpecDel(int[] Id)
+        public IActionResult SpecDel(int[] Id)
         {
 
             for (int i = 0; i < Id.Length; i++)
