@@ -24,7 +24,10 @@ namespace SOTA.Controllers
             var login = HttpContext.User.Identity.Name;
             Users user = db.Users.Where(p => p.Name == login).First();
             ViewBag.rl = user.Role;
-            RabotaTablList rabotaList = new RabotaTablList();
+            FormirRabotaTablList formir = new FormirRabotaTablList(user,db);
+            RabotaUchenList rabotaList = new RabotaUchenList();
+
+            rabotaList=formir.GetSpisokRabotUchen();
             /* rabotaList.Id=RabotaList
 
 
@@ -37,29 +40,29 @@ namespace SOTA.Controllers
              rabotaList.PredmN = db.Predm.Where(p => p.Id == klass).ToList();
              rabotaList.Rabotas = db.Rabota.ToList();
              */
-            int KlassU = db.Klass.Where(x => x.Id == user.IdKlass).First().KlassNom;
-            RabotaTablList list = new RabotaTablList();
-            list.RabotaTabls = (from rab in db.Rabota
+            //int KlassU = db.Klass.Where(x => x.Id == user.IdKlass).First().KlassNom;
+            //RabotaTablList list = new RabotaTablList();
+            //list.RabotaTabls = (from rab in db.Rabota
 
-                                join SpecK in db.Specific on rab.IdSpec equals SpecK.Id into spK
-                                from SK in spK.DefaultIfEmpty()
+            //                    join SpecK in db.Specific on rab.IdSpec equals SpecK.Id into spK
+            //                    from SK in spK.DefaultIfEmpty()
 
 
-                                select new RabotaTabl
-                                {
-                                    Id = rab.Id,
-                                    Name = rab.Name,
-                                    Dliteln = rab.Dliteln,
-                                    Nachalo = rab.Nachalo,
-                                    Konec = rab.Konec,
-                                    PredmN = db.Predm.Where(x => x.Id == SK.Predm).First().Name,
-                                    TipN = db.TipSpec.Where(x => x.Id == SK.Tip).First().Name
-                                }).ToList();
+            //                    select new RabotaTabl
+            //                    {
+            //                        Id = rab.Id,
+            //                        Name = rab.Name,
+            //                        Dliteln = rab.Dliteln,
+            //                        Nachalo = rab.Nachalo,
+            //                        Konec = rab.Konec,
+            //                        PredmN = db.Predm.Where(x => x.Id == SK.Predm).First().Name,
+            //                        TipN = db.TipSpec.Where(x => x.Id == SK.Tip).First().Name
+            //                    }).ToList();
 
             // list.Filt = new FilterLKTO();
-            DateTime dateNow = DateTime.Now;
-            list.RabotaTabls = list.RabotaTabls.Where(x => x.KlassR == KlassU && x.Konec > dateNow).ToList();
-            rabotaList = list;
+        //    DateTime dateNow = DateTime.Now;
+            //list.RabotaTabls = list.RabotaTabls.Where(x => x.KlassR == KlassU && x.Konec > dateNow).ToList();
+            //rabotaList = list;
             //rabotaList = rabotaList.RabotaTabls
 
             return View(rabotaList);
