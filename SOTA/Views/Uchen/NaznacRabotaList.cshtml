@@ -1,4 +1,4 @@
-﻿@model SOTA.Models.RabotaTablList
+﻿@model SOTA.Models.RabotaUchenList
 
 @{
     ViewData["Title"] = "Назначенные работы";
@@ -26,9 +26,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var row in Model.RabotaTabls)
-
+                    @if (Model.RabotaTabls != null)
                     {
+                        @foreach (var row in Model.RabotaTabls)
+
+                        {
 
                         <tr>
                             <td>@row.Name</td>
@@ -48,6 +50,7 @@
                                 }
                             </td>
                         </tr>
+                        }
                     }
                 </tbody>
             </table>

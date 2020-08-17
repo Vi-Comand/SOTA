@@ -24,16 +24,16 @@ namespace SOTA.Controllers
             var login = HttpContext.User.Identity.Name;
             Users user = db.Users.Where(p => p.Name == login).First();
             ViewBag.rl = user.Role;
-            RabotaTablList rabotaList = new RabotaTablList();
+            RabotaUchenList rabotaList = new RabotaUchenList();
             int KlassU = db.Klass.Where(x => x.Id == user.IdKlass).First().KlassNom;
-            RabotaTablList list = new RabotaTablList();
+            RabotaUchenList list = new RabotaUchenList();
             list.RabotaTabls = (from rab in db.Rabota
 
                                 join SpecK in db.Specific on rab.IdSpec equals SpecK.Id into spK
                                 from SK in spK.DefaultIfEmpty()
 
 
-                                select new RabotaTabl
+                                select new RabotaUchen
                                 {
                                     Id = rab.Id,
                                     Name = rab.Name,

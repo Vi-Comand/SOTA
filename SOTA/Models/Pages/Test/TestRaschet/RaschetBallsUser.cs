@@ -3,15 +3,77 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using SOTA.Models.Pages.Test.TestRaschet;
+using SOTA.Models.Pages.Test.TestRaschet.ConcreteStrategy;
 
 namespace SOTA.Models.Pages.TestRaschet
+
 {
+    
     public class AnswerUserRascheta
     {
         public AnswerUser Otvet { get; set; }
         public int Tip { get; set; }
         public double Ball { get; set; }
     }
+
+    public class Raschet
+        {
+        List<AnswerUserRascheta> OtvUsrPoschitano;
+        SotaContext db;
+        ContextStrategy strategy;
+        List<Otvet> OtvVBD;
+        public Raschet(List<AnswerUserRascheta> OtvUsr, List<Otvet> OtvetsVBD, SotaContext db)
+        { 
+            this.db=db;
+            List<AnswerUserRascheta> OtvetsUsers =new List<AnswerUserRascheta>();
+
+            
+            OtvUsr = OtvetsUsers.Where(x => x.Tip == 1).ToList();
+            if (OtvUsr.Count != 0)
+            {
+                strategy = new ContextStrategy(new Tip1());
+                
+                int[] mass = OtvUsr.Select(x => x.Otvet.IdZadan).ToArray();
+                OtvVBD = OtvetsVBD.Where(x => mass.Contains(x.IdZadan)).ToList();
+                OtvUsrPoschitano.AddRange(strategy.GetRaschet(OtvUsr, OtvVBD));
+            }
+            OtvUsr = OtvetsUsers.Where(x => x.Tip == 2).ToList();
+            if (OtvUsr.Count != 0)
+            {
+                strategy = new ContextStrategy(new Tip2());
+
+                int[] mass = OtvUsr.Select(x => x.Otvet.IdZadan).ToArray();
+                OtvVBD = OtvetsVBD.Where(x => mass.Contains(x.IdZadan)).Where(x => x.Verno == 1).ToList();
+                OtvUsrPoschitano.AddRange(strategy.GetRaschet(OtvUsr, OtvVBD));
+            }
+            OtvUsr = OtvetsUsers.Where(x => x.Tip == 4).ToList();
+            if (OtvUsr.Count != 0)
+            {
+
+                strategy = new ContextStrategy(new Tip4());
+
+                int[] mass = OtvUsr.Select(x => x.Otvet.IdZadan).ToArray();
+                OtvVBD = OtvetsVBD.Where(x => mass.Contains(x.IdZadan)).Where(x => x.Verno == 1).ToList();
+                OtvUsrPoschitano.AddRange(strategy.GetRaschet(OtvUsr, OtvVBD));
+            }
+
+
+
+        }
+
+        private void SaveBalls()
+        {
+            db.UsersBalls.AddRange(OtvUsrPoschitano.Select(x => new UsersBalls() { Ball = x.Ball, Date = DateTime.Now, IdRabota = x.Otvet.IdRabota, IdUser = x.Otvet.IdUser, IdZadania = x.Otvet.IdZadan }));
+            db.SaveChanges();
+        }
+
+}
+
+
+
+
+
     public class RaschetBallsUser: IRaschetBallsUser
     {
         private List<AnswerUserRascheta> OtvetsUsers;
