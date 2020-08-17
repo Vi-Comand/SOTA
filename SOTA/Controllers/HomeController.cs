@@ -20,49 +20,63 @@ namespace SOTA.Controllers
         public IActionResult Index()
         {
             string login = HttpContext.User.Identity.Name;
-            Users user = db.Users.Where(p => p.Name == login).First();
-            ViewBag.rl = user.Role;
-            if (user.Role == 4)
+            Users user=new Users();
+            try
             {
-                ViewBag.rl = user.Role;
-                return RedirectToAction("RabotaList", "Rabota");
+                user = db.Users.Where(p => p.Name == login).First();
             }
-            if (user.Role == 3)
+            catch
             {
-                ViewBag.rl = user.Role;
-                return RedirectToAction("UO", "Admin");
+                user = null;
             }
-            if (user.Role == 2)
+
+            if (user != null)
             {
+
+
+
                 ViewBag.rl = user.Role;
-                return RedirectToAction("OO", "Admin");
-            }
-            if (user.Role == 1)
-            {
-                ViewBag.rl = user.Role;
-                return RedirectToAction("Klass", "Admin");
-            }
-            if (user.Role == 0)
-            {
-                ViewBag.rl = user.Role;
-                return RedirectToAction("NaznacRabotaList", "Uchen");
+                if (user.Role == 4)
+                {
+                    ViewBag.rl = user.Role;
+                    return RedirectToAction("RabotaList", "Rabota");
+                }
+
+                if (user.Role == 3)
+                {
+                    ViewBag.rl = user.Role;
+                    return RedirectToAction("UO", "Admin");
+                }
+
+                if (user.Role == 2)
+                {
+                    ViewBag.rl = user.Role;
+                    return RedirectToAction("OO", "Admin");
+                }
+
+                if (user.Role == 1)
+                {
+                    ViewBag.rl = user.Role;
+                    return RedirectToAction("Klass", "Admin");
+                }
+
+                if (user.Role == 0)
+                {
+                    ViewBag.rl = user.Role;
+                    return RedirectToAction("NaznacRabotaList", "Uchen");
+                }
+                else
+                {
+                    ViewBag.rl = user.Role;
+                    return RedirectToAction("RabotaList", "Rabota");
+                }
             }
             else
             {
-                ViewBag.rl = user.Role;
-                return RedirectToAction("RabotaList", "Rabota");
+                return RedirectToAction("Login", "Account");
             }
         }
 
-        /*   public IActionResult SpecifikacList()
-           {
-               return View();
-           }
-
-           public IActionResult SpecifikacAdd()
-           {
-               return View();
-           }*/
         public IActionResult Privacy()
         {
             return View();
