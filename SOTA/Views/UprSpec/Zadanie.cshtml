@@ -91,7 +91,8 @@
         }
         @foreach (var row in Model.Otvets)
         {
-            @: var text = "@row.Text";
+            @: var text = "@row.Text" ;
+
                 @: var ball = "@row.Ball";
                 @: var param = "@row.Param1";
                 @:ForOtvTip4(param, text, ball);
@@ -126,7 +127,14 @@
                 AddTip2();
             }
 
-            document.getElementById("ViborOtveta[" + nomZad + "]").value = text;
+            var div = document.createElement('div');
+            div.innerHTML = text;
+
+
+            var textbox = document.getElementById("ViborOtveta[" + nomZad + "]");
+            textbox.value = div.textContent;
+
+
             if (ball != 0 || verno==1) {
                document.getElementById("check[" + nomZad + "]").checked = true;
                ballvibotv(nomZad);
@@ -158,7 +166,12 @@
                 //addInput(parseInt(mass[0]), parseInt(mass[1])-1);
                 //}
             console.log("ach" + param);
-            document.getElementById("ach" + param).value = text;
+            var div = document.createElement('div');
+            div.innerHTML = text;
+
+
+            var textbox = document.getElementById("ach" + param);
+            textbox.value =div.textContent;
 
 
 
@@ -320,7 +333,7 @@
 
 <body>
     @*<button class="btn btn-outline-success " id="SaveZadanie" form="0">Сохранить</button>*@
-
+    <a href="/UprSpec/SpecifikacRedact?id_spec=@Model.IdSpec" class='btn btn-icon btn-sm btn-outline-yel text-left btn-block'><i class='fas fa-plus'></i>Назад</a>
 
 
     <div class="card-body">
@@ -329,7 +342,7 @@
                 <div class="accordion-header" role="button" data-toggle="collapse" data-target="#panel-body-1" aria-expanded="true" id="pb-1">
                     <h3>Условие</h3>
                 </div>
-                <div class="accordion-body card collapse show" id="panel-body-1" data-parent="#accordion">
+                <div class="accordion-body card collapse show overflow-auto" id="panel-body-1" data-parent="#accordion">
                     <table border="0" cellpadding="2" cellspacing="0" style="width:100%;">
                         <tbody>
                             <tr>
@@ -717,7 +730,7 @@
                     <h3>Предпросмотр и сохранение</h3>
                 </div>
                 <div class="accordion-body card collapse" id="panel-body-3" data-parent="#accordion">
-                    <div class="card-body">
+                    <div class="card-body overflow-auto">
                         <div id="TextZadanPredprosmotr"></div>
                         <div id="OtvetiZadanPredprosmotr"></div>
                     </div>
@@ -953,7 +966,7 @@
         }
 
         jQuery('#add').click(function () {
-            ddTip2();
+            AddTip2();
         });
         function AddTip2() {
             //form.appendChild(event.target.parentNode.(true));
@@ -1291,7 +1304,7 @@
                     if (j == 1) {
                         table += "<td id=\"but[" + i + "]\"><button type=\"button\" name=\"addAlternativeTable[" + i + "]\" id=\"addAlternativeTable[" + i + "]\" class=\"classAddAlternativeTable\"  OnClick=\"addInput(" + i + ",2);\"  >+</button> <button type=\"button\" name=\"delAlternativeTable[" + i + "]\" id=\"delAlternativeTable[" + i + "]\" class=\"classDelAlternativeTable\"  OnClick=\"delInput(" + i + ",2);\"  >-</button></td> ";
                     }
-                    table += "<td><input name= \"ach" + i + "," + j + "\" id= \"ach" + i + "," + j + "\"/> </td>";
+                    table += "<td><input type=\"text\" name= \"ach" + i + "," + j + "\" id= \"ach" + i + "," + j + "\"/> </td>";
 
 
                 }

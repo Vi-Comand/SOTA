@@ -584,7 +584,7 @@ namespace SOTA.Controllers
 
 
 
-        [HttpPost]
+        //[HttpPost]
         public async Task<IActionResult> LoadNaServAjaxTo(IList<IFormFile> files)
         {
             int lastId = db.SaveImg.Max(x => x.Id) + 1;
@@ -601,11 +601,11 @@ namespace SOTA.Controllers
                 saveImg.Tip = tip;
                 db.SaveImg.Add(saveImg);
                 db.SaveChanges();
-                using (var fileStream = new FileStream(Directory.GetCurrentDirectory() + "\\wwwroot\\Img\\" + filename, FileMode.Create))
+                using (var fileStream = new FileStream(Directory.GetCurrentDirectory() + "//wwwroot//Img//" + filename, FileMode.Create))
                 {
                     await source.CopyToAsync(fileStream).ConfigureAwait(false);
                 }
-                data = "https://" + Request.Host.ToUriComponent() + "\\Img\\" + filename;
+                data = "https://" + Request.Host.ToUriComponent() + "//Img//" + filename;
             }
 
             return Json(data);
@@ -629,6 +629,7 @@ namespace SOTA.Controllers
             ZadanieRedact model = new ZadanieRedact();
             var Zadan = db.Zadanie.Where(x => x.IdSpec == id_spec && x.Nomer == n_zad && x.Variant == n_var).First();
             model.Id = Zadan.Id;
+            model.IdSpec = id_spec;
             model.Text = Zadan.Text;
             model.Tip = Zadan.Tip;
             model.Ball = Zadan.Ball;

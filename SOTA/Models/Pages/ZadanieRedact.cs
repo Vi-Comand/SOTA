@@ -8,6 +8,8 @@ namespace SOTA.Models
     public class ZadanieRedact
     {
         public int Id { get; set; }
+
+        public int IdSpec { get; set; }
         public int Tip { get; set; }
         public string Text { get; set; }
         public double Ball { get; set; }
