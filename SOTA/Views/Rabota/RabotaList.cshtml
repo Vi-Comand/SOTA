@@ -39,30 +39,30 @@
                                 <td><input type="checkbox" class="DEL" value="@row.Id" /></td>
                                 <td><a href="/Rabota/RabotaRedact?IdRabota=@row.Id" class='btn btn-icon btn-sm btn-outline-yel text-left btn-block'><i class='fas fa-pencil-alt'></i>@row.Name </a></td>
                                 <td>
-                                    @if (row.IdSpec != 0 )
-                                        {
-                                            //@Model.Specs.Where(x => x.Id == row.IdSpec).First().Name;
+                                    @if (row.IdSpec != 0)
+                                    {
+                                        @row.IdSpec;
+                                    }
+                                    else
+                                    { @Html.Raw("Не выбрана спецификация");
                                 }
-                                else
-                                { @Html.Raw("Не выбрана спецификация");
-                            }
-                            </td>
-                            <td>
-                                @if (row.IdSpec != 0)
-                                {
-                                    //@Model.Predms.Where(x => x.Id == Model.Specs.Where(y => y.Id == row.IdSpec).First().Predm).First().Name
+                                </td>
+                                <td>
+                                    @if (row.IdSpec != 0)
+                                    {
+                                        //@Model.Predms.Where(x => x.Id == Model.Specs.Where(y => y.Id == row.IdSpec).First().Predm).First().Name
+                                    }
+                                    else
+                                    {@Html.Raw("<span>Не выбрана спецификация</span>");
                                 }
-                            else
-                            { @Html.Raw("<span>Не выбрана спецификация</span>");
+                                </td>
+                                <td>@row.UrovenRabot</td>
+                                <td>@row.Nachalo</td>
+                                <td>@row.Konec</td>
+                                <td>@row.Dliteln</td>
+                                <td>@row.Sozd</td>
+                            </tr>
                         }
-                        </td>
-                        <td>@row.UrovenRabot</td>
-                        <td>@row.Nachalo</td>
-                        <td>@row.Konec</td>
-                        <td>@row.Dliteln</td>
-                        <td>@row.Sozd</td>
-                    </tr>
-                }
                     }
                 </tbody>
             </table>

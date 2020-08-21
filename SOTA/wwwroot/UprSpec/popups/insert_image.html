@@ -117,8 +117,8 @@
                     <form name="uploader" enctype="multipart/form-data" method="POST">
                         <tr>
                             <!--<td> <input id="files2" name="files2" type="file" size="1" multiple onchange="uploadFiles('files2');" /></td>-->
-                            <td style="padding-bottom: 2px; padding-top: 0px;" width="300"><input type="file" accept="image/*,image/jpeg" id="files" name="files" size="1" onchange="uploadFiles('files');" style="font-size: 10px; width: 100%;"></td>
-                            <td style="padding-bottom: 2px; padding-top: 0px;" width="80"><input type="button" onClick="loadNaServ();" name="submit" id="loadServ" value="Загрузить на сервер" style="font-size: 10px; width: 100%;"></td>
+                            <td style="padding-bottom: 2px; padding-top: 0px;" width="380"><input type="file" accept="image/*,image/jpeg" id="files" name="files" size="1" onchange="uploadFiles('files');" style="font-size: 10px; width: 100%;"></td>
+                            
 
                         </tr>
                     </form>
@@ -142,11 +142,11 @@
                             <table width="180" border="0" cellpadding="0" cellspacing="0" style="background-color: #F7F7F7; border: 2px solid #FFFFFF; padding: 5px;">
                                 <tr>
                                     <td style="padding-bottom: 2px; padding-top: 0px; font-family: arial, verdana, helvetica; font-size: 11px;">Ширина:</td>
-                                    <td style="width:60px;padding-bottom: 2px; padding-top: 0px;"><input class="wh" type="text" name="width" id="width" value="500" style="font-size: 10px; width: 100%;"></td>
+                                    <td style="width:60px;padding-bottom: 2px; padding-top: 0px;"><input class="wh" type="text" name="width" id="width"  style="font-size: 10px; width: 100%;"></td>
                                 </tr>
                                 <tr>
                                     <td style="padding-bottom: 2px; padding-top: 0px; font-family: arial, verdana, helvetica; font-size: 11px;">Высота:</td>
-                                    <td style="padding-bottom: 2px; padding-top: 0px;"><input class="he" type="text" name="height" id="height" value="300" style="font-size: 10px; width: 100%;"></td>
+                                    <td style="padding-bottom: 2px; padding-top: 0px;"><input class="he" type="text" name="height" id="height"  style="font-size: 10px; width: 100%;"></td>
                                 </tr>
                                 <tr>
                                     <td style="padding-bottom: 2px; padding-top: 0px; font-family: arial, verdana, helvetica; font-size: 11px;">Границы:</td>
@@ -236,7 +236,6 @@
                     };
                 }
       //      })
-
             $.ajax(
                 {
                     url: "/UprSpec/LoadNaServAjaxTo/",
@@ -266,7 +265,7 @@
 
 
         // $("form[name='uploader']").submit(function (e) {
-        function loadNaServ() {
+        /*function loadNaServ() {
             event.stopPropagation(); // остановка всех текущих JS событий
             event.preventDefault();  // остановка дефолтного события для текущего элемента - клик для <a> тега
 
@@ -310,7 +309,7 @@
             else {
                 alert("Не выбрано файла");
             }
-        };
+        };*/
     </script>
 </body>
 
