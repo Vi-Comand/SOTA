@@ -41,6 +41,7 @@ namespace SOTA.Models.Pages.TestRaschet
             OtvUsr = OtvetsUsers.Where(x => x.Tip == 2).ToList();
             if (OtvUsr.Count != 0)
             {
+
                 strategy = new ContextStrategy(new Tip2());
 
                 int[] mass = OtvUsr.Select(x => x.Otvet.IdZadan).ToArray();
