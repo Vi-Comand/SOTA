@@ -20,18 +20,10 @@ namespace SOTA.Controllers
         public IActionResult Index()
         {
             string login = HttpContext.User.Identity.Name;
-            Users user=new Users();
-            try
-            {
-                user = db.Users.Where(p => p.Name == login).First();
-            }
-            catch
-            {
-                user = null;
-            }
+            Users user= db.Users.Where(p => p.Name == login).First();
+          
 
-            if (user != null)
-            {
+          
 
 
 
@@ -70,11 +62,7 @@ namespace SOTA.Controllers
                     ViewBag.rl = user.Role;
                     return RedirectToAction("RabotaList", "Rabota");
                 }
-            }
-            else
-            {
-                return RedirectToAction("Login", "Account");
-            }
+            
         }
 
         public IActionResult Privacy()

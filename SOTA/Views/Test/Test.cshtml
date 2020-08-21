@@ -233,10 +233,10 @@ $("#TabForZadan").on("click", function () {
             StrOtv = StrOtv.substring(StrOtv.indexOf('|=}'));
 
             document.getElementById('OtvetZadan[' + nZad + ']').innerHTML +=
-                "<label  style=\"height:28px\" >" + MyArray[i].text + "</label><input type='text' name=\"ID" + MyArray[i].id+
+                "<label  style=\"height:28px\" >" + MyArray[i].text + "</label><input type='text' class='m-l-10' name=\"ID" + MyArray[i].id+
                 "\" id=\"nZad" + nZad + "tab" +
                 i +
-            "\" value=" + text+" ></br>";
+            "\" value=" + text+"  ></br>";
         }
 
     }
@@ -293,7 +293,7 @@ $("#TabForZadan").on("click", function () {
 
 
         div.innerHTML =
-            '<div class="container col-12 shadow p-3 mb-5 bg-whitesmoke rounded h-100"><div class="col-12" style="min-height: 200px;" id="TextZadan[' +
+            '<div class="container col-12 shadow p-3 mb-5  rounded h-100"><div class="col-12" style="min-height: 200px;" id="TextZadan[' +
             i +
             ']"></div><div class="col-12" style="margin-top: 30px;"  id="OtvetZadan[' +
             i +
@@ -376,7 +376,7 @@ $("#TabForZadan").on("click", function () {
         if (elem) {
             elem.remove();
         }
-        var table = '<table class="simple-little-table" id=\"PredTabelOtvet\">';
+        var table = '<table class="simple-little-table table-bordered" id=\"PredTabelOtvet\">';
 
         for (var i = 0; i < row; i++) {
 
@@ -389,14 +389,14 @@ $("#TabForZadan").on("click", function () {
                 i +
                 "]\" id= \"TabOtvRow[" +
                 i +
-                "]\"/> </td>";
+                "]\" class=\"m-l-10\"/> </td>";
 
 
             table += '</tr>';
 
         }
         table += '</table>';
-
+        alert(1);
         var div = document.createElement("div");
         var TableCreate = document.getElementById("OtvetiZadanPredprosmotr");
         div.innerHTML = table;

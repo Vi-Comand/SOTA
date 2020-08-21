@@ -1,80 +1,46 @@
 ﻿@model SOTA.Models.Pages.Test.ResultTest
 
 @{
-    ViewData["Title"] = "Список работ";
+    ViewData["Title"] = "Результаты";
 }
 
-<h1>Список работ</h1>
+<h1>Результаты</h1>
 <form method="post">
 
     <div class="col-12 shadow p-3 mb-5 bg-white rounded">
-        
-        <div class="col-12 table-responsive-lg">
+
+        <div class="col-6 table-responsive-lg m-l-r-auto">
             <table class="table table-hover  table-sm table-bordered shadow align-content-center text-center">
                 <thead class="table-yel">
                     <tr>
-                     
-                        <th>Номер задания</th>
+                        <th width="50%">Номер задания</th>
                         <th>Балл</th>
-                        
-
                     </tr>
                 </thead>
                 <tbody>
                     @if (Model.Result != null)
                     {
+                        double i = 0;
                         @foreach (var row in Model.Result)
-
                         {
                             <tr>
-                        <td>@row.Number</td>
-                        <td>@row.Ball</td>
-                        
-                    </tr>
-                }
-
+                                <td>@row.Number</td>
+                                <td>@row.Ball</td>
+                            </tr>
+                            i = i + row.Ball;
+                        }
+                        <tr class="table-success">
+                            <td>Всего </td>
+                            <td>@i из @ViewBag.sumrab </td>
+                            @*<td>@ViewBag.SumTest</td>*@
+                        </tr>
                     }
                 </tbody>
+                <tfoot class=" ">
+
+                </tfoot>
             </table>
-        </div>
-        <div class=" text-right">
-            <nav class="d-inline-block">
-                <ul class="pagination mb-0">
-                    <li class="page-item disabled">
-                        <a class="page-link shadow" href="#" tabindex="-1"><i class="fas fa-chevron-left"></i></a>
-                    </li>
-                    <li class="page-item active"><a class="page-link shadow" href="#">1</a></li>
-                    <li class="page-item">
-                        <a class="page-link shadow" href="#">2</a>
-                    </li>
-                    <li class="page-item "><a class="page-link shadow" href="#">3</a></li>
-                    <li class="page-item ">
-                        <a class="page-link shadow" href="#"><i class="fas fa-chevron-right"></i></a>
-                    </li>
-                </ul>
-            </nav>
         </div>
 
     </div>
-    <script>
-        function Del() {
-            var a = document.querySelectorAll('input.DEL:checked');
-            var outMO = []; //выходной массив
-            for (var x = 0; x < a.length; x++) { //перебераем все объекты
-                outMO.push(a[x].value); //добавляем значения в выходной массив
-            }
-            console.log(outMO);
-
-            jQuery.ajax({
-                url: '/Rabota/RabotaDel/',
-                type: "POST",
-                dataType: "json",
-                data: { Id: outMO },
-                success: function (query) {
-                    //          alert(query);
-                }
-
-            });
-        }
-    </script>
 </form>

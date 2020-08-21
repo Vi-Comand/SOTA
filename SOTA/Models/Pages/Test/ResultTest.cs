@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Remotion.Linq.Clauses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Remotion.Linq.Clauses;
 
 namespace SOTA.Models.Pages.Test
 {
@@ -26,12 +26,12 @@ namespace SOTA.Models.Pages.Test
             db = context;
             GetResult();
         }
-  
+
         public void GetResult()
         {
             Result = db.UsersBalls.Where(x => x.IdUser == _idUser && x.IdRabota == _idRabota).Join(db.Zadanie,
-                x => x.IdZadania, y => y.Id, (x, y) => new BallPoZadan {Number = y.Nomer, Ball = x.Ball}).ToList();   
-            
+                x => x.IdZadania, y => y.Id, (x, y) => new BallPoZadan { Number = y.Nomer, Ball = x.Ball }).OrderBy(x => x.Number).ToList();
+
         }
 
     }
