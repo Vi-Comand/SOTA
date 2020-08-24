@@ -6,23 +6,33 @@
 <script src="~/js/Test/ZagruzkaVigruzka.js"></script>
 
 <form method="post">
-<div class="container col-12 shadow p-3 mb-5 bg-white rounded h-100">
-    <input type="text" id="idRabota"  asp-controller="Test" asp-action="KonecRabot"  asp-for="@Model._idRabota" />
- 
-    <div class="card-body">
-        <ul class="nav nav-pills" id="TabForZadan" role="tablist">
-        </ul>
-        <div class="tab-content  " id="Zadans">
+    <div class="container col-12 shadow p-3 mb-5 bg-white rounded h-100">
+        <input type="hidden" id="idRabota" asp-controller="Test" asp-action="KonecRabot" asp-for="@Model._idRabota" />
+
+        <div class="card-body">
+            <div>
+                <ul class="nav nav-pills" id="TabForZadan" role="tablist"></ul>
+               @* <a id="Konec" class="btn btn-outline-secondary  shadow " asp-controller="Test" asp-action="KonecRabot" asp-route-idRabota="@Model._idRabota" asp-for="@Model._idRabota"><i class="fas fa-check"></i> Завершить работу</a>*@
+            </div>
+            <div class="tab-content  " id="Zadans">
 
 
+            </div>
+
+            @*<div class="tab-content  " id="Zadans">
+
+                </div>*@
         </div>
-        <div class="tab-content  " id="Zadans">
-
+        <div class="row m-l-20 ">
+            <div class="col-auto mr-auto">
+                <a id="pred" class="btn btn-outline-primary  shadow" asp-controller="Test" asp-action="KonecRabot" asp-route-idRabota="@Model._idRabota" asp-for="@Model._idRabota"><i class='fas  fa-arrow-circle-left'></i> Предыдущий вопрос</a>
+            </div>
+            <div class="col-auto m-r-20">
+                <a id="sled" class="btn btn-outline-primary shadow m-l-auto" asp-controller="Test" asp-action="KonecRabot" asp-route-idRabota="@Model._idRabota" asp-for="@Model._idRabota"> Следующий вопрос <i class='fas  fa-arrow-circle-right ' style="margin-right:0px; margin-left:10px"></i></a>
+            </div>
         </div>
+        
     </div>
-
-    <a id="Konec" class="btn btn-outline-success col-3 shadow"  asp-controller="Test" asp-action="KonecRabot" asp-route-idRabota="@Model._idRabota" asp-for="@Model._idRabota"><i class='fas fa-check'></i> Завершить работу</a>
-</div>
 </form>
 
 
@@ -39,12 +49,11 @@ $("#TabForZadan").on("click", function () {
    }
 
     function VivodZadan() {
-
         for (var i = 1; i <= @Model._Zadan.Count; i++) {
 
             AddTabForZadan(i);
         }
-
+        AddZaverch();
 
         @foreach (var row in Model._Zadan)
         {
@@ -135,7 +144,7 @@ $("#TabForZadan").on("click", function () {
         MyObj.otvVBD = otvVBD;
         return MyObj;
     }
-  
+
     //function razborCheck(StrOtv,MyArray) {
 
 
@@ -251,9 +260,13 @@ $("#TabForZadan").on("click", function () {
         document.getElementById('OtvetZadan[' + nZad + ']').innerHTML = "<textarea rows='5'  cols='100' id='nZad" + nZad + "Svb' >" + StrOtv+"</textarea>";
     }
 
-
-
-
+    function AddZaverch() {
+        var TabForZadan = document.getElementById('TabForZadan');
+        var li = document.createElement("li");
+        li.setAttribute("class", "nav-item");
+        li.innerHTML = '<a id="Konec" class="btn btn-outline-secondary  shadow " asp-controller="Test" asp-action="KonecRabot" asp-route-idRabota="@Model._idRabota" asp-for="@Model._idRabota"><i class="fas fa-check"></i> Завершить работу</a>';
+        TabForZadan.appendChild(li);
+    }
     function AddTabForZadan(i) {
 
         var TabForZadan = document.getElementById('TabForZadan');
@@ -293,9 +306,9 @@ $("#TabForZadan").on("click", function () {
 
 
         div.innerHTML =
-            '<div class="container col-12 shadow p-3 mb-5  rounded h-100"><div class="col-12" style="min-height: 200px;" id="TextZadan[' +
+            '<div class="container col-12 shadow overflow-auto  m-l-0 rounded h-100"><div class="col-12" style="min-height: 200px;" id="TextZadan[' +
             i +
-            ']"></div><div class="col-12" style="margin-top: 30px;"  id="OtvetZadan[' +
+            ']"></div><div class="col-12" style="margin-top: 30px; min-width:600px;"  id="OtvetZadan[' +
             i +
             ']"></div></div></div>';
 

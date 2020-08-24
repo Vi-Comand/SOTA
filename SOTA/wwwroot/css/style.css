@@ -364,15 +364,17 @@ select.form-control:not([size]):not([multiple]) {
     margin-bottom: .5rem; }
 
 .custom-switch-indicator {
-  display: inline-block;
-  height: 1.25rem;
-  width: 2.25rem;
-  background: #e9ecef;
-  border-radius: 50px;
-  position: relative;
-  vertical-align: bottom;
-  border: 1px solid rgba(0, 40, 100, 0.12);
-  transition: .3s border-color, .3s background-color; }
+    display: inline-block;
+    height: 1.25rem;
+    width: 2.25rem;
+    min-width: 2.25rem;
+    background: #e9ecef;
+    border-radius: 50px;
+    position: relative;
+    vertical-align: bottom;
+    border: 1px solid rgba(0, 40, 100, 0.12);
+    transition: .3s border-color, .3s background-color;
+}
   .custom-switch-indicator:before {
     content: '';
     position: absolute;
