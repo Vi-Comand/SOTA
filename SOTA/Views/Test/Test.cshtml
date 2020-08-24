@@ -4,6 +4,8 @@
 }
 <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
 <script src="~/js/Test/ZagruzkaVigruzka.js"></script>
+<script src="~/js/Test/KonecRabot.js"></script>
+
 
 <form method="post">
     <div class="container col-12 shadow p-3 mb-5 bg-white rounded h-100">
@@ -44,6 +46,17 @@ $("#TabForZadan").on("click", function () {
    // setTimeout(() => GetActiveLI(), 1000);
 
 });
+
+
+    $("#Konec").on("click", function () {
+
+        GetPredActiveLI();
+        KonecRaboti();
+        // setTimeout(() => GetActiveLI(), 1000);
+
+    });
+
+
    window.onload = function() {
        VivodZadan();
    }

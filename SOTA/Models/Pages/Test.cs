@@ -208,7 +208,7 @@ namespace SOTA.Models
 
         private void VBD()
         {
-            Variant = !db.VariantUser.Where(x => x.IdRabota == idRabota && x.IdUser == idUser).Any() ? 0:db.VariantUser.Where(x => x.IdRabota == idRabota && x.IdUser == idUser).FirstOrDefault().Variant;
+            Variant = db.VariantUser.Where(x => x.IdRabota == idRabota && x.IdUser == idUser).Select(x=>x.Variant).FirstOrDefault();
         }
         public int GetVariant()
         {

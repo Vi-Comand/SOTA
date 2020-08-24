@@ -414,7 +414,7 @@ namespace SOTA.Controllers
 
             }
 
-            Otvets.Reverse();
+            //Otvets.Reverse();
             return Otvets;
         }
         private List<Otvet> OtvTip4(string[] arr, string[] arr1, int idZadania, int obshBall)
