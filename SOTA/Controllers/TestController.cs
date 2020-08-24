@@ -3,8 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using SOTA.Models;
 using SOTA.Models.Pages.Test;
 using SOTA.Models.Pages.TestRaschet;
+using System;
 using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace SOTA.Controllers
 {
@@ -29,7 +30,17 @@ namespace SOTA.Controllers
         {
             var login = HttpContext.User.Identity.Name;
             int idUser = db.Users.Where(p => p.Name == login).First().Id;
-            IRaschetBallsUser raschet = new RaschetBallsUser(db, idRabota, idUser);
+            VariantUser variantUser = db.VariantUser.Where(x => x.IdUser == idUser && x.IdRabota == idRabota).First();
+            if (variantUser.Konec == 0)
+            {
+                variantUser.Konec = 1;
+                variantUser.KonecDate = DateTime.Now;
+
+                IRaschetBallsUser raschet = new RaschetBallsUser(db, idRabota, idUser);
+                
+
+            }
+
             return RedirectToAction("ViewResultTest", new { idRabota });
 
         }
@@ -56,10 +67,16 @@ namespace SOTA.Controllers
         {
             var login = HttpContext.User.Identity.Name;
             int idUser = db.Users.Where(p => p.Name == login).First().Id;
-            OpredelenieVariant Var = new OpredelenieVariant(idRabota, idUser, db);
-            VarintTest Test = new VarintTest(idRabota, Var.GetVariant(), db, idUser);
-
-            return View("Test", Test);
+            var Konec = db.VariantUser.Where(x => x.IdUser == idUser && x.IdRabota == idRabota).Select(x => x.Konec).First();
+           // int Konec = UserVariant !=null ? UserVariant.First().Konec:0;
+             
+            if (Konec == 0)
+            {
+                OpredelenieVariant Var = new OpredelenieVariant(idRabota, idUser, db);
+                VarintTest Test = new VarintTest(idRabota, Var.GetVariant(), db, idUser);
+                return View("Test", Test);
+            }
+            return RedirectToAction("ViewResultTest", new { idRabota });
         }
     }
 }

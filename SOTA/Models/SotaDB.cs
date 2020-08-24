@@ -107,7 +107,8 @@ namespace SOTA.Models
         public int IdUser { get; set; }
         public int Variant { get; set; }
         public DateTime Date { get; set; }
-
+        public int Konec { get; set; }
+        public DateTime KonecDate { get; set; }
 
     }
     public class UsersBalls

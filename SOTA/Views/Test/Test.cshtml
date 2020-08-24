@@ -4,25 +4,26 @@
 }
 <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
 <script src="~/js/Test/ZagruzkaVigruzka.js"></script>
+<script src="~/js/Test/KonecRabot.js"></script>
+
 
 <form method="post">
-<div class="container col-12 shadow p-3 mb-5 bg-white rounded h-100">
-    <input type="text" id="idRabota"  asp-controller="Test" asp-action="KonecRabot"  asp-for="@Model._idRabota" />
- 
-    <div class="card-body">
-        <ul class="nav nav-pills" id="TabForZadan" role="tablist">
-        </ul>
-        <div class="tab-content  " id="Zadans">
+    <div class="container col-12 shadow p-3 mb-5 bg-white rounded h-100">
+        <input type="hidden" id="idRabota" asp-controller="Test" asp-action="KonecRabot" asp-for="@Model._idRabota" />
+
+        <div class="card-body">
+            <ul class="nav nav-pills" id="TabForZadan" role="tablist"></ul>
+            <div class="tab-content  " id="Zadans">
 
 
+            </div>
+            <div class="tab-content  " id="Zadans">
+
+            </div>
         </div>
-        <div class="tab-content  " id="Zadans">
 
-        </div>
+        <a id="Konec" class="btn btn-outline-success col-3 shadow" asp-controller="Test" asp-action="KonecRabot" asp-route-idRabota="@Model._idRabota" asp-for="@Model._idRabota"><i class='fas fa-check'></i> Завершить работу</a>
     </div>
-
-    <a id="Konec" class="btn btn-outline-success col-3 shadow"  asp-controller="Test" asp-action="KonecRabot" asp-route-idRabota="@Model._idRabota" asp-for="@Model._idRabota"><i class='fas fa-check'></i> Завершить работу</a>
-</div>
 </form>
 
 
@@ -34,6 +35,17 @@ $("#TabForZadan").on("click", function () {
    // setTimeout(() => GetActiveLI(), 1000);
 
 });
+
+
+    $("#Konec").on("click", function () {
+
+        GetPredActiveLI();
+        KonecRaboti();
+        // setTimeout(() => GetActiveLI(), 1000);
+
+    });
+
+
    window.onload = function() {
        VivodZadan();
    }
@@ -135,7 +147,7 @@ $("#TabForZadan").on("click", function () {
         MyObj.otvVBD = otvVBD;
         return MyObj;
     }
-  
+
     //function razborCheck(StrOtv,MyArray) {
 
 
