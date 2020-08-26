@@ -605,7 +605,7 @@ namespace SOTA.Controllers
                 {
                     await source.CopyToAsync(fileStream).ConfigureAwait(false);
                 }
-                data = "https://" + Request.Host.ToUriComponent() + "//Img//" + filename;
+                data = "http://" + Request.Host.ToUriComponent() + "//Img//" + filename;
             }
 
             return Json(data);

@@ -32,24 +32,24 @@
 
                         {
 
-                            <tr>
-                                <td>@row.Name</td>
-                                <td>@row.PredmN</td>
-                                <td>@row.TipN</td>
-                                <td>@row.Nachalo</td>
-                                <td>@row.Konec</td>
-                                <td>@row.Dliteln</td>
-                                <td>
-                                    @if (row.Nachalo >= DateTime.Now)
-                                    {
-                                        <a href="" class='btn btn-icon btn-sm btn-outline-yel text-left btn-block disabled'><i class='fas fa-square-root-alt'></i>Работа еще не началась</a>
-                                    }
-                                    else
-                                    {
-                                        <a asp-route-idRabota="@row.Id" asp-controller="Test" asp-action="Test" class='btn btn-icon btn-sm btn-outline-yel text-left btn-block'><i class='fas fa-square-root-alt'></i>Открыть</a>
-                                    }
-                                </td>
-                            </tr>
+                        <tr>
+                            <td>@row.Name</td>
+                            <td>@row.PredmN</td>
+                            <td>@row.TipN</td>
+                            <td>@row.Nachalo</td>
+                            <td>@row.Konec</td>
+                            <td>@row.Dliteln</td>
+                            <td>
+                                @if (row.Nachalo > DateTime.Now)
+                                {
+                                    <a href="" class='btn btn-icon btn-sm btn-outline-yel text-left btn-block disabled'><i class='fas fa-square-root-alt'></i>Начать тестирование</a>
+                                }
+                                else
+                                {
+                                    <a asp-route-idRabota="@row.Id" asp-controller="Test" asp-action="Test" class='btn btn-icon btn-sm btn-outline-yel text-left btn-block'><i class='fas fa-square-root-alt'></i>Начать тестирование</a>
+                                }
+                            </td>
+                        </tr>
                         }
                     }
                 </tbody>

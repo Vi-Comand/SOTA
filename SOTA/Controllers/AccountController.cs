@@ -110,13 +110,13 @@ namespace SOTA.Controllers
                 // await Authenticate(user.Name).ConfigureAwait(false); // аутентификация
 
                 await Authenticate(user.Name).ConfigureAwait(false); // аутентификация
-                //string login = HttpContext.User.Identity.Name;
-                //Users user1 = db.Users.Where(p => p.Name == model.Name).First();
-                //ViewBag.rl = user1.Role;
-                
-                    ViewBag.rl = user.Role;
-                    return RedirectToAction("Index", "Home");
-               
+                                                                     //string login = HttpContext.User.Identity.Name;
+                                                                     //Users user1 = db.Users.Where(p => p.Name == model.Name).First();
+                                                                     //ViewBag.rl = user1.Role;
+
+                ViewBag.rl = user.Role;
+                return RedirectToAction("Index", "Home");
+
                 //if (user.Role == 0)
                 //{
                 //    ViewBag.rl = user.Role;
@@ -243,6 +243,8 @@ namespace SOTA.Controllers
 
 
         }
+
+
 
 
 

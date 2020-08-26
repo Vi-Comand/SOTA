@@ -52,11 +52,17 @@ namespace SOTA.Controllers
 
             // list.Filt = new FilterLKTO();
             DateTime dateNow = DateTime.Now;
-            list.RabotaTabls = list.RabotaTabls.Where(x => x.KlassR == KlassU && x.Konec < dateNow).ToList();
+            list.RabotaTabls = list.RabotaTabls.Where(x => x.Konec < dateNow).ToList();
             rabotaList = list;
             //rabotaList = rabotaList.RabotaTabls
 
             return View(rabotaList);
+        }
+
+        public IActionResult SaveReport(int IdRabota)
+        {
+
+            return Json("Ok");
         }
     }
 }

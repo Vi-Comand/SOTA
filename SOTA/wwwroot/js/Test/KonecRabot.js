@@ -1,5 +1,5 @@
 
-function vbd() {
+function KonecRabot() {
 
     var idRabota = document.getElementById("idRabota").value;
 
