@@ -31,10 +31,10 @@
         </div>
         <div class="row m-l-20 ">
             <div class="col-auto mr-auto">
-                <a id="pred" class="btn btn-outline-primary  shadow" ><i class='fas  fa-arrow-circle-left'></i> Предыдущий вопрос</a>
+                <a id="pred" class="btn btn-outline-primary  shadow"><i class='fas  fa-arrow-circle-left'></i> Предыдущий вопрос</a>
             </div>
             <div class="col-auto m-r-20">
-                <a id="sled" class="btn btn-outline-primary shadow m-l-auto" > Следующий вопрос <i class='fas  fa-arrow-circle-right ' style="margin-right:0px; margin-left:10px"></i></a>
+                <a id="sled" class="btn btn-outline-primary shadow m-l-auto"> Следующий вопрос <i class='fas  fa-arrow-circle-right ' style="margin-right:0px; margin-left:10px"></i></a>
             </div>
         </div>
 
@@ -45,14 +45,14 @@
 <script>
     var OtvVBDMass = new Map();
 $("#TabForZadan").on("click", function () {
-  
+
     GetPredActiveLI();
    // setTimeout(() => GetActiveLI(), 1000);
 
 });
 
     $("#pred").on("click", function () {
-        
+
         GetPred();
         // setTimeout(() => GetActiveLI(), 1000);
 
@@ -66,7 +66,7 @@ $("#TabForZadan").on("click", function () {
     });
 
     $("#Konec").on("click", function () {
-      
+
         GetPredActiveLI();
         KonecRaboti();
         // setTimeout(() => GetActiveLI(), 1000);
@@ -208,7 +208,7 @@ $("#TabForZadan").on("click", function () {
 
     function AddZOtvTip1(i,text) {
 
-        document.getElementById('OtvetZadan[' + i + ']').innerHTML = "<input type='text' id='Zad"+i+"Otvet'class='form-control input100' value="+text+" ><span class='focus - input100 '></span><label class='label' style='left:10px;'>Ответ</label>";
+        document.getElementById('OtvetZadan[' + i + ']').innerHTML = "<input type='text' id='Zad" + i +"Otvet'class='form-control input100 border-dark' value="+text+" ><span class='focus-input100 '></span><label class='label' style='left:10px;'>Ответ</label>";
     }
 
     function AddZOtvTip2(MyArray, nZad,StrOtv) {
@@ -331,7 +331,7 @@ $("#TabForZadan").on("click", function () {
         div.innerHTML =
             '<div class="container col-12 shadow overflow-auto  m-l-0 rounded h-100"><div class="col-12" style="min-height: 200px;" id="TextZadan[' +
             i +
-            ']"></div><div class="col-12" style="margin-top: 30px; min-width:600px;"  id="OtvetZadan[' +
+            ']"></div><div class=" wrap-input100 validate-input group col-12" style="margin-top: 30px; min-width:600px;"  id="OtvetZadan[' +
             i +
             ']"></div></div></div>';
 

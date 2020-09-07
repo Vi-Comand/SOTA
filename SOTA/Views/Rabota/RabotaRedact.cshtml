@@ -1,7 +1,7 @@
 ﻿@model SOTA.Models.RabotaRedact
 @{
     ViewData["Title"] = "Создание работы";
-   
+
 }
 <form method="post">
     <h1>Назначение работы</h1>
@@ -18,7 +18,7 @@
 
                     <input type="hidden" class="form-control input100" id="id" asp-for=@Model.Rabot.Id required />
                     <input type="text" class="form-control input100" id="nazv" asp-for=@Model.Rabot.Name required />
-                   
+
                     <span class="focus-input100 "></span>
                     <label class="label">Название работы</label>
                 </div>
@@ -29,8 +29,8 @@
                         </div>
                     </div>
 
-                
-                    <input type="text" class="form-control input100" id="klass" asp-for=@Model.Rabot.Klass required />
+
+                    <input type="text" class="form-control input100 " id="klass" asp-for=@Model.Rabot.Klass required />
                     <span class="focus-input100 "></span>
                     <label class="label">Класс</label>
                 </div>
@@ -61,40 +61,42 @@
                             <i class="fas fa-comment-alt"></i>
                         </div>
                     </div>
-                    <input type="text" class="form-control input100" id="dateN" asp-for=@Model.Rabot.Nachalo required />
+                    @*<input type="text" class="form-control input100" id="dateN" asp-for=@Model.Rabot.Nachalo required />*@
+                    <input type="datetime-local" class="form-control input100" id="dateN" asp-for=@Model.Rabot.Nachalo required>
                     <span class="focus-input100 "></span>
                     <label class="label">Дата начала</label>
                 </div>
-                <script>
-                    jQuery(function () {
-                        $('#dateN').daterangepicker({
-                            singleDatePicker: true,
-                            showDropdowns: true,
-                            minYear: 2020,
-                            "timePicker": true,
-                            "timePicker24Hour": true,
-                            "autoApply": true,
+                @*<script>
+            jQuery(function () {
+                $('#dateN1').daterangepicker({
+                    singleDatePicker: true,
+                    showDropdowns: true,
+                    minYear: 2020,
+                    "timePicker": true,
+                    "timePicker24Hour": true,
+                    "autoApply": true,
 
-                            locale: {
-                                format: 'DD.MM.YYYY HH:mm',
-                                "applyLabel": "Выбрать",
-                                "cancelLabel": "Отменить",
-                                "firstDay": 1
-                            }
-                        });
-                    });
-                </script>
+                    locale: {
+                        format: 'DD.MM.YYYY HH:mm',
+                        "applyLabel": "Выбрать",
+                        "cancelLabel": "Отменить",
+                        "firstDay": 1
+                    }
+                });
+            });
+        </script>*@
                 <div class="input-group wrap-input100 validate-input col-3 group">
                     <div class="input-group-prepend ">
                         <div class="input-group-text">
                             <i class="fas fa-comment-alt"></i>
                         </div>
                     </div>
-                    <input type="datetime" class="form-control input100" id="dateK" asp-for=@Model.Rabot.Konec required />
+                    @*<input type="datetime" class="form-control input100" id="dateK" asp-for=@Model.Rabot.Konec required />*@
+                    <input type="datetime-local" class="form-control input100" id="dateK" asp-for=@Model.Rabot.Konec required>
                     <span class="focus-input100 "></span>
                     <label class="label">Дата окончания</label>
                 </div>
-                <script>
+                @*<script>
                     jQuery(function () {
                         $('#dateK').daterangepicker({
                             singleDatePicker: true,
@@ -112,7 +114,7 @@
                             }
                         });
                     });
-                </script>
+                </script>*@
 
                 <div class="input-group wrap-input100 validate-input col-3 group">
                     <div class="input-group-prepend ">

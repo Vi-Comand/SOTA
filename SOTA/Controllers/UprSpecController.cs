@@ -584,7 +584,7 @@ namespace SOTA.Controllers
 
 
 
-        //[HttpPost]
+        [HttpPost]
         public async Task<IActionResult> LoadNaServAjaxTo(IList<IFormFile> files)
         {
             int lastId = db.SaveImg.Max(x => x.Id) + 1;
@@ -601,11 +601,11 @@ namespace SOTA.Controllers
                 saveImg.Tip = tip;
                 db.SaveImg.Add(saveImg);
                 db.SaveChanges();
-                using (var fileStream = new FileStream(Directory.GetCurrentDirectory() + "//wwwroot//Img//" + filename, FileMode.Create))
+                using (var fileStream = new FileStream(Directory.GetCurrentDirectory() + "/wwwroot/Img/" + filename, FileMode.Create))
                 {
                     await source.CopyToAsync(fileStream).ConfigureAwait(false);
                 }
-                data = "http://" + Request.Host.ToUriComponent() + "//Img//" + filename;
+                data = /*"http://" + Request.Host.ToUriComponent() + */"/Img/" + filename;
             }
 
             return Json(data);
