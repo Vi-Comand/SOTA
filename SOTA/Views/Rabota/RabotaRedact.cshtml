@@ -9,7 +9,7 @@
     <div class="col-12 shadow p-3 mb-5 bg-white rounded">
         <div class="container">
             <div class="row">
-                <div class="input-group wrap-input100 validate-input col-9 group">
+                <div class="input-group wrap-input100 validate-input col-10 group">
                     <div class="input-group-prepend ">
                         <div class="input-group-text">
                             <i class="fas fa-comment-alt"></i>
@@ -22,20 +22,9 @@
                     <span class="focus-input100 "></span>
                     <label class="label">Название работы</label>
                 </div>
-                <div class="input-group wrap-input100 validate-input col-2 group">
-                    <div class="input-group-prepend ">
-                        <div class="input-group-text">
-                            <i class="fas fa-comment-alt"></i>
-                        </div>
-                    </div>
 
 
-                    <input type="text" class="form-control input100 " id="klass" asp-for=@Model.Rabot.Klass required />
-                    <span class="focus-input100 "></span>
-                    <label class="label">Класс</label>
-                </div>
-
-                <div class="input-group wrap-input100 validate-input col-11 group">
+                <div class="input-group wrap-input100 validate-input col-10 group">
                     <div class="input-group-prepend ">
                         <div class="input-group-text">
                             <i class="fas fa-list-alt"></i>
@@ -58,73 +47,118 @@
                 <div class="input-group wrap-input100 validate-input col-3 group">
                     <div class="input-group-prepend ">
                         <div class="input-group-text">
-                            <i class="fas fa-comment-alt"></i>
+                            <i class="far fa-calendar-alt"></i>
                         </div>
                     </div>
                     @*<input type="text" class="form-control input100" id="dateN" asp-for=@Model.Rabot.Nachalo required />*@
-                    <input type="datetime-local" class="form-control input100" id="dateN" asp-for=@Model.Rabot.Nachalo required>
+                    <input type="datetime-local" class="form-control input100" id="dateN" asp-for=@Model.Rabot.Nachalo required >
                     <span class="focus-input100 "></span>
                     <label class="label">Дата начала</label>
                 </div>
                 @*<script>
-            jQuery(function () {
-                $('#dateN1').daterangepicker({
-                    singleDatePicker: true,
-                    showDropdowns: true,
-                    minYear: 2020,
-                    "timePicker": true,
-                    "timePicker24Hour": true,
-                    "autoApply": true,
+                        jQuery(function () {
+                            $('#dateN1').daterangepicker({
+                                singleDatePicker: true,
+                                showDropdowns: true,
+                                minYear: 2020,
+                                "timePicker": true,
+                                "timePicker24Hour": true,
+                                "autoApply": true,
 
-                    locale: {
-                        format: 'DD.MM.YYYY HH:mm',
-                        "applyLabel": "Выбрать",
-                        "cancelLabel": "Отменить",
-                        "firstDay": 1
-                    }
-                });
-            });
-        </script>*@
+                                locale: {
+                                    format: 'DD.MM.YYYY HH:mm',
+                                    "applyLabel": "Выбрать",
+                                    "cancelLabel": "Отменить",
+                                    "firstDay": 1
+                                }
+                            });
+                        });
+                    </script>*@
                 <div class="input-group wrap-input100 validate-input col-3 group">
                     <div class="input-group-prepend ">
                         <div class="input-group-text">
-                            <i class="fas fa-comment-alt"></i>
+                            <i class="far fa-calendar-alt"></i>
                         </div>
                     </div>
                     @*<input type="datetime" class="form-control input100" id="dateK" asp-for=@Model.Rabot.Konec required />*@
-                    <input type="datetime-local" class="form-control input100" id="dateK" asp-for=@Model.Rabot.Konec required>
+                    <input type="datetime-local" class="form-control input100" id="dateK" asp-for=@Model.Rabot.Konec required onblur="var dn = document.getElementById('dateN').value; if (this.value <= dn) {
+    alert('Дата окончания меньше или равна дате начала'); this.value = moment().add(1, 'h').format('YYYY-MM-DDTHH:MM');    }">
                     <span class="focus-input100 "></span>
                     <label class="label">Дата окончания</label>
                 </div>
-                @*<script>
-                    jQuery(function () {
-                        $('#dateK').daterangepicker({
-                            singleDatePicker: true,
-                            showDropdowns: true,
-                            minYear: 2020,
-                            "timePicker": true,
-                            "timePicker24Hour": true,
-                            "autoApply": true,
 
-                            locale: {
-                                format: 'DD.MM.YYYY HH:mm',
-                                "applyLabel": "Выбрать",
-                                "cancelLabel": "Отменить",
-                                "firstDay": 1
-                            }
-                        });
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        var dn = document.getElementById("dateN");
+                        var dk = document.getElementById("dateK");
+                        var w = moment().format('YYYY-MM-DDTHH:MM');
+                        var ww = moment(w).add(1, 'h').format('YYYY-MM-DDTHH:MM');
+                        if (dn.value == '0001-01-01T00:00:00.000') { dn.value = w; } 
+                        if (dk.value == '0001-01-01T00:00:00.000') { dk.value = ww; }
+
+
                     });
-                </script>*@
+                </script>
+
+
+
+
+
+
+                @*<script>
+                        jQuery(function () {
+                            $('#dateK').daterangepicker({
+                                singleDatePicker: true,
+                                showDropdowns: true,
+                                minYear: 2020,
+                                "timePicker": true,
+                                "timePicker24Hour": true,
+                                "autoApply": true,
+
+                                locale: {
+                                    format: 'DD.MM.YYYY HH:mm',
+                                    "applyLabel": "Выбрать",
+                                    "cancelLabel": "Отменить",
+                                    "firstDay": 1
+                                }
+                            });
+                        });
+                    </script>*@
 
                 <div class="input-group wrap-input100 validate-input col-3 group">
                     <div class="input-group-prepend ">
                         <div class="input-group-text">
-                            <i class="fas fa-comment-alt"></i>
+                            <i class="far fa-clock"></i>
                         </div>
                     </div>
                     <input type="number" class="form-control input100" id="nazv" asp-for=@Model.Rabot.Dliteln required />
                     <span class="focus-input100 "></span>
                     <label class="label">Длительность работы, мин.</label>
+                </div>
+
+                <div class="input-group wrap-input100 validate-input col-3 group">
+
+                    <div class="input-group-prepend ">
+                        <div class="input-group-text">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                    </div>
+                    <select class="form-control input100" asp-for=@Model.Rabot.Klass required>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                    </select>
+                    <span class="focus-input100"></span>
+                    <label class="label">Класс</label>
                 </div>
 
                 <div class="input-group wrap-input100 validate-input col-3 group">

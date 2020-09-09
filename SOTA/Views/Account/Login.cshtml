@@ -29,7 +29,7 @@
                                         <i class="fas fa-at"></i>
                                     </div>
                                 </div>
-                                <input type="text" asp-for="Name" class="form-control input100" id="validationLog" placeholder="Логин" pattern="[A-Za-zА-Яа-яЁё0-9@@_ ]{6,}" required  onshow="if (this.value.length > 4) { qwe(); }" oninput="if (this.value.length > 4) { qwe(); }" />
+                                <input type="text" asp-for="Name" class="form-control input100" id="validationLog" placeholder="Логин" pattern="[A-Za-zА-Яа-яЁё0-9@@_ ]{6,}" required onshow="if (this.value.length > 4) { qwe(); }" oninput="if (this.value.length > 4) { qwe(); }" />
                                 <span asp-validation-for="Name" class="focus-input100"></span>
 
 
@@ -44,7 +44,7 @@
                                             <i class="fas fa-lock"></i>
                                         </div>
                                     </div>
-                                    <input type="password" asp-for="Pass" class="form-control pwstrength input100" id="validationPass" placeholder="Пароль"  pattern="[A-Za-zА-Яа-яЁё0-9]{6,}" />
+                                    <input type="password" asp-for="Pass" class="form-control pwstrength input100" id="validationPass" placeholder="Пароль" pattern="[A-Za-zА-Яа-яЁё0-9]{6,}" data-toggle="tooltip" data-placement="right" title="Пароль не короче 6 символов из букв и/или цифр на русской или англиской раскладке" />
                                     <span asp-validation-for="Pass" class="focus-input100"></span>
 
                                 </div>
@@ -58,7 +58,7 @@
                                             <i class="fas fa-lock"></i>
                                         </div>
                                     </div>
-                                    <input type="password" asp-for="AddPass" class="form-control pwstrength input100" id="AddPass" placeholder="Пароль" pattern="[A-Za-zА-Яа-яЁё0-9]{6,}"  oninput=" sravn();" />
+                                    <input type="password" asp-for="AddPass" class="form-control pwstrength input100" id="AddPass" placeholder="Пароль" pattern="[A-Za-zА-Яа-яЁё0-9]{6,}" oninput=" sravn();" data-toggle="tooltip" data-placement="right" title="Пароль не короче 6 символов из букв и/или цифр на русской или англиской раскладке" />
                                     <span asp-validation-for="AddPass" class="focus-input100"></span>
 
                                 </div>
@@ -70,7 +70,7 @@
                                             <i class="fas fa-lock"></i>
                                         </div>
                                     </div>
-                                    <input type="password" asp-for="AddPass2" class="form-control pwstrength input100" id="AddPass2" placeholder="Пароль" pattern="[A-Za-zА-Яа-яЁё0-9]{6,}" oninput=" sravn();" />
+                                    <input type="password" asp-for="AddPass2" class="form-control pwstrength input100" id="AddPass2" placeholder="Пароль" pattern="[A-Za-zА-Яа-яЁё0-9]{6,}" oninput=" sravn();" data-toggle="tooltip" data-placement="right" title="Пароль не короче 6 символов из букв и/или цифр на русской или англиской раскладке" />
                                     <span asp-validation-for="AddPass2" class="focus-input100"></span>
 
                                 </div>
@@ -233,7 +233,7 @@
             var Pass2 = AddPass2.value;
 
 
-            if (Pass == Pass2 && sogl.checked && Pass!="") {
+            if (Pass == Pass2 && sogl.checked && Pass != "") {
                 div_save.classList.remove('d-none');
             }
             else {

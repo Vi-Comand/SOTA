@@ -184,6 +184,16 @@ namespace SOTA.Controllers
             db.SaveChanges();
             return Json("ok");
         }
+
+        public async Task<IActionResult> ChangedTemaAjax(int n_spec, int n_zad, string tema)
+        {
+
+            List<Zadanie> Zadans = db.Zadanie.Where(t => t.IdSpec == n_spec && t.Nomer == n_zad).ToList();
+            foreach (Zadanie row in Zadans)
+                row.Tema = tema;
+            db.SaveChanges();
+            return Json("ok");
+        }
         public async Task<IActionResult> VivodZadaniaAjax(int idZadania)
         {
             System.Threading.Thread.Sleep(100);

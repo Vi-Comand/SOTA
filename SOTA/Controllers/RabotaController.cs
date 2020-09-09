@@ -53,17 +53,17 @@ namespace SOTA.Controllers
             ViewBag.rl = user.Role;
             SborkaRabotaRedact sbor = new SborkaRabotaRedact(db, IdRabota);
             RabotaRedact rabota = sbor.GetRabotaRedact();
-           
-        
-           
 
-          
 
-           // ViewData["TipSpecs"] = db.TipSpec.ToList();
-          
-          
+
+
+
+
+            // ViewData["TipSpecs"] = db.TipSpec.ToList();
+
+
             return View(rabota);
-           
+
         }
         public IActionResult RabotaList()
         {
@@ -71,9 +71,9 @@ namespace SOTA.Controllers
             Users user = db.Users.Where(p => p.Name == login).First();
             ViewBag.rl = user.Role;
             RabotaList rabotaList = new RabotaList();
-          
+
             rabotaList.Rabotas = db.Rabota.ToList();
-      
+
             return View(rabotaList);
         }
         public async Task<IActionResult> RabotaNaznach(RabotaRedact rabota)
@@ -81,18 +81,21 @@ namespace SOTA.Controllers
             string login = HttpContext.User.Identity.Name;
             Users user = db.Users.Where(p => p.Name == login).First();
             ViewBag.rl = user.Role;
-     
-           
-            
-        
-                db.Update(rabota.Rabot).State = EntityState.Modified;
-                //db.Rabota.Update(AddRabota);
+
+
+
+
+            db.Update(rabota.Rabot).State = EntityState.Modified;
+            //db.Rabota.Update(AddRabota);
 
             await db.SaveChangesAsync().ConfigureAwait(false);
+            if (rabota.Rabot.UrovenRabot == "Край")
+            {
+                DelNaznach(rabota.Rabot.Id);
+            }
 
-                
-                return RedirectToAction("RabotaList");
-        
+            return RedirectToAction("RabotaList");
+
         }
 
         public async Task<IActionResult> Variants(int idRabota)
@@ -131,6 +134,7 @@ namespace SOTA.Controllers
             db.NaznachMo.RemoveRange(Naznac);
             List<NaznachOo> NaznacOO = db.NaznachOo.Where(x => x.IdRab == id).ToList();
             db.NaznachOo.RemoveRange(NaznacOO);
+            db.SaveChanges();
         }
 
 

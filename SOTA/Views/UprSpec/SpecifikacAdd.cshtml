@@ -73,16 +73,27 @@
                 </div>
 
                 <div class="input-group wrap-input100 validate-input col-2 group">
-                    <label for="Spec_Class" class="m-b-0">
-                        <div class="input-group-prepend ">
-                            <div class="input-group-text">
-                                <i class="fas fa-list-ol"></i>
-                            </div>
+
+                    <div class="input-group-prepend ">
+                        <div class="input-group-text">
+                            <i class="fas fa-graduation-cap"></i>
                         </div>
-                    </label>
-                        <input type="number" class="form-control input100" asp-for=@Model.Spec.Class pattern="[0-9]{1-2}" required />
-                        <span class="focus-input100"></span>
-                        <label class="label">Класс</label>
+                    </div>
+                    <select class="form-control input100" asp-for=@Model.Spec.Class required>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                    </select>
+                    <span class="focus-input100"></span>
+                    <label class="label">Класс</label>
                 </div>
 
 

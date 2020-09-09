@@ -64,7 +64,19 @@
                             <i class="fas fa-graduation-cap"></i>
                         </div>
                     </div>
-                    <input type="text" class="form-control input100" asp-for=@Model.Spec.Class pattern="[0-9]{1-2}" required />
+                    <select class="form-control input100" asp-for=@Model.Spec.Class required>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                    </select>
                     <span class="focus-input100"></span>
                     <label class="label">Класс</label>
                 </div>
@@ -141,13 +153,16 @@
             if (Zadanies[i].text != null) {
 
                 numbers.set(Zadanies[i].variant + "," + Zadanies[i].nomer, 1);
-                numbers.set( Zadanies[i].nomer + "b", Zadanies[i].ball);
+                numbers.set(Zadanies[i].nomer + "b", Zadanies[i].ball);
+                numbers.set(Zadanies[i].nomer + "t", Zadanies[i].tema);
+
             }
     else
             {
 
                 numbers.set(Zadanies[i].variant + "," + Zadanies[i].nomer, 0);
                 numbers.set(Zadanies[i].nomer + "b", Zadanies[i].ball);
+                numbers.set(Zadanies[i].nomer + "t", Zadanies[i].tema);
             }
 
         console.log(numbers);
@@ -184,8 +199,8 @@
 
 
 
-                table += ' <th width="150px">Количество баллов</th></tr></thead> <tbody>';
-
+                table += ' <th width="150px">Количество баллов</th>';
+                table += ' <th width="250px">Тема задания</th></tr></thead> <tbody>';
 
 
                 for (var i = 1; i <= row; i++) {
@@ -210,14 +225,24 @@
                         }
                         else {
                             if (numbers.get(i + "b") != null) {
-
-
-                                table += ' <td class=" wrap-input100 validate-input "><input type="number" class="form-control-sm input100 " id=Ball' + i + ' value=' + numbers.get(i + "b") + ' pattern="[0-9]{6,}" required  onchange="changedball(' + i + ',Ball' + i + ')" /><span class="focus-input100"></span></td>';
+                                table += ' <td class=" wrap-input100 validate-input "><input type="number" class="form-control-sm input100 " id=Ball' + i + ' value=' + numbers.get(i + "b") + ' pattern="[0-9]{1}" required  onchange="changedball(' + i + ',Ball' + i + ')" /><span class="focus-input100"></span></td>';
                             }
                             else {
-
-                                table += ' <td class=" wrap-input100 validate-input "><input type="number" class="form-control-sm input100 " id=Ball' + i + ' value="1" pattern="[0-9]{6,}" required  onchange="changedball(' + i + ',Ball' + i + ')" /><span class="focus-input100"></span></td>';
+                                table += ' <td class=" wrap-input100 validate-input "><input type="number" class="form-control-sm input100 " id=Ball' + i + ' value="1" pattern="[0-9]{1}" required  onchange="changedball(' + i + ',Ball' + i + ')" /><span class="focus-input100"></span></td>';
                             }
+
+                            if (numbers.get(i + "t") != null) {
+                                table += ' <td class=" wrap-input100 validate-input "><input type="text" class="form-control-sm input100 " id=Tema' + i + ' value=' + numbers.get(i + "t") + '   onchange="changedtema(' + i + ',Tema' + i + ')" /><span class="focus-input100"></span></td>';
+                            }
+                            else {
+                                table += ' <td class=" wrap-input100 validate-input "><input type="text" class="form-control-sm input100 " id=Tema' + i + '  onchange="changedtema(' + i + ',Tema' + i + ')" /><span class="focus-input100"></span></td>';
+                            }
+
+
+
+
+
+
                         }
                     }
 
@@ -245,6 +270,21 @@
             type: "POST",
             dataType: "json",
             data: { n_zad: n_zad, n_spec: n_spec, ball:ball.value },
+            success: function (data) {
+                console.log(data);
+
+            }
+        });
+    }
+
+    function changedtema(n_zad, tema) {
+        n_spec = document.getElementById("id_spec").value;
+        alert(tema.value);
+        jQuery.ajax({
+            url: '/UprSpec/ChangedTemaAjax/',
+            type: "POST",
+            dataType: "json",
+            data: { n_zad: n_zad, n_spec: n_spec, tema: tema.value },
             success: function (data) {
                 console.log(data);
 

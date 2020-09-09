@@ -208,7 +208,7 @@ $("#TabForZadan").on("click", function () {
 
     function AddZOtvTip1(i,text) {
 
-        document.getElementById('OtvetZadan[' + i + ']').innerHTML = "<input type='text' id='Zad" + i +"Otvet'class='form-control input100 border-dark' value="+text+" ><span class='focus-input100 '></span><label class='label' style='left:10px;'>Ответ</label>";
+        document.getElementById('OtvetZadan[' + i + ']').innerHTML = "<input type='text' id='Zad" + i +"Otvet'class='form-control input100 border-dark otv-"+i+"' value="+text+" ><span class='focus-input100 '></span><label class='label' style='left:10px;'>Ответ</label>";
     }
 
     function AddZOtvTip2(MyArray, nZad,StrOtv) {
@@ -226,7 +226,7 @@ $("#TabForZadan").on("click", function () {
                 i +
                 "\" id=\"nZad" + nZad + "ch" +
                 i +
-            "\" value=" + MyArray[i].id + "  class=\"custom-switch-input\" " + cheked +"><span class=\"custom-switch-indicator\"  > </span >" +
+            "\" value=" + MyArray[i].id + "  class=\"custom-switch-input otv-" + nZad+"  \" " + cheked +"><span class=\"custom-switch-indicator\"  > </span >" +
                 MyArray[i].text +
                 "</label></br>";
         }
@@ -250,7 +250,7 @@ $("#TabForZadan").on("click", function () {
             document.getElementById('OtvetZadan[' + nZad + ']').innerHTML +=
                 ' <div class="custom-control custom-radio custom-control-inline" ><input type="radio" id=\"nZad' + nZad + 'rb' +
                 i +
-            '\" name="customRadio' + kolRadioButtonName+'" value=\"' + MyArray[i].id + '\" class="custom-control-input" ' + cheked+'><label class="custom-control-label" for=\"nZad' + nZad + 'rb' +
+            '\" name="customRadio' + kolRadioButtonName + '" value=\"' + MyArray[i].id + '\" class="custom-control-input otv-' + nZad+'" ' + cheked+'><label class="custom-control-label" for=\"nZad' + nZad + 'rb' +
                 i +
                 '\">' +
                 MyArray[i].text +
@@ -271,7 +271,7 @@ $("#TabForZadan").on("click", function () {
             StrOtv = StrOtv.substring(StrOtv.indexOf('|=}'));
 
             document.getElementById('OtvetZadan[' + nZad + ']').innerHTML +=
-                "<label  style=\"height:28px\" >" + MyArray[i].text + "</label><input type='text' class='m-l-10' name=\"ID" + MyArray[i].id+
+                "<label  style=\"height:28px\" >" + MyArray[i].text + "</label><input type='text' class='m-l-10 otv-" + nZad+"' name=\"ID" + MyArray[i].id+
                 "\" id=\"nZad" + nZad + "tab" +
                 i +
             "\" value=" + text+"  ></br>";
@@ -286,7 +286,7 @@ $("#TabForZadan").on("click", function () {
 
     function AddZOtvTip5(nZad,StrOtv) {
 
-        document.getElementById('OtvetZadan[' + nZad + ']').innerHTML = "<textarea rows='5'  cols='100' id='nZad" + nZad + "Svb' >" + StrOtv+"</textarea>";
+        document.getElementById('OtvetZadan[' + nZad + ']').innerHTML = "<textarea rows='5' class='otv-" + nZad+"' cols='100' id='nZad" + nZad + "Svb' >" + StrOtv+"</textarea>";
     }
 
 

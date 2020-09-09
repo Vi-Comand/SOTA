@@ -7,6 +7,21 @@ function GetPredActiveLI() {
     podgotovkaKSave(nZad);
 }
 
+function Pokraska() {
+    var d = document.getElementsByClassName("nav-link active");
+    var nZad = d[0].id.substr(3);
+    nZad = nZad.substr(0, nZad.length - 4);
+    alert(nZad);
+    o = document.getElementsByClassName("otv-" + nZad);
+    if (o[0].value != "") {
+        w = o[0].value;
+        document.getElementById("Zad" + nZad + "-tab").style.backgroundColor = "#999999";
+        alert(w);
+    }
+    
+    podgotovkaKSave(nZad);
+}
+
 function GetPred() {
     var d = document.getElementsByClassName("nav-link active");
     var nZad = d[0].id.substr(3);
@@ -14,16 +29,19 @@ function GetPred() {
     nZad = nZad - 1;
     if (document.getElementById("Zad" + nZad + "-tab") != null)
         document.getElementById("Zad" + nZad + "-tab").click();
+    Pokraska();
     podgotovkaKSave(nZad);
 }
 
 function GetSled() {
+    
     var d = document.getElementsByClassName("nav-link active");
     var nZad = d[0].id.substr(3);
     nZad = nZad.substr(0, nZad.length - 4);
     nZad = parseInt(nZad) + 1;
     if (document.getElementById("Zad" + nZad + "-tab"))
         document.getElementById("Zad" + nZad + "-tab").click();
+    Pokraska();
     podgotovkaKSave(nZad);
 }
 
