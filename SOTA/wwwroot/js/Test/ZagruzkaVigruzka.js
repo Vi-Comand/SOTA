@@ -4,44 +4,70 @@ function GetPredActiveLI() {
 
     nZad = nZad.substr(0, nZad.length - 4);
 
+
+
+   
     podgotovkaKSave(nZad);
 }
 
-function Pokraska() {
-    var d = document.getElementsByClassName("nav-link active");
-    var nZad = d[0].id.substr(3);
-    nZad = nZad.substr(0, nZad.length - 4);
-    alert(nZad);
-    o = document.getElementsByClassName("otv-" + nZad);
-    if (o[0].value != "") {
-        w = o[0].value;
-        document.getElementById("Zad" + nZad + "-tab").style.backgroundColor = "#999999";
-        alert(w);
-    }
+function skr(z) {
+    var PB = document.getElementById("pred");
+    var SB = document.getElementById("sled");
+    var coll = document.getElementById("CountZ").value;
     
-    podgotovkaKSave(nZad);
+    if (z  == 1) {
+        PB.style.display = "none";
+    }
+    else {
+        PB.style.display = "inline-block";
+    }
+
+    if (z == coll) {
+        SB.style.display = "none";
+    }
+    else {
+        SB.style.display = "inline-block";
+    }
+
 }
 
 function GetPred() {
     var d = document.getElementsByClassName("nav-link active");
+    var PB = document.getElementById("pred");
     var nZad = d[0].id.substr(3);
     nZad = nZad.substr(0, nZad.length - 4);
+    
     nZad = nZad - 1;
+    if (nZad == 1) {
+        PB.style.display = "none";
+    }
+    else {
+        PB.style.display = "inline-block";
+    }
     if (document.getElementById("Zad" + nZad + "-tab") != null)
         document.getElementById("Zad" + nZad + "-tab").click();
-    Pokraska();
+    //Pokraska();
     podgotovkaKSave(nZad);
 }
 
 function GetSled() {
     
     var d = document.getElementsByClassName("nav-link active");
+    var SB = document.getElementById("sled");
+    var coll = document.getElementById("CountZ").value;
     var nZad = d[0].id.substr(3);
     nZad = nZad.substr(0, nZad.length - 4);
     nZad = parseInt(nZad) + 1;
+    if (nZad == coll) {
+        SB.style.display = "none";
+    }
+    else {
+        SB.style.display = "inline-block";
+    }
+
     if (document.getElementById("Zad" + nZad + "-tab"))
         document.getElementById("Zad" + nZad + "-tab").click();
-    Pokraska();
+    //Pokraska();
     podgotovkaKSave(nZad);
 }
 
@@ -137,6 +163,10 @@ function vbd(id, text) {
         });
     }
     OtvVBDMass.set(parseInt(id), text);
+    var d = document.getElementsByClassName("nav-link active");
+    var nZad = d[0].id.substr(3);
+    nZad = nZad.substr(0, nZad.length - 4);
+    document.getElementById("Zad" + nZad + "-tab").style.backgroundColor = "#999999";
     console.log(OtvVBDMass);
 
 }

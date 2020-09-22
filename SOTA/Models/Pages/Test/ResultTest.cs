@@ -10,6 +10,7 @@ namespace SOTA.Models.Pages.Test
     {
         public int Number { get; set; }
         public double Ball { get; set; }
+        public string Tema { get; set; }
 
     }
     public class ResultTest
@@ -30,7 +31,7 @@ namespace SOTA.Models.Pages.Test
         public void GetResult()
         {
             Result = db.UsersBalls.Where(x => x.IdUser == _idUser && x.IdRabota == _idRabota).Join(db.Zadanie,
-                x => x.IdZadania, y => y.Id, (x, y) => new BallPoZadan { Number = y.Nomer, Ball = x.Ball }).OrderBy(x => x.Number).ToList();
+                x => x.IdZadania, y => y.Id, (x, y) => new BallPoZadan { Number = y.Nomer, Ball = x.Ball, Tema = y.Tema }).OrderBy(x => x.Number).ToList();
 
         }
 

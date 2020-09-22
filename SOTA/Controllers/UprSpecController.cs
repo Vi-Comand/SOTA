@@ -636,6 +636,8 @@ namespace SOTA.Controllers
             string login = HttpContext.User.Identity.Name;
             Users user = db.Users.Where(p => p.Name == login).First();
             ViewBag.rl = user.Role;
+            ViewBag.n_var = n_var;
+            ViewBag.n_zad = n_zad;
             ZadanieRedact model = new ZadanieRedact();
             var Zadan = db.Zadanie.Where(x => x.IdSpec == id_spec && x.Nomer == n_zad && x.Variant == n_var).First();
             model.Id = Zadan.Id;

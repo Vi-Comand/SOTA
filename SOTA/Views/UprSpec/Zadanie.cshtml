@@ -333,9 +333,9 @@
 
 <body>
     @*<button class="btn btn-outline-success " id="SaveZadanie" form="0">Сохранить</button>*@
-    <a href="/UprSpec/SpecifikacRedact?id_spec=@Model.IdSpec" class='btn btn-icon btn-sm btn-outline-yel text-left btn-block'><i class='fas fa-plus'></i>Назад</a>
+    <a href="/UprSpec/SpecifikacRedact?id_spec=@Model.IdSpec" class='btn btn-icon btn-sm btn-outline-yel text-left btn-block'><i class='fas fa-arrow-circle-left'></i>Назад</a>
 
-
+    <h3>Вариант: @ViewBag.n_var Задание: @ViewBag.n_zad</h3>
     <div class="card-body">
         <div id="accordion">
             <div class="accordion">
@@ -351,7 +351,7 @@
                                     <br>
                                     <form name="exampleForm" action="example.html" method="post">
                                         <input type="hidden" asp-for="@Model.Id" id="idZadania" />
-                                        <textarea id="textarea1" name="test1" style="width:800px;height:400px;">
+                                        <textarea id="textarea1" name="test1" style="width:1000px;height:400px;">
                                             @if(Model.Text!=null)
                                                 {
                                                     @Model.Text;

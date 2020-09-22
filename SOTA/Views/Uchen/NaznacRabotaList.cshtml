@@ -46,7 +46,7 @@
                                     }
                                     else
                                     {
-                                        <a asp-route-idRabota="@row.Id" asp-controller="Test" asp-action="Test" class='btn btn-icon btn-sm btn-outline-yel text-left btn-block'><i class='fas fa-square-root-alt'></i>Открыть</a>
+                                        <a asp-route-idRabota="@row.Id" asp-controller="Test" asp-action="Test" class='btn btn-icon btn-sm btn-outline-yel text-left btn-block '  onclick="load(@row.Id);"><i class='fa fa-square-root-alt ' id="i-@row.Id"></i>Открыть</a>
                                     }
                                 </td>
                             </tr>
@@ -57,4 +57,14 @@
 
         </div>
     </div>
+    <script>
+        function load(id)
+        {
+            var ik = document.getElementById('i-' + id + '');
+            ik.classList.remove('fa-square-root-alt');
+            ik.classList.add('fa-spinner');
+            ik.classList.add('fa-spin');
+            ik.classList.add('fa-2x');
+        };
+    </script>
 </form>

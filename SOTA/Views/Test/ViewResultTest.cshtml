@@ -9,12 +9,13 @@
 
     <div class="col-12 shadow p-3 mb-5 bg-white rounded">
 
-        <div class="col-6 table-responsive-lg m-l-r-auto">
+        <div class="col-12 table-responsive-lg m-l-r-auto">
             <table class="table table-hover  table-sm table-bordered shadow align-content-center text-center">
                 <thead class="table-yel">
                     <tr>
-                        <th width="50%">Номер задания</th>
-                        <th>Балл</th>
+                        <th width="20%">Номер задания</th>
+                        <th width="20%">Балл</th>
+                        <th width="60%">Тема</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -26,6 +27,7 @@
                             <tr>
                                 <td>@row.Number</td>
                                 <td>@row.Ball</td>
+                                <td>@row.Tema</td>
                             </tr>
                             i = i + row.Ball;
                         }

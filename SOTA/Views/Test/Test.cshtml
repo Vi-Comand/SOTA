@@ -10,7 +10,7 @@
 <form method="post">
     <div class="container col-12 shadow p-3 mb-5 bg-white rounded h-100">
         <input type="hidden" id="idRabota" asp-controller="Test" asp-action="KonecRabot" asp-for="@Model._idRabota" />
-
+        <input type="hidden" id="CountZ" asp-controller="Test" asp-action="KonecRabot" asp-for="@Model._Zadan.Count" />
         <div class="card-body">
             <div class="row">
                 <div class=" col-auto mr-auto">
@@ -31,7 +31,7 @@
         </div>
         <div class="row m-l-20 ">
             <div class="col-auto mr-auto">
-                <a id="pred" class="btn btn-outline-primary  shadow"><i class='fas  fa-arrow-circle-left'></i> Предыдущий вопрос</a>
+                <a id="pred" style="display:none;" class="btn btn-outline-primary  shadow"><i class='fas  fa-arrow-circle-left'></i> Предыдущий вопрос</a>
             </div>
             <div class="col-auto m-r-20">
                 <a id="sled" class="btn btn-outline-primary shadow m-l-auto"> Следующий вопрос <i class='fas  fa-arrow-circle-right ' style="margin-right:0px; margin-left:10px"></i></a>
@@ -302,7 +302,7 @@ $("#TabForZadan").on("click", function () {
                 i +
                 '" role="tab" aria-controls="Zad' +
                 i +
-                '" aria-selected="false">' +
+                '" aria-selected="false" onclick="skr('+i+')">' +
                 i +
                 '</a>';
         else
@@ -312,7 +312,7 @@ $("#TabForZadan").on("click", function () {
                 i +
                 '" role="tab" aria-controls="Zad' +
                 i +
-                '" aria-selected="false">' +
+                '" aria-selected="false" onclick="skr(' + i +')">' +
                 i +
                 '</a>';
 

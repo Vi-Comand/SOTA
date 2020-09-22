@@ -199,8 +199,8 @@
 
 
 
-                table += ' <th width="150px">Количество баллов</th>';
-                table += ' <th width="250px">Тема задания</th></tr></thead> <tbody>';
+                table += ' <th width="100px">Количество баллов</th>';
+                table += ' <th min-width="350px">Тема задания</th></tr></thead> <tbody>';
 
 
                 for (var i = 1; i <= row; i++) {
@@ -232,7 +232,8 @@
                             }
 
                             if (numbers.get(i + "t") != null) {
-                                table += ' <td class=" wrap-input100 validate-input "><input type="text" class="form-control-sm input100 " id=Tema' + i + ' value=' + numbers.get(i + "t") + '   onchange="changedtema(' + i + ',Tema' + i + ')" /><span class="focus-input100"></span></td>';
+                                tem = numbers.get(i + "t");
+                                table += ' <td class=" wrap-input100 validate-input "><input type="text" class="form-control-sm input100 " id=Tema' + i + ' value="' + tem + '"   onchange="changedtema(' + i + ',Tema' + i + ')" /><span class="focus-input100"></span></td>';
                             }
                             else {
                                 table += ' <td class=" wrap-input100 validate-input "><input type="text" class="form-control-sm input100 " id=Tema' + i + '  onchange="changedtema(' + i + ',Tema' + i + ')" /><span class="focus-input100"></span></td>';
@@ -279,7 +280,7 @@
 
     function changedtema(n_zad, tema) {
         n_spec = document.getElementById("id_spec").value;
-        alert(tema.value);
+       
         jQuery.ajax({
             url: '/UprSpec/ChangedTemaAjax/',
             type: "POST",
