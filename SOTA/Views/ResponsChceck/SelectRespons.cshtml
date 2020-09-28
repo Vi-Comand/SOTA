@@ -1,0 +1,61 @@
+﻿@model SOTA.Models.ListRab;
+@{
+    ViewData["Title"] = "Выбор ответов";
+}
+
+<h1>Выбор ответов</h1>
+
+<div class="col-12 shadow p-3 mb-5 bg-white rounded">
+
+    <div class="col-12 table-responsive-lg">
+        <table class="table table-hover  table-sm table-bordered shadow align-content-center text-center">
+            <thead class="table-yel">
+                <tr>
+                    <th></th>
+                    <th>Название работы</th>
+                    <th>Дата работы</th>
+                    <th>Предмет</th>
+                    <th>Номер вопроса</th>
+                    <th>Вариант</th>
+                    <th>Проверить</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.ListRabs != null)
+                {
+                    @foreach (var row in Model.ListRabs)
+
+                    {
+
+                        <tr>
+                            <td><input type="checkbox" class="DEL" value="@row.Id" /></td>
+                            <td><a href="/ResponsChceck/SelectZadan?idSpec=@row.IdSpec" class='btn btn-icon btn-sm btn-outline-yel text-left btn-block'><i class='fas fa-pencil-alt'></i>@row.Name </a></td>
+                            <td>
+                                @if (row.IdSpec != 0)
+                                {
+                                    //@Model.Specs.Where(x => x.Id == row.IdSpec).First().Name;
+                                }
+                                else
+                                {@Html.Raw("Не выбрана спецификация");
+                            }
+                            </td>
+                            <td>
+                                @if (row.IdSpec != 0)
+                                {
+                                    //@Model.Predms.Where(x => x.Id == Model.Specs.Where(y => y.Id == row.IdSpec).First().Predm).First().Name
+                                }
+                                else
+                                {@Html.Raw("<span>Не выбрана спецификация</span>");
+                            }
+                            </td>
+                            <td>@row.Nachalo</td>
+                            <td>@row.IdSpec</td>
+                            <td>@row.Klass</td>
+                            <td>@row.UrovenRabot</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

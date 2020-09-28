@@ -1,0 +1,111 @@
+﻿@model SOTA.Models.ListRab;
+@{
+    ViewData["Title"] = "Проверка ответов";
+}
+
+<h1>Проверка ответов</h1>
+<a href="/ResponsChceck/SelectZadan?idSpec=@ViewBag.sp" class='btn btn-icon btn-sm btn-outline-yel text-left btn-block'><i class='fas fa-arrow-circle-left'></i>Назад</a>
+<div class="col-12 shadow p-3 mb-5 bg-white rounded">
+    <input type="hidden" id="idZad" value="@Model.listKriters[0].IdZad" />
+    <input type="hidden" id="id_ans" />
+    <input type="hidden" id="id_rab" />
+    <input type="hidden" id="id_user" />
+    <div class="col-12 ">
+        <table>
+            <tr>
+                <td width="50%"><h4>Задание</h4></td>
+                <td width="50%"><h4>Ответ</h4></td>
+            </tr>
+            <tr>
+                <td width="50%"><div id="zad"></div></td>
+                <td width="50%"><div id="otv"></div></td>
+            </tr>
+            <tr><td><br /></td></tr>
+            <tr>
+                <td width="10%" colspan="2"><h4>Выберите критерий</h4></td>
+            </tr>
+            <tr>
+                <td width="70%">
+                    @foreach (var row in Model.listKriters)
+
+                    {
+                        <div class="form-check "  >
+                            <span onclick="select();">
+                                <input class="form-check-input" type="radio" name="kriter" id="kriter_@row.Id" onmouseup="select();" value="@row.Ball">
+                                <label class="form-check-label" for="kriter_@row.Id" >
+                                    @row.Text /   @row.Ball балл(а)
+                                </label>
+                            </span>
+                        </div>
+                    }
+                </td>
+                <td width="30%">
+                    <a id="Prover" class="btn btn-outline-success  shadow d-none" onclick="save();"><i class='fas fa-check'></i>Сохранить и продолжить</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<script>
+    window.onload = function () {
+        getTO();
+    }
+
+    function getTO() {
+        idZad = document.getElementById("idZad").value;
+        zad = document.getElementById("zad");
+        otv = document.getElementById("otv");
+        id_ans = document.getElementById("id_ans");
+        id_rab = document.getElementById("id_rab");
+        id_user = document.getElementById("id_user");
+        Prover = document.getElementById("Prover");
+        jQuery.ajax({
+            url: '/ResponsChceck/GetTO/',
+            type: "POST",
+            dataType: "json",
+            data: { id_zad: idZad },
+            success: function (data) {
+                //console.log(data);
+
+                zad.textContent = data[0];
+                otv.textContent = data[1];
+                id_ans.value = data[2];
+                id_rab.value = data[3];
+                id_user.value = data[4];
+                if (data[1] == "Всё проверено") {
+                    Prover.classList.add('d-none');
+                }
+
+            }
+        });
+    }
+
+    function save() {
+        idZad = document.getElementById("idZad").value;
+        var radio = $('input[name=kriter]:checked').val();
+        id_ans = document.getElementById("id_ans").value;
+        id_rab = document.getElementById("id_rab").value;
+        id_user = document.getElementById("id_user").value;
+        jQuery.ajax({
+            url: '/ResponsChceck/SaveK/',
+            type: "POST",
+            dataType: "json",
+            data: { id_zad: idZad, radio: radio, Id_ans: id_ans, Id_rab: id_rab, Id_user: id_user },
+            success: function (data) {
+                //console.log(data);
+                alert("Сохранено");
+                getTO();
+            }
+
+        });
+    }
+
+    function select() {
+        Prover = document.getElementById("Prover");
+        otv = document.getElementById("otv").textContent;
+        if (otv != "Всё проверено") {
+            Prover.classList.remove('d-none');
+        }
+       
+    }
+</script>

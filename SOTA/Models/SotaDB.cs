@@ -96,7 +96,7 @@ namespace SOTA.Models
         public int IdZadan { get; set; }
         public int IdRabota { get; set; }
         public string TextOtv { get; set; }
-
+        public int Proveren { get; set; }
         public DateTime Date { get; set; }
 
     }
