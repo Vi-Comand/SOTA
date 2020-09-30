@@ -29,6 +29,11 @@
     <Content Remove="wwwroot\fonts\nunito-v9-latin-regular.ttf" />
     <Content Remove="wwwroot\fonts\nunito-v9-latin-regular.woff" />
     <Content Remove="wwwroot\fonts\nunito-v9-latin-regular.woff2" />
+    <Content Remove="wwwroot\Reports\Templates\Протокол проведения монитороинговой работы.xlsx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Models\Pages\Reports\Tips\Tip1\ProtokolProvedeniaMonitoringovoyRaboti.cs" />
   </ItemGroup>
 
 
@@ -64,6 +69,9 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\fonts\" />
+    <Folder Include="wwwroot\Reports\FinishedReports\" />
+    <Folder Include="wwwroot\Reports\FinishedReports\Tip1\Region\" />
+    <Folder Include="wwwroot\Reports\FinishedReports\Tip1\" />
     <Folder Include="wwwroot\UprSpec\uploads\" />
     <Folder Include="wwwroot\Img\" />
   </ItemGroup>

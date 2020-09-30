@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using SOTA.Models;
 using System;
 using System.Linq;
+using SOTA.Models.Pages.Reports;
+
 
 namespace SOTA.Controllers
 {
@@ -16,49 +18,47 @@ namespace SOTA.Controllers
             db = context;
         }
         // [HttpGet]
-        //[Route("Rabota/RabotaAdd/")]
+       
         [Authorize]
+        [Route("Report/ReportsList/")]
         public IActionResult ReportsList()
         {
-            // var login = HttpContext.User.Claims.First().Value;
-            var login = HttpContext.User.Identity.Name;
+            string login = HttpContext.User.Identity.Name;
             Users user = db.Users.Where(p => p.Name == login).First();
             ViewBag.rl = user.Role;
-            RabotaUchenList rabotaList = new RabotaUchenList();
-            int KlassU = db.Klass.Where(x => x.Id == user.IdKlass).First().KlassNom;
-            RabotaUchenList list = new RabotaUchenList();
-            list.RabotaTabls = (from rab in db.Rabota
 
-                                join SpecK in db.Specific on rab.IdSpec equals SpecK.Id into spK
-                                from SK in spK.DefaultIfEmpty()
-
-
-                                select new RabotaUchen
-                                {
-                                    Id = rab.Id,
-                                    Name = rab.Name,
-                                    IdSpec = rab.IdSpec,
-                                    Dliteln = rab.Dliteln,
-                                    UrovenRabot = rab.UrovenRabot,
-                                    Nachalo = rab.Nachalo,
-                                    Konec = rab.Konec,
-                                    ListUchasn = rab.ListUchasn,
-                                    Sozd = rab.Sozd,
-                                    SpecN = SK.Name,
-                                    PredmN = db.Predm.Where(x => x.Id == SK.Predm).First().Name,
-                                    TipN = db.TipSpec.Where(x => x.Id == SK.Tip).First().Name,
-                                    KlassR = SK.Class
-                                }).ToList();
-
-            // list.Filt = new FilterLKTO();
-            DateTime dateNow = DateTime.Now;
-            list.RabotaTabls = list.RabotaTabls.Where(x => x.Konec < dateNow).ToList();
-            rabotaList = list;
-            //rabotaList = rabotaList.RabotaTabls
-
-            return View(rabotaList);
+            return View();
+        }
+        [Route("Report/ReportsList/{tip?}")]
+        public IActionResult ReportsList(int tip)
+        {
+            string login = HttpContext.User.Identity.Name;
+            Users user = db.Users.Where(p => p.Name == login).First();
+            ViewBag.rl = user.Role;
+            int idOO = 16;//iro
+            FormirRabotaTablList Tabl = new FormirRabotaTablList(idOO, db);
+            var rabotaList = Tabl.GetSpisokRabotReports();
+            return View("RabotaList",rabotaList);
         }
 
+        [Route("Report/Download/{IdRabota?}/{Tip?}")]
+        public IActionResult Download(int IdRabota,int Tip)
+        {
+            //string login = HttpContext.User.Identity.Name;
+            //Users user = db.Users.Where(p => p.Name == login).First();
+            //ViewBag.rl = user.Role;
+            int idOO = 16;//iro
+
+            
+
+                     ReportGenerator Report = new ReportGenerator(Tip, db, IdRabota);
+            Report.Generaition();
+
+
+
+
+           return RedirectToAction("File","Download");
+        }
         public IActionResult SaveReport(int IdRabota)
         {
 
