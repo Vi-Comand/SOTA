@@ -104,11 +104,17 @@
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="UO">Главная</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Report" asp-action="ReportsList">Отчеты</a>
+                                </li>
                             }
                             else if (ViewBag.rl == 2)
                             {
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="OO">Главная</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Report" asp-action="ReportsList">Отчеты</a>
                                 </li>
                             }
                             else if (ViewBag.rl == 1)

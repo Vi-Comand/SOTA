@@ -29,35 +29,52 @@ namespace SOTA.Controllers
 
             return View();
         }
+        //
         [Route("Report/ReportsList/{tip?}")]
         public IActionResult ReportsList(int tip)
         {
             string login = HttpContext.User.Identity.Name;
             Users user = db.Users.Where(p => p.Name == login).First();
             ViewBag.rl = user.Role;
-            int idOO = 16;//iro
-            FormirRabotaTablList Tabl = new FormirRabotaTablList(idOO, db);
-            var rabotaList = Tabl.GetSpisokRabotReports();
+            FormirRabotaTablList Tabl = new FormirRabotaTablList();
+            var rabotaList = new ReportsRabotaList();
+            if (user.Role == 2)
+            {
+                 Tabl = new FormirRabotaTablList(user.IdOo, db);
+                rabotaList   = Tabl.GetSpisokRabotReports();
+            }
+            if (user.Role == 3)
+            {
+                Tabl = new FormirRabotaTablList(new Mo { Id = user.IdMo }, db);
+                rabotaList = Tabl.GetSpisokRabotReports();
+            }
             return View("RabotaList",rabotaList);
         }
 
         [Route("Report/Download/{IdRabota?}/{Tip?}")]
-        public IActionResult Download(int IdRabota,int Tip)
+        public IActionResult Download(int IdRabota, int Tip)
         {
-            //string login = HttpContext.User.Identity.Name;
-            //Users user = db.Users.Where(p => p.Name == login).First();
-            //ViewBag.rl = user.Role;
-            int idOO = 16;//iro
+            string login = HttpContext.User.Identity.Name;
+            Users user = db.Users.Where(p => p.Name == login).First();
+            ViewBag.rl = user.Role;
+          
 
-            
+            ReportGenerator Report;
+            if (user.Role == 2)
+            {
+                 Report = new ReportTip1( db, IdRabota,new Oo {Id= user.IdOo });
+                return RedirectToAction("File", "Download", new { path = Report.Create() });
+            }
 
-                     ReportGenerator Report = new ReportGenerator(Tip, db, IdRabota);
-            Report.Generaition();
+            if (user.Role == 3)
+            {
+                Report = new ReportTip1(db, IdRabota, new Mo { Id = user.IdMo });
+                return RedirectToAction("File", "Download", new { path = Report.Create() });
+            }
 
 
 
-
-           return RedirectToAction("File","Download");
+            return RedirectToAction("ReportsList");
         }
         public IActionResult SaveReport(int IdRabota)
         {

@@ -15,16 +15,19 @@ namespace SOTA.Models.Pages.Reports
     public class GeneretionListBalls
     {
         SotaContext db;
-        int idRabota=4;
-        int idOO=16;
+        int idRabota;
+        int idOO;
         List<BallUser> UsrBalls;
         List<RowForTable> Tables;
-        public GeneretionListBalls(SotaContext context)
+        public GeneretionListBalls(SotaContext context,int idRabota)
         {
             db = context;
+            this.idRabota = idRabota;
+    
         }
-        public List<RowForTable>  Get()
+        public List<RowForTable>  Get(int idOO)
         {
+            this.idOO = idOO;
             UploadingBalls();
             GenerationTables();
             return Tables;

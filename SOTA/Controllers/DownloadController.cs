@@ -13,9 +13,9 @@ namespace SOTA.Controllers
     {
 
         [HttpGet]
-        public async Task<IActionResult> File()
+        public async Task<IActionResult> File(string path)
         {
-            var path = Directory.GetCurrentDirectory() + "/wwwroot/Reports/Templates/Протокол проведения мониторинговой работы.xlsx";
+           
             var memory = new MemoryStream();
             using (var stream = new FileStream(path, FileMode.Open))
             {

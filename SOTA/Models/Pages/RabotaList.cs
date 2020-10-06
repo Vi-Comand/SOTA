@@ -44,12 +44,17 @@ namespace SOTA.Models
         int _idOO;
         int _idMO;
         int klass;
+        public FormirRabotaTablList()
+        {
+
+        }
         public FormirRabotaTablList(Users user, SotaContext db)
         {
             _db = db;
           
             _idOO=user.IdOo;
           _idMO = user.IdMo;
+            
             dateNow = DateTime.Now;
             klass=db.Klass.Find(user.IdKlass).KlassNom;
          
@@ -63,6 +68,16 @@ namespace SOTA.Models
             
 
         }
+        public FormirRabotaTablList(Mo MO, SotaContext db)
+        {
+            _db = db;
+            _idOO = 0;
+            _idMO = MO.Id;
+            dateNow = DateTime.Now;
+
+
+        }
+
 
         public  RabotaUchenList GetSpisokRabotUchen()
         {
@@ -129,20 +144,15 @@ namespace SOTA.Models
         {
            
 
-
-            
-
-
             List<Rabota> ListRabot = new List<Rabota>();
 
             ListRabot.AddRange(GetSpisokRabotKray(list));
             ListRabot.AddRange(GetSpisokRabotMO(list));
+           
             ListRabot.AddRange(GetSpisokRabotOO(list));
 
 
             return ListRabot;
-
-
 
         }
         private List<Rabota> GetSpisokRabotKray(List<Rabota> rabot)
@@ -162,16 +172,29 @@ namespace SOTA.Models
         }
         private List<Rabota> GetSpisokRabotOO(List<Rabota> rabot)
         {
-
-            var spisok = from Naznach in _db.NaznachOo.Where(x => x.IdOo == _idOO)
+            IQueryable<Rabota> spisok;
+            if (_idOO != 0)
+            {
+                spisok = from Naznach in _db.NaznachOo.Where(x => x.IdOo == _idOO)
 
                          join Rab in rabot on Naznach.IdRab equals Rab.Id
-                        
-                         select Rab;
 
+                         select Rab;
+            }
+            else
+            {
+                spisok = from OO in _db.Oo.Where(x => x.IdMo == _idMO)
+                         join Naznach in _db.NaznachOo on OO.Id equals Naznach.IdOo into naznach
+                         from Naznach in naznach
+                         join Rab in rabot on Naznach.IdRab equals Rab.Id into rab
+                         from Rab in rab
+                         select Rab
+
+                     ;
+            }
             return spisok.ToList();
         }
-
+        
     }
 
         public class RabotaList

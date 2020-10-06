@@ -12,9 +12,12 @@
                 <a id="AddSpec" class="btn btn-outline-success col-3" asp-area="" asp-controller="Rabota" asp-action="RabotaAdd"><i class='fas fa-plus-circle'></i>    Назначить</a>
                 <a id="AddSpec" class="btn btn-outline-danger col-3" asp-area="" asp-controller="Rabota" asp-action="RabotaDel"><i class='fas fa-trash'></i>     Удалить</a>
             </div>*@
+        @if (ViewBag.rl == 2 || ViewBag.rl == 3)
+        {
         <div class="col-12 table-responsive-lg">
             <a class="nav-link text-dark" asp-area="" asp-controller="Report" asp-route-tip="1" asp-action="ReportsList">Протокол проведения монитороинговой работы</a>
         </div>
+        }
     </div>
 </form>
 

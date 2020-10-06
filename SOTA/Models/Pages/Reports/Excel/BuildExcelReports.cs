@@ -12,13 +12,15 @@ namespace SOTA.Models.Pages.Reports
         ProtokolProvedeniaMonitoringovoyRaboti Protokol;
         string Name;
         string Path;
+        string PathFile;
+
         public BuildExcelReports(ProtokolProvedeniaMonitoringovoyRaboti Protokol)
         {
             this.Protokol = Protokol;
-            Path = GetPath();
+            Path = GetPathFolder();
             Name = GetName();
 }
-        private string GetPath()
+        private string GetPathFolder()
         { string path = Directory.GetCurrentDirectory() + "/wwwroot/Reports/FinishedReports/Tip1/Region/" + Protokol.Tables[1].MO;
 
                if(!Directory.Exists(path))
@@ -41,21 +43,24 @@ namespace SOTA.Models.Pages.Reports
         }
         public void CreateFile()
         {
-            if (!Directory.Exists(Path+"/"+Name+".xlsx"))
+            if (!File.Exists(Path+"/"+Name+".xlsx"))
             {
                 ProtokolExcel Excel = new ProtokolExcel(Protokol, Path + "/" + Name + ".xlsx");
                 Excel.Create();
             }
 
+
+            PathFile = Path + "/" + Name + ".xlsx";
+
+
         }
-
-
-
-
-        private void Save()
+      
+        public string GetPath()
         {
-
+            return PathFile;
         }
+
+
 
 
     }
