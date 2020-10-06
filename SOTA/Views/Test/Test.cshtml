@@ -21,7 +21,21 @@
                 </div>
             </div>
             <div class="tab-content  " id="Zadans">
+                <div class="tab-content accordion shadow" id="DText">
+                    
+                        <div class="card-header" id="headingOne">
+                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    Прочитайте текст
+                                </button>
+                        </div>
 
+                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#DText">
+                            <div class="card-body" id="DopText">
+
+                            </div>
+                        </div>
+                    
+                </div>
 
             </div>
 
@@ -91,6 +105,11 @@ $("#TabForZadan").on("click", function () {
 
             @: AddTextZadan(@row._nomer, "@row._text",@row._tip,@row._idZadan);
 
+            if (row._Doptext != "")
+            {
+            @: AddDopText(@row._nomer, "@row._text",@row._tip,@row._idZadan);
+        }
+
             if (row._tip == 1)
             {
                 @:AddZOtvTip1(@row._nomer,"@row._otvVBD");
@@ -128,6 +147,7 @@ $("#TabForZadan").on("click", function () {
                 {
                     @:MyArray[@i] = ObjVibOtv(@str._id, "@str._text");
                     i++;
+
 
                 }
 
@@ -196,15 +216,18 @@ $("#TabForZadan").on("click", function () {
         divText.innerHTML = divText.textContent;
         divText.innerHTML += "<input type='hidden' id='Zad" + i + "Tip' value=" + tip + "  />"
           divText.innerHTML+="<input type='hidden' id='Zad"+i+"ID' value="+id+"  />"
-
-
-
-
-
-
-
-
     }
+
+    function AddDopText(i, DopText, tip, id) {
+        var divText = document.getElementById('TextZadan[' + i + ']');
+
+        divText.innerHTML = text;
+        divText.innerHTML = divText.textContent;
+        divText.innerHTML += "<input type='hidden' id='Zad" + i + "Tip' value=" + tip + "  />"
+        divText.innerHTML += "<input type='hidden' id='Zad" + i + "ID' value=" + id + "  />"
+    }
+
+
 
     function AddZOtvTip1(i,text) {
 

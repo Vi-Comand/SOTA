@@ -34,21 +34,21 @@
                             <tbody>
                                 @for (int i = 0; i < Model.LisrUsersKlass.Count; i++)
                                 {
-                    <tr>
-                        <td>@Model.LisrUsersKlass[i].Id </td>
-                        <td>@Model.LisrUsersKlass[i].Klass</td>
-                        <td>@Model.LisrUsersKlass[i].Name</td>
-                        <td>@Model.LisrUsersKlass[i].DateReg</td>
+                                    <tr>
+                                        <td>@Model.LisrUsersKlass[i].Id </td>
+                                        <td>@Model.LisrUsersKlass[i].Klass</td>
+                                        <td>@Model.LisrUsersKlass[i].Name</td>
+                                        <td>@Model.LisrUsersKlass[i].DateReg</td>
 
-                        <td>
-                            @if (@Model.LisrUsersKlass[i].Pass != null)
-                            {
-            <a asp-area="" asp-controller="Admin" asp-action="CleanPass" asp-route-idDel="@Model.LisrUsersKlass[i].Id" class="btn btn-danger">Сбросить пароль</a>}
-                            @if (@Model.LisrUsersKlass[i].Kod == "1")
-                            {
-            <a asp-area="" asp-controller="Admin" asp-action="RazrReg" asp-route-idReg="@Model.LisrUsersKlass[i].Id" class="btn btn-success">Разрешить регистрацию</a>}
-                        </td>
-                    </tr>}
+                                        <td>
+                                            @if (@Model.LisrUsersKlass[i].Pass != null)
+                                            {
+                                                <a asp-area="" asp-controller="Admin" asp-action="CleanPass" asp-route-idDel="@Model.LisrUsersKlass[i].Id" asp-route-role="@ViewBag.rl" class="btn btn-danger">Сбросить пароль</a>}
+                                            @if (@Model.LisrUsersKlass[i].Kod == "1")
+                                            {
+                                                <a asp-area="" asp-controller="Admin" asp-action="RazrReg" asp-route-idReg="@Model.LisrUsersKlass[i].Id" asp-route-role="@ViewBag.rl" class="btn btn-success">Разрешить регистрацию</a>}
+                                        </td>
+                                    </tr>}
                             </tbody>
                             <tfoot class=" ">
                                 <tr>
@@ -70,7 +70,7 @@
                                 {
                                     if (i == 0 || Model.LisrUsersTest[i - 1].IdKlass != Model.LisrUsersTest[i].IdKlass)
                                     {
-                    <a class="list-group-item list-group-item-action p-1" href="#klass_@Model.LisrUsersTest[i].IdKlass"> @Model.LisrUsersTest[i].Klass</a>}
+                                        <a class="list-group-item list-group-item-action p-1" href="#klass_@Model.LisrUsersTest[i].IdKlass"> @Model.LisrUsersTest[i].Klass</a>}
                                 }
                             </div>
                         </div>
@@ -81,31 +81,31 @@
                                     {
                                         if (i == 0 || Model.LisrUsersTest[i - 1].IdKlass != Model.LisrUsersTest[i].IdKlass)
                                         {
-                        <thead class="table-yel">
-                            <tr id="klass_@Model.LisrUsersTest[i].IdKlass">
-                                <td colspan="6">
-                                    <h4>  @Model.LisrUsersTest[i].Klass</h4>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>#</th>
-                                <th>Логин</th>
-                                <th>Дата регистрации</th>
-                                <th>Управление</th>
-                            </tr>
-                        </thead> }
+                                            <thead class="table-yel">
+                                                <tr id="klass_@Model.LisrUsersTest[i].IdKlass">
+                                                    <td colspan="6">
+                                                        <h4>  @Model.LisrUsersTest[i].Klass</h4>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Логин</th>
+                                                    <th>Дата регистрации</th>
+                                                    <th>Управление</th>
+                                                </tr>
+                                            </thead> }
                                         if (i == 0 || Model.LisrUsersTest[i - 1].IdKlass == Model.LisrUsersTest[i].IdKlass)
                                         {
-                        <tr>
-                            <td>@Model.LisrUsersTest[i].Id </td>
-                            <td>@Model.LisrUsersTest[i].Name</td>
-                            <td>@Model.LisrUsersTest[i].DateReg</td>
-                            <td>
-                                @if (@Model.LisrUsersTest[i].Pass != null)
-                                {
-            <a asp-area="" asp-controller="Admin" asp-action="CleanPass" asp-route-idDel="@Model.LisrUsersTest[i].Id" class="btn btn-danger">Сбросить пароль</a>}
-                            </td>
-                        </tr>}
+                                            <tr>
+                                                <td>@Model.LisrUsersTest[i].Id </td>
+                                                <td>@Model.LisrUsersTest[i].Name</td>
+                                                <td>@Model.LisrUsersTest[i].DateReg</td>
+                                                <td>
+                                                    @if (@Model.LisrUsersTest[i].Pass != null)
+                                                    {
+                                                        <a asp-area="" asp-controller="Admin" asp-action="CleanPass" asp-route-idDel="@Model.LisrUsersTest[i].Id" class="btn btn-danger">Сбросить пароль</a>}
+                                                </td>
+                                            </tr>}
                                     }
                                 </table>
                             </div>

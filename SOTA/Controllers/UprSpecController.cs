@@ -76,7 +76,10 @@ namespace SOTA.Controllers
         {
             db.Specific.Add(model.Spec);
             db.SaveChanges();
-            return RedirectToAction("SpecifikacRedact", new { id_spec = model.Spec.Id });
+            return RedirectToAction("SpecifikacRedact", new
+            {
+                id_spec = model.Spec.Id
+            });
         }
 
         public IActionResult SpecifikacIzmen(SpecifikacAddModel model)
@@ -139,7 +142,10 @@ namespace SOTA.Controllers
                 db.SaveChanges();
             }
 
-            return RedirectToAction("SpecifikacRedact", new { id_spec = model.Spec.Id });
+            return RedirectToAction("SpecifikacRedact", new
+            {
+                id_spec = model.Spec.Id
+            });
         }
         private List<Zadanie> AddedVar(int n_var, int kol_zad, int n_spec, int n_zad)
         {
@@ -209,7 +215,10 @@ namespace SOTA.Controllers
             }
             catch (Exception ex)
             {
-                return Json(new { data = ex });
+                return Json(new
+                {
+                    data = ex
+                });
             }
             return Json(Zadan);
         }
@@ -613,6 +622,9 @@ namespace SOTA.Controllers
                 db.SaveChanges();
                 using (var fileStream = new FileStream(Directory.GetCurrentDirectory() + "/wwwroot/Img/" + filename, FileMode.Create))
                 {
+
+                    var optimizer = new ImageMagick.ImageOptimizer();
+                    optimizer.Compress(fileStream);
                     await source.CopyToAsync(fileStream).ConfigureAwait(false);
                 }
                 data = /*"http://" + Request.Host.ToUriComponent() + */"/Img/" + filename;
@@ -652,7 +664,8 @@ namespace SOTA.Controllers
                     model.KolStrTabOtv = (int)model.Otvets.Max(x => x.Param1);
                 }
                 catch
-                { }
+                {
+                }
             return View("Zadanie", model);
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

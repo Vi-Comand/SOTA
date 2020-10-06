@@ -75,23 +75,88 @@ namespace SOTA.Controllers
             return View("Klass", usersPage);
         }
 
-        public IActionResult CleanPass(int idDel)
+        public IActionResult CleanPass(int idDel, int role)
         {
-            Users user = new Users();
-            user = db.Users.FirstOrDefault(u => u.Id == idDel);
-            user.Pass = null;
-            user.DateReg = DateTime.MinValue;
-            db.SaveChanges();
-            return Redirect("Users");
+            if (role == 4)
+            {
+                Users user = new Users();
+                user = db.Users.FirstOrDefault(u => u.Id == idDel);
+                user.Pass = null;
+                user.DateReg = DateTime.MinValue;
+                db.SaveChanges();
+                return Redirect("Users");
+            }
+            if (role == 3)
+            {
+                Users user = new Users();
+                user = db.Users.FirstOrDefault(u => u.Id == idDel);
+                user.Pass = null;
+                user.DateReg = DateTime.MinValue;
+                db.SaveChanges();
+                return Redirect("UO");
+            }
+            if (role == 2)
+            {
+                Users user = new Users();
+                user = db.Users.FirstOrDefault(u => u.Id == idDel);
+                user.Pass = null;
+                user.DateReg = DateTime.MinValue;
+                db.SaveChanges();
+                return Redirect("OO");
+            }
+            if (role == 1)
+            {
+                Users user = new Users();
+                user = db.Users.FirstOrDefault(u => u.Id == idDel);
+                user.Pass = null;
+                user.DateReg = DateTime.MinValue;
+                db.SaveChanges();
+                return Redirect("Klass");
+            }
+            else
+            {
+                return Redirect("Index");
+            }
         }
 
-        public IActionResult RazrReg(int idReg)
+        public IActionResult RazrReg(int idReg, int role)
         {
-            Users user = new Users();
-            user = db.Users.FirstOrDefault(u => u.Id == idReg);
-            user.Kod = "0";
-            db.SaveChanges();
-            return Redirect("Users");
+            if (role == 4)
+            {
+                Users user = new Users();
+                user = db.Users.FirstOrDefault(u => u.Id == idReg);
+                user.Kod = "0";
+                db.SaveChanges();
+                return Redirect("Users");
+            }
+            if (role == 3)
+            {
+                Users user = new Users();
+                user = db.Users.FirstOrDefault(u => u.Id == idReg);
+                user.Kod = "0";
+                db.SaveChanges();
+                return Redirect("UO");
+            }
+            if (role == 2)
+            {
+                Users user = new Users();
+                user = db.Users.FirstOrDefault(u => u.Id == idReg);
+                user.Kod = "0";
+                db.SaveChanges();
+                return Redirect("OO");
+            }
+            if (role == 1)
+            {
+                Users user = new Users();
+                user = db.Users.FirstOrDefault(u => u.Id == idReg);
+                user.Kod = "0";
+                db.SaveChanges();
+                return Redirect("Klass");
+            }
+            else
+            {
+                return Redirect("Index");
+            }
         }
 
         public async Task<IActionResult> LoadUsers(IList<IFormFile> uploadedFile)

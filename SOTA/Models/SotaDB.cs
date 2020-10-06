@@ -13,6 +13,7 @@ namespace SOTA.Models
         public int Nomer { get; set; }
         public double Ball { get; set; }
         public string Tema { get; set; }
+        public string Doptext { get; set; }
     }
     public class Predm
     {

@@ -51,7 +51,7 @@
                         </div>
                     </div>
                     @*<input type="text" class="form-control input100" id="dateN" asp-for=@Model.Rabot.Nachalo required />*@
-                    <input type="datetime-local" class="form-control input100" id="dateN" asp-for=@Model.Rabot.Nachalo required >
+                    <input type="datetime-local" class="form-control input100" id="dateN" asp-for=@Model.Rabot.Nachalo required>
                     <span class="focus-input100 "></span>
                     <label class="label">Дата начала</label>
                 </div>
@@ -94,7 +94,7 @@
                         var dk = document.getElementById("dateK");
                         var w = moment().format('YYYY-MM-DDTHH:MM');
                         var ww = moment(w).add(1, 'h').format('YYYY-MM-DDTHH:MM');
-                        if (dn.value == '0001-01-01T00:00:00.000') { dn.value = w; } 
+                        if (dn.value == '0001-01-01T00:00:00.000') { dn.value = w; }
                         if (dk.value == '0001-01-01T00:00:00.000') { dk.value = ww; }
 
 
@@ -323,7 +323,7 @@
             dataType: "json",
             data: { naz: outMO, id: id },
             success: function (query) {
-                //          alert(query);
+                alert(query);
             }
 
         });
