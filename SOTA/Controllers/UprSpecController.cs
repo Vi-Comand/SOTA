@@ -10,9 +10,8 @@ using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-
-
-
+using ImageMagick;
+using System.Drawing.Imaging;
 
 namespace SOTA.Controllers
 {
@@ -608,8 +607,13 @@ namespace SOTA.Controllers
         {
             int lastId = db.SaveImg.Max(x => x.Id) + 1;
             string data = "";
+
+            
+
             foreach (IFormFile source in files)
             {
+
+
                 string filename = ContentDispositionHeaderValue.Parse(source.ContentDisposition).FileName.Trim('"');
                 filename = this.EnsureCorrectFilename(filename);
                 string tip = "." + filename.Substring(filename.LastIndexOf(".") + 1);
@@ -623,10 +627,16 @@ namespace SOTA.Controllers
                 using (var fileStream = new FileStream(Directory.GetCurrentDirectory() + "/wwwroot/Img/" + filename, FileMode.Create))
                 {
 
-                    var optimizer = new ImageMagick.ImageOptimizer();
-                    optimizer.Compress(fileStream);
+
+
+
+
+            
                     await source.CopyToAsync(fileStream).ConfigureAwait(false);
+               
                 }
+       
+               
                 data = /*"http://" + Request.Host.ToUriComponent() + */"/Img/" + filename;
             }
 

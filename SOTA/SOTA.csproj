@@ -29,14 +29,18 @@
     <Content Remove="wwwroot\fonts\nunito-v9-latin-regular.ttf" />
     <Content Remove="wwwroot\fonts\nunito-v9-latin-regular.woff" />
     <Content Remove="wwwroot\fonts\nunito-v9-latin-regular.woff2" />
+    <Content Remove="wwwroot\Reports\Templates\Протокол проведения монитороинговой работы.xlsx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Models\Pages\Reports\Tips\Tip1\ProtokolProvedeniaMonitoringovoyRaboti.cs" />
   </ItemGroup>
 
 
   <ItemGroup>
     <PackageReference Include="epplus" Version="4.5.3.2" />
     <PackageReference Include="linq2db" Version="2.9.8" />
-    <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="7.22.0" />
-    <PackageReference Include="Magick.NET.Core" Version="5.0.0" />
+    <PackageReference Include="Magick.NET-Q8-x64" Version="7.22.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="2.2.0" />
@@ -66,6 +70,9 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\fonts\" />
+    <Folder Include="wwwroot\Reports\FinishedReports\" />
+    <Folder Include="wwwroot\Reports\FinishedReports\Tip1\Region\" />
+    <Folder Include="wwwroot\Reports\FinishedReports\Tip1\" />
     <Folder Include="wwwroot\UprSpec\uploads\" />
     <Folder Include="wwwroot\Img\" />
   </ItemGroup>
