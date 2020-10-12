@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using ImageMagick;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
@@ -6,12 +7,11 @@ using SOTA.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using ImageMagick;
-using System.Drawing.Imaging;
 
 namespace SOTA.Controllers
 {
@@ -585,6 +585,10 @@ namespace SOTA.Controllers
                     {
                         zadan.Text = "1";
                     }
+                    if (zadan.Doptext != null)
+                    {
+                        zadan.Doptext = "1";
+                    }
                 }
 
             }
@@ -608,7 +612,7 @@ namespace SOTA.Controllers
             int lastId = db.SaveImg.Max(x => x.Id) + 1;
             string data = "";
 
-            
+
 
             foreach (IFormFile source in files)
             {
@@ -631,12 +635,12 @@ namespace SOTA.Controllers
 
 
 
-            
+
                     await source.CopyToAsync(fileStream).ConfigureAwait(false);
-               
+
                 }
-       
-               
+
+
                 data = /*"http://" + Request.Host.ToUriComponent() + */"/Img/" + filename;
             }
 

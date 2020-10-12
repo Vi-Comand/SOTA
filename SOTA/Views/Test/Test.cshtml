@@ -21,20 +21,20 @@
                 </div>
             </div>
             <div class="tab-content  " id="Zadans">
-                <div class="tab-content accordion shadow" id="DText">
-                    
-                        <div class="card-header" id="headingOne">
-                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    Прочитайте текст
-                                </button>
-                        </div>
+                <div class="tab-content accordion shadow d-none" id="DText">
 
-                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#DText">
-                            <div class="card-body" id="DopText">
+                    <div class="card-header" id="headingOne">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Прочитайте текст
+                        </button>
+                    </div>
 
-                            </div>
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#DText">
+                        <div class="card-body" id="DopText">
+
                         </div>
-                    
+                    </div>
+
                 </div>
 
             </div>
@@ -105,10 +105,9 @@ $("#TabForZadan").on("click", function () {
 
             @: AddTextZadan(@row._nomer, "@row._text",@row._tip,@row._idZadan);
 
-            if (row._Doptext != "")
-            {
-            @: AddDopText(@row._nomer, "@row._text",@row._tip,@row._idZadan);
-        }
+
+            @: AddDopText(@row._nomer, "@row._Doptext",@row._tip,@row._idZadan);
+
 
             if (row._tip == 1)
             {
@@ -219,12 +218,15 @@ $("#TabForZadan").on("click", function () {
     }
 
     function AddDopText(i, DopText, tip, id) {
-        var divText = document.getElementById('TextZadan[' + i + ']');
+        var divText = document.getElementById('DopText' + i + '');
 
-        divText.innerHTML = text;
+        divText.innerHTML = DopText;
         divText.innerHTML = divText.textContent;
-        divText.innerHTML += "<input type='hidden' id='Zad" + i + "Tip' value=" + tip + "  />"
-        divText.innerHTML += "<input type='hidden' id='Zad" + i + "ID' value=" + id + "  />"
+        if (DopText == "") {
+            var dText = document.getElementById('DText' + i + '');
+            dText.classList.add("d-none");
+        }
+
     }
 
 
@@ -350,9 +352,13 @@ $("#TabForZadan").on("click", function () {
         div.setAttribute("aria-labelledby", "Zad" + i);
         div.innerHTML = i;
 
-
         div.innerHTML =
-            '<div class="container col-12 shadow overflow-auto  m-l-0 rounded h-100"><div class="col-12" style="min-height: 200px;" id="TextZadan[' +
+
+            '<div class="tab-content accordion shadow" id="DText' + i +
+        '"><div class="card-header" id = "headingOne' + i + '" ><button class="btn btn-outline-yel" type="button" data-toggle="collapse" data-target="#collapse' + i +
+        '" aria-expanded="true" aria-controls="collapse' + i + '">Прочитайте текст</button></div><div id="collapse' + i +
+        '" class="collapse " aria-labelledby="headingOne" data-parent="#DText' + i + '"><div class="card-body" id="DopText' + i +
+        '"></div></div></div ><div class="container col-12 shadow overflow-auto  m-l-0 rounded h-100"><div class="col-12" style="min-height: 100px;" id="TextZadan[' +
             i +
             ']"></div><div class=" wrap-input100 validate-input group col-12" style="margin-top: 30px; min-width:600px;"  id="OtvetZadan[' +
             i +
@@ -360,7 +366,6 @@ $("#TabForZadan").on("click", function () {
 
 
         var Zadans = document.getElementById("Zadans");
-
         Zadans.appendChild(div);
         TabForZadan.appendChild(li);
 

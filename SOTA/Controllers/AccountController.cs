@@ -57,7 +57,7 @@ namespace SOTA.Controllers
                         iterationCount: 10000,
                         numBytesRequested: 256 / 8));
 
-                    user = await db.Users.FirstOrDefaultAsync(u => u.Name == model.Name && u.Pass == hashed)
+                    user = await db.Users.FirstOrDefaultAsync(u => u.Name.ToLower() == model.Name.ToLower() && u.Pass == hashed)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -73,7 +73,7 @@ namespace SOTA.Controllers
                     if (model.AddPass == model.AddPass2 && model.Sogl == true)
                     {
                         user = new Users();
-                        user = await db.Users.FirstOrDefaultAsync(u => u.Name == model.Name).ConfigureAwait(false);
+                        user = await db.Users.FirstOrDefaultAsync(u => u.Name.ToLower() == model.Name.ToLower()).ConfigureAwait(false);
                         string password = model.AddPass;
 
                         //generate a 128 - bit salt using a secure PRNG
@@ -137,7 +137,7 @@ namespace SOTA.Controllers
             Users user = new Users();
             try
             {
-                user = await db.Users.FirstOrDefaultAsync(u => u.Name == name).ConfigureAwait(false);
+                user = await db.Users.FirstOrDefaultAsync(u => u.Name.ToLower() == name.ToLower()).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
