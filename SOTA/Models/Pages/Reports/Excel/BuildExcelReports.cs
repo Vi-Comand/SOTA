@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using SOTA.Models.Pages.Reports.Excel.Tip;
+using System.Text.RegularExpressions;
 
 namespace SOTA.Models.Pages.Reports
 {
@@ -20,10 +21,16 @@ namespace SOTA.Models.Pages.Reports
             Path = GetPathFolder();
             Name = GetName();
 }
-        private string GetPathFolder()
-        { string path = Directory.GetCurrentDirectory() + "/wwwroot/Reports/FinishedReports/Tip1/Region/" + Protokol.Tables[1].MO;
 
-               if(!Directory.Exists(path))
+        private string GetPathFolder()
+        {
+         
+
+
+            string path = Directory.GetCurrentDirectory() + "/wwwroot/Reports/FinishedReports/Tip1/Rabota/" + Regex.Replace(Protokol.NameR, @"[^\w\r\n]", "");
+         
+
+            if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
             }

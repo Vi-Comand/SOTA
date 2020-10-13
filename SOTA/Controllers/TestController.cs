@@ -5,7 +5,7 @@ using SOTA.Models.Pages.Test;
 using SOTA.Models.Pages.TestRaschet;
 using System;
 using System.Linq;
-
+using System.Threading;
 
 namespace SOTA.Controllers
 {
@@ -31,6 +31,8 @@ namespace SOTA.Controllers
             var login = HttpContext.User.Identity.Name;
             int idUser = db.Users.Where(p => p.Name == login).First().Id;
             VariantUser variantUser = db.VariantUser.Where(x => x.IdUser == idUser && x.IdRabota == idRabota).First();
+      Thread.Sleep(1000);
+
             if (variantUser.Konec == 0)
             {
                 variantUser.Konec = 1;
