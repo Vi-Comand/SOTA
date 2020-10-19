@@ -6,6 +6,29 @@
 <script src="~/js/Test/ZagruzkaVigruzka.js"></script>
 <script src="~/js/Test/KonecRabot.js"></script>
 
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Завершение работы</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Вы уверены, что хотите завершить работу?
+                После завершения работы, продолжить и изменить ответы будет нельзя
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Продолжить работу</button>
+                <a id="Konec" class="btn btn-outline-danger  shadow " asp-controller="Test" asp-action="KonecRabot" asp-route-idRabota="@Model._idRabota" asp-for="@Model._idRabota"><i class="fas fa-check"></i> Завершить работу</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 
 <form method="post">
     <div class="container col-12 shadow p-3 mb-5 bg-white rounded h-100">
@@ -17,7 +40,10 @@
                     <ul class="nav nav-pills" id="TabForZadan" role="tablist"></ul>
                 </div>
                 <div class="col-auto">
-                    <a id="Konec" class="btn btn-outline-secondary  shadow " asp-controller="Test" asp-action="KonecRabot" asp-route-idRabota="@Model._idRabota" asp-for="@Model._idRabota"><i class="fas fa-check"></i> Завершить работу</a>
+                    <button type="button" class="btn btn-outline-danger  shadow" data-toggle="modal" data-target="#staticBackdrop">
+                        Завершить работу
+                    </button>
+                    
                 </div>
             </div>
             <div class="tab-content  " id="Zadans">
@@ -49,6 +75,9 @@
             </div>
             <div class="col-auto m-r-20">
                 <a id="sled" class="btn btn-outline-primary shadow m-l-auto"> Следующий вопрос <i class='fas  fa-arrow-circle-right ' style="margin-right:0px; margin-left:10px"></i></a>
+                 <button type="button" id="Zav" class="btn btn-outline-danger  shadow" style="display:none;" data-toggle="modal" data-target="#staticBackdrop">
+                        Завершить работу
+                    </button>
             </div>
         </div>
 
@@ -288,20 +317,28 @@ $("#TabForZadan").on("click", function () {
 
 
 
-    function AddZOtvTip4(MyArray, nZad,StrOtv) {
+    function AddZOtvTip4(MyArray, nZad, StrOtv) {
+        var div = document.getElementById('OtvetZadan[' + nZad + ']');
+        var table = '<table class="simple-little-table table-bordered" id=\"PredTabelOtvet\">';
         for (i = 0; i < MyArray.length; i++) {
             var search = ("ID" + MyArray[i].id + "{=|");
             StrOtv = StrOtv.substring(StrOtv.indexOf(search) + search.length);
             var text = StrOtv.substring(StrOtv.indexOf('|=}'), -(StrOtv.indexOf('|=}')));
             StrOtv = StrOtv.substring(StrOtv.indexOf('|=}'));
-
-            document.getElementById('OtvetZadan[' + nZad + ']').innerHTML +=
-                "<label  style=\"height:28px\" >" + MyArray[i].text + "</label><input type='text' class='m-l-10 otv-" + nZad+"' name=\"ID" + MyArray[i].id+
-                "\" id=\"nZad" + nZad + "tab" +
-                i +
-            "\" value=" + text+"  ></br>";
+            table += '<tr>';
+            table += '<td><label  style=\"height:28px\" >' + MyArray[i].text + '</label></td>';
+            table += '<td><input type="text" class="m-l-10 otv -' + nZad+'" name=\"ID' + MyArray[i].id+
+                '\" id=\"nZad' + nZad + 'tab' + i + '\" value=' + text + '  ></td>';
+            table += '</tr>';
+         //   document.getElementById('OtvetZadan[' + nZad + ']').innerHTML +=
+         //       "<label  style=\"height:28px\" >" + MyArray[i].text + "</label><input type='text' class='m-l-10 otv-" + nZad+"' name=\"ID" + MyArray[i].id+
+         //       "\" id=\"nZad" + nZad + "tab" +
+         //       i +
+         //   "\" value=" + text+"  ></br>";
         }
-
+        table += '</table>';
+        div.innerHTML = table;
+        //TableCreate.after(div);
     }
 
 
@@ -440,7 +477,7 @@ $("#TabForZadan").on("click", function () {
         if (elem) {
             elem.remove();
         }
-        var table = '<table class="simple-little-table table-bordered" id=\"PredTabelOtvet\">';
+        var table = '<table class="simple-little-table" id=\"PredTabelOtvet\">';
 
         for (var i = 0; i < row; i++) {
 

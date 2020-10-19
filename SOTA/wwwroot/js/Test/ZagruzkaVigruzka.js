@@ -54,15 +54,18 @@ function GetSled() {
     
     var d = document.getElementsByClassName("nav-link active");
     var SB = document.getElementById("sled");
+    var CL = document.getElementById("Zav");
     var coll = document.getElementById("CountZ").value;
     var nZad = d[0].id.substr(3);
     nZad = nZad.substr(0, nZad.length - 4);
     nZad = parseInt(nZad) + 1;
     if (nZad == coll) {
         SB.style.display = "none";
+        CL.style.display = "inline-block";
     }
     else {
         SB.style.display = "inline-block";
+        CL.style.display = "none";
     }
 
     if (document.getElementById("Zad" + nZad + "-tab"))
