@@ -141,8 +141,7 @@ namespace SOTA.Models
         AnswerUser answer = new AnswerUser();
 
         SotaContext db;
-        public SaveOtvUser(int _id, string _text, SotaContext _db, int _idUser, int _idRabota)
-        {
+        public SaveOtvUser(int _id, string _text, SotaContext _db, int _idUser, int _idRabota, int proveren)       {
             if (_id != 0 && _text != null && _db != null && _idUser != 0 && _idRabota != 0)
             {
                 db = _db;
@@ -150,14 +149,14 @@ namespace SOTA.Models
                 {
                     answer = db.AnswerUser.First(x => x.IdZadan == _id && x.IdRabota == _idRabota && x.IdUser == _idUser);
 
-
+                    answer.Proveren = proveren;
                     answer.TextOtv = _text;
                     SaveChange();
                 }
                 else
                 {
                     answer.IdZadan = _id;
-
+                    answer.Proveren = proveren;
                     answer.TextOtv = _text;
                     answer.IdRabota = _idRabota;
                     answer.IdUser = _idUser;

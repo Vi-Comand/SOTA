@@ -255,11 +255,17 @@ namespace SOTA.Controllers
 
 
         }
-        private void UdalitStarOtv(int idZadania)
-        {
+        private bool UdalitStarOtv(int idZadania)
+        { bool udaleno = false;
             List<Otvet> OldOtv = db.Otvet.Where(x => x.IdZadan == idZadania).ToList();
-            db.Otvet.RemoveRange(OldOtv);
-            db.SaveChanges();
+            if (OldOtv.Count != 0)
+            {
+                db.Otvet.RemoveRange(OldOtv);
+                db.SaveChanges();
+                udaleno = true;
+            }
+
+            return udaleno;
         }
         #region IzmenenjaOtvets
         private List<Otvet> PoiskIzmen(List<Otvet> UserOtvets, int idZadania, int tip)
@@ -487,7 +493,7 @@ namespace SOTA.Controllers
                 Otvets.Add(Otv);
 
             }
-            Otvets.Reverse();
+           // Otvets.Reverse();
             return Otvets;
         }
 
@@ -501,9 +507,10 @@ namespace SOTA.Controllers
             EditZadanie.Tip = tip;
             if (NeNuzniStarOtv(EditZadanie.IdSpec))
             {
-                UdalitStarOtv(idZadania);
+               bool revers= UdalitStarOtv(idZadania);
                 ListOtvets = FomirListOtv(tip, idZadania, arr, arr1, obshBall);
-
+                if(revers)
+                ListOtvets.Reverse();
             }
             else
             {
@@ -511,7 +518,7 @@ namespace SOTA.Controllers
 
             }
 
-            db.Otvet.AddRangeAsync(ListOtvets).ConfigureAwait(false);
+            db.Otvet.AddRange(ListOtvets);
             db.SaveChanges();
 
 
