@@ -60,17 +60,21 @@
                 ZapolnOtvTip4();
             if (@Model.Tip== 5)
                 ZapolnOtvTip5();
+
+            predprosmotr();
         }
-        function ZapolnOtvTip1()
-        {
+        function ZapolnOtvTip1() {
+
+            var div = document.createElement('div');
+           
             i = 0;
             @foreach(var row in Model.Otvets)
             {
-                @:if (i == 0) { i++; document.getElementById("StrOtv[0]").value = "@row.Text"; }
-            @:else { AddTip1(); document.getElementById("StrOtv[" + i + "]").value = "@row.Text"; i++;}
-            }
+                @:if (i == 0) { div.innerHTML = "@row.Text"; document.getElementById("StrOtv[0]").value = div.textContent; i++;       }
+            @:else { AddTip1(); div.innerHTML = "@row.Text"; document.getElementById("StrOtv[" + i + "]").value =  div.textContent; i++; }
+            
         }
-
+        }
         function ZapolnOtvTip2() {
             var nomZad = 1;
             @foreach (var row in Model.Otvets)
@@ -310,12 +314,22 @@
             if (elem) {
                 elem.remove();
             }
+            console.log(arrOtvBD);
             var table = '<table class="simple-little-table" id=\"PredTabelOtvet\">';
 
             for (var i = 0; i < row; i++) {
-
+                var text = "";
+                var nOtv=i + 1.1;
+                for (var j = 0; j < row; j++) {
+                  
+                    if (arrOtvBD[j].param1 == nOtv.toString()) {
+                      
+                        text = arrOtvBD[j].text;
+                        break;
+                    }
+                }
                 table += '<tr>';
-                table += "<td> <label class=\"custom -switch mt - 2\">" + arrOtvBD[i].text + "<\label><input name= \"TabOtvRow[" + i + "]\" id= \"TabOtvRow[" + i + "]\"/> </td>";
+                table += "<td> <label class=\"custom -switch mt - 2\">" +text + "<\label><input name= \"TabOtvRow[" + i + "]\" id= \"TabOtvRow[" + i + "]\"/> </td>";
                 table += '</tr>';
             }
             table += '</table>';
@@ -394,10 +408,10 @@
                                     <a class="nav-link" id="contact-tab" data-toggle="tab" href="#otv3" role="tab" aria-controls="otv3" aria-selected="false">Выпадающий список</a>
                                 </li>*@
                             <li class="nav-item">
-                                <a class="nav-link" id="linkTip3" data-toggle="tab" href="#otv4" role="tab" aria-controls="otv4" aria-selected="false">Табличный</a>
+                                <a class="nav-link" id="linkTip4" data-toggle="tab" href="#otv4" role="tab" aria-controls="otv4" aria-selected="false">Табличный</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="linkTip4" data-toggle="tab" href="#otv5" role="tab" aria-controls="otv5" aria-selected="false">Свободный ответ</a>
+                                <a class="nav-link" id="linkTip5" data-toggle="tab" href="#otv5" role="tab" aria-controls="otv5" aria-selected="false">Свободный ответ</a>
                             </li>
                         </ul>
                         <div class="tab-content" id="myTabContent">
