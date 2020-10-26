@@ -93,12 +93,12 @@ namespace SOTA.Controllers
 
 
 
-        public IActionResult SaveOtvet(int id, string text, int idRabota)
+        public IActionResult SaveOtvet(int id, string text, int idRabota, int proveren)
         {
             var login = HttpContext.User.Identity.Name;
             int idUser = db.Users.Where(p => p.Name == login).First().Id;
 
-            SaveOtvUser save = new SaveOtvUser(id, text, db, idUser, idRabota);
+            SaveOtvUser save = new SaveOtvUser(id, text, db, idUser, idRabota, proveren);
 
             return Json("ok");
         }

@@ -80,25 +80,33 @@ function podgotovkaKSave(nZad) {
 
     var tip = document.getElementById("Zad" + nZad + "Tip").value;
     var text;
-
-    if (tip == 1)
+    var proveren = 1;
+    if (tip == 1) {
         text = document.getElementById("Zad" + nZad + "Otvet").value;
+     
+    }
     if (tip == 2) {
         text = TextOtvTip2(nZad);
+   
+
+
     }
     if (tip == 3) {
         text = TextOtvTip3(nZad);
+
     }
     if (tip == 4) {
         text = TextOtvTip4(nZad);
+  
     }
     if (tip == 5) {
         text = document.getElementById("nZad" + nZad + "Svb").value;
+        proveren = 0;
     }
     console.log(text);
     if (id != null && text != "" && text != null) {
 
-        vbd(id, text);
+        vbd(id, text, proveren);
     }
 
 }
@@ -150,18 +158,18 @@ function TextOtvTip4(nZad) {
 
 
 
-function vbd(id, text) {
+function vbd(id, text,proveren) {
 
     var idRabota = document.getElementById("idRabota").value;
 
-    // alert("text " + text);
+  Console.log("text: " + text);
     //alert("vbd " + OtvVBDMass.get(parseInt(id)));
     if (text != OtvVBDMass.get(parseInt(id))) {
         jQuery.ajax({
             url: '/Test/SaveOtvet/',
             type: "POST",
             dataType: "json",
-            data: { id: id, text: text, idRabota: idRabota }
+            data: { id: id, text: text, idRabota: idRabota, proveren: proveren}
 
         });
     }

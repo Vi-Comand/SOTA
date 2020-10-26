@@ -48,6 +48,10 @@
     <script type="text/javascript">
         window.onload = function () {
             OtvActive();
+                
+            document.getElementById("linkTip" + "@Model.Tip").className = "nav-link active";
+            document.getElementById("otv" + "@Model.Tip").className = "tab-pane fade active show";
+           // NavLinkOtvet.addClass = "active";
             if (@Model.Tip== 1)
                 ZapolnOtvTip1();
             if (@Model.Tip== 2)
@@ -380,24 +384,24 @@
                     <div class="card-body">
                         <ul class="nav nav-tabs" id="otv_Tab" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#otv1" role="tab" aria-controls="otv1" aria-selected="true">Строчный ответ</a>
+                                <a class="nav-link" id="linkTip1" data-toggle="tab"  href="#otv1" role="tab" aria-controls="otv1" aria-selected="true">Строчный ответ</a>
 
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#otv2" role="tab" aria-controls="otv2" aria-selected="false">Выбор ответа</a>
+                                <a class="nav-link" id="linkTip2" data-toggle="tab" href="#otv2" role="tab" aria-controls="otv2" aria-selected="false">Выбор ответа</a>
                             </li>
                             @*<li class="nav-item">
                                     <a class="nav-link" id="contact-tab" data-toggle="tab" href="#otv3" role="tab" aria-controls="otv3" aria-selected="false">Выпадающий список</a>
                                 </li>*@
                             <li class="nav-item">
-                                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#otv4" role="tab" aria-controls="otv4" aria-selected="false">Табличный</a>
+                                <a class="nav-link" id="linkTip3" data-toggle="tab" href="#otv4" role="tab" aria-controls="otv4" aria-selected="false">Табличный</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#otv5" role="tab" aria-controls="otv5" aria-selected="false">Свободный ответ</a>
+                                <a class="nav-link" id="linkTip4" data-toggle="tab" href="#otv5" role="tab" aria-controls="otv5" aria-selected="false">Свободный ответ</a>
                             </li>
                         </ul>
                         <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade show active" id="otv1" role="tabpanel" aria-labelledby="otv1-tab">
+                            <div class="tab-pane fade" id="otv1" role="tabpanel" aria-labelledby="otv1-tab">
 
                                 <form name="myForm1">
                                     <div class="col row">
