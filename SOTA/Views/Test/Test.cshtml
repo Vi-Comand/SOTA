@@ -43,7 +43,7 @@
                     <button type="button" class="btn btn-outline-danger  shadow" data-toggle="modal" data-target="#staticBackdrop">
                         Завершить работу
                     </button>
-                    
+
                 </div>
             </div>
             <div class="tab-content  " id="Zadans">
@@ -75,9 +75,9 @@
             </div>
             <div class="col-auto m-r-20">
                 <a id="sled" class="btn btn-outline-primary shadow m-l-auto"> Следующий вопрос <i class='fas  fa-arrow-circle-right ' style="margin-right:0px; margin-left:10px"></i></a>
-                 <button type="button" id="Zav" class="btn btn-outline-danger  shadow" style="display:none;" data-toggle="modal" data-target="#staticBackdrop">
-                        Завершить работу
-                    </button>
+                <button type="button" id="Zav" class="btn btn-outline-danger  shadow" style="display:none;" data-toggle="modal" data-target="#staticBackdrop">
+                    Завершить работу
+                </button>
             </div>
         </div>
 
@@ -319,7 +319,7 @@ $("#TabForZadan").on("click", function () {
 
     function AddZOtvTip4(MyArray, nZad, StrOtv) {
         var div = document.getElementById('OtvetZadan[' + nZad + ']');
-        var table = '<table class="simple-little-table table-bordered" id=\"PredTabelOtvet\">';
+        var table = '<table class="simple-little-table"  id=\"PredTabelOtvet\">';
         for (i = 0; i < MyArray.length; i++) {
             var search = ("ID" + MyArray[i].id + "{=|");
             StrOtv = StrOtv.substring(StrOtv.indexOf(search) + search.length);
@@ -497,7 +497,7 @@ $("#TabForZadan").on("click", function () {
 
         }
         table += '</table>';
-   
+
         var div = document.createElement("div");
         var TableCreate = document.getElementById("OtvetiZadanPredprosmotr");
         div.innerHTML = table;
