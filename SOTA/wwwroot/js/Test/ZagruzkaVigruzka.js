@@ -143,16 +143,24 @@ function TextOtvTip3(nZad) {
 
 function TextOtvTip4(nZad) {
     var text = "";
+    var per="";
     for (i = 0; ; i++) {
         if (document.getElementById("nZad" + nZad + "tab" + i) != null) {
 
             text += document.getElementById("nZad" + nZad + "tab" + i).name + "{=|" + document.getElementById("nZad" + nZad + "tab" + i).value + "|=}";
 
-
+            per += document.getElementById("nZad" + nZad + "tab" + i).value;
         }
         else
             break;
     }
+
+
+    if (per.length == 0) {
+        text = '';
+        
+    }
+ 
     return text;
 }
 
@@ -162,7 +170,7 @@ function vbd(id, text,proveren) {
 
     var idRabota = document.getElementById("idRabota").value;
 
-  Console.log("text: " + text);
+  
     //alert("vbd " + OtvVBDMass.get(parseInt(id)));
     if (text != OtvVBDMass.get(parseInt(id))) {
         jQuery.ajax({

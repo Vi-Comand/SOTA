@@ -60,17 +60,21 @@
                 ZapolnOtvTip4();
             if (@Model.Tip== 5)
                 ZapolnOtvTip5();
+
+            predprosmotr();
         }
-        function ZapolnOtvTip1()
-        {
+        function ZapolnOtvTip1() {
+
+            var div = document.createElement('div');
+           
             i = 0;
             @foreach(var row in Model.Otvets)
             {
-                @:if (i == 0) { i++; document.getElementById("StrOtv[0]").value = "@row.Text"; }
-            @:else { AddTip1(); document.getElementById("StrOtv[" + i + "]").value = "@row.Text"; i++;}
-            }
+                @:if (i == 0) { div.innerHTML = "@row.Text"; document.getElementById("StrOtv[0]").value = div.textContent; i++;       }
+            @:else { AddTip1(); div.innerHTML = "@row.Text"; document.getElementById("StrOtv[" + i + "]").value =  div.textContent; i++; }
+            
         }
-
+        }
         function ZapolnOtvTip2() {
             var nomZad = 1;
             @foreach (var row in Model.Otvets)
@@ -310,12 +314,22 @@
             if (elem) {
                 elem.remove();
             }
+            console.log(arrOtvBD);
             var table = '<table class="simple-little-table" id=\"PredTabelOtvet\">';
 
             for (var i = 0; i < row; i++) {
-
+                var text = "";
+                var nOtv=i + 1.1;
+                for (var j = 0; j < row; j++) {
+                  
+                    if (arrOtvBD[j].param1 == nOtv.toString()) {
+                      
+                        text = arrOtvBD[j].text;
+                        break;
+                    }
+                }
                 table += '<tr>';
-                table += "<td> <label class=\"custom -switch mt - 2\">" + arrOtvBD[i].text + "<\label><input name= \"TabOtvRow[" + i + "]\" id= \"TabOtvRow[" + i + "]\"/> </td>";
+                table += "<td> <label class=\"custom -switch mt - 2\">" +text + "<\label><input name= \"TabOtvRow[" + i + "]\" id= \"TabOtvRow[" + i + "]\"/> </td>";
                 table += '</tr>';
             }
             table += '</table>';
@@ -336,7 +350,7 @@
 </head>
 
 <body>
-    @*<button class="btn btn-outline-success " id="SaveZadanie" form="0">Сохранить</button>*@
+   
     <a href="/UprSpec/SpecifikacRedact?id_spec=@Model.IdSpec" class='btn btn-icon btn-sm btn-outline-yel text-left btn-block'><i class='fas fa-arrow-circle-left'></i>Назад</a>
 
     <h3>Вариант: @ViewBag.n_var Задание: @ViewBag.n_zad</h3>
@@ -379,7 +393,7 @@
                 <div class="accordion-header" role="button" data-toggle="collapse" id="pb-2" aria-expanded="false">
                     <h3>Ответ</h3>
                 </div>
-                @*<div class="accordion-body card collapse" id="panel-body-2" data-parent="#accordion">*@
+               
                 <div id="panel-body-2" class="accordion-body card collapse" data-parent="#accordion">
                     <div class="card-body">
                         <ul class="nav nav-tabs" id="otv_Tab" role="tablist">
@@ -390,14 +404,12 @@
                             <li class="nav-item">
                                 <a class="nav-link" id="linkTip2" data-toggle="tab" href="#otv2" role="tab" aria-controls="otv2" aria-selected="false">Выбор ответа</a>
                             </li>
-                            @*<li class="nav-item">
-                                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#otv3" role="tab" aria-controls="otv3" aria-selected="false">Выпадающий список</a>
-                                </li>*@
+                            
                             <li class="nav-item">
-                                <a class="nav-link" id="linkTip3" data-toggle="tab" href="#otv4" role="tab" aria-controls="otv4" aria-selected="false">Табличный</a>
+                                <a class="nav-link" id="linkTip4" data-toggle="tab" href="#otv4" role="tab" aria-controls="otv4" aria-selected="false">Табличный</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="linkTip4" data-toggle="tab" href="#otv5" role="tab" aria-controls="otv5" aria-selected="false">Свободный ответ</a>
+                                <a class="nav-link" id="linkTip5" data-toggle="tab" href="#otv5" role="tab" aria-controls="otv5" aria-selected="false">Свободный ответ</a>
                             </li>
                         </ul>
                         <div class="tab-content" id="myTabContent">
@@ -408,11 +420,6 @@
 
                                         <div class="input-group wrap-input100 validate-input col-4">
 
-                                            <div class="input-group-prepend ">
-                                                <div class="input-group-text">
-                                                    <i class="fas fa-list-ol"></i>
-                                                </div>
-                                            </div>
                                             <input type="text" class="form-control input100" id="BallStrOtv" asp-for="@Model.Ball" size="3" placeholder="Баллы" />
                                             <span class="focus-input100"></span>
                                         </div>
@@ -429,14 +436,30 @@
 
                                         <div id="StrOtvet[0]" class="input-group wrap-input100 validate-input col-12">
 
+
+
+                                            <div class="m-sm-1" height="42px" id="NumberAnswer">
+                                                <label class="custom-switch mt-2" style="height:28px">
+
+                                                    <input type="checkbox" name="NumberAnswer" id="NumberAnswer" value="1"  class="custom-switch-input">
+                                                    <span class="custom-switch-indicator"></span>Числовой ответ
+                                                </label>
+                                            </div>
+
                                             <div class="input-group-prepend ">
                                                 <div class="input-group-text">
                                                     <i class="far fa-comment-alt"></i>
                                                 </div>
                                             </div>
+
+
+
+
+
+
                                             <input type="text" class="form-control input100" id="StrOtv[0]" placeholder="Правильный ответ" />
                                             <span class="focus-input100"></span>
-                                            @*<a href="#" class="classDelAlternative btn btn-icon btn btn-danger" name="delAlternative" value="1" id="delAlternative" OnClick="a(0);"><i class="fas fa-times"></i></a>*@
+
                                         </div>
                                     </div>
                                 </form>
@@ -592,26 +615,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    @*<input type="checkbox" name="checkBallVibOtv" id="checkBallVibOtv" onchange="ballvibotvall()" />
-                                        <input type="text" id="BallVibOtv" size="3" />
-                                        <div id="ViborOtvetov">
-                                            @*<div id="DivViborOtveta[1]">
-                                                <input name="ViborOtveta[1]" id="ViborOtveta[1]" type="text" />
-                                                <input type="checkbox" name="check[1]" id="check[1]" value="1" onchange="ballvibotv(1)" />
-                                                </div>
-                                            <div id="DivViborOtveta[2]">
-                                                <input name="ViborOtveta[2]" id="ViborOtveta[2]" type="text" />
-                                                <input type="checkbox" name="check[2]" id="check[2]" value="1" onchange="ballvibotv(2)" />
-
-                                            </div>
-                                            <div id="DivViborOtveta[3]">
-                                                <input name="DivViborOtveta[3]" id="ViborOtveta[3]" type="text" /> <input type="checkbox" name="check[3]" id="check[3]" value="1" onchange="ballvibotv(3)" />
-                                            </div>
-                                            <div id="DivViborOtveta[4]">
-
-                                                <input name="ViborOtveta[4]" id="ViborOtveta[4]" type="text" /> <input type="checkbox" name="check[4]" id="check[4]" value="1" onchange="ballvibotv(4)" />
-                                            </div>
-                                        </div>*@
+                                 
                                     <div class="row">
                                         <div class="input-group wrap-input100 validate-input col-2">
                                             <a href="#" class="btn btn-success input100 btn-icon icon-left" name="add" id="add">
@@ -647,7 +651,7 @@
                                 </div>
 
                             </div>
-                            @*<div class="tab-pane fade" id="otv3" role="tabpanel" aria-labelledby="otv3-tab">3</div>*@
+                          
                             <div class="tab-pane fade" id="otv4" role="tabpanel" aria-labelledby="otv4-tab">
 
                                 <div class="container-fluid">
@@ -675,7 +679,7 @@
 
 
                                         <input type="text" id="kolRow" />
-                                        @*<input type="text" id="kolCol" />*@
+                                      
                                         <button type="button" name="AddTabel" id="AddTabel" OnClick="generateTable()">Добавить таблицу</button>
 
                                         <div id="TableCreate">
@@ -749,52 +753,6 @@
 
 
 
-    @*<div class="accordion" id="accordionExample">
-        <div class="card">
-            <div class="card-header" id="headingOne">
-                <h5 class="mb-0">
-                    <button class="btn btn-link" type="button" id="uslov_collaps" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        Условие
-                    </button>
-                </h5>
-            </div>
-
-            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                <div class="card-body">
-
-
-
-                    <div class="scroll" id="text">
-
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-header" id="headingTwo">
-                    <h5 class="mb-0">
-                        <button disabled class="btn btn-link collapsed" id="otvet_collaps" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            Ответ
-                        </button>
-                    </h5>
-                </div>
-
-            </div>
-
-            <div class="card">
-                <div class="card-header" id="headingThree">
-                    <h5 class="mb-0">
-                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                            Предпросмотр и сохранение
-                        </button>
-                    </h5>
-                </div>
-                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-
-                </div>
-            </div>
-        </div>*@
 
     <script>
         var inputs = 0;
@@ -805,11 +763,10 @@
         var CountSvbOtv = 0;
         var SvobodNomer = 1;
         var NomerViborOtv = 5;
-        //   form.addEventListener('click', function (event) {
-        //    event.preventDefault();
+      
 
         jQuery("#SaveViborOtvet").click(function () {
-            //  alert("das");
+          
             var arr = new Array(NomerViborOtv);
             var arr1 = new Array(NomerViborOtv);
             var iStr = 0;
@@ -863,11 +820,11 @@
 
                 if (document.getElementById("StrOtv[" + arrStr[iStr] + "]") != null) {
                     arr[indexmass] = document.getElementById("StrOtv[" + arrStr[iStr] + "]").value;
-                    //  alert(arr[indexmass]);
+                    
                     indexmass++;
                 }
 
-                // alert(arr[iStr]);
+               
             }
 
             vbd(1, arr, arr1, 0);
@@ -886,12 +843,12 @@
 
 
 
-                    // alert(arr[indexmass]);
+                 
                     indexmass++;
 
                 }
 
-                // alert(arr[iStr]);
+             
             }
 
 
@@ -908,7 +865,7 @@
             var obshBall = 0;
 
             var checkboxBallOtv = document.getElementById("checkBallTabOtv");
-            // alert(checkboxBallOtv.checked);
+           
             if (checkboxBallOtv.checked)
                 obshBall = 0;
             else {
@@ -920,14 +877,13 @@
                     arr1[i - 1] = document.getElementById("BallTabOtv[" + i + "]").value;
                 for (j = 1; j < j + 1; j++) {
 
-                    //alert(document.getElementById("ach" + i + "," + j + "").value);
+                  
                     if (document.getElementById("ach" + i + "," + j + "") == null) {
 
                         break;
                     }
                     else {
-                        //arr.set(i + "," + j, document.getElementById("ach" + i + "," + j + "").value);
-                        // arr.set( "gcf","gh");
+                        
 
 
 
@@ -936,16 +892,12 @@
                         arr[indexArr] = document.getElementById("ach" + i + "," + j + "").value;
                         indexArr++;
 
-                        //alert(document.getElementById("ach" + i+","+j+"").value);
-                        //  console.log(arr[i][j]);
+                      
                     }
 
                 }
 
-                //alert("StrOtv[" + iStr + "]");
-
-                //  arr[iStr] = document.getElementById("StrOtv[" + iStr + "]").value;
-                // alert(arr[iStr]);
+                
             }
 
 
@@ -962,7 +914,7 @@
                 dataType: "json",
                 data: { tip: tip, idZadania: idZadania, arr: arr, arr1: arr1, obshBall: obshBall },
                 success: function (query) {
-                    //          alert(query);
+                   
                 }
 
             });
@@ -973,16 +925,14 @@
             AddTip2();
         });
         function AddTip2() {
-            //form.appendChild(event.target.parentNode.(true));
-
-
+            
 
             var ViborOtvetov = document.getElementById("DivViborOtveta[" + (NomerViborOtv - 1) + "]");
             var div = document.createElement("div");
             div.id = "DivViborOtveta[" + NomerViborOtv + "]";
             div.className = "input-group wrap-input100 row m-sm-1";
 
-            // Добавляем новый узел в конец списка полей
+          
             div.innerHTML = "<div class=\"input-group-prepend \"><div class=\"input-group-text\"><i class=\"fas fa-list-ol\"></i></div></div><input type=\"text\" class=\"form-control input100 \" name=\"ViborOtveta[" + NomerViborOtv + "]\" id = \"ViborOtveta[" + NomerViborOtv + "]\" placeholder=\"Введите ответ\" /><span class=\"focus-input100\"></span>";
             ViborOtvetov.after(div);
 
@@ -992,7 +942,7 @@
             div.className = "m-sm-1";
             div.setAttribute("height", "42px");
 
-            // Добавляем новый узел в конец списка полей
+          
             div.innerHTML = "<label class=\"custom-switch mt-2\" style=\"height:28px\"><input type=\"checkbox\" name=\"check[" + NomerViborOtv + "]\" id=\"check[" + NomerViborOtv + "]\" value=\"1\" onchange=\"ballvibotv(" + NomerViborOtv + ")\" class=\"custom-switch-input\"><span class=\"custom-switch-indicator\"></span></label>";
             ViborOtvetovShek.after(div);
 
@@ -1000,9 +950,7 @@
             var div = document.createElement("div");
             div.id = "DivBallVibOtv[" + NomerViborOtv + "]";
             div.className = "input-group wrap-input100 row m-sm-1 hiden"
-            // Добавляем HTML-контент с пом. свойства innerHTML
-            // div.innerHTML = "<input name=\"ViborOtveta[" + NomerViborOtv + "]\" id=\"ViborOtveta[" + NomerViborOtv + "]\" type=\"text\" /> <input type=\"checkbox\"  name=check[" + NomerViborOtv + "] id=check[" + NomerViborOtv + "] onchange='ballvibotv(" + NomerViborOtv + ")' >";
-            // Добавляем новый узел в конец списка полей
+           
             div.innerHTML = "<div class=\"input-group-prepend \" ><div class=\"input-group-text\"><i class=\"fas fa-list-ol\"></i></div></div><input type=\"text\" class=\"form-control input100\" id=\"BallVibOtv[" + NomerViborOtv + "]\" size=\"3\" placeholder=\"Балл\" /><span class=\"focus-input100\"></span>";
             ViborOtvetovBall.after(div);
 
@@ -1042,12 +990,6 @@
 
 
 
-            // Создать пустой массив
-            //for (i = 0; i < arr.length; i++)
-            //      alert(arr[i]);
-
-
-            ////form.appendChild(event.target.parentNode.(true));
             var LastDivSvbOtv = 0;
 
             i = arrSvb.length;
@@ -1065,8 +1007,7 @@
             var div = document.createElement("div");
             SvbNomer++;
             i = arrSvb.length;
-            //   alert(arrSvb.length);
-
+        
             var table = document.getElementById('tableSvbOtv');
 
             var row = document.createElement("TR");
@@ -1076,40 +1017,24 @@
             var td3 = document.createElement("TD");
             row.id = "SvbOtvetRow[" + SvbNomer + "]";
             arrSvb[i] = SvbNomer;
-            //div.id = "SvbOtvetDiv[" + SvbNomer+ "]";
-            //// Добавляем HTML-контент с пом. свойства innerHTML
-            //div.innerHTML = "  <div id=\"SvbOtvetDiv[" + SvbNomer+ "]\"><textarea rows=\"2\" cols=\"45\" name=\"SvbOtv[" + SvbNomer + "]\" id=\"SvbOtv[" + SvbNomer + "]\" /> </textarea> </div>";
-            // Добавляем новый узел в конец списка полей
+          
             row.appendChild(td1);
             row.appendChild(td2);
             row.appendChild(td3);
-            // Наполняем ячейки
+          
             td1.innerHTML = '<input type="text" id="BallSvbOtv[' + SvbNomer + ']"  size="3"/>';
             td2.innerHTML = "  <div id=\"SvbOtvetDiv[" + SvbNomer + "]\"><textarea rows=\"2\" cols=\"45\" name=\"SvbOtv[" + SvbNomer + "]\" id=\"SvbOtv[" + SvbNomer + "]\" /> </textarea> </div>";
             td3.innerHTML = " <button type=\"button\" name=\"delAlternativeArea\" id=\"delAlternativeArea\" class=\"classDelAlternativeArea\"  OnClick=\"d(" + SvbNomer + ");\"  >Удалить</button>";
 
 
-            //ViborOtvetov.after(div);
+           
             CountSvbOtv++;
 
 
 
 
         }
-        //document.getElementById('delAlternativeArea').onclick = function () {
-
-
-        //    alert("dasd");
-        //    if (i > 3) {
-
-        //        //elem.parentNode.removeChild(elem);
-        //        var elem = document.getElementById("SvbOtvet[" + (i - 1) + "]");
-        //        elem.remove();
-
-        //        i--;
-
-        //    }
-        //};
+       
         function ballvibotvall() {
             for (i = 1; i <= NomerViborOtv; i++) {
                 ballvibotv(i);
@@ -1120,7 +1045,7 @@
                 }
                 else {
                     document.getElementById('BallVibOtv').hidden = false;
-                    //document.getElementById('BallVibOtv[' + n + ']').value = "";
+                  
                 }
 
             }
@@ -1132,26 +1057,14 @@
             var divcheck = document.getElementById('DivBallVibOtv[' + n + ']');
             if (checkbox.checked && checkboxi != null && checkboxi.checked) {
                 divcheck.classList.remove('hiden');
-                // var DivVibOtv = document.getElementById("DivViborOtveta[" + n + "]");
-                //  DivVibOtv.innerHTML += '<input type=\"checkbox\"  name=check[' + n + '] id=check[' + n + '] onchange="ballvibotv(' + n + ')" checked > <input type="text" id="BallVibOtv[' + n + ']"  size="2"  />';
-
+              
 
             }
             else {
                 if (divcheck != null)
                     divcheck.classList.add('hiden');
 
-                //var ball = document.getElementById("BallVibOtv[" + n + "]");
-                //if (ball != null)
-                //    ball.remove();
-                // document.getElementById("BallVibOtv").hidden = false;
-                //   var table = document.getElementById('TabelOtvet');
-                //for (i = 1; i <= table.rows.length; i++) {
-                //    var ballTabOtv = document.getElementById("BallTabOtv[" + i + "]");
-                //    if(ballTabOtv!=null)
-                //    ballTabOtv.remove();
-
-            }
+             }
         }
 
 
@@ -1192,10 +1105,7 @@
                         elem.remove();
                         CountSvbOtv--;
                     }
-                //  arr.pop("SvbOtvetDiv[" + n+ "]");
-                // elem.parentNode.removeChild(elem);
-
-
+         
 
 
 
@@ -1219,7 +1129,7 @@
 
         function AddTip1() {
             StrNomer++;
-            //form.appendChild(event.target.parentNode.(true));
+           
 
 
             var LastStrOtv = 0;
@@ -1244,9 +1154,7 @@
             div.id = "StrOtvet[" + StrNomer + "]";
             div.className = "input-group wrap-input100 validate-input col-12";
 
-            // Добавляем HTML-контент с пом. свойства innerHTML
-            // div.innerHTML = "<input type=\"text\" name=\"StrOtv[" + StrNomer + "]\" id=\"StrOtv[" + StrNomer + "]\" />   <button type=\"button\" name=\"delAlternative\" id=\"delAlternative\" class=\"classDelAlternative\"  OnClick=\"a(" + StrNomer + ");\"  >Удалить</button>";
-            // Добавляем новый узел в конец списка полей
+          
             div.innerHTML = "<div class=\"input-group-prepend \"><div class=\"input-group-text\"><i class=\"far fa-comment-alt\"></i></div></div><input type=\"text\" class=\"form-control input100\" name=\"StrOtv[" + StrNomer + "]\" id=\"StrOtv[" + StrNomer + "]\" placeholder=\"Альтернативный правильный ответ\" /><span class=\"focus-input100\"></span><a href=\"#\" class=\"classDelAlternative btn btn-icon btn btn-danger\" name=\"delAlternative\"  id=\"delAlternative\" OnClick=\"a(" + StrNomer + ");\"><i class=\"fas fa-times\"></i></a>";
 
 
@@ -1258,20 +1166,7 @@
 
 
         }
-        //document.getElementById('delAlternative').onclick = function () {
-
-
-        //    if (i > 3) {
-
-        //        elem.parentNode.removeChild(elem);
-        //        var elem = document.getElementById("StrOtvet[" + (i - 1) + "]");
-        //        elem.remove();
-
-        //        i--;
-
-        //    }
-
-        //};
+      
 
 
         function a(n) {
@@ -1317,7 +1212,7 @@
 
             }
             table += '</table>';
-            // document.getElementById('table').innerHTML = table;
+          
             var div = document.createElement("div");
             var TableCreate = document.getElementById("TableCreate");
             div.innerHTML = table;
@@ -1332,7 +1227,7 @@
 
             if (SvobodNomer > 0) {
 
-                // elem.parentNode.removeChild(elem);
+              
                 var elem = document.getElementById("Kriterii[" + n + "]");
                 elem.remove();
 
@@ -1344,13 +1239,13 @@
 
 
         jQuery('#addAlternativeArea').click(function () {
-            //form.appendChild(event.target.parentNode.(true));
+            
             var ViborOtvetov = document.getElementById("SvobodOtvet");
             var div = document.createElement("div");
             div.id = "Kriterii[" + SvobodNomer + "]";
-            // Добавляем HTML-контент с пом. свойства innerHTML
+           
             div.innerHTML = "<textarea name=\"Kriterii[" + i + "]\" id=\"Kriterii[" + i + "]\" type=\"text\" >  </textarea> <button type=\"button\" name=\"delAlternativeArea\" id=\"delAlternativeArea\" class=\"classDelAlternativeArea\"  OnClick=\"delalternativearea(" + SvobodNomer + ");\"  >Удалить</button>";
-            // Добавляем новый узел в конец списка полей
+          
             ViborOtvetov.after(div);
 
 
@@ -1362,13 +1257,13 @@
 
         jQuery('#TableCreate').click(function () {
 
-            //form.appendChild(event.target.parentNode.(true));
+            
             var ViborOtvetov = document.getElementById("SvobodOtvet");
             var div = document.createElement("div");
             div.id = "Kriterii[" + SvobodNomer + "]";
-            // Добавляем HTML-контент с пом. свойства innerHTML
+            
             div.innerHTML = "<textarea name=\"Kriterii[" + i + "]\" id=\"Kriterii[" + i + "]\" type=\"text\" >  </textarea> <button type=\"button\" name=\"delAlternativeArea\" id=\"delAlternativeArea\" class=\"classDelAlternativeArea\"  OnClick=\"delalternativearea(" + SvobodNomer + ");\"  >Удалить</button>";
-            // Добавляем новый узел в конец списка полей
+           
             ViborOtvetov.after(div);
 
 
@@ -1385,12 +1280,10 @@
 
 
 
-    @*<script src="~/lib/jquery/dist/jquery.js"></script>*@
+    
     <script>
 
-        //$(document).ready(function () {
-        //    alert('Ваша версия jQuery ' + jQuery.fn.jquery);
-        //});
+     
 
 
         function delInput(row, column) {
@@ -1480,9 +1373,9 @@
 
         function continueButton() {
             if (document.getElementById("wysiwygtextarea1").contentWindow.document.body.innerHTML != "") {
-                //  document.getElementById("otvet_collaps").removeAttribute("disabled");
+            
                 jQuery("#pb-2").removeClass("collapsed");
-                // $("#pb-1").addClass("collapsed");
+                
                 document.getElementById("pb-2").setAttribute("aria-expanded", "true");
                 document.getElementById("pb-1").setAttribute("aria-expanded", "false");
                 jQuery("#pb-2").data("target", '#panel-body-2').attr('data-target', '#panel-body-2');
