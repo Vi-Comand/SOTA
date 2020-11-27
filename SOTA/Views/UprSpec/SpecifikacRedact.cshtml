@@ -81,51 +81,87 @@
                     <label class="label">Класс</label>
                 </div>
 
-                <div class="input-group wrap-input100 validate-input col-3 group">
+                <div class="input-group wrap-input100 validate-input col-12 alert-info group" >
+                    <h3>Критерии оценивания</h3>
+                                                <div class="input-group wrap-input100 validate-input col-12  group" id="krit">
+                                                    <input type="hidden" id="krit_id" />
+                                                    <div class="input-group wrap-input100 validate-input col-5 group">
+                                                        <div class="input-group-prepend ">
+                                                            <div class="input-group-text">
+                                                                <i class="fas fa-osi"></i>
+                                                            </div>
+                                                        </div>
+                                                        <input type="hidden" class="form-control input100" id="m_ball" asp-for=@Model.Spec.Id />
+                                                        <input type="text" class="form-control input100" id="m_ball" asp-for=@Model.Spec.Name required />
+                                                        <span class="focus-input100"></span>
+                                                        <label class="label">Максимальный балл</label>
+                                                    </div>
+                                                    <div class="input-group wrap-input100 validate-input col-5 group">
+                                                        <div class="input-group-prepend ">
+                                                            <div class="input-group-text">
+                                                                <i class="fas fa-comment-alt"></i>
+                                                            </div>
+                                                        </div>
+                                                        <input type="hidden" class="form-control input100" id="ocenk" asp-for=@Model.Spec.Id />
+                                                        <input type="text" class="form-control input100" id="ocenk" asp-for=@Model.Spec.Name required />
+                                                        <span class="focus-input100"></span>
+                                                        <label class="label">Названи оценки</label>
+                                                    </div>
+                                                    <button id="del_kriter" class="btn btn-icon icon-right btn-outline-danger col-1 shadow" style="margin-bottom:30px" asp-controller="UprSpec" asp-action="SpecifikacIzmen">
+                                                        <i class='fas fa-minus'></i>
+                                                    </button>
+                                                </div>
+                    <button id="add_kriter" class="btn btn-icon icon-left btn-outline-success col-3 shadow" asp-controller="UprSpec" asp-action="SpecifikacIzmen">
+    <i class='fas fa-plus'></i>Добавить критерий
+</button>
+                </div>
 
-                    <div class="input-group-prepend ">
-                        <div class="input-group-text">
-                            <i class="fas fa-calculator"></i>
+
+                    <div class="input-group wrap-input100 validate-input col-3 group">
+
+                        <div class="input-group-prepend ">
+                            <div class="input-group-text">
+                                <i class="fas fa-calculator"></i>
+                            </div>
                         </div>
+                        <input type="number" class="form-control input100" id="var" asp-for=@Model.KolVar pattern="[0-9]{6,}" required />
+                        <span class="focus-input100"></span>
+                        <label class="label">Количество вариантов</label>
                     </div>
-                    <input type="number" class="form-control input100" id="var" asp-for=@Model.KolVar pattern="[0-9]{6,}" required />
-                    <span class="focus-input100"></span>
-                    <label class="label">Количество вариантов</label>
-                </div>
 
-                <div class="input-group wrap-input100 validate-input col-3 group">
+                    <div class="input-group wrap-input100 validate-input col-3 group">
 
-                    <div class="input-group-prepend ">
-                        <div class="input-group-text">
-                            <i class="fas fa-calculator"></i>
+                        <div class="input-group-prepend ">
+                            <div class="input-group-text">
+                                <i class="fas fa-calculator"></i>
+                            </div>
                         </div>
+                        <input type="number" class="form-control input100" asp-for=@Model.KolZad id="zadan" pattern="[0-9]{6,}" required />
+                        <span class="focus-input100"></span>
+                        <label class="label">Количество заданий</label>
                     </div>
-                    <input type="number" class="form-control input100" asp-for=@Model.KolZad id="zadan" pattern="[0-9]{6,}" required />
-                    <span class="focus-input100"></span>
-                    <label class="label">Количество заданий</label>
+
+                    <div class="input-group wrap-input100 validate-input col-3" style="height: 42px;">
+
+                        <button href="#" class="btn btn-outline-success input100 btn-icon icon-left shadow" asp-controller="UprSpec" asp-action="IzmKolZadans" id="AddTabel">
+                            <i class="fas fa-square-root-alt"></i>
+                            <ya-tr-span data-index="147-0" data-value=" Default" data-translation="Сформировать" data-type="trSpan">Сформировать</ya-tr-span>
+                        </button>
+
+                        <span class="focus-input100"></span>
+                    </div>
+
+                    <div id="TableCreate" class="col-12 table-responsive-xl">
+
+
+                    </div>
+
+
                 </div>
-
-                <div class="input-group wrap-input100 validate-input col-3" style="height: 42px;">
-
-                    <button href="#" class="btn btn-outline-success input100 btn-icon icon-left shadow" asp-controller="UprSpec" asp-action="IzmKolZadans" id="AddTabel">
-                        <i class="fas fa-square-root-alt"></i>
-                        <ya-tr-span data-index="147-0" data-value=" Default" data-translation="Сформировать" data-type="trSpan">Сформировать</ya-tr-span>
-                    </button>
-
-                    <span class="focus-input100"></span>
-                </div>
-
-                <div id="TableCreate" class="col-12 table-responsive-xl">
-
-
-                </div>
-
-
+                <button id="SaveIsmen" class="btn btn-icon icon-left btn-outline-success col-3 shadow" asp-controller="UprSpec" asp-action="SpecifikacIzmen">
+                    <i class='fas fa-save'></i>Сохранить изменения
+                </button>
             </div>
-            <button id="SaveIsmen" class="btn btn-icon icon-left btn-outline-success col-3 shadow" asp-controller="UprSpec" asp-action="SpecifikacIzmen">
-                <i class='fas fa-save'></i>Сохранить изменения
-            </button>
-        </div>
     </div>
 </form>
 <script>
