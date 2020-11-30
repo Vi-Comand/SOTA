@@ -64,16 +64,11 @@ namespace SOTA.Models.Pages.Reports
         {
             UsrBalls = (from Ball in UsrBalls
 
-                        join User in db.Users on Ball.Id equals User.Id into us
-                        from US in us.DefaultIfEmpty()
-                        join MO in db.Mo on US.IdMo equals MO.Id into mo
-                        from MO in mo.DefaultIfEmpty()
-                        join OO in db.Oo on MO.Id equals OO.IdMo into oo
-                        from OO in oo.DefaultIfEmpty()
-                        join Klass in db.Klass on US.IdKlass equals Klass.Id into kl
-                        from Klass in kl.DefaultIfEmpty()
-                        join Var in db.VariantUser on US.Id equals Var.IdUser into vr
-                        from Var in vr.DefaultIfEmpty()
+                        join US in db.Users on Ball.Id equals US.Id                      
+                        join MO in db.Mo on US.IdMo equals MO.Id 
+                        join OO in db.Oo on US.IdOo equals OO.Id
+                        join Klass in db.Klass on US.IdKlass equals Klass.Id 
+                        join Var in db.VariantUser on US.Id equals Var.IdUser 
 
                         select new RowForTable
                         {
