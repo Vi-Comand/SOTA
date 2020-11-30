@@ -44,6 +44,10 @@ namespace SOTA.Models
         {
             get; set;
         }
+        public string Urov
+        {
+            get; set;
+        }
     }
     public class Predm
     {
