@@ -12,11 +12,13 @@ namespace SOTA.Models.Pages.Reports
         public DateTime DateProved { get; set; }
         public int KolVar { get; set; }
         public int KolUch { get; set; }
-        public List<RowForTable> Tables { get; set; }
-        public List<Double> ProcVipZad { get; set; }
+        public List<RowProtokol> Tables { get; set; }
+        public List<double> ProcVipZad { get; set; }
+        public List <RowAnalytics> AnalyticsTable { get; set; }
+
     }
 
-       public class RowForTable
+       public class RowProtokol
     {
         public int Id { get; set; }
         public string MO { get; set; }
@@ -24,13 +26,24 @@ namespace SOTA.Models.Pages.Reports
         public string FIO { get; set; }
         public string Klass { get; set; }
         public int Var { get; set; }
-        public List<Double> Balls { get; set; }
+        public List<double> Balls { get; set; }
         public Double ProcVipUch { get; set; }
         public Double SumBall { get; set; }
         
         
 
     }
-    
+    public class RowAnalytics
+    {
+        public int Number { get; set; }
+        public string CheckElementContent { get; set; }
+        public string LevelOfComplexity { get; set; }
+        public double MaxScore { get; set; }
+        public double AverageGrades { get; set; }
+        public double LevelSuccess { get; set; }
+        public string Conclusion { get; set; }
+       
+    }
+
 
 }

@@ -91,8 +91,13 @@ namespace SOTA.Models.Pages.Reports.Excel.Tip
 
 
         }
+        private void FillList2(ExcelWorksheet workSheet)
+        {
+          
 
-        private void Chart(ExcelWorksheet workSheet, int kolRow,int kolZad)
+        }
+
+            private void Chart(ExcelWorksheet workSheet, int kolRow,int kolZad)
         {
             double top=0;
             for (int i = 1; i < kolRow+13 ; i++)
