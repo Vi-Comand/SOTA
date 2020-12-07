@@ -18,14 +18,14 @@ namespace SOTA.Models.Pages.Reports
         int idRabota;
         int idOO;
         List<BallUser> UsrBalls;
-        List<RowForTable> Tables;
+        List<RowProtokol> Tables;
         public GeneretionListBalls(SotaContext context,int idRabota)
         {
             db = context;
             this.idRabota = idRabota;
     
         }
-        public List<RowForTable>  Get(int idOO)
+        public List<RowProtokol>  Get(int idOO)
         {
             this.idOO = idOO;
             UploadingBalls();
@@ -58,7 +58,7 @@ namespace SOTA.Models.Pages.Reports
         }
         private void GenerationTables()
         {
-           Tables = new List<RowForTable>();
+           Tables = new List<RowProtokol>();
             int idspec = db.Rabota.Find(idRabota).IdSpec;
            int KolZadansVVar =  db.Zadanie.Count(x => x.Variant == 1 && x.IdSpec == idspec);
             int[] idUser = UsrBalls.Select(x => x.idUser).ToArray();
@@ -66,7 +66,7 @@ namespace SOTA.Models.Pages.Reports
             for(int i=0;i< idUser.Length; i++)
             {
                 var sp = UsrBalls.Where(x => x.idUser == idUser[i]).ToList();
-                RowForTable str = new RowForTable();
+                RowProtokol str = new RowProtokol();
                 str.Id = idUser[i];
                 str.Balls = new List<double>();
                 for (int j=1;j<=KolZadansVVar;j++)

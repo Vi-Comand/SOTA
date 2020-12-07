@@ -10,9 +10,9 @@ namespace SOTA.Models.Pages.Reports
         SotaContext db; 
    
        
-         List<RowForTable> UsrBalls;
+         List<RowProtokol> UsrBalls;
         List<double> ProcVipZad;
-        public GeneretionListUchen(List<RowForTable> UserBalls, SotaContext context)
+        public GeneretionListUchen(List<RowProtokol> UserBalls, SotaContext context)
         {
             db = context;
             UsrBalls = UserBalls;
@@ -25,7 +25,7 @@ namespace SOTA.Models.Pages.Reports
          
             return ProcVipZad;
         }
-        public List<RowForTable> GetTables()
+        public List<RowProtokol> GetTables()
         {
             GetListUchen();
             RaschetBalls();
@@ -70,7 +70,7 @@ namespace SOTA.Models.Pages.Reports
                         join Klass in db.Klass on US.IdKlass equals Klass.Id 
                         join Var in db.VariantUser on US.Id equals Var.IdUser 
 
-                        select new RowForTable
+                        select new RowProtokol
                         {
                             Id = US.Id,
                             FIO = (US.F!=null ? US.F+" " : "") + " " + (US.I!=null &&US.I.Any() ? US.I.Substring(0, 1) + "." : "") + (US.O != null && US.O.Any()  ? US.O.Substring(0, 1) + ".":""),
