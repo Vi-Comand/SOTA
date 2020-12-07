@@ -49,7 +49,7 @@ namespace SOTA.Models.Pages.Reports
             protokol.Tables=list.GetTables();
             protokol.ProcVipZad = list.GetProcVip();
             protokol.KolUch = protokol.Tables.Count;
-            var AnalyticsTable=new CreatingAnalyticsTable(db,idRabota);
+            var AnalyticsTable=new CreatingAnalyticsTable(db,idRabota,protokol);
             protokol.AnalyticsTable = AnalyticsTable.Get();
         }
         private List<RowProtokol> FillingBall()

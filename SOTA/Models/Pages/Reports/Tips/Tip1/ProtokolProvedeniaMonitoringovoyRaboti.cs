@@ -36,11 +36,17 @@ namespace SOTA.Models.Pages.Reports
     public class RowAnalytics
     {
         public int Number { get; set; }
+        //Проверяемы элемент содержания
         public string CheckElementContent { get; set; }
+        //Уровень сложности
         public string LevelOfComplexity { get; set; }
+        //Максимальный балл
         public double MaxScore { get; set; }
-        public double AverageGrades { get; set; }
+        //Средний балл
+        public double AverageScore { get; set; }
+        //Уровень успешности
         public double LevelSuccess { get; set; }
+        //Заключение по заданиям
         public string Conclusion { get; set; }
        
     }

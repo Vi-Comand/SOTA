@@ -43,46 +43,12 @@ namespace SOTA.Models.Pages.Reports.Excel.Tip
 
             ExcelPackage excelPack = new ExcelPackage(fileInfo);
                
-                var workSheet = excelPack.Workbook.Worksheets[0];
-            int KolZad = Protokol.Tables[1].Balls.Count;
-            int kolUchen = Protokol.Tables.Count;
-                AddNumberZadans(workSheet, KolZad);
-            int rowKol = 12;
-            workSheet.Cells[3, 2].Value = Protokol.NameR;
-            workSheet.Cells[4, 2].Value = Protokol.Predmet;
-            workSheet.Cells[5, 2].Value = Protokol.DateProved;
-            workSheet.Cells[6, 2].Value = Protokol.KolVar;
-            workSheet.Cells[7, 2].Value = Protokol.KolUch;
-            foreach (var row in Protokol.Tables )
-                {
-                workSheet.Cells[rowKol, 1].Value = row.MO;
-                workSheet.Cells[rowKol, 2].Value = row.OO;
-                workSheet.Cells[rowKol, 3].Value = row.Klass;
-                workSheet.Cells[rowKol, 4].Value = row.FIO;
-                workSheet.Cells[rowKol, 5].Value = row.Var;
-                int indexColumnsBalls = 6;
-              foreach(var ball in row.Balls)
-                {if (ball != -1)
-                        workSheet.Cells[rowKol, indexColumnsBalls].Value = ball; 
-                else
-                        workSheet.Cells[rowKol, indexColumnsBalls].Value = "-";
-                    indexColumnsBalls++;
-                }
-                workSheet.Cells[rowKol, indexColumnsBalls].Value = Math.Round(row.ProcVipUch, 2);
-                workSheet.Cells[rowKol, indexColumnsBalls+1].Value = row.SumBall;
-                rowKol++;
-            }
-           int  indexColumnsProcVipolnen = 6;
-            foreach (var row in Protokol.ProcVipZad)
-            {
-                workSheet.Cells[rowKol, indexColumnsProcVipolnen].Value = Math.Round(row, 2);
-                indexColumnsProcVipolnen++;
-            }
+            
+            FillProtokolList(excelPack.Workbook.Worksheets[0]);
+            FillAnalyticsList(excelPack.Workbook.Worksheets[1]);
 
 
-
-            Style(workSheet, kolUchen, KolZad);
-            Chart(workSheet, kolUchen, KolZad);
+            
 
             excelPack.Save();
 
@@ -91,9 +57,69 @@ namespace SOTA.Models.Pages.Reports.Excel.Tip
 
 
         }
-        private void FillList2(ExcelWorksheet workSheet)
+        private void FillProtokolList(ExcelWorksheet workSheet)
         {
-          
+            int KolZad = Protokol.Tables[1].Balls.Count;
+            int kolUchen = Protokol.Tables.Count;
+            AddNumberZadans(workSheet, KolZad);
+            int rowKol = 12;
+            workSheet.Cells[3, 2].Value = Protokol.NameR;
+            workSheet.Cells[4, 2].Value = Protokol.Predmet;
+            workSheet.Cells[5, 2].Value = Protokol.DateProved;
+            workSheet.Cells[6, 2].Value = Protokol.KolVar;
+            workSheet.Cells[7, 2].Value = Protokol.KolUch;
+            foreach (var row in Protokol.Tables)
+            {
+                workSheet.Cells[rowKol, 1].Value = row.MO;
+                workSheet.Cells[rowKol, 2].Value = row.OO;
+                workSheet.Cells[rowKol, 3].Value = row.Klass;
+                workSheet.Cells[rowKol, 4].Value = row.FIO;
+                workSheet.Cells[rowKol, 5].Value = row.Var;
+                int indexColumnsBalls = 6;
+                foreach (var ball in row.Balls)
+                {
+                    if (ball != -1)
+                        workSheet.Cells[rowKol, indexColumnsBalls].Value = ball;
+                    else
+                        workSheet.Cells[rowKol, indexColumnsBalls].Value = "-";
+                    indexColumnsBalls++;
+                }
+                workSheet.Cells[rowKol, indexColumnsBalls].Value = Math.Round(row.ProcVipUch, 2);
+                workSheet.Cells[rowKol, indexColumnsBalls + 1].Value = row.SumBall;
+                rowKol++;
+            }
+            int indexColumnsProcVipolnen = 6;
+            foreach (var row in Protokol.ProcVipZad)
+            {
+                workSheet.Cells[rowKol, indexColumnsProcVipolnen].Value = Math.Round(row, 2);
+                indexColumnsProcVipolnen++;
+            }
+            Style(workSheet, kolUchen, KolZad);
+            Chart(workSheet, kolUchen, KolZad);
+
+        }
+
+        private void FillAnalyticsList(ExcelWorksheet workSheet)
+        {
+            int rowIndex = 2;
+            foreach (var row in Protokol.AnalyticsTable)
+            {
+                
+                    workSheet.Cells[rowIndex, 1].Value = row.Number;
+                workSheet.Cells[rowIndex, 2].Value = row.CheckElementContent;
+                workSheet.Cells[rowIndex, 3].Value = row.LevelOfComplexity;
+                workSheet.Cells[rowIndex, 4].Value = row.MaxScore;
+                workSheet.Cells[rowIndex, 5].Value = row.AverageScore;
+                workSheet.Cells[rowIndex, 6].Value = row.LevelSuccess;
+                workSheet.Cells[rowIndex, 7].Value = row.Conclusion;
+
+
+
+                rowIndex++;
+
+
+            }
+
 
         }
 
