@@ -49,10 +49,12 @@ namespace SOTA.Models.Pages.Reports
             protokol.Tables=list.GetTables();
             protokol.ProcVipZad = list.GetProcVip();
             protokol.KolUch = protokol.Tables.Count;
+            var AnalyticsTable=new CreatingAnalyticsTable(db,idRabota,protokol);
+            protokol.AnalyticsTable = AnalyticsTable.Get();
         }
-        private List<RowForTable> FillingBall()
+        private List<RowProtokol> FillingBall()
         {
-            List<RowForTable> list = new List<RowForTable>();
+            List<RowProtokol> list = new List<RowProtokol>();
             GeneretionListBalls listBalls = new GeneretionListBalls(db, idRabota);
             if (idOO != 0)
             {
