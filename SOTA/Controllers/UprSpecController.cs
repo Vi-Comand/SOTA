@@ -210,6 +210,25 @@ namespace SOTA.Controllers
             return Json("ok");
         }
 
+        public async Task<IActionResult> AddKriterAjax(int specK, string name, int ball)
+        {
+
+            Kriterocen krit = new Kriterocen();
+            krit.IdSpec = specK;
+            krit.MaxBall = ball;
+            krit.Name = name;
+            await db.Kriterocen.AddAsync(krit).ConfigureAwait(false);
+            try
+            {
+                await db.SaveChangesAsync().ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                return Json(ex);
+            }
+            return Json("Сохранено. После добавления всех критериев обновите страницу");
+        }
+
         public async Task<IActionResult> VivodZadaniaAjax(int idZadania)
         {
             System.Threading.Thread.Sleep(100);
@@ -267,7 +286,8 @@ namespace SOTA.Controllers
 
         }
         private bool UdalitStarOtv(int idZadania)
-        { bool udaleno = false;
+        {
+            bool udaleno = false;
             List<Otvet> OldOtv = db.Otvet.Where(x => x.IdZadan == idZadania).ToList();
             if (OldOtv.Count != 0)
             {
@@ -504,7 +524,7 @@ namespace SOTA.Controllers
                 Otvets.Add(Otv);
 
             }
-           // Otvets.Reverse();
+            // Otvets.Reverse();
             return Otvets;
         }
 
@@ -518,10 +538,10 @@ namespace SOTA.Controllers
             EditZadanie.Tip = tip;
             if (NeNuzniStarOtv(EditZadanie.IdSpec))
             {
-               bool revers= UdalitStarOtv(idZadania);
+                bool revers = UdalitStarOtv(idZadania);
                 ListOtvets = FomirListOtv(tip, idZadania, arr, arr1, obshBall);
-                if(revers)
-                ListOtvets.Reverse();
+                if (revers)
+                    ListOtvets.Reverse();
             }
             else
             {
@@ -555,7 +575,7 @@ namespace SOTA.Controllers
 
             model.KolVar = !db.Zadanie.Any(x => x.IdSpec == id_spec) ? 0 : db.Zadanie.Where(x => x.IdSpec == id_spec).OrderByDescending(x => x.Variant).First().Variant;
             model.Zadanies = ProverkaNaOdinakovBall(db.Zadanie.Where(x => x.IdSpec == id_spec).ToList(), model.KolZad);
-
+            model.Kriterocens = db.Kriterocen.Where(x => x.IdSpec == id_spec).OrderBy(w => w.MaxBall).ToList();
             model.Predms = db.Predm.ToList();
             model.TipSpecs = db.TipSpec.ToList();
 
@@ -673,7 +693,15 @@ namespace SOTA.Controllers
             return filename;
         }
 
+        public IActionResult DelKrit(int idkr, int idsp)
+        {
+            Kriterocen kr = new Kriterocen { Id = idkr };
+            db.Kriterocen.Remove(kr);
+            db.SaveChanges();
+            int id_spec = idsp;
+            return RedirectToAction("SpecifikacRedact", new { id_spec });
 
+        }
 
         public IActionResult Zadanie(int n_var, int n_zad, int id_spec)
         {

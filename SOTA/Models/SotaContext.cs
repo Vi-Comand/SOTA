@@ -20,6 +20,7 @@ namespace SOTA.Models
         public DbSet<AnswerUser> AnswerUser { get; set; }
         public DbSet<VariantUser> VariantUser { get; set; }
         public DbSet<UsersBalls> UsersBalls { get; set; }
+        public DbSet<Kriterocen> Kriterocen { get; set; }
         public SotaContext(DbContextOptions<SotaContext> options)
             : base(options)
         {

@@ -14,8 +14,8 @@
                 <a class="nav-link " id="oo-tab" data-toggle="tab" href="#oo" role="tab" aria-controls="oo" aria-selected="true">Список учащихся</a>
             </li>
             @*<li class="nav-item">
-                <a class="nav-link" id="otchet-tab" data-toggle="tab" href="#otchet" role="tab" aria-controls="otchet" aria-selected="false">Отчеты</a>
-            </li>*@
+                    <a class="nav-link" id="otchet-tab" data-toggle="tab" href="#otchet" role="tab" aria-controls="otchet" aria-selected="false">Отчеты</a>
+                </li>*@
         </ul>
         <div class="tab-content tab-bordered " id="myTabContent2">
             <div class="tab-pane fade show active" id="klass" role="tabpanel" aria-labelledby="klass-tab">
@@ -103,7 +103,8 @@
                                                 <td>
                                                     @if (@Model.LisrUsersTest[i].Pass != null)
                                                     {
-                                                        <a asp-area="" asp-controller="Admin" asp-action="CleanPass" asp-route-idDel="@Model.LisrUsersTest[i].Id" class="btn btn-danger">Сбросить пароль</a>}
+                                                        <a asp-area="" asp-controller="Admin" asp-action="CleanPass" asp-route-idDel="@Model.LisrUsersTest[i].Id" asp-route-role="@ViewBag.rl" class="btn btn-danger">Сбросить пароль</a>
+                                                    }
                                                 </td>
                                             </tr>}
                                     }

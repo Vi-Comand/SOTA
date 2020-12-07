@@ -60,6 +60,28 @@ namespace SOTA.Models
             get; set;
         }
     }
+    public class Kriterocen
+    {
+        public int Id
+        {
+            get; set;
+        }
+
+        public int IdSpec
+        {
+            get; set;
+        }
+
+        public int MaxBall
+        {
+            get; set;
+        }
+
+        public string Name
+        {
+            get; set;
+        }
+    }
     public class TipSpec
     {
         public int Id

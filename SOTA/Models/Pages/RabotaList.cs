@@ -25,12 +25,13 @@ namespace SOTA.Models
     }
 
     public class ReportsRabotaList
-    {public int idOO { get; }
+    {
+        public int idOO { get; }
         public List<RabotaUchen> RabotaTabls { get; set; }
     }
 
 
-        public class RabotaUchenList
+    public class RabotaUchenList
     {
         public List<RabotaUchen> RabotaTabls { get; set; }
     }
@@ -38,8 +39,8 @@ namespace SOTA.Models
     public class FormirRabotaTablList
     {
 
-      //  Users User;
-          SotaContext _db;
+        //  Users User;
+        SotaContext _db;
         DateTime dateNow;
         int _idOO;
         int _idMO;
@@ -51,13 +52,13 @@ namespace SOTA.Models
         public FormirRabotaTablList(Users user, SotaContext db)
         {
             _db = db;
-          
-            _idOO=user.IdOo;
-          _idMO = user.IdMo;
-            
+
+            _idOO = user.IdOo;
+            _idMO = user.IdMo;
+
             dateNow = DateTime.Now;
-            klass=db.Klass.Find(user.IdKlass).KlassNom;
-         
+            klass = db.Klass.Find(user.IdKlass).KlassNom;
+
         }
         public FormirRabotaTablList(int idOO, SotaContext db)
         {
@@ -65,7 +66,7 @@ namespace SOTA.Models
             _idOO = idOO;
             _idMO = db.Oo.Where(x => x.Id == idOO).First().IdMo;
             dateNow = DateTime.Now;
-            
+
 
         }
         public FormirRabotaTablList(Mo MO, SotaContext db)
@@ -79,33 +80,33 @@ namespace SOTA.Models
         }
 
 
-        public  RabotaUchenList GetSpisokRabotUchen()
+        public RabotaUchenList GetSpisokRabotUchen()
         {
             RabotaUchenList rabotaList = new RabotaUchenList();
-            _db.Rabota.Where(x => x.Klass == klass && x.Konec > dateNow).ToList();
-            List<Rabota> list = GetSpisokRabot(_db.Rabota.Where(x => x.Klass == klass && x.Konec > dateNow).ToList());
-            if(list.Count!=0)
-                        rabotaList.RabotaTabls =   (from rab in list
+            _db.Rabota.Where(x => x.Klass == klass /*&& x.Konec > dateNow*/).ToList();
+            List<Rabota> list = GetSpisokRabot(_db.Rabota.Where(x => x.Klass == klass /*&& x.Konec > dateNow*/).ToList());
+            if (list.Count != 0)
+                rabotaList.RabotaTabls = (from rab in list
 
-                                                    join SpecK in _db.Specific on rab.IdSpec equals SpecK.Id into spK
-                                                    from SK in spK.DefaultIfEmpty()
-                                                    join Pred in _db.Predm on SK.Predm equals Pred.Id into pr
-                                                    from Predm in pr.DefaultIfEmpty()
-                                                    join Tip in _db.TipSpec on SK.Tip equals Tip.Id into T
-                                                    from Tip in T.DefaultIfEmpty()
+                                          join SpecK in _db.Specific on rab.IdSpec equals SpecK.Id into spK
+                                          from SK in spK.DefaultIfEmpty()
+                                          join Pred in _db.Predm on SK.Predm equals Pred.Id into pr
+                                          from Predm in pr.DefaultIfEmpty()
+                                          join Tip in _db.TipSpec on SK.Tip equals Tip.Id into T
+                                          from Tip in T.DefaultIfEmpty()
 
 
 
-                                                    select new RabotaUchen
-                                                    {
-                                                        Id = rab.Id,
-                                                        Name = rab.Name,
-                                                        Dliteln = rab.Dliteln,
-                                                        Nachalo = rab.Nachalo,
-                                                        Konec = rab.Konec,
-                                                        PredmN = Predm.Name,
-                                                        TipN = Tip.Name
-                                                    }).ToList();
+                                          select new RabotaUchen
+                                          {
+                                              Id = rab.Id,
+                                              Name = rab.Name,
+                                              Dliteln = rab.Dliteln,
+                                              Nachalo = rab.Nachalo,
+                                              Konec = rab.Konec,
+                                              PredmN = Predm.Name,
+                                              TipN = Tip.Name
+                                          }).ToList();
 
             return rabotaList;
         }
@@ -114,7 +115,7 @@ namespace SOTA.Models
         {
             ReportsRabotaList rabotaList = new ReportsRabotaList();
             _db.Rabota.Where(x => x.Klass == klass && x.Konec < dateNow).ToList();
-            List<Rabota> list = GetSpisokRabot(_db.Rabota.Where(x =>x.Konec < dateNow).ToList());
+            List<Rabota> list = GetSpisokRabot(_db.Rabota.Where(x => x.Konec < dateNow).ToList());
             if (list.Count != 0)
                 rabotaList.RabotaTabls = (from rab in list
 
@@ -142,13 +143,13 @@ namespace SOTA.Models
         }
         private List<Rabota> GetSpisokRabot(List<Rabota> list)
         {
-           
+
 
             List<Rabota> ListRabot = new List<Rabota>();
 
             ListRabot.AddRange(GetSpisokRabotKray(list));
             ListRabot.AddRange(GetSpisokRabotMO(list));
-           
+
             ListRabot.AddRange(GetSpisokRabotOO(list));
 
 
@@ -164,8 +165,8 @@ namespace SOTA.Models
         {
             var spisok = from Naznach in _db.NaznachMo.Where(x => x.IdMo == _idMO)
 
-                         join Rab in rabot on Naznach.IdRab equals Rab.Id 
-                        
+                         join Rab in rabot on Naznach.IdRab equals Rab.Id
+
                          select Rab;
 
             return spisok.ToList();
@@ -194,20 +195,20 @@ namespace SOTA.Models
             }
             return spisok.ToList();
         }
-        
+
     }
 
-        public class RabotaList
+    public class RabotaList
     {
-       //
+        //
         public List<Rabota> Rabotas { get; set; }
-  
-      
-       
+
+
+
     }
 
-   
-    }
+
+}
 
 
 

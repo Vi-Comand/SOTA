@@ -82,40 +82,58 @@
                 </div>
 
                 <div class="input-group wrap-input100 validate-input col-12  group">
-                    <h3>Критерии оценивания</h3>
-                        <table class="table table-hover table-sm table-bordered shadow" id="TableKrit">
-                            <thead class="table-yel">
-                                <tr>
-                                    <th>Баллы</th>
-                                    <th>Оценка</th>
-                                    <th>Удалить</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>0-5</td>
-                                    <td>2</td>
-                                    <td>
-                                        <button id="del_kriter" class="btn btn-icon icon-left btn-outline-danger col-5 shadow"  asp-controller="UprSpec" asp-action="SpecifikacIzmen"><i class='fas fa-minus'></i> Удалить</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <td colspan="3" class="text-center">
-                                        <button id="add_kriter" class="btn btn-icon icon-left btn-outline-success col-10 shadow" asp-controller="UprSpec" asp-action="SpecifikacIzmen">
-                                            <i class='fas fa-plus'></i>Добавить критерий
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tfoot>
-                        </table>
+                    <h4>Критерии оценивания</h4>
+                    <table class="table table-hover table-sm table-bordered shadow" id="TableKrit">
+                        <thead class="table-yel text-center">
+                            <tr>
+                                <th>Баллы</th>
+                                <th>Оценка</th>
+                                <th>Удалить</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 1; i < Model.Kriterocens.Count(); i++)
+                            {
 
-                        <input type="hidden" id="krit_id" />
+                                <tr>
+                                    @if (i == 1)
+                                    {
+                                        <td class="text-center">0-@Model.Kriterocens[i].MaxBall   </td> }
+                                    else
+                                    {
+                                        <td class="text-center"> @(Model.Kriterocens[i].MaxBall - Model.Kriterocens[i - 1].MaxBall) - @Model.Kriterocens[i].MaxBall    </td>}
+                                    <td class="text-center">@Model.Kriterocens[i].Name</td>
+                                    <td class="text-center">
+                                        <button id="del_kriter" class="btn btn-icon icon-left btn-outline-danger  shadow" asp-controller="UprSpec" asp-route-idkr="@Model.Kriterocens[i].Id" asp-route-idsp="@Model.Kriterocens[i].IdSpec" asp-action="DelKrit"><i class='fas fa-minus'></i> Удалить критерий</button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3" class="text-center">
+                                    <button id="Add" form="0" class="btn btn-icon icon-left btn-success col-9 shadow " data-toggle="modal" data-target="#AddKriter">
+                                        <i class='fas fa-plus'></i>Добавить критерий
+                                    </button>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                    <input type="hidden" id="krit_id" />
+                </div>
+
+                <div class="input-group wrap-input100 validate-input col-12  group">
+                    <h4>Стартовая инструкция</h4>
+                    <textarea class="input-group-text col-11" style="height: auto; text-align: left;" rows="10"></textarea>
+
+                    <input type="hidden" id="krit_id" />
                 </div>
 
 
-                <div class="input-group wrap-input100 validate-input col-3 group">
+
+
+                <div class="input-group wrap-input100 validate-input col-lg-3 col-xl-3 col-md-4 col-6 group">
 
                     <div class="input-group-prepend ">
                         <div class="input-group-text">
@@ -127,7 +145,7 @@
                     <label class="label">Количество вариантов</label>
                 </div>
 
-                <div class="input-group wrap-input100 validate-input col-3 group">
+                <div class="input-group wrap-input100 validate-input col-lg-3 col-xl-3 col-md-4 col-6 group">
 
                     <div class="input-group-prepend ">
                         <div class="input-group-text">
@@ -139,7 +157,7 @@
                     <label class="label">Количество заданий</label>
                 </div>
 
-                <div class="input-group wrap-input100 validate-input col-3" style="height: 42px;">
+                <div class="input-group wrap-input100 validate-input col-lg-3 col-xl-3 col-md-4 col-6 group" style="height: 42px;">
 
                     <button href="#" class="btn btn-outline-success input100 btn-icon icon-left shadow" asp-controller="UprSpec" asp-action="IzmKolZadans" id="AddTabel">
                         <i class="fas fa-square-root-alt"></i>
@@ -161,7 +179,40 @@
             </button>
         </div>
     </div>
+
 </form>
+<div class="modal  fade" id="AddKriter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Дабавить критерий</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="input-group wrap-input100 validate-input col-11 group">
+                        <input type="hidden" class="form-control input100" id="id_spec1" asp-for=@Model.Spec.Id />
+                        <input type="text" class="form-control input100" id="ballK" required />
+                        <span class="focus-input100"></span>
+                        <label class="label">Максимальный балл критерия</label>
+                    </div>
+                    <div class="input-group wrap-input100 validate-input col-11 group">
+                        <input type="text" class="form-control input100" id="nameK" required />
+                        <span class="focus-input100"></span>
+                        <label class="label">Название критерия</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                <button type="button" class="btn btn-primary" form="0" onclick="SaveK()" data-dismiss="modal">Сохранить</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     window.onload = function () {
         generateTable();
@@ -350,6 +401,24 @@
                 console.log(data);
 
             }
+        });
+    }
+</script>
+<script>
+    function SaveK() {
+        var id_spec1 = document.getElementById("id_spec1").value;
+        var nameK = document.getElementById("nameK").value;
+        var ballK = document.getElementById("ballK").value;
+
+        jQuery.ajax({
+            url: '/UprSpec/AddKriterAjax/',
+            type: "POST",
+            dataType: "json",
+            data: { specK: id_spec1, name: nameK, ball: ballK },
+            success: function (query) {
+                alert(query);
+            }
+
         });
     }
 </script>

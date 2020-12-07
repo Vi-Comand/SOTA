@@ -31,7 +31,7 @@ namespace SOTA.Controllers
             var login = HttpContext.User.Identity.Name;
             int idUser = db.Users.Where(p => p.Name == login).First().Id;
             VariantUser variantUser = db.VariantUser.Where(x => x.IdUser == idUser && x.IdRabota == idRabota).First();
-      Thread.Sleep(1000);
+            Thread.Sleep(1000);
 
             if (variantUser.Konec == 0)
             {
@@ -111,6 +111,7 @@ namespace SOTA.Controllers
             double sumrab = db.Zadanie.Where(x => x.IdSpec == idspec && x.Variant == 1).Sum(r => r.Ball);
             ViewBag.sumrab = sumrab;
             ViewBag.role = "0";
+            ViewBag.dateK = db.Rabota.First(x => x.Id == idRabota).Konec;
             return View("ViewResultTest", Result);
         }
         public IActionResult Test(int idRabota)

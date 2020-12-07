@@ -20,15 +20,15 @@ namespace SOTA.Controllers
         [Authorize]
         public IActionResult NaznacRabotaList()
         {
-     
+
             var login = HttpContext.User.Identity.Name;
             Users user = db.Users.Where(p => p.Name == login).First();
             ViewBag.rl = user.Role;
-            FormirRabotaTablList formir = new FormirRabotaTablList(user,db);
+            FormirRabotaTablList formir = new FormirRabotaTablList(user, db);
             RabotaUchenList rabotaList = new RabotaUchenList();
 
-            rabotaList=formir.GetSpisokRabotUchen();
-          
+            rabotaList = formir.GetSpisokRabotUchen();
+
 
             return View(rabotaList);
         }
