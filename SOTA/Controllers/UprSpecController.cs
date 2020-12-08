@@ -555,7 +555,7 @@ namespace SOTA.Controllers
 
             model.KolVar = !db.Zadanie.Any(x => x.IdSpec == id_spec) ? 0 : db.Zadanie.Where(x => x.IdSpec == id_spec).OrderByDescending(x => x.Variant).First().Variant;
             model.Zadanies = ProverkaNaOdinakovBall(db.Zadanie.Where(x => x.IdSpec == id_spec).ToList(), model.KolZad);
-
+            model.SeparateScore = db.Zadanie.Where(x => x.IdSpec == id_spec && x.Variant == 1 && x.Ball == 0).Select(x => x.Nomer).ToList();
             model.Predms = db.Predm.ToList();
             model.TipSpecs = db.TipSpec.ToList();
 
@@ -582,6 +582,7 @@ namespace SOTA.Controllers
         public async Task<List<Zadanie>> ZadanNaOdinakovBallAsync(List<Zadanie> Zadans)
         {
             var result = await Task.Run(() => ZadanNaOdinakovBall(Zadans));
+           
             return result;
         }
 
@@ -607,6 +608,12 @@ namespace SOTA.Controllers
                     {
                         zadan.Doptext = "1";
                     }
+                    if (zadan.Ball==0)
+                    {
+                        zadan.Ball = db.Otvet.Where(y => y.IdZadan == zadan.Id).Select(x => x.Ball).Sum();
+                        
+                    }
+
                 }
 
             }

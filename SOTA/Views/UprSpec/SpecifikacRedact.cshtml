@@ -178,16 +178,25 @@
         //tip = document.getElementById("tip").value;
         //predmet = document.getElementById("predmet").value;
         var model = '@Html.Raw(Json.Serialize(Model.Zadanies))';
+         var model1 = '@Html.Raw(Json.Serialize(Model.SeparateScore))';
         let Zadanies = new Array();
+        let SeparateScore = new Array();
         Zadanies = JSON.parse(model);
+        SeparateScore = JSON.parse(model1);
         let numbers = new Map();
 
 
         for (var i = 0; i < Zadanies.length; i++)
             if (Zadanies[i].text != null) {
+               
 
                 numbers.set(Zadanies[i].variant + "," + Zadanies[i].nomer, 1);
                 numbers.set(Zadanies[i].nomer + "b", Zadanies[i].ball);
+                for (var j = 0; j < SeparateScore.length; j++) {
+                    if (SeparateScore[j] == Zadanies[i].nomer)
+                        numbers.set(Zadanies[i].nomer + "d", 1);
+                }
+                
                 numbers.set(Zadanies[i].nomer + "t", Zadanies[i].tema);
                 numbers.set(Zadanies[i].nomer + "u", Zadanies[i].urov);
 
@@ -262,8 +271,14 @@
                         }
                         else {
                             if (numbers.get(i + "b") != null) {
-                                table += ' <td class=" wrap-input100 validate-input "><input type="number" class="form-control-sm input100 " id=Ball' + i + ' value=' + numbers.get(i + "b") + ' pattern="[0-9]{1}" required  onchange="changedball(' + i + ',Ball' + i + ')" /><span class="focus-input100"></span></td>';
-                            }
+
+ 
+                                if (numbers.get(i + "d") == 1) { table += ' <td class=" wrap-input100 validate-input "><input type="number" class="form-control-sm input100 " id=Ball' + i + ' value=' + numbers.get(i + "b") + ' pattern="[0-9]{1}" required  onchange="changedball(' + i + ',Ball' + i + ')" disabled /><span class="focus-input100"></span></td>'; }
+
+                                else {
+                                    table += ' <td class=" wrap-input100 validate-input "><input type="number" class="form-control-sm input100 " id=Ball' + i + ' value=' + numbers.get(i + "b") + ' pattern="[0-9]{1}" required  onchange="changedball(' + i + ',Ball' + i + ')"  /><span class="focus-input100"></span></td>';
+                                }
+                                }
                             else {
                                 table += ' <td class=" wrap-input100 validate-input "><input type="number" class="form-control-sm input100 " id=Ball' + i + ' value="1" pattern="[0-9]{1}" required  onchange="changedball(' + i + ',Ball' + i + ')" /><span class="focus-input100"></span></td>';
                             }

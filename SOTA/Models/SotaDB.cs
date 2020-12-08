@@ -47,9 +47,11 @@ namespace SOTA.Models
         public string Urov
         {
             get; set;
-        }
+        }      
     }
-    public class Predm
+  
+       
+        public class Predm
     {
         public int Id
         {
@@ -60,6 +62,7 @@ namespace SOTA.Models
             get; set;
         }
     }
+
     public class TipSpec
     {
         public int Id

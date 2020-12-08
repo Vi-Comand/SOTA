@@ -11,5 +11,6 @@ namespace SOTA.Models
         public List<Predm> Predms { get; set; }
         public List<TipSpec> TipSpecs { get; set; }
         public List<Zadanie> Zadanies { get; set; }
+        public List<int> SeparateScore { get; set; } = new List<int>();
     }
 }

@@ -48,7 +48,7 @@
     <script type="text/javascript">
         window.onload = function () {
             OtvActive();
-                
+             
             document.getElementById("linkTip" + "@Model.Tip").className = "nav-link active";
             document.getElementById("otv" + "@Model.Tip").className = "tab-pane fade active show";
            // NavLinkOtvet.addClass = "active";
@@ -62,6 +62,7 @@
                 ZapolnOtvTip5();
 
             predprosmotr();
+            SwitchSharedSplitScore();   
         }
         function ZapolnOtvTip1() {
 
@@ -1034,8 +1035,28 @@
 
 
         }
-       
+        jQuery('#checkBallVibOtv').click(function () {
+            SwitchSharedSplitScore();
+        });
+        function SwitchSharedSplitScore()
+        {
+            var checkBallVibOtv = document.getElementById("checkBallVibOtv");
+            var BallVibOtv = document.getElementById("BallVibOtv");
+
+            if (checkBallVibOtv.checked) {
+
+
+                BallVibOtv.setAttribute("type", "hidden");
+                BallVibOtv.value = 0;
+            }
+            else {
+
+                BallVibOtv.setAttribute("type", "text");
+
+            }
+        }
         function ballvibotvall() {
+            
             for (i = 1; i <= NomerViborOtv; i++) {
                 ballvibotv(i);
 
