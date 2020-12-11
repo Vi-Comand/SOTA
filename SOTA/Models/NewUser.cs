@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Internal;
 using MoreLinq;
 using OfficeOpenXml;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -43,25 +44,40 @@ namespace SOTA.Models
         }
         private void ReadFile()
         {
+            string n;
+            string f;
+            string im;
+            string o;
             using (var package = new ExcelPackage(File.OpenReadStream()))
             {
 
                 var workSheet = package.Workbook.Worksheets[0];
-                for (int i = 8; workSheet.Cells[i, 1].Value != null; i++)
+                for (int i = 9; workSheet.Cells[i, 1].Value != null; i++)
                 {
-                    RowExcel rowExcel = new RowExcel();
-                    rowExcel.MO = workSheet.Cells[i, 2].Value == null ? string.Empty : workSheet.Cells[i, 2].Value.ToString();
-                    rowExcel.OO = workSheet.Cells[i, 3].Value == null ? string.Empty : workSheet.Cells[i, 3].Value.ToString();
-                    rowExcel.F = workSheet.Cells[i, 6].Value == null ? string.Empty : workSheet.Cells[i, 6].Value.ToString();
-                    rowExcel.I = workSheet.Cells[i, 7].Value == null ? string.Empty : workSheet.Cells[i, 7].Value.ToString();
-                    rowExcel.O = workSheet.Cells[i, 8].Value == null ? string.Empty : workSheet.Cells[i, 8].Value.ToString();
-                    rowExcel.Klass = workSheet.Cells[i, 5].Value == null ? string.Empty : workSheet.Cells[i, 5].Value.ToString();
-                    rowExcel.NomKlass = Convert.ToInt32(workSheet.Cells[i, 4].Value);
-                    rowExcel.Name = workSheet.Cells[i, 9].Value == null ? string.Empty : workSheet.Cells[i, 9].Value.ToString();
-                    rowExcel.DateReg = Convert.ToDateTime("0001-01-01 00:00:00");
-                    rowExcel.Role = 0;
-                    rowExcel.Kod = "1";
-                    rowExcels.Add(rowExcel);
+                    try
+                    {
+                        RowExcel rowExcel = new RowExcel();
+                        rowExcel.MO = workSheet.Cells[i, 2].Value == null ? string.Empty : workSheet.Cells[i, 2].Value.ToString();
+                        rowExcel.OO = workSheet.Cells[i, 3].Value == null ? string.Empty : workSheet.Cells[i, 3].Value.ToString();
+                        rowExcel.F = workSheet.Cells[i, 6].Value == null ? string.Empty : workSheet.Cells[i, 6].Value.ToString();
+                        rowExcel.I = workSheet.Cells[i, 7].Value == null ? string.Empty : workSheet.Cells[i, 7].Value.ToString();
+                        rowExcel.O = workSheet.Cells[i, 8].Value == null ? string.Empty : workSheet.Cells[i, 8].Value.ToString();
+                        rowExcel.Klass = workSheet.Cells[i, 5].Value == null ? string.Empty : workSheet.Cells[i, 5].Value.ToString();
+
+                        rowExcel.NomKlass = Convert.ToInt32(workSheet.Cells[i, 4].Value);
+                        f = workSheet.Cells[i, 6].Value == null ? string.Empty : workSheet.Cells[i, 6].Value.ToString();
+                        im = workSheet.Cells[i, 7].Value == null ? string.Empty : workSheet.Cells[i, 7].Value.ToString();
+                        o = workSheet.Cells[i, 8].Value == null ? string.Empty : workSheet.Cells[i, 8].Value.ToString();
+
+                        n = f + (im.Length == 0 ? "" : im[0].ToString()) + (o.Length == 0 ? "" : o[0].ToString());
+                        rowExcel.Name = n;
+                        rowExcel.DateReg = Convert.ToDateTime("0001-01-01 00:00:00");
+                        rowExcel.Role = 0;
+                        rowExcel.Kod = "1";
+                        rowExcels.Add(rowExcel);
+                    }
+                    catch (Exception ex)
+                    { }
                 }
             }
         }
@@ -140,7 +156,7 @@ namespace SOTA.Models
                     Users usersMo = new Users();
                     usersMo.IdMo = ListMO[i].Id;
                     usersMo.Role = 3;
-                    usersMo.Name = ListMO[i].Name + "_администратор";
+                    usersMo.Name = ListMO[i].Name + "_УО";
                     usersMo.DateReg = Convert.ToDateTime("0001-01-01 00:00:00");
                     usersMo.Kod = "1";
                     ListUserMO.Add(usersMo);
@@ -243,14 +259,69 @@ namespace SOTA.Models
             CreateUser();
         }
 
+
+
+
+
         private void CreateUser()
         {
             ListUser = db.Users.ToList();
+            //ToN(textBox1.Text, "25");
             var load_rows1 = rowExcels.FindAll(w => ListUser.Find(x => w.Name == x.Name) == null);
             var errore_rows1 = rowExcels.FindAll(w => (ListUser.Find(x => w.Name == x.Name) != null));
 
+            var query = load_rows1.GroupBy(x => x.Name, StringComparer.InvariantCultureIgnoreCase)
+               .Where(g => g.Count() > 1)
+               .Select(y => new { Element = y.Key, Counter = y.Count() })
+               .ToList();
+
+            for (int q = 0; q < query.Count; q++)
+            {
+                for (int w = 1; w <= query[q].Counter; w++)
+                {
+                    var row = load_rows1.Find(x => x.Name.ToLower() == query[q].Element.ToLower());
+                    row.Name = row.Name + "_" + w.ToString();
+                }
+            }
+
+            var query1 = load_rows1.GroupBy(x => x.Name)
+              .Where(g => g.Count() > 1)
+              .Select(y => new { Element = y.Key, Counter = y.Count() })
+              .ToList();
+
+            var anyDuplicate = load_rows1.GroupBy(x => x.Name).Any(g => g.Count() > 1);
+
+
+
+
+
             load_rows = load_rows1.Select(x => new Users { I = x.I, F = x.F, O = x.O, DateReg = x.DateReg, IdKlass = Convert.ToInt32(x.Klass), IdOo = Convert.ToInt32(x.OO), IdMo = Convert.ToInt32(x.MO), Role = Convert.ToInt32(x.Role), Name = x.Name, Kod = x.Kod }).ToList();
 
+
+
+            db.Users.AddRange(load_rows);
+            db.SaveChanges();
+            ListUser = db.Users.ToList();
+            for (int i = 0; i < errore_rows1.Count; i++)
+            {
+                string temp_name = "";
+                int j = 1;
+            link1:
+                temp_name = errore_rows1[i].Name + "_" + j.ToString();
+                // errore_rows1[i].Name = temp_name;
+                if (ListUser.Find(w => w.Name == temp_name).Name == null)
+                {
+                    errore_rows1[i].Name = temp_name;
+                }
+                else
+                {
+                    j++;
+                    goto link1;
+                }
+            }
+            //   var errore_rows2 = errore_rows1.FindAll(w => (ListUser.Find(x => w.Name == x.Name) != null));
+            load_rows = errore_rows1.Select(x => new Users { I = x.I, F = x.F, O = x.O, DateReg = x.DateReg, IdKlass = Convert.ToInt32(x.Klass), IdOo = Convert.ToInt32(x.OO), IdMo = Convert.ToInt32(x.MO), Role = Convert.ToInt32(x.Role), Name = x.Name, Kod = x.Kod }).ToList();
+            var anyDuplicate1 = load_rows.GroupBy(x => x.Name).Any(g => g.Count() > 1);
             db.Users.AddRange(load_rows);
             db.SaveChanges();
 
@@ -291,5 +362,94 @@ namespace SOTA.Models
             FormirListAndCreatOO(file);
 
         }
+
+
+        string bukv = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
+        string sys = "25";
+        /// <summary>
+        /// Переводит из деятичной системы счисления в систему счисления с основанием N
+        /// </summary>
+        /// <param name="number">Число, которое переводим </param>
+        /// <param name="sys">Система счисления, в которую переводим</param>
+        /// <returns>Возвращает переведенное число в строковом формате</returns>
+        private string ToN(string number, string sys)
+        {
+            string newNum = "";
+            int num = Convert.ToInt32(number);
+            int chast = Convert.ToInt32(number);
+            ArrayList numTemp = new ArrayList();
+            while (chast > 0)
+            {
+                chast = chast / Convert.ToInt32(sys);
+                numTemp.Add(num - chast * Convert.ToInt32(sys));
+                num = chast;
+            }
+            int j;
+            for (j = numTemp.Count - 1; j >= 0; j--)
+                newNum += newCh(numTemp[j].ToString(), "to");
+            return newNum;
+        }
+        /// <summary>
+        /// Функция, заменяет буквы на числа и наоборот
+        /// </summary>
+        /// <param name="sym">Число, над которым нужно работать</param>
+        /// <param name="otk">В какую сторону осуществляется действие относительно десятичной системы счисления</param>
+        /// <returns>Возвращает букву, если числу соответствует буква и наоборот, иначе число</returns>
+        string newCh(string sym, string otk)
+        {
+            string s = "";
+            if (otk == "to")
+            {
+                if (Convert.ToInt32(sym) > 10)
+                    s += bukv.Substring(Convert.ToInt32(sym) - 10, 1);
+                else
+                    s += sym;
+            }
+            else if (otk == "from")
+            {
+                if (bukv.IndexOf(sym) == -1)
+                    s += sym;
+                else
+                    s += (bukv.IndexOf(sym) + 10).ToString();
+            }
+            return s;
+        }
+
+
+        /// <summary>
+        /// Переводит системы счисления с основанием N в деятичную систему счисления 
+        /// </summary>
+        /// <param name="number">Число, которое переводим </param>
+        /// <param name="sys">Система счисления, из которой переводим</param>
+        /// <returns>Возвращает переведенное число в строковом формате</returns>
+        private string FromN(string number, string sys)
+        {
+            int newNum = 0;
+            string temp = "";
+            int t;
+            int i;
+            for (i = 0; i < number.Length; i++)
+            {
+                temp = "";
+                temp += newCh(number.Substring(i, 1), "from");
+                t = (int)Math.Pow(Convert.ToDouble(sys), Convert.ToDouble(number.Length - (i + 1)));
+                newNum += Convert.ToInt32(temp) * t;
+            }
+            return newNum.ToString();
+        }
+        private string FromTo(string number, string sysN, string sysK)
+        {
+            string temp = "";
+            temp = FromN(number, sysN);
+            temp = ToN(temp, sysK);
+            return temp;
+        }
+
+
+
+
+
+
+
     }
 }
