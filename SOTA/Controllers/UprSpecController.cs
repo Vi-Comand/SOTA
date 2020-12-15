@@ -394,7 +394,7 @@ namespace SOTA.Controllers
         #endregion
 
         #region FomirListOtvetov
-        private List<Otvet> FomirListOtv(int tip, int idZadania, string[] arr, string[] arr1, int obshBall)
+        private List<Otvet> FomirListOtv(int tip, int idZadania, string[] arr, string[] arr1, double obshBall)
         {
             List<Otvet> Otvets = new List<Otvet>();
             if (tip == 1)
@@ -426,7 +426,7 @@ namespace SOTA.Controllers
         }
 
 
-        private List<Otvet> OtvTip2(string[] arr, string[] arr1, int idZadania, int obshBall)
+        private List<Otvet> OtvTip2(string[] arr, string[] arr1, int idZadania, double obshBall)
         {
             List<Otvet> Otvets = new List<Otvet>();
 
@@ -452,7 +452,7 @@ namespace SOTA.Controllers
             //Otvets.Reverse();
             return Otvets;
         }
-        private List<Otvet> OtvTip4(string[] arr, string[] arr1, int idZadania, int obshBall)
+        private List<Otvet> OtvTip4(string[] arr, string[] arr1, int idZadania, double obshBall)
         {
             List<Otvet> Otvets = new List<Otvet>();
             Otvet Otv = new Otvet();
@@ -509,14 +509,14 @@ namespace SOTA.Controllers
         }
 
         #endregion
-        public async Task<IActionResult> SaveOtveti(int tip, int idZadania, string[] arr, string[] arr1, int obshBall)
+        public async Task<IActionResult> SaveOtveti(int tip, int idZadania, string[] arr, string[] arr1, double obshBall)
         {
             List<Otvet> ListOtvets = new List<Otvet>();
-
             Zadanie EditZadanie = new Zadanie();
             EditZadanie = db.Zadanie.Find(idZadania);
             EditZadanie.Tip = tip;
-            if (NeNuzniStarOtv(EditZadanie.IdSpec))
+           
+                if (NeNuzniStarOtv(EditZadanie.IdSpec))
             {
                bool revers= UdalitStarOtv(idZadania);
                 ListOtvets = FomirListOtv(tip, idZadania, arr, arr1, obshBall);
@@ -527,6 +527,38 @@ namespace SOTA.Controllers
             {
                 ListOtvets = PoiskIzmen(FomirListOtv(tip, idZadania, arr, arr1, obshBall), idZadania, tip);
 
+            }
+                if (obshBall == 0)
+                {
+                    var Zadanies = db.Zadanie.Where(x => x.IdSpec == EditZadanie.IdSpec && x.Nomer == EditZadanie.Nomer);
+                    foreach (var row in Zadanies)
+                    {
+                        row.Ball = 0;
+                    }
+                    
+
+                }
+                else
+                {
+                    List<Otvet> listOtevets=new List<Otvet>();
+                    var Zadanies = db.Zadanie.Where(x => x.IdSpec == EditZadanie.IdSpec && x.Nomer == EditZadanie.Nomer);
+                    foreach (var row in Zadanies)
+                    {
+                        row.Ball = obshBall;
+
+
+
+                        listOtevets.AddRange(db.Otvet.Where(x=>x.IdZadan==row.Id&& x.Ball!=0));
+
+                    }
+                    if(listOtevets.Count!=0)
+                    foreach (var row in listOtevets)
+                    {
+                        row.Ball = 0;
+                    }
+                    db.Otvet.UpdateRange(listOtevets);
+                db.Zadanie.UpdateRange(Zadanies);
+                    db.SaveChanges();
             }
 
             db.Otvet.AddRange(ListOtvets);
