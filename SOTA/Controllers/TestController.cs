@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SOTA.Models;
 using SOTA.Models.Pages.Test;
 using SOTA.Models.Pages.TestRaschet;
@@ -120,8 +119,8 @@ namespace SOTA.Controllers
             int idUser = db.Users.Where(p => p.Name == login).First().Id;
             var Konec = db.VariantUser.Where(x => x.IdUser == idUser && x.IdRabota == idRabota).Select(x => x.Konec).FirstOrDefault();
             // int Konec = UserVariant !=null ? UserVariant.First().Konec:0;
-
-            if (Konec == 0)
+            DateTime dateK = db.Rabota.Find(idRabota).Konec;
+            if (Konec == 0 && DateTime.Now < dateK)
             {
                 OpredelenieVariant Var = new OpredelenieVariant(idRabota, idUser, db);
                 VarintTest Test = new VarintTest(idRabota, Var.GetVariant(), db, idUser);

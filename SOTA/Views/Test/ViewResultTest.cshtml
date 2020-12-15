@@ -25,28 +25,29 @@
                         double i = 0;
 
 
-                            @foreach (var row in Model.Result)
+                    @foreach (var row in Model.Result)
+                        {
+                            if (ViewBag.dateK < DateTime.Now)
                             {
-                                if (ViewBag.dateK < DateTime.Now)
-                                {
-                                <tr>
-                                    <td>@row.Number</td>
-                                    <td>@row.Ball</td>
-                                    <td>@row.Tema</td>
-                                </tr>
-                                }
-                                i = i + row.Ball;
-
+                    <tr>
+                        <td>@row.Number</td>
+                        <td>@row.Ball</td>
+                        <td>@row.Tema</td>
+                    </tr>
                             }
-                        <tr class="table-success">
-                            <td>Всего </td>
-                            <td>@i из @ViewBag.sumrab </td>
-                            <td>
-                                @if (ViewBag.dateK > DateTime.Now) {
-                                <p>Результаты по заданиям будут оступны после</p> @ViewBag.dateK
-                                        }
-                            </td>
-                        </tr>
+                            i = i + row.Ball;
+
+                        }
+                    <tr class="table-success">
+                        <td>Всего </td>
+                        <td>@i @*из @ViewBag.sumrab*@ </td>
+                        <td>
+                            @if (ViewBag.dateK > DateTime.Now)
+                                {
+                            <p>Результаты по заданиям будут доступны после</p>  @ViewBag.dateK
+                                }
+                        </td>
+                    </tr>
                     }
                 </tbody>
                 <tfoot class=" ">
