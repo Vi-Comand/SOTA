@@ -1,8 +1,6 @@
 ﻿@model SOTA.Models.RabotaUchenList
 
-@{
-    ViewData["Title"] = "Назначенные работы";
-}
+@{ ViewData["Title"] = "Назначенные работы"; }
 
 <h1>Список работ</h1>
 <form method="post">
@@ -28,38 +26,33 @@
                 <tbody>
                     @if (Model.RabotaTabls != null)
                     {
-                        @foreach (var row in Model.RabotaTabls)
+        @foreach (var row in Model.RabotaTabls)
 
-                        {
+        {
 
-                            <tr>
-                                <td>@row.Name</td>
-                                <td>@row.PredmN</td>
-                                <td>@row.TipN</td>
-                                <td>@row.Nachalo</td>
-                                <td>@row.Konec</td>
-                                <td>@row.Dliteln</td>
-                                <td>
-                                    @if (row.Nachalo >= DateTime.Now)
-                                    {
-                                        <a href="" class='btn btn-icon btn-sm btn-outline-yel text-left btn-block disabled'><i class='fas fa-square-root-alt'></i>Работа еще не началась</a>
-                                    }
-                                    else
-                                    {
-                                        <a asp-route-idRabota="@row.Id" asp-controller="Test" asp-action="Test" class='btn btn-icon btn-sm btn-outline-yel text-left btn-block '  onclick="load(@row.Id);"><i class='fa fa-square-root-alt ' id="i-@row.Id"></i>Открыть</a>
-                                    }
-                                </td>
-                            </tr>
-                        }
-                    }
+<tr>
+    <td>@row.Name</td>
+    <td>@row.PredmN</td>
+    <td>@row.TipN</td>
+    <td>@row.Nachalo</td>
+    <td>@row.Konec</td>
+    <td>@row.Dliteln</td>
+    <td>
+        @if (row.Nachalo >= DateTime.Now)
+        {
+<a href="" class='btn btn-icon btn-sm btn-outline-yel text-left btn-block disabled'><i class='fas fa-square-root-alt'></i>Работа еще не началась</a> }
+else
+{
+<a asp-route-idRabota="@row.Id" asp-controller="Test" asp-action="Test" class='btn btn-icon btn-sm btn-outline-yel text-left btn-block ' onclick="load(@row.Id);"><i class='fa fa-square-root-alt ' id="i-@row.Id"></i>Открыть</a>}
+    </td>
+</tr>}}
                 </tbody>
             </table>
 
         </div>
     </div>
     <script>
-        function load(id)
-        {
+        function load(id) {
             var ik = document.getElementById('i-' + id + '');
             ik.classList.remove('fa-square-root-alt');
             ik.classList.add('fa-spinner');
