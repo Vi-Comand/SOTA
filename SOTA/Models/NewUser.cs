@@ -267,10 +267,9 @@ namespace SOTA.Models
         {
             ListUser = db.Users.ToList();
             //ToN(textBox1.Text, "25");
-            var load_rows1 = rowExcels.FindAll(w => ListUser.Find(x => w.Name == x.Name) == null);
-            var errore_rows1 = rowExcels.FindAll(w => (ListUser.Find(x => w.Name == x.Name) != null));
 
-            var query = load_rows1.GroupBy(x => x.Name, StringComparer.InvariantCultureIgnoreCase)
+
+            var query = rowExcels.GroupBy(x => x.Name, StringComparer.InvariantCultureIgnoreCase)
                .Where(g => g.Count() > 1)
                .Select(y => new { Element = y.Key, Counter = y.Count() })
                .ToList();
@@ -279,20 +278,21 @@ namespace SOTA.Models
             {
                 for (int w = 1; w <= query[q].Counter; w++)
                 {
-                    var row = load_rows1.Find(x => x.Name.ToLower() == query[q].Element.ToLower());
+                    var row = rowExcels.Find(x => x.Name.ToLower() == query[q].Element.ToLower());
                     row.Name = row.Name + "_" + w.ToString();
                 }
             }
 
-            var query1 = load_rows1.GroupBy(x => x.Name)
+            var query1 = rowExcels.GroupBy(x => x.Name)
               .Where(g => g.Count() > 1)
               .Select(y => new { Element = y.Key, Counter = y.Count() })
               .ToList();
 
-            var anyDuplicate = load_rows1.GroupBy(x => x.Name).Any(g => g.Count() > 1);
+            var anyDuplicate = rowExcels.GroupBy(x => x.Name).Any(g => g.Count() > 1);
 
 
-
+            var load_rows1 = rowExcels.FindAll(w => ListUser.Find(x => w.Name == x.Name) == null);
+            var errore_rows1 = rowExcels.FindAll(w => (ListUser.Find(x => w.Name == x.Name) != null));
 
 
             load_rows = load_rows1.Select(x => new Users { I = x.I, F = x.F, O = x.O, DateReg = x.DateReg, IdKlass = Convert.ToInt32(x.Klass), IdOo = Convert.ToInt32(x.OO), IdMo = Convert.ToInt32(x.MO), Role = Convert.ToInt32(x.Role), Name = x.Name, Kod = x.Kod }).ToList();
@@ -301,31 +301,38 @@ namespace SOTA.Models
 
             db.Users.AddRange(load_rows);
             db.SaveChanges();
-            ListUser = db.Users.ToList();
+            //ListUser = db.Users.iq();
             for (int i = 0; i < errore_rows1.Count; i++)
             {
                 string temp_name = "";
                 int j = 1;
-            link1:
-                temp_name = errore_rows1[i].Name + "_" + j.ToString();
-                // errore_rows1[i].Name = temp_name;
-                if (ListUser.Find(w => w.Name == temp_name).Name == null)
+                for (int q = 0; ; q++)
                 {
-                    errore_rows1[i].Name = temp_name;
-                }
-                else
-                {
-                    j++;
-                    goto link1;
+                    temp_name = errore_rows1[i].Name + "_" + j.ToString();
+                    // errore_rows1[i].Name = temp_name;
+                    if (db.Users.Where(w => w.Name == temp_name).Count() == 0)
+                    {
+                        errore_rows1[i].Name = temp_name;
+                        var x = errore_rows1[i];
+                        Users er_add = new Users { I = x.I, F = x.F, O = x.O, DateReg = x.DateReg, IdKlass = Convert.ToInt32(x.Klass), IdOo = Convert.ToInt32(x.OO), IdMo = Convert.ToInt32(x.MO), Role = Convert.ToInt32(x.Role), Name = x.Name, Kod = x.Kod };
+                        db.Users.Add(er_add);
+                        db.SaveChanges();
+                        break;
+                    }
+                    else
+                    {
+                        j++;
+
+                    }
                 }
             }
             //   var errore_rows2 = errore_rows1.FindAll(w => (ListUser.Find(x => w.Name == x.Name) != null));
-            load_rows = errore_rows1.Select(x => new Users { I = x.I, F = x.F, O = x.O, DateReg = x.DateReg, IdKlass = Convert.ToInt32(x.Klass), IdOo = Convert.ToInt32(x.OO), IdMo = Convert.ToInt32(x.MO), Role = Convert.ToInt32(x.Role), Name = x.Name, Kod = x.Kod }).ToList();
+            //load_rows = errore_rows1.Select(x => new Users { I = x.I, F = x.F, O = x.O, DateReg = x.DateReg, IdKlass = Convert.ToInt32(x.Klass), IdOo = Convert.ToInt32(x.OO), IdMo = Convert.ToInt32(x.MO), Role = Convert.ToInt32(x.Role), Name = x.Name, Kod = x.Kod }).ToList();
             var anyDuplicate1 = load_rows.GroupBy(x => x.Name).Any(g => g.Count() > 1);
-            db.Users.AddRange(load_rows);
-            db.SaveChanges();
+            //db.Users.AddRange(load_rows);
+            //db.SaveChanges();
 
-            foreach (var row in load_rows1)
+            //   foreach (var row in load_rows1)
             {
 
             }
