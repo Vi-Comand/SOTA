@@ -77,6 +77,7 @@ namespace SOTA.Models
 
 
         }
+    
 
 
         public  RabotaUchenList GetSpisokRabotUchen()

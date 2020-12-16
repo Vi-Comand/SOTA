@@ -12,6 +12,7 @@ namespace SOTA.Models.Pages.Reports
         int idRabota;
         int idOO;
         int idMO;
+        private int idKlass;
         ProtokolProvedeniaMonitoringovoyRaboti protokol;
         public ReportTip1( SotaContext context, int idRabota, Oo OO)
         {
@@ -26,6 +27,13 @@ namespace SOTA.Models.Pages.Reports
             this.idRabota = idRabota;
         
             this.idMO = MO.Id;
+        }
+        public ReportTip1(SotaContext context, int idRabota, Klass Klass)
+        {
+            db = context;
+            this.idRabota = idRabota;
+
+            this.idKlass = Klass.Id;
         }
         public override string Create()
         {

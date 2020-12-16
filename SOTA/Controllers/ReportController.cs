@@ -57,9 +57,15 @@ namespace SOTA.Controllers
             string login = HttpContext.User.Identity.Name;
             Users user = db.Users.Where(p => p.Name == login).First();
             ViewBag.rl = user.Role;
-          
 
+       
             ReportGenerator Report;
+            if (user.Role == 1)
+            {
+                Report = new ReportTip1(db, IdRabota, new Klass { Id = user.IdKlass }); ;
+                return RedirectToAction("File", "Download", new { path = Report.Create() });
+            }
+
             if (user.Role == 2)
             {
                  Report = new ReportTip1( db, IdRabota,new Oo {Id= user.IdOo });
@@ -72,8 +78,7 @@ namespace SOTA.Controllers
                 return RedirectToAction("File", "Download", new { path = Report.Create() });
             }
 
-
-
+          
             return RedirectToAction("ReportsList");
         }
         public IActionResult SaveReport(int IdRabota)
