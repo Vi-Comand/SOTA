@@ -31,9 +31,14 @@ namespace SOTA.Models.Pages.Reports
         {
             protokol = new ProtokolProvedeniaMonitoringovoyRaboti();
             FillingProtocol();
-            BuildExcelReports Excel = new BuildExcelReports(protokol);
-            Excel.CreateFile();
-            return Excel.GetPath();
+            if (protokol.KolUch != 0)
+            {
+                BuildExcelReports Excel = new BuildExcelReports(protokol);
+                Excel.CreateFile();
+                return Excel.GetPath();
+            }
+
+            return "NotData";
 
         }
        
@@ -44,13 +49,18 @@ namespace SOTA.Models.Pages.Reports
             protokol.DateProved = rab.Nachalo.Date;
             protokol.Predmet = db.Predm.Find(db.Specific.Find(rab.IdSpec).Predm).Name;          
             protokol.KolVar = db.Zadanie.Where(x => x.IdSpec == rab.IdSpec).OrderByDescending(x => x.Variant).First().Variant;
-           
-            GeneretionListUchen list = new GeneretionListUchen(FillingBall(), db);
-            protokol.Tables=list.GetTables();
-            protokol.ProcVipZad = list.GetProcVip();
-            protokol.KolUch = protokol.Tables.Count;
-            var AnalyticsTable=new CreatingAnalyticsTable(db,idRabota,protokol);
-            protokol.AnalyticsTable = AnalyticsTable.Get();
+            var listBalls = FillingBall();
+            if (listBalls.Count != 0)
+            {
+                GeneretionListUchen list = new GeneretionListUchen(listBalls, db);
+
+                protokol.Tables = list.GetTables();
+
+                protokol.ProcVipZad = list.GetProcVip();
+                protokol.KolUch = protokol.Tables.Count;
+                var AnalyticsTable = new CreatingAnalyticsTable(db, idRabota, protokol);
+                protokol.AnalyticsTable = AnalyticsTable.Get();
+            }
         }
         private List<RowProtokol> FillingBall()
         {
