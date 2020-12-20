@@ -20,7 +20,9 @@ namespace SOTA.Controllers
             {
                 return RedirectToAction("ErroreData");
             }
-                var memory = new MemoryStream();
+            path = path.Replace("\"", "").Replace("\'", "").Replace("?", "").Replace("*", "").Replace("|", "")
+                .Replace("<", "").Replace(">", "");
+            var memory = new MemoryStream();
                 using (var stream = new FileStream(path, FileMode.Open))
                 {
                     await stream.CopyToAsync(memory);

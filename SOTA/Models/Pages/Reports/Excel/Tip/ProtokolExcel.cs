@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using OfficeOpenXml;
 using OfficeOpenXml.Drawing;
@@ -27,6 +28,9 @@ namespace SOTA.Models.Pages.Reports.Excel.Tip
             {
                 ExcelPackage excelPack = new ExcelPackage();
                 excelPack.Load(stream);
+               
+                Path = Path.Replace("\"", "").Replace("\'", "").Replace("?", "").Replace("*", "").Replace("|", "")
+                    .Replace("<", "").Replace(">", "");
                 FileInfo fileInfo=new FileInfo(Path);
                 excelPack.SaveAs(fileInfo);
             }
