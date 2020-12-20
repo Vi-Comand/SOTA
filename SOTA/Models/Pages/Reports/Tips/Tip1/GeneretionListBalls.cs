@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Rewrite.Internal.UrlActions;
 
 
 namespace SOTA.Models.Pages.Reports
@@ -54,7 +56,7 @@ namespace SOTA.Models.Pages.Reports
 
 
                         }).OrderBy(x => x.nZad).ToList();
-            
+           
         }
         private void GenerationTables()
         {

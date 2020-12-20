@@ -5,15 +5,19 @@ using OfficeOpenXml;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing.Text;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using SOTA.Models.Pages.Reports;
 
 namespace SOTA.Models
 {
 
     public class RowExcel
     {
+        public int ID { get; set; }
         public string MO { get; set; }
         public string OO { get; set; }
         public string F { get; set; }
@@ -82,6 +86,14 @@ namespace SOTA.Models
             }
         }
     }
+
+    public class CheckUnique
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public string NameIterator { get; set; }
+    }
+
 
     public class LoadVBD
     {
@@ -292,7 +304,7 @@ namespace SOTA.Models
 
 
             var load_rows1 = rowExcels.FindAll(w => ListUser.Find(x => w.Name == x.Name) == null);
-            var errore_rows1 = rowExcels.FindAll(w => (ListUser.Find(x => w.Name == x.Name) != null));
+            List<RowExcel> errore_rows1 = rowExcels.FindAll(w => (ListUser.Find(x => w.Name == x.Name) != null));
 
 
             load_rows = load_rows1.Select(x => new Users { I = x.I, F = x.F, O = x.O, DateReg = x.DateReg, IdKlass = Convert.ToInt32(x.Klass), IdOo = Convert.ToInt32(x.OO), IdMo = Convert.ToInt32(x.MO), Role = Convert.ToInt32(x.Role), Name = x.Name, Kod = x.Kod }).ToList();
@@ -301,36 +313,62 @@ namespace SOTA.Models
 
             db.Users.AddRange(load_rows);
             db.SaveChanges();
-            //ListUser = db.Users.iq();
-            for (int i = 0; i < errore_rows1.Count; i++)
-            {
-                string temp_name = "";
-                int j = 1;
-                for (int q = 0; ; q++)
-                {
-                    temp_name = errore_rows1[i].Name + "_" + j.ToString();
-                    // errore_rows1[i].Name = temp_name;
-                    if (db.Users.Where(w => w.Name == temp_name).Count() == 0)
-                    {
-                        errore_rows1[i].Name = temp_name;
-                        var x = errore_rows1[i];
-                        Users er_add = new Users { I = x.I, F = x.F, O = x.O, DateReg = x.DateReg, IdKlass = Convert.ToInt32(x.Klass), IdOo = Convert.ToInt32(x.OO), IdMo = Convert.ToInt32(x.MO), Role = Convert.ToInt32(x.Role), Name = x.Name, Kod = x.Kod };
-                        db.Users.Add(er_add);
-                        db.SaveChanges();
-                        break;
-                    }
-                    else
-                    {
-                        j++;
 
-                    }
-                }
+
+            for(int i=0; i< errore_rows1.Count;i++)
+            {
+                errore_rows1[i].ID = i;
+
             }
-            //   var errore_rows2 = errore_rows1.FindAll(w => (ListUser.Find(x => w.Name == x.Name) != null));
-            //load_rows = errore_rows1.Select(x => new Users { I = x.I, F = x.F, O = x.O, DateReg = x.DateReg, IdKlass = Convert.ToInt32(x.Klass), IdOo = Convert.ToInt32(x.OO), IdMo = Convert.ToInt32(x.MO), Role = Convert.ToInt32(x.Role), Name = x.Name, Kod = x.Kod }).ToList();
-            var anyDuplicate1 = load_rows.GroupBy(x => x.Name).Any(g => g.Count() > 1);
-            //db.Users.AddRange(load_rows);
-            //db.SaveChanges();
+            List<CheckUnique> listCheck= errore_rows1.Select(x=>new CheckUnique {ID = x.ID,Name = x.Name, NameIterator = x.Name+"_"+ 1 }).ToList();
+           // List<CheckUnique> listUniqueCheck=new List<CheckUnique>();
+
+           // listUniqueCheck.AddRange(listCheck);
+            for (int i = 2;; i++)
+            {
+                listCheck = ComparisonWithTheDB(listCheck);
+                foreach (var UpdateRow in listCheck)
+                {
+                    var row = errore_rows1.First(x => x.ID == UpdateRow.ID);
+
+                    UpdateRow.NameIterator = UpdateRow.Name + "_" + i;
+                    row.Name = UpdateRow.NameIterator;
+                }
+
+                if(listCheck.Count==0)
+                    break;
+            }
+
+            //ListUser = db.Users.iq();
+        //for (int i = 0; i < errore_rows1.Count; i++)
+        //{
+        //    string temp_name = "";
+        //    int j = 1;
+        //    for (int q = 0; ; q++)
+        //    {
+        //        temp_name = errore_rows1[i].Name + "_" + j.ToString();
+        //        // errore_rows1[i].Name = temp_name;
+        //        if (db.Users.Where(w => w.Name == temp_name).Count() == 0)
+        //        {
+        //            errore_rows1[i].Name = temp_name;
+        //            var x = errore_rows1[i];
+        //            Users er_add = new Users { I = x.I, F = x.F, O = x.O, DateReg = x.DateReg, IdKlass = Convert.ToInt32(x.Klass), IdOo = Convert.ToInt32(x.OO), IdMo = Convert.ToInt32(x.MO), Role = Convert.ToInt32(x.Role), Name = x.Name, Kod = x.Kod };
+        //            db.Users.Add(er_add);
+        //            db.SaveChanges();
+        //            break;
+        //        }
+        //        else
+        //        {
+        //            j++;
+
+        //        }
+        //    }
+        //}
+        //   var errore_rows2 = errore_rows1.FindAll(w => (ListUser.Find(x => w.Name == x.Name) != null));
+        load_rows = errore_rows1.Select(x => new Users { I = x.I, F = x.F, O = x.O, DateReg = x.DateReg, IdKlass = Convert.ToInt32(x.Klass), IdOo = Convert.ToInt32(x.OO), IdMo = Convert.ToInt32(x.MO), Role = Convert.ToInt32(x.Role), Name = x.Name, Kod = x.Kod }).ToList();
+        var anyDuplicate1 = load_rows.GroupBy(x => x.Name).Any(g => g.Count() > 1);
+            db.Users.AddRange(load_rows);
+            db.SaveChanges();
 
             //   foreach (var row in load_rows1)
             {
@@ -340,7 +378,18 @@ namespace SOTA.Models
 
         }
 
+        private List<CheckUnique> ComparisonWithTheDB(List<CheckUnique>  listCheck)
+        {
+            var list = (from NameUsers in db.Users.Select(x => x.Name)
 
+                join Check in listCheck on NameUsers equals Check.NameIterator
+
+                select Check).ToList();
+
+           
+            return list;
+
+        }
 
 
 

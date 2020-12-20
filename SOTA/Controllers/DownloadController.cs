@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using SOTA.Models;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -15,16 +16,32 @@ namespace SOTA.Controllers
         [HttpGet]
         public async Task<IActionResult> File(string path)
         {
-           
-            var memory = new MemoryStream();
-            using (var stream = new FileStream(path, FileMode.Open))
+            if (path == "NotData")
             {
-                await stream.CopyToAsync(memory);
+                return RedirectToAction("ErroreData");
             }
-            memory.Position = 0;
-            var ext = Path.GetExtension(path).ToLowerInvariant();
-            return File(memory, GetMimeTypes()[ext], Path.GetFileName(path));
+            path = path.Replace("\"", "").Replace("\'", "").Replace("?", "").Replace("*", "").Replace("|", "")
+                .Replace("<", "").Replace(">", "");
+            var memory = new MemoryStream();
+                using (var stream = new FileStream(path, FileMode.Open))
+                {
+                    await stream.CopyToAsync(memory);
+                }
+
+                memory.Position = 0;
+                var ext = Path.GetExtension(path).ToLowerInvariant();
+                return File(memory, GetMimeTypes()[ext], Path.GetFileName(path));
+
+
         }
+
+        public  IActionResult ErroreData()
+        {ErrorViewModel err=new ErrorViewModel();
+            err.RequestId="Нет данных по прошедшим эту работу ученикам";
+            
+            return View("Error", err);
+        }
+
 
         private Dictionary<string, string> GetMimeTypes()
         {

@@ -30,7 +30,8 @@ namespace SOTA.Models.Pages.Reports
         private void FillingAnalyticsTableFromBD()
         {
             int SpecID = db.Rabota.Find(RabotaID).IdSpec;
-            AnalyticsTable = db.Zadanie.Where(x => x.IdSpec == SpecID && x.Variant==1).Select(y => new RowAnalytics { Number = y.Nomer, CheckElementContent = y.Tema, LevelOfComplexity = y.Urov, MaxScore=y.Ball }).OrderBy(x=>x.Number).ToList();
+            AnalyticsTable = db.Zadanie.Where(x => x.IdSpec == SpecID && x.Variant==1).Select(y => new RowAnalytics { Number = y.Nomer, CheckElementContent = y.Tema, LevelOfComplexity = y.Urov, MaxScore=y.Ball==0?db.Otvet.Where(x=>x.IdZadan==y.Id&&x.Ustar==0).Select(b=>b.Ball).Sum(): y.Ball }).OrderBy(x=>x.Number).ToList();
+       
         }
         private void CalculationAnalyticsTable()
         {
