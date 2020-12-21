@@ -43,39 +43,34 @@
 
                     @if (ViewBag.rl == 4)
                     {
-                        <a class="navbar-brand" asp-area="" asp-controller="Rabota" asp-action="RabotaList">
-                            <img src="~/favicon.png" width="30" height="30" alt="logo">
-                            СОТА
-                        </a>
-                    }
+        <a class="navbar-brand" asp-area="" asp-controller="Rabota" asp-action="RabotaList">
+            <img src="~/favicon.png" width="30" height="30" alt="logo">
+            СОТА
+        </a>}
                     @if (ViewBag.rl == 3)
                     {
-                        <a class="navbar-brand" asp-area="" asp-controller="Admin" asp-action="UO">
-                            <img src="~/favicon.png" width="30" height="30" alt="logo">
-                            СОТА
-                        </a>
-                    }
+        <a class="navbar-brand" asp-area="" asp-controller="Admin" asp-action="UO">
+            <img src="~/favicon.png" width="30" height="30" alt="logo">
+            СОТА
+        </a>}
                     @if (ViewBag.rl == 2)
                     {
-                        <a class="navbar-brand" asp-area="" asp-controller="Admin" asp-action="OO">
-                            <img src="~/favicon.png" width="30" height="30" alt="logo">
-                            СОТА
-                        </a>
-                    }
+        <a class="navbar-brand" asp-area="" asp-controller="Admin" asp-action="OO">
+            <img src="~/favicon.png" width="30" height="30" alt="logo">
+            СОТА
+        </a>}
                     @if (ViewBag.rl == 1)
                     {
-                        <a class="navbar-brand" asp-area="" asp-controller="Admin" asp-action="Klass">
-                            <img src="~/favicon.png" width="30" height="30" alt="logo">
-                            СОТА
-                        </a>
-                    }
+        <a class="navbar-brand" asp-area="" asp-controller="Admin" asp-action="Klass">
+            <img src="~/favicon.png" width="30" height="30" alt="logo">
+            СОТА
+        </a>}
                     @if (ViewBag.rl == 0)
                     {
-                        <a class="navbar-brand" asp-area="" asp-controller="Uchen" asp-action="NaznacRabotaList">
-                            <img src="~/favicon.png" width="30" height="30" alt="logo">
-                            СОТА
-                        </a>
-                    }
+        <a class="navbar-brand" asp-area="" asp-controller="Uchen" asp-action="NaznacRabotaList">
+            <img src="~/favicon.png" width="30" height="30" alt="logo">
+            СОТА
+        </a>}
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -86,79 +81,78 @@
                             @if (ViewBag.rl == 4)
                             {
 
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Rabota" asp-action="RabotaList">Работы</a>
-                                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Rabota" asp-action="RabotaList">Работы</a>
+                </li>
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="SpecList" asp-action="SpecifikacList">Спецификации</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Report" asp-action="ReportsList">Отчеты</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Users">Пользователи</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="ResponsChceck" asp-action="SelectRespons">Проверка</a>
-                                </li>
-                            }
-                            else if (ViewBag.rl == 3)
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="UO">Главная</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Report" asp-action="ReportsList">Отчеты</a>
-                                </li>
-                            }
-                            else if (ViewBag.rl == 2)
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="OO">Главная</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Report" asp-action="ReportsList">Отчеты</a>
-                                </li>
-                            }
-                            else if (ViewBag.rl == 1)
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Klass">Главная</a>
-                                </li>
-                            }
-                            else if (ViewBag.rl == 0)
-                            {
-                                <li class="nav-item ">
+                                                <li class="nav-item">
+                                                    <a class="nav-link text-dark" asp-area="" asp-controller="Report" asp-action="ReportsList">Отчеты</a>
+                                                </li>
+                                                                <li class="nav-item">
+                                                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Users">Пользователи</a>
+                                                                </li>
+                                                                                <li class="nav-item">
+                                                                                    <a class="nav-link text-dark" asp-area="" asp-controller="ResponsChceck" asp-action="SelectRespons">Проверка</a>
+                                                                                </li>
+ }
+                                                                            else if (ViewBag.rl == 3)
+                                                                            {
+                                                                <li class="nav-item">
+                                                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="UO">Главная</a>
+                                                                </li>
+                                                                                <li class="nav-item">
+                                                                                    <a class="nav-link text-dark" asp-area="" asp-controller="Report" asp-action="ReportsList">Отчеты</a>
+                                                                                </li>
+ }
+                                                                            else if (ViewBag.rl == 2)
+                                                                            {
+                                                                <li class="nav-item">
+                                                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="OO">Главная</a>
+                                                                </li>
+                                                                                <li class="nav-item">
+                                                                                    <a class="nav-link text-dark" asp-area="" asp-controller="Report" asp-action="ReportsList">Отчеты</a>
+                                                                                </li>
+ }
+                                                                            else if (ViewBag.rl == 1)
+                                                                            {
+                                                                <li class="nav-item">
+                                                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Klass">Главная</a>
+                                                                </li>
+ }
+                                                            else if (ViewBag.rl == 0)
+                                                            {
+                                                <li class="nav-item ">
 
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Uchen" asp-action="NaznacRabotaList">Главная</a>
-                                </li>
-                                /* <li class="nav-item ">
+                                                    <a class="nav-link text-dark" asp-area="" asp-controller="Uchen" asp-action="NaznacRabotaList">Главная</a>
+                                                </li>
+ /* <li class="nav-item ">
 
-                                     <a class="nav-link text-dark" asp-area="" asp-controller="Uchen" asp-action="NaznacRabotaList">Результаты</a>
-                                 </li>*/
-                            }
-                            else
-                            {
+                                                               <a class="nav-link text-dark" asp-area="" asp-controller="Uchen" asp-action="NaznacRabotaList">Результаты</a>
+                                                           </li>*/
+                                            }
+                                            else
+                                            {
                                 <li class="nav-item ">
 
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Главная</a>
                                 </li>
-                            }
+}
                         </ul>
                         <ul class="nav navbar-nav flex-grow-1 nav-pills  navbar-right">
                             @if (User.Identity.IsAuthenticated == false)
                             {
-                                <li class="nav-item " style="margin:5px; margin-left:auto;">
-                                    <a asp-controller="Account" class="nav-link text-dark" asp-action="Login">Войти </a>
-                                </li>
-
-                            }
-                            else
-                            {
-                                <li class="nav-item" style="margin:5px; margin-left:auto;">
-                                    <a asp-controller="Account" class="nav-link text-dark" asp-action="Logout">Выйти </a>
-                                </li>
-                            }
+                <li class="nav-item " style="margin:5px; margin-left:auto;">
+                    <a asp-controller="Account" class="nav-link text-dark" asp-action="Login">Войти </a>
+                </li>
+ }
+            else
+            {
+<li class="nav-item" style="margin:5px; margin-left:auto;">
+    <a asp-controller="Account" class="nav-link text-dark" asp-action="Logout">Выйти </a>
+</li>
+}
                         </ul>
                     </div>
                 </div>
@@ -177,7 +171,7 @@
 
     <footer class="border-top footer ">
         <div class="container">
-            &copy; 2020 - СОТА, ГБОУ ИРО КК   kve@kkidppo.ru
+            &copy; 2020 - СОТА, ГБОУ ИРО КК   Техническая поддержка:  <a href="mailto:kve@kkidppo.ru" style="color:darkblue">kve@kkidppo.ru</a>
         </div>
         <script>
             $(function () {
@@ -192,13 +186,13 @@
                 });
             });
 
-                                                                                                                                                                                                    //$('#topheader .navbar-nav a').on('click', function () {
-                                                                                                                                                                                                    //    alert(1);
-                                                                                                                                                                                                    //    $('#topheader .navbar-nav').find('li.active').removeClass('active');
-                                                                                                                                                                                                    //    alert(2);
-                                                                                                                                                                                                    //    $(this).parent('li').addClass('active');
-                                                                                                                                                                                                    //    alert(3);
-                                                                                                                                                                                                    //});</script>
+                                                                                                                                                                                                                            //$('#topheader .navbar-nav a').on('click', function () {
+                                                                                                                                                                                                                            //    alert(1);
+                                                                                                                                                                                                                            //    $('#topheader .navbar-nav').find('li.active').removeClass('active');
+                                                                                                                                                                                                                            //    alert(2);
+                                                                                                                                                                                                                            //    $(this).parent('li').addClass('active');
+                                                                                                                                                                                                                            //    alert(3);
+                                                                                                                                                                                                                            //});</script>
     </footer>
 
 
