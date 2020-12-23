@@ -1,8 +1,5 @@
 ﻿@model SOTA.Models.LoginModel
-@{
-    ViewData["Title"] = "Авторизация";
-
-}
+@{ ViewData["Title"] = "Авторизация"; }
 <script defer src="~/js/jquery.pwstrength.js"></script>
 <body>
     <main class="page hire-me-page">
@@ -29,7 +26,7 @@
                                         <i class="fas fa-at"></i>
                                     </div>
                                 </div>
-                                <input type="text" asp-for="Name" class="form-control input100" id="validationLog" placeholder="Логин" pattern="[A-Za-zА-Яа-яЁё0-9@@_.- ]{6,}" required onshow="if (this.value.length > 4) { qwe(); }" oninput="if (this.value.length > 4) { qwe(); }" />
+                                <input type="text" asp-for="Name" class="form-control input100" id="validationLog" placeholder="Логин" pattern="[A-Za-zА-Яа-яЁё0-9@@_.- ]{5,}" required onshow="if (this.value.length > 4) { qwe(); }" oninput="if (this.value.length > 4) { qwe(); }" />
                                 <span asp-validation-for="Name" class="focus-input100"></span>
 
 
