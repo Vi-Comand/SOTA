@@ -45,6 +45,7 @@ namespace SOTA.Models
         int _idOO;
         int _idMO;
         int klass;
+        int role;
         public FormirRabotaTablList()
         {
 
@@ -66,25 +67,37 @@ namespace SOTA.Models
             _idOO = idOO;
             _idMO = db.Oo.Where(x => x.Id == idOO).First().IdMo;
             dateNow = DateTime.Now;
-
-
         }
+
         public FormirRabotaTablList(Mo MO, SotaContext db)
         {
             _db = db;
             _idOO = 0;
             _idMO = MO.Id;
             dateNow = DateTime.Now;
-
-
         }
 
+        public FormirRabotaTablList(SotaContext db)
+        {
+            _db = db;
+            _idOO = 0;
+            dateNow = DateTime.Now;
+            role = 4;
+        }
 
         public RabotaUchenList GetSpisokRabotUchen()
         {
             RabotaUchenList rabotaList = new RabotaUchenList();
             _db.Rabota.Where(x => x.Klass == klass /*&& x.Konec > dateNow*/).ToList();
-            List<Rabota> list = GetSpisokRabot(_db.Rabota.Where(x => x.Klass == klass /*&& x.Konec > dateNow*/).ToList());
+            List<Rabota> list;
+            if (role == 4)
+            {
+                list = _db.Rabota.ToList();
+            }
+            else
+            {
+                list = GetSpisokRabot(_db.Rabota.Where(x => x.Klass == klass /*&& x.Konec > dateNow*/).ToList());
+            }
             if (list.Count != 0)
                 rabotaList.RabotaTabls = (from rab in list
 
@@ -114,8 +127,19 @@ namespace SOTA.Models
         public ReportsRabotaList GetSpisokRabotReports()
         {
             ReportsRabotaList rabotaList = new ReportsRabotaList();
-            _db.Rabota.Where(x => x.Klass == klass && x.Konec < dateNow).ToList();
-            List<Rabota> list = GetSpisokRabot(_db.Rabota.Where(x => x.Konec < dateNow).ToList());
+            List<Rabota> list;
+            if (role == 4)
+            {
+                _db.Rabota.Where(x => x.Konec < dateNow).ToList();
+                list = _db.Rabota.ToList();
+            }
+            else
+            {
+                _db.Rabota.Where(x => x.Klass == klass && x.Konec < dateNow).ToList();
+                list = _db.Rabota.Where(x => x.Konec < dateNow).ToList();
+            }
+
+
             if (list.Count != 0)
                 rabotaList.RabotaTabls = (from rab in list
 
