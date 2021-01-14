@@ -9,7 +9,7 @@ namespace SOTA.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-
+        
 
         SotaContext db;
 
@@ -17,10 +17,13 @@ namespace SOTA.Controllers
         {
             db = context;
         }
+
+        
+
         public IActionResult Index()
         {
             string login = HttpContext.User.Identity.Name;
-            Users user= db.Users.Where(p => p.Name == login).First();
+            var user= db.Users.Where(p => p.Name == login).First();
           
 
           
@@ -79,4 +82,5 @@ namespace SOTA.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
+    
 }

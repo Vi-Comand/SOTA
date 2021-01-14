@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace SOTA.Models
 {
@@ -21,10 +22,15 @@ namespace SOTA.Models
         public DbSet<VariantUser> VariantUser { get; set; }
         public DbSet<UsersBalls> UsersBalls { get; set; }
         public DbSet<Kriterocen> Kriterocen { get; set; }
+       
         public SotaContext(DbContextOptions<SotaContext> options)
             : base(options)
         {
             //Database.EnsureCreated();
+        }
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
         }
     }
 }
