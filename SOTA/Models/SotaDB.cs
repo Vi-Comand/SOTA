@@ -1,4 +1,7 @@
 ﻿using System;
+using Microsoft.AspNetCore.Identity;
+
+
 
 namespace SOTA.Models
 {
@@ -158,7 +161,7 @@ namespace SOTA.Models
     }
 
     public class Users
-    {
+    { 
         public int Id
         {
             get; set;

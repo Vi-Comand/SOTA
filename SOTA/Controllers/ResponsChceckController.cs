@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SOTA.Models;
 using System;
 using System.Linq;
+using System.Security.Claims;
 
 namespace SOTA.Controllers
 {
@@ -19,9 +20,9 @@ namespace SOTA.Controllers
 
         public IActionResult SelectRespons()
         {
-            string login = HttpContext.User.Identity.Name;
-            Users user = db.Users.Where(p => p.Name == login).First();
-            ViewBag.rl = user.Role;
+            ////string login = HttpContext.User.Identity.Name;
+            ////Users user = db.Users.Where(p => p.Name == login).First();
+            ViewBag.rl = Convert.ToInt16(HttpContext.User.Claims.First(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value);
             SelectRespons selectRespons = new SelectRespons(db);
             ListRab listRab = new ListRab();
             listRab.ListRabs = selectRespons.LRabots();
@@ -30,9 +31,9 @@ namespace SOTA.Controllers
 
         public IActionResult SelectZadan(int idSpec)
         {
-            string login = HttpContext.User.Identity.Name;
-            Users user = db.Users.Where(p => p.Name == login).First();
-            ViewBag.rl = user.Role;
+            //string login = HttpContext.User.Identity.Name;
+            //Users user = db.Users.Where(p => p.Name == login).First();
+            ViewBag.rl = Convert.ToInt16(HttpContext.User.Claims.First(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value);
             SelectRespons selectRespons = new SelectRespons(db);
             ListRab listRab = new ListRab();
             listRab.ListZads = selectRespons.LZadans(idSpec);
@@ -52,9 +53,9 @@ namespace SOTA.Controllers
 
         public IActionResult Proverka(int idZad)
         {
-            string login = HttpContext.User.Identity.Name;
-            Users user = db.Users.Where(p => p.Name == login).First();
-            ViewBag.rl = user.Role;
+            //string login = HttpContext.User.Identity.Name;
+            //Users user = db.Users.Where(p => p.Name == login).First();
+            ViewBag.rl = Convert.ToInt16(HttpContext.User.Claims.First(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value);
             SelectRespons selectRespons = new SelectRespons(db);
             ListRab listRab = new ListRab();
             listRab.listKriters = selectRespons.LKriter(idZad);

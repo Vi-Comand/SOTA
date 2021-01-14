@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SOTA.Models;
+using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
 
 namespace SOTA.Controllers
 {
@@ -19,47 +21,49 @@ namespace SOTA.Controllers
         }
         public IActionResult Index()
         {
-            string login = HttpContext.User.Identity.Name;
-            Users user= db.Users.Where(p => p.Name == login).First();
+
+           int role = Convert.ToInt16(HttpContext.User.Claims.First(x=>x.Type== ClaimsIdentity.DefaultRoleClaimType).Value);
+            //string login = HttpContext.User.Identity.Name;
+            //Users user= db.Users.Where(p => p.Name == login).First();
           
 
           
 
 
 
-                ViewBag.rl = user.Role;
-                if (user.Role == 4)
+                ViewBag.rl = role;
+                if (role == 4)
                 {
-                    ViewBag.rl = user.Role;
+                   
                     return RedirectToAction("RabotaList", "Rabota");
                 }
 
-                if (user.Role == 3)
+                if (role == 3)
                 {
-                    ViewBag.rl = user.Role;
+                   
                     return RedirectToAction("UO", "Admin");
                 }
 
-                if (user.Role == 2)
+                if (role == 2)
                 {
-                    ViewBag.rl = user.Role;
+                    
                     return RedirectToAction("OO", "Admin");
                 }
 
-                if (user.Role == 1)
+                if (role == 1)
                 {
-                    ViewBag.rl = user.Role;
+                   
                     return RedirectToAction("Klass", "Admin");
                 }
 
-                if (user.Role == 0)
+                if (role == 0)
                 {
-                    ViewBag.rl = user.Role;
+                    
                     return RedirectToAction("NaznacRabotaList", "Uchen");
                 }
                 else
                 {
-                    ViewBag.rl = user.Role;
+                   
                     return RedirectToAction("RabotaList", "Rabota");
                 }
             

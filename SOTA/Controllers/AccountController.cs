@@ -109,7 +109,7 @@ namespace SOTA.Controllers
 
                 // await Authenticate(user.Name).ConfigureAwait(false); // аутентификация
 
-                await Authenticate(user.Name).ConfigureAwait(false); // аутентификация
+                await Authenticate(user.Name,user.Role.ToString()).ConfigureAwait(false); // аутентификация
                                                                      //string login = HttpContext.User.Identity.Name;
                                                                      //Users user1 = db.Users.Where(p => p.Name == model.Name).First();
                                                                      //ViewBag.rl = user1.Role;
@@ -216,7 +216,7 @@ namespace SOTA.Controllers
             }
             */
 
-        private async Task Authenticate(string userName)
+        private async Task Authenticate(string userName,string roleName )
         {
 
             //CompositeModel compositeModel=new CompositeModel(db);
@@ -228,7 +228,8 @@ namespace SOTA.Controllers
             // создаем один claim
             var claims = new[]
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, userName )
+                new Claim(ClaimsIdentity.DefaultNameClaimType, userName ),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, roleName )
                 //new Claim("name", userName)
             };
             ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType,

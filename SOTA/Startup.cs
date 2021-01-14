@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -45,6 +46,12 @@ namespace SOTA
 
             });
 
+            //services.AddDbContext<DbContext>();
+
+            ////and this: add identity and create the db
+            //services.AddIdentity<Users, IdentityRole>()
+            //    .AddEntityFrameworkStores<DbContext>();
+
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                .AddCookie(options => //CookieAuthenticationOptions
                 {
@@ -87,5 +94,7 @@ namespace SOTA
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
-    }
+        
+        
+        }
 }

@@ -37,7 +37,7 @@ namespace SOTA.Controllers
 
         public IActionResult UO()
         {
-            string login = HttpContext.User.Identity.Name;
+          string login = HttpContext.User.Identity.Name;
             Users user = db.Users.Where(p => p.Name == login).First();
             int ImO = user.IdMo;
             ViewBag.rl = user.Role;

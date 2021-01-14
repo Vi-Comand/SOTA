@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SOTA.Models;
 using System;
 using System.Linq;
+using System.Security.Claims;
 
 namespace SOTA.Controllers
 {
@@ -17,9 +18,9 @@ namespace SOTA.Controllers
         }
         public IActionResult SpecifikacList()
         {
-            string login = HttpContext.User.Identity.Name;
-            Users user = db.Users.Where(p => p.Name == login).First();
-            ViewBag.rl = user.Role;
+            //string login = HttpContext.User.Identity.Name;
+            //Users user = db.Users.Where(p => p.Name == login).First();
+            ViewBag.rl = Convert.ToInt16(HttpContext.User.Claims.First(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value);
             SpecifikacsList model = new SpecifikacsList();
 
             model.Spec = db.Specific.ToList();

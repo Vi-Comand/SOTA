@@ -4,7 +4,7 @@ using SOTA.Models;
 using System;
 using System.Linq;
 using SOTA.Models.Pages.Reports;
-
+using System.Security.Claims;
 
 namespace SOTA.Controllers
 {
@@ -23,9 +23,8 @@ namespace SOTA.Controllers
         [Route("Report/ReportsList/")]
         public IActionResult ReportsList()
         {
-            string login = HttpContext.User.Identity.Name;
-            Users user = db.Users.Where(p => p.Name == login).First();
-            ViewBag.rl = user.Role;
+            
+            ViewBag.rl = Convert.ToInt16(HttpContext.User.Claims.First(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value);
 
             return View();
         }

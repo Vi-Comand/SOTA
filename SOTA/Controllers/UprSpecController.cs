@@ -11,6 +11,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace SOTA.Controllers
@@ -52,17 +53,17 @@ namespace SOTA.Controllers
 
         public IActionResult SpecifikacList()
         {
-            string login = HttpContext.User.Identity.Name;
-            Users user = db.Users.Where(p => p.Name == login).First();
-            ViewBag.rl = user.Role;
+            //string login = HttpContext.User.Identity.Name;
+            //Users user = db.Users.Where(p => p.Name == login).First();
+            ViewBag.rl = Convert.ToInt16(HttpContext.User.Claims.First(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value);
             return View();
         }
 
         public IActionResult SpecifikacAdd()
         {
-            string login = HttpContext.User.Identity.Name;
-            Users user = db.Users.Where(p => p.Name == login).First();
-            ViewBag.rl = user.Role;
+            //string login = HttpContext.User.Identity.Name;
+            //Users user = db.Users.Where(p => p.Name == login).First();
+            ViewBag.rl = Convert.ToInt16(HttpContext.User.Claims.First(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value);
             SpecifikacAddModel model = new SpecifikacAddModel();
             model.Spec = new Specific();
             model.Predms = db.Predm.ToList();
@@ -566,9 +567,9 @@ namespace SOTA.Controllers
         //}
         public IActionResult SpecifikacRedact(int id_spec)
         {
-            string login = HttpContext.User.Identity.Name;
-            Users user = db.Users.Where(p => p.Name == login).First();
-            ViewBag.rl = user.Role;
+            //string login = HttpContext.User.Identity.Name;
+            //Users user = db.Users.Where(p => p.Name == login).First();
+            ViewBag.rl = Convert.ToInt16(HttpContext.User.Claims.First(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value);
             SpecifikacRedactModel model = new SpecifikacRedactModel();
             model.Spec = db.Specific.Find(id_spec);
             model.KolZad = !db.Zadanie.Any(x => x.Variant == 1) ? 0 : db.Zadanie.Count(x => x.Variant == 1 && x.IdSpec == id_spec);
@@ -705,9 +706,9 @@ namespace SOTA.Controllers
 
         public IActionResult Zadanie(int n_var, int n_zad, int id_spec)
         {
-            string login = HttpContext.User.Identity.Name;
-            Users user = db.Users.Where(p => p.Name == login).First();
-            ViewBag.rl = user.Role;
+            //string login = HttpContext.User.Identity.Name;
+            //Users user = db.Users.Where(p => p.Name == login).First();
+            ViewBag.rl = Convert.ToInt16(HttpContext.User.Claims.First(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value);
             ViewBag.n_var = n_var;
             ViewBag.n_zad = n_zad;
             ZadanieRedact model = new ZadanieRedact();

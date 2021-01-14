@@ -5,6 +5,7 @@ using SOTA.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 
@@ -23,9 +24,9 @@ namespace SOTA.Controllers
         //[Route("Rabota/RabotaAdd/")]
         public IActionResult RabotaAdd()
         {
-            string login = HttpContext.User.Identity.Name;
-            Users user = db.Users.Where(p => p.Name == login).First();
-            ViewBag.rl = user.Role;
+            //string login = HttpContext.User.Identity.Name;
+            //Users user = db.Users.Where(p => p.Name == login).First();
+            ViewBag.rl = Convert.ToInt16(HttpContext.User.Claims.First(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value);
             ViewData["Predms"] = db.Predm.ToList();
             ViewData["TipSpecs"] = db.TipSpec.ToList();
             ViewData["SpisSpec"] = db.Specific;
@@ -48,9 +49,9 @@ namespace SOTA.Controllers
 
         public IActionResult RabotaRedact(int IdRabota)
         {
-            string login = HttpContext.User.Identity.Name;
-            Users user = db.Users.Where(p => p.Name == login).First();
-            ViewBag.rl = user.Role;
+            //string login = HttpContext.User.Identity.Name;
+            //Users user = db.Users.Where(p => p.Name == login).First();
+            ViewBag.rl = Convert.ToInt16(HttpContext.User.Claims.First(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value);
             SborkaRabotaRedact sbor = new SborkaRabotaRedact(db, IdRabota);
             RabotaRedact rabota = sbor.GetRabotaRedact();
 
@@ -67,9 +68,9 @@ namespace SOTA.Controllers
         }
         public IActionResult RabotaList()
         {
-            string login = HttpContext.User.Identity.Name;
-            Users user = db.Users.Where(p => p.Name == login).First();
-            ViewBag.rl = user.Role;
+            //string login = HttpContext.User.Identity.Name;
+            //Users user = db.Users.Where(p => p.Name == login).First();
+            ViewBag.rl = Convert.ToInt16(HttpContext.User.Claims.First(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value);
             RabotaList rabotaList = new RabotaList();
 
             rabotaList.Rabotas = db.Rabota.ToList();
@@ -78,9 +79,9 @@ namespace SOTA.Controllers
         }
         public async Task<IActionResult> RabotaNaznach(RabotaRedact rabota)
         {
-            string login = HttpContext.User.Identity.Name;
-            Users user = db.Users.Where(p => p.Name == login).First();
-            ViewBag.rl = user.Role;
+            //string login = HttpContext.User.Identity.Name;
+            //Users user = db.Users.Where(p => p.Name == login).First();
+            ViewBag.rl = Convert.ToInt16(HttpContext.User.Claims.First(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value);
 
 
 
@@ -100,17 +101,17 @@ namespace SOTA.Controllers
 
         public async Task<IActionResult> Variants(int idRabota)
         {
-            string login = HttpContext.User.Identity.Name;
-            Users user = db.Users.Where(p => p.Name == login).First();
-            ViewBag.rl = user.Role;
+            //string login = HttpContext.User.Identity.Name;
+            //Users user = db.Users.Where(p => p.Name == login).First();
+            ViewBag.rl = Convert.ToInt16(HttpContext.User.Claims.First(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value);
             Variants model = new Variants(idRabota, db);
             return View("Variants", model);
         }
         public async Task<IActionResult> Variant(int nVar, int idSpec)
         {
-            string login = HttpContext.User.Identity.Name;
-            Users user = db.Users.Where(p => p.Name == login).First();
-            ViewBag.rl = user.Role;
+            //string login = HttpContext.User.Identity.Name;
+            //Users user = db.Users.Where(p => p.Name == login).First();
+            ViewBag.rl = Convert.ToInt16(HttpContext.User.Claims.First(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value);
             Variant variant = new Variant(idSpec, nVar, db);
             return View("Variant", variant);
         }
