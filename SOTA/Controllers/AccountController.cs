@@ -109,7 +109,7 @@ namespace SOTA.Controllers
 
                 // await Authenticate(user.Name).ConfigureAwait(false); // аутентификация
 
-                await Authenticate(user).ConfigureAwait(false); // аутентификация
+                await Authenticate(user.Name).ConfigureAwait(false); // аутентификация
                                                                      //string login = HttpContext.User.Identity.Name;
                                                                      //Users user1 = db.Users.Where(p => p.Name == model.Name).First();
                                                                      //ViewBag.rl = user1.Role;
@@ -143,7 +143,7 @@ namespace SOTA.Controllers
             {
                 ex.Message.ToString();
             }
-          if (user != null)
+            if (user != null)
             {
                 if (user.Pass == null)
                 {
@@ -216,9 +216,9 @@ namespace SOTA.Controllers
             }
             */
 
-        private async Task Authenticate(Users user)
+        private async Task Authenticate(string userName)
         {
-            
+
             //CompositeModel compositeModel=new CompositeModel(db);
             string remoteIpAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
 
@@ -228,20 +228,16 @@ namespace SOTA.Controllers
             // создаем один claim
             var claims = new[]
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Name),
-                new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Name)
-            
+                new Claim(ClaimsIdentity.DefaultNameClaimType, userName )
                 //new Claim("name", userName)
             };
             ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType,
                  ClaimsIdentity.DefaultRoleClaimType);
-            
             // var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                 new ClaimsPrincipal(id)).ConfigureAwait(false);
             //  }
 
-       
 
 
 
@@ -263,5 +259,4 @@ namespace SOTA.Controllers
             return RedirectToAction("Index", "Home");
         }
     }
-   
 }

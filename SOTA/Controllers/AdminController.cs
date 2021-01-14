@@ -21,7 +21,7 @@ namespace SOTA.Controllers
         public IActionResult Users()
         {
             string login = HttpContext.User.Identity.Name;
-            var user = db.Users.Where(p => p.Name == login).First();
+            Users user = db.Users.Where(p => p.Name == login).First();
             ViewBag.rl = user.Role;
             ListUsersAdmin listUsersAdmin = new ListUsersAdmin(db);
             listUsersAdmin.LisrUsersA();
