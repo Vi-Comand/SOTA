@@ -35,7 +35,7 @@
 
         // Use it to attach the editor directly to a defined textarea
         WYSIWYG.attach('textarea1'); // default setup
-        //WYSIWYG.attach('textarea2', full); // full featured setup
+        WYSIWYG.attach('textarea2'); // full featured setup
         //WYSIWYG.attach('textarea3', small); // small setup
 
         // Use it to display an iframes instead of a textareas
@@ -48,7 +48,7 @@
     <script type="text/javascript">
         window.onload = function () {
             OtvActive();
-                
+
             document.getElementById("linkTip" + "@Model.Tip").className = "nav-link active";
             document.getElementById("otv" + "@Model.Tip").className = "tab-pane fade active show";
            // NavLinkOtvet.addClass = "active";
@@ -66,13 +66,13 @@
         function ZapolnOtvTip1() {
 
             var div = document.createElement('div');
-           
+
             i = 0;
             @foreach(var row in Model.Otvets)
             {
                 @:if (i == 0) { div.innerHTML = "@row.Text"; document.getElementById("StrOtv[0]").value = div.textContent; i++;       }
             @:else { AddTip1(); div.innerHTML = "@row.Text"; document.getElementById("StrOtv[" + i + "]").value =  div.textContent; i++; }
-            
+
         }
         }
         function ZapolnOtvTip2() {
@@ -321,9 +321,9 @@
                 var text = "";
                 var nOtv=i + 1.1;
                 for (var j = 0; j < row; j++) {
-                  
+
                     if (arrOtvBD[j].param1 == nOtv.toString()) {
-                      
+
                         text = arrOtvBD[j].text;
                         break;
                     }
@@ -350,7 +350,7 @@
 </head>
 
 <body>
-   
+
     <a href="/UprSpec/SpecifikacRedact?id_spec=@Model.IdSpec" class='btn btn-icon btn-sm btn-outline-yel text-left btn-block'><i class='fas fa-arrow-circle-left'></i>Назад</a>
 
     <h3>Вариант: @ViewBag.n_var Задание: @ViewBag.n_zad</h3>
@@ -381,6 +381,27 @@
                         </tbody>
                     </table>
 
+
+                    <table border="0" cellpadding="2" cellspacing="0" style="width:100%;">
+                        <tbody>
+                            <tr>
+                                <td>
+
+                                    <br>
+                                    <form name="exampleForm1" action="example.html" method="post">
+                                        <input type="hidden" asp-for="@Model.Id" id="idZadania" />
+                                        <textarea id="textarea2" name="test2" style="width:1000px;height:400px;">
+                                            @if(Model.DopText!=null)
+                                                {
+                                                    @Model.DopText;
+                                                }
+                                        </textarea>
+                                    </form>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
                     <div class="input-group wrap-input100 validate-input col-3">
                         <a href="#" onclick="continueButton()" class="btn btn-success btn-icon icon-left">
                             <i class="fas  fa-arrow-right"></i>
@@ -393,18 +414,18 @@
                 <div class="accordion-header" role="button" data-toggle="collapse" id="pb-2" aria-expanded="false">
                     <h3>Ответ</h3>
                 </div>
-               
+
                 <div id="panel-body-2" class="accordion-body card collapse" data-parent="#accordion">
                     <div class="card-body">
                         <ul class="nav nav-tabs" id="otv_Tab" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link" id="linkTip1" data-toggle="tab"  href="#otv1" role="tab" aria-controls="otv1" aria-selected="true">Строчный ответ</a>
+                                <a class="nav-link" id="linkTip1" data-toggle="tab" href="#otv1" role="tab" aria-controls="otv1" aria-selected="true">Строчный ответ</a>
 
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="linkTip2" data-toggle="tab" href="#otv2" role="tab" aria-controls="otv2" aria-selected="false">Выбор ответа</a>
                             </li>
-                            
+
                             <li class="nav-item">
                                 <a class="nav-link" id="linkTip4" data-toggle="tab" href="#otv4" role="tab" aria-controls="otv4" aria-selected="false">Табличный</a>
                             </li>
@@ -441,7 +462,7 @@
                                             <div class="m-sm-1" height="42px" id="NumberAnswer">
                                                 <label class="custom-switch mt-2" style="height:28px">
 
-                                                    <input type="checkbox" name="NumberAnswer" id="NumberAnswer" value="1"  class="custom-switch-input">
+                                                    <input type="checkbox" name="NumberAnswer" id="NumberAnswer" value="1" class="custom-switch-input">
                                                     <span class="custom-switch-indicator"></span>Числовой ответ
                                                 </label>
                                             </div>
@@ -615,7 +636,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                 
+
                                     <div class="row">
                                         <div class="input-group wrap-input100 validate-input col-2">
                                             <a href="#" class="btn btn-success input100 btn-icon icon-left" name="add" id="add">
@@ -651,7 +672,7 @@
                                 </div>
 
                             </div>
-                          
+
                             <div class="tab-pane fade" id="otv4" role="tabpanel" aria-labelledby="otv4-tab">
 
                                 <div class="container-fluid">
@@ -679,7 +700,7 @@
 
 
                                         <input type="text" id="kolRow" />
-                                      
+
                                         <button type="button" name="AddTabel" id="AddTabel" OnClick="generateTable()">Добавить таблицу</button>
 
                                         <div id="TableCreate">
@@ -763,10 +784,10 @@
         var CountSvbOtv = 0;
         var SvobodNomer = 1;
         var NomerViborOtv = 5;
-      
+
 
         jQuery("#SaveViborOtvet").click(function () {
-          
+
             var arr = new Array(NomerViborOtv);
             var arr1 = new Array(NomerViborOtv);
             var iStr = 0;
@@ -820,11 +841,11 @@
 
                 if (document.getElementById("StrOtv[" + arrStr[iStr] + "]") != null) {
                     arr[indexmass] = document.getElementById("StrOtv[" + arrStr[iStr] + "]").value;
-                    
+
                     indexmass++;
                 }
 
-               
+
             }
 
             vbd(1, arr, arr1, 0);
@@ -843,12 +864,12 @@
 
 
 
-                 
+
                     indexmass++;
 
                 }
 
-             
+
             }
 
 
@@ -865,7 +886,7 @@
             var obshBall = 0;
 
             var checkboxBallOtv = document.getElementById("checkBallTabOtv");
-           
+
             if (checkboxBallOtv.checked)
                 obshBall = 0;
             else {
@@ -877,13 +898,13 @@
                     arr1[i - 1] = document.getElementById("BallTabOtv[" + i + "]").value;
                 for (j = 1; j < j + 1; j++) {
 
-                  
+
                     if (document.getElementById("ach" + i + "," + j + "") == null) {
 
                         break;
                     }
                     else {
-                        
+
 
 
 
@@ -892,12 +913,12 @@
                         arr[indexArr] = document.getElementById("ach" + i + "," + j + "").value;
                         indexArr++;
 
-                      
+
                     }
 
                 }
 
-                
+
             }
 
 
@@ -914,7 +935,7 @@
                 dataType: "json",
                 data: { tip: tip, idZadania: idZadania, arr: arr, arr1: arr1, obshBall: obshBall },
                 success: function (query) {
-                   
+
                 }
 
             });
@@ -925,14 +946,14 @@
             AddTip2();
         });
         function AddTip2() {
-            
+
 
             var ViborOtvetov = document.getElementById("DivViborOtveta[" + (NomerViborOtv - 1) + "]");
             var div = document.createElement("div");
             div.id = "DivViborOtveta[" + NomerViborOtv + "]";
             div.className = "input-group wrap-input100 row m-sm-1";
 
-          
+
             div.innerHTML = "<div class=\"input-group-prepend \"><div class=\"input-group-text\"><i class=\"fas fa-list-ol\"></i></div></div><input type=\"text\" class=\"form-control input100 \" name=\"ViborOtveta[" + NomerViborOtv + "]\" id = \"ViborOtveta[" + NomerViborOtv + "]\" placeholder=\"Введите ответ\" /><span class=\"focus-input100\"></span>";
             ViborOtvetov.after(div);
 
@@ -942,7 +963,7 @@
             div.className = "m-sm-1";
             div.setAttribute("height", "42px");
 
-          
+
             div.innerHTML = "<label class=\"custom-switch mt-2\" style=\"height:28px\"><input type=\"checkbox\" name=\"check[" + NomerViborOtv + "]\" id=\"check[" + NomerViborOtv + "]\" value=\"1\" onchange=\"ballvibotv(" + NomerViborOtv + ")\" class=\"custom-switch-input\"><span class=\"custom-switch-indicator\"></span></label>";
             ViborOtvetovShek.after(div);
 
@@ -950,7 +971,7 @@
             var div = document.createElement("div");
             div.id = "DivBallVibOtv[" + NomerViborOtv + "]";
             div.className = "input-group wrap-input100 row m-sm-1 hiden"
-           
+
             div.innerHTML = "<div class=\"input-group-prepend \" ><div class=\"input-group-text\"><i class=\"fas fa-list-ol\"></i></div></div><input type=\"text\" class=\"form-control input100\" id=\"BallVibOtv[" + NomerViborOtv + "]\" size=\"3\" placeholder=\"Балл\" /><span class=\"focus-input100\"></span>";
             ViborOtvetovBall.after(div);
 
@@ -1007,7 +1028,7 @@
             var div = document.createElement("div");
             SvbNomer++;
             i = arrSvb.length;
-        
+
             var table = document.getElementById('tableSvbOtv');
 
             var row = document.createElement("TR");
@@ -1017,24 +1038,24 @@
             var td3 = document.createElement("TD");
             row.id = "SvbOtvetRow[" + SvbNomer + "]";
             arrSvb[i] = SvbNomer;
-          
+
             row.appendChild(td1);
             row.appendChild(td2);
             row.appendChild(td3);
-          
+
             td1.innerHTML = '<input type="text" id="BallSvbOtv[' + SvbNomer + ']"  size="3"/>';
             td2.innerHTML = "  <div id=\"SvbOtvetDiv[" + SvbNomer + "]\"><textarea rows=\"2\" cols=\"45\" name=\"SvbOtv[" + SvbNomer + "]\" id=\"SvbOtv[" + SvbNomer + "]\" /> </textarea> </div>";
             td3.innerHTML = " <button type=\"button\" name=\"delAlternativeArea\" id=\"delAlternativeArea\" class=\"classDelAlternativeArea\"  OnClick=\"d(" + SvbNomer + ");\"  >Удалить</button>";
 
 
-           
+
             CountSvbOtv++;
 
 
 
 
         }
-       
+
         function ballvibotvall() {
             for (i = 1; i <= NomerViborOtv; i++) {
                 ballvibotv(i);
@@ -1045,7 +1066,7 @@
                 }
                 else {
                     document.getElementById('BallVibOtv').hidden = false;
-                  
+
                 }
 
             }
@@ -1057,14 +1078,14 @@
             var divcheck = document.getElementById('DivBallVibOtv[' + n + ']');
             if (checkbox.checked && checkboxi != null && checkboxi.checked) {
                 divcheck.classList.remove('hiden');
-              
+
 
             }
             else {
                 if (divcheck != null)
                     divcheck.classList.add('hiden');
 
-             }
+            }
         }
 
 
@@ -1105,7 +1126,7 @@
                         elem.remove();
                         CountSvbOtv--;
                     }
-         
+
 
 
 
@@ -1129,7 +1150,7 @@
 
         function AddTip1() {
             StrNomer++;
-           
+
 
 
             var LastStrOtv = 0;
@@ -1154,7 +1175,7 @@
             div.id = "StrOtvet[" + StrNomer + "]";
             div.className = "input-group wrap-input100 validate-input col-12";
 
-          
+
             div.innerHTML = "<div class=\"input-group-prepend \"><div class=\"input-group-text\"><i class=\"far fa-comment-alt\"></i></div></div><input type=\"text\" class=\"form-control input100\" name=\"StrOtv[" + StrNomer + "]\" id=\"StrOtv[" + StrNomer + "]\" placeholder=\"Альтернативный правильный ответ\" /><span class=\"focus-input100\"></span><a href=\"#\" class=\"classDelAlternative btn btn-icon btn btn-danger\" name=\"delAlternative\"  id=\"delAlternative\" OnClick=\"a(" + StrNomer + ");\"><i class=\"fas fa-times\"></i></a>";
 
 
@@ -1166,7 +1187,7 @@
 
 
         }
-      
+
 
 
         function a(n) {
@@ -1212,7 +1233,7 @@
 
             }
             table += '</table>';
-          
+
             var div = document.createElement("div");
             var TableCreate = document.getElementById("TableCreate");
             div.innerHTML = table;
@@ -1227,7 +1248,7 @@
 
             if (SvobodNomer > 0) {
 
-              
+
                 var elem = document.getElementById("Kriterii[" + n + "]");
                 elem.remove();
 
@@ -1239,13 +1260,13 @@
 
 
         jQuery('#addAlternativeArea').click(function () {
-            
+
             var ViborOtvetov = document.getElementById("SvobodOtvet");
             var div = document.createElement("div");
             div.id = "Kriterii[" + SvobodNomer + "]";
-           
+
             div.innerHTML = "<textarea name=\"Kriterii[" + i + "]\" id=\"Kriterii[" + i + "]\" type=\"text\" >  </textarea> <button type=\"button\" name=\"delAlternativeArea\" id=\"delAlternativeArea\" class=\"classDelAlternativeArea\"  OnClick=\"delalternativearea(" + SvobodNomer + ");\"  >Удалить</button>";
-          
+
             ViborOtvetov.after(div);
 
 
@@ -1257,13 +1278,13 @@
 
         jQuery('#TableCreate').click(function () {
 
-            
+
             var ViborOtvetov = document.getElementById("SvobodOtvet");
             var div = document.createElement("div");
             div.id = "Kriterii[" + SvobodNomer + "]";
-            
+
             div.innerHTML = "<textarea name=\"Kriterii[" + i + "]\" id=\"Kriterii[" + i + "]\" type=\"text\" >  </textarea> <button type=\"button\" name=\"delAlternativeArea\" id=\"delAlternativeArea\" class=\"classDelAlternativeArea\"  OnClick=\"delalternativearea(" + SvobodNomer + ");\"  >Удалить</button>";
-           
+
             ViborOtvetov.after(div);
 
 
@@ -1280,10 +1301,10 @@
 
 
 
-    
+
     <script>
 
-     
+
 
 
         function delInput(row, column) {
@@ -1373,9 +1394,9 @@
 
         function continueButton() {
             if (document.getElementById("wysiwygtextarea1").contentWindow.document.body.innerHTML != "") {
-            
+
                 jQuery("#pb-2").removeClass("collapsed");
-                
+
                 document.getElementById("pb-2").setAttribute("aria-expanded", "true");
                 document.getElementById("pb-1").setAttribute("aria-expanded", "false");
                 jQuery("#pb-2").data("target", '#panel-body-2').attr('data-target', '#panel-body-2');
@@ -1393,11 +1414,12 @@
         function SaveTextZadania() {
             var idZadania = document.getElementById("idZadania").value;
             var textZadania = document.getElementById("wysiwygtextarea1").contentWindow.document.body.innerHTML;
+            var dopTextZadania = document.getElementById("wysiwygtextarea2").contentWindow.document.body.innerHTML;
             jQuery.ajax({
                 url: '/UprSpec/SaveWysiwygText/',
                 type: "POST",
                 dataType: "json",
-                data: { idZadania: idZadania, text: textZadania },
+                data: { idZadania: idZadania, text: textZadania, dopText: dopTextZadania },
                 success: function (query) {
                     console.log(query);
                 }
