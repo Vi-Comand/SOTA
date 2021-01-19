@@ -30,14 +30,17 @@ namespace SOTA.Controllers
             return View();
         }
 
-        public async Task<IActionResult> SaveWysiwygText(int idZadania, string Text)
+        public async Task<IActionResult> SaveWysiwygText(int idZadania, string Text, string DopText)
         {
             Zadanie RedactZandan = db.Zadanie.Find(idZadania);
 
             if (Text != RedactZandan.Text)
             {
                 RedactZandan.Text = Text;
-
+                if (DopText != RedactZandan.Doptext)
+                {
+                    RedactZandan.Doptext = DopText;
+                }
 
                 await db.SaveChangesAsync().ConfigureAwait(false);
                 return Json("Изменения внесены");
@@ -228,6 +231,23 @@ namespace SOTA.Controllers
             }
             return Json("Сохранено. После добавления всех критериев обновите страницу");
         }
+
+        public async Task<IActionResult> SaveInstrAjax(int specK, string inst)
+        {
+            Specific specific = db.Specific.Find(specK);
+            specific.Instrukc = inst;
+
+            try
+            {
+                await db.SaveChangesAsync().ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                return Json(ex);
+            }
+            return Json("Сохранено. После добавления всех критериев обновите страницу");
+        }
+
 
         public async Task<IActionResult> VivodZadaniaAjax(int idZadania)
         {
@@ -718,6 +738,7 @@ namespace SOTA.Controllers
             model.Tip = Zadan.Tip;
             model.Ball = Zadan.Ball;
             model.Otvets = db.Otvet.Where(x => x.IdZadan == Zadan.Id && x.Ustar != 1).ToList();
+            model.DopText = Zadan.Doptext;
             if (Zadan.Tip == 4 && model.Otvets != null)
                 try
                 {

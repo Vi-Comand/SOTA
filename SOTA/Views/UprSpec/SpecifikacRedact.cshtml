@@ -98,10 +98,10 @@
                                 <tr>
                                     @if (i == 1)
                                     {
-                                        <td class="text-center">0-@Model.Kriterocens[i].MaxBall   </td> }
+                                        <td class="text-center">0 - @Model.Kriterocens[i].MaxBall   </td> }
                                     else
                                     {
-                                        <td class="text-center"> @(Model.Kriterocens[i].MaxBall - Model.Kriterocens[i - 1].MaxBall) - @Model.Kriterocens[i].MaxBall    </td>}
+                                        <td class="text-center"> @( Model.Kriterocens[i - 1].MaxBall + 1) - @Model.Kriterocens[i].MaxBall    </td>}
                                     <td class="text-center">@Model.Kriterocens[i].Name</td>
                                     <td class="text-center">
                                         <button id="del_kriter" class="btn btn-icon icon-left btn-outline-danger  shadow" asp-controller="UprSpec" asp-route-idkr="@Model.Kriterocens[i].Id" asp-route-idsp="@Model.Kriterocens[i].IdSpec" asp-action="DelKrit"><i class='fas fa-minus'></i> Удалить критерий</button>
@@ -125,9 +125,15 @@
 
                 <div class="input-group wrap-input100 validate-input col-12  group">
                     <h4>Стартовая инструкция</h4>
-                    <textarea class="input-group-text col-11" style="height: auto; text-align: left;" rows="10"></textarea>
+                    <textarea asp-for=@Model.Spec.Instrukc class="input-group-text col-11" style="height: auto; text-align: left;" rows="10"></textarea>
 
-                    <input type="hidden" id="krit_id" />
+
+                    <button type="button" class="btn btn-icon icon-left btn-outline-success col-3 shadow" form="0" onclick="SaveIns()">
+                        <i class='fas fa-save'></i>Сохранить инструкцию
+                    </button>
+                    <button type="button" class="btn btn-icon icon-left btn-outline-danger col-3 shadow" form="0" onclick="DelIns()">
+                        <i class='fas fa-save'></i>Удалить инструкцию
+                    </button>
                 </div>
 
 
@@ -202,7 +208,7 @@
                     <div class="input-group wrap-input100 validate-input col-11 group">
                         <input type="text" class="form-control input100" id="nameK" required />
                         <span class="focus-input100"></span>
-                        <label class="label">Название критерия</label>
+                        <label class="label">Оценка</label>
                     </div>
                 </div>
             </div>
@@ -415,6 +421,22 @@
             type: "POST",
             dataType: "json",
             data: { specK: id_spec1, name: nameK, ball: ballK },
+            success: function (query) {
+                alert(query);
+            }
+
+        });
+    }
+
+    function SaveIns() {
+        var id_spec1 = document.getElementById("id_spec").value;
+        var ins = document.getElementById("Spec_Instrukc").value;
+
+        jQuery.ajax({
+            url: '/UprSpec/SaveInstrAjax/',
+            type: "POST",
+            dataType: "json",
+            data: { specK: id_spec1, inst: ins },
             success: function (query) {
                 alert(query);
             }

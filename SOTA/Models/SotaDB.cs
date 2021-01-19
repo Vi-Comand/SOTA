@@ -117,6 +117,10 @@ namespace SOTA.Models
         {
             get; set;
         }
+        public string Instrukc
+        {
+            get; set;
+        }
 
 
     }
