@@ -15,5 +15,6 @@ namespace SOTA.Models
         public double Ball { get; set; }
         public int KolStrTabOtv { get; set; }
         public List<Otvet> Otvets { get; set; }
+        public string DopText { get; set; }
     }
 }
