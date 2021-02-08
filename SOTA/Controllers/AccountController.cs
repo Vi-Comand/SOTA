@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SOTA.Models;
 using System;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-
 
 
 namespace SOTA.Controllers
@@ -57,11 +57,12 @@ namespace SOTA.Controllers
                         iterationCount: 10000,
                         numBytesRequested: 256 / 8));
 
-                    user = await db.Users.FirstOrDefaultAsync(u => u.Name.ToLower() == model.Name.ToLower() && u.Pass == hashed)
+                    user = await db.Users.Select(x => new Users { Role = x.Role, Name = x.Name, Pass = x.Pass }).FirstOrDefaultAsync(u => u.Name.ToLower() == model.Name.ToLower() && u.Pass == hashed)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
+
                     ex.Message.ToString();
                 }
 
@@ -125,7 +126,7 @@ namespace SOTA.Controllers
             }
 
 
-            ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+            ViewBag.Error = "Некорректные логин и(или) пароль";
 
 
 
@@ -137,7 +138,7 @@ namespace SOTA.Controllers
             Users user = new Users();
             try
             {
-                user = await db.Users.FirstOrDefaultAsync(u => u.Name.ToLower() == name.ToLower()).ConfigureAwait(false);
+                user = await db.Users.Select(x => new Users { Role = x.Role, Kod = x.Kod, Name = x.Name, Pass = x.Pass }).FirstOrDefaultAsync(u => u.Name.ToLower() == name.ToLower()).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
