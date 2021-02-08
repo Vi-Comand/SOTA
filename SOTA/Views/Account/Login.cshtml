@@ -26,17 +26,18 @@
                                         <i class="fas fa-at"></i>
                                     </div>
                                 </div>
-                                <input type="text" asp-for="Name" class="form-control input100" id="validationLog" placeholder="Логин" @*pattern="[A-Za-zА-Яа-яЁё0-9@@_.- ]{5,}" *@ required onshow="if (this.value.length > 4) { qwe(); }" />@*oninput="if (this.value.length > 4) { qwe(); }" *@
+                                <input type="text" asp-for="Name" class="form-control input100" id="validationLog" placeholder="Логин" required onshow="if (this.value.length > 4) { qwe(); }" onchange="clear1(); " />
+                                @**@
                                 <span asp-validation-for="Name" class="focus-input100"></span>
 
-
+                                <button form="0" id="ChekLog" class="bg-yel-but" onclick="qwe();">
+                                    <span class="bg-yel-span">-></span>
+                                </button>
                             </div>
-                            @*<button form="0" id="ChekLog" class="bg-yel-but" onclick="qwe();">
-                                    <span class="bg-yel-span">Далее</span>
-                                </button>*@
+
                             <label class="form-group d-none alert-warning" id="lab_log">Логин не существует</label>
 
-                            <div class="form-group @*d-none*@" id="div_pass">
+                            <div class="form-group d-none" id="div_pass">
                                 <label for="validationPass">Пароль</label>
                                 <div class="input-group wrap-input100 validate-input">
                                     <div class="input-group-prepend">
@@ -90,6 +91,12 @@
 
                                 </div>
                             </div>
+                            @if (ViewBag.Error != null)
+                            {
+                                <div class="form-group  alert-warning" id="div_dosr">
+                                    Неверный пароль!
+                                </div>
+                            }
                             <div class="form-group d-none alert-warning" id="div_dosr_0">
                                 Логин верен, но необходима разрешение на регистрацию. Обратитесь к администратору класса
                             </div>
@@ -102,7 +109,7 @@
                             <div class="form-group d-none alert-warning" id="div_dosr_3">
                                 Логин верен, но необходима разрешение на регистрацию. Обратитесь к администратору системы 8(861)232-39-71
                             </div>
-                            <div class="form-group @*d-none*@" id="div_vhod">
+                            <div class="form-group d-none" id="div_vhod">
                                 <button id="KolvoLoad" class="bg-yel-but" asp-controller="Account" asp-action="Login">
                                     <span class="bg-yel-span"> Войти</span>
                                 </button>
@@ -152,7 +159,11 @@
         //    }
         //});
 
-
+        function clear1() {
+            div_pass.classList.add('d-none');
+            div_vhod.classList.add('d-none');
+            pass.removeAttribute('required');
+        };
 
         function qwe() {
             var login = input.value;
