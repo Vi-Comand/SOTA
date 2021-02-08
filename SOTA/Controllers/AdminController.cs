@@ -5,6 +5,7 @@ using SOTA.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace SOTA.Controllers
@@ -21,15 +22,15 @@ namespace SOTA.Controllers
         public IActionResult Users()
         {
             string login = HttpContext.User.Identity.Name;
-            Users user = db.Users.Where(p => p.Name == login).First();
-            ViewBag.rl = user.Role;
+            //  Users user = db.Users.Where(p => p.Name == login).First();
+            ViewBag.rl = Convert.ToInt16(HttpContext.User.Claims.First(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value);
             ListUsersAdmin listUsersAdmin = new ListUsersAdmin(db);
             listUsersAdmin.LisrUsersA();
             UsersPage usersPage = new UsersPage();
             usersPage.LisrUsersMO = listUsersAdmin.LisrUsersAdm.Where(x => x.Role == 3).OrderBy(x => x.IdMo).ToList();
             usersPage.LisrUsersOO = listUsersAdmin.LisrUsersAdm.Where(x => x.Role == 2).OrderBy(x => x.IdMo).ToList();
             usersPage.LisrUsersKlass = listUsersAdmin.LisrUsersAdm.Where(x => x.Role == 1).OrderBy(x => x.IdMo).ThenBy(x => x.IdOo).ToList();
-            usersPage.LisrUsersTest = listUsersAdmin.LisrUsersAdm.Where(x => x.Role == 0).ToList();
+            // usersPage.LisrUsersTest = listUsersAdmin.LisrUsersAdm.Where(x => x.Role == 0).ToList();
             // LisrUsersA listMo = new ListUsersMo();
             //listMo.UsersMo = db.Users.Where(p => p.Role == 3).ToList();
             return View("Users", usersPage);
@@ -37,7 +38,7 @@ namespace SOTA.Controllers
 
         public IActionResult UO()
         {
-          string login = HttpContext.User.Identity.Name;
+            string login = HttpContext.User.Identity.Name;
             Users user = db.Users.Where(p => p.Name == login).First();
             int ImO = user.IdMo;
             ViewBag.rl = user.Role;
@@ -62,18 +63,54 @@ namespace SOTA.Controllers
             return View("OO", usersPage);
         }
 
-        public IActionResult Klass()
+        /*    public IActionResult Klass()
+            {
+                string login = HttpContext.User.Identity.Name;
+                Users user = db.Users.Where(p => p.Name == login).First();
+                int ImKlass = user.IdKlass;
+                ViewBag.rl = user.Role;
+                ListUsersAdmin listUsersAdmin = new ListUsersAdmin(db);
+                listUsersAdmin.GetRab(user.IdMo, user.IdOo, user.IdKlass);
+                if (listUsersAdmin.rabList == null)
+                {
+                    listUsersAdmin.LisrUsersA();
+                }
+                else
+                {
+                    listUsersAdmin.LisrUsersA(listUsersAdmin.rabList.Last().Id);
+                    ViewBag.last = listUsersAdmin.rabList.Last().Id;
+                }
+                UsersPage usersPage = new UsersPage();
+                usersPage.rabotaKlasss = listUsersAdmin.rabList;
+                usersPage.LisrUsersTest = listUsersAdmin.LisrUsersAdm.Where(x => x.Role == 0 && x.IdKlass == ImKlass).OrderBy(x => x.Klass).ToList();
+
+                return View("Klass", usersPage);
+            }*/
+
+        public IActionResult Klass(UsersPage page)
         {
             string login = HttpContext.User.Identity.Name;
             Users user = db.Users.Where(p => p.Name == login).First();
             int ImKlass = user.IdKlass;
             ViewBag.rl = user.Role;
             ListUsersAdmin listUsersAdmin = new ListUsersAdmin(db);
-            listUsersAdmin.LisrUsersA();
+            listUsersAdmin.GetRab(user.IdMo, user.IdOo, user.IdKlass);
+            if (listUsersAdmin.rabList == null)
+            {
+                listUsersAdmin.LisrUsersA();
+            }
+            else
+            {
+                listUsersAdmin.LisrUsersA(1);
+                ViewBag.last = 1;
+            }
             UsersPage usersPage = new UsersPage();
+            usersPage.rabotaKlasss = listUsersAdmin.rabList;
             usersPage.LisrUsersTest = listUsersAdmin.LisrUsersAdm.Where(x => x.Role == 0 && x.IdKlass == ImKlass).OrderBy(x => x.Klass).ToList();
+
             return View("Klass", usersPage);
         }
+
 
         public IActionResult CleanPass(int idDel, int role)
         {

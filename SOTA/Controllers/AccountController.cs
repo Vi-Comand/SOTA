@@ -109,10 +109,10 @@ namespace SOTA.Controllers
 
                 // await Authenticate(user.Name).ConfigureAwait(false); // аутентификация
 
-                await Authenticate(user.Name,user.Role.ToString()).ConfigureAwait(false); // аутентификация
-                                                                     //string login = HttpContext.User.Identity.Name;
-                                                                     //Users user1 = db.Users.Where(p => p.Name == model.Name).First();
-                                                                     //ViewBag.rl = user1.Role;
+                await Authenticate(user.Name, user.Role.ToString()).ConfigureAwait(false); // аутентификация
+                                                                                           //string login = HttpContext.User.Identity.Name;
+                                                                                           //Users user1 = db.Users.Where(p => p.Name == model.Name).First();
+                                                                                           //ViewBag.rl = user1.Role;
 
                 ViewBag.rl = user.Role;
                 return RedirectToAction("Index", "Home");
@@ -216,7 +216,7 @@ namespace SOTA.Controllers
             }
             */
 
-        private async Task Authenticate(string userName,string roleName )
+        private async Task Authenticate(string userName, string roleName)
         {
 
             //CompositeModel compositeModel=new CompositeModel(db);

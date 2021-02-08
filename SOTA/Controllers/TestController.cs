@@ -108,6 +108,7 @@ namespace SOTA.Controllers
             ResultTest Result = new ResultTest(idUser, idRabota, db);
             int idspec = db.Rabota.First(x => x.Id == idRabota).IdSpec;
             double sumrab = db.Zadanie.Where(x => x.IdSpec == idspec && x.Variant == 1).Sum(r => r.Ball);
+           
             ViewBag.sumrab = sumrab;
             ViewBag.role = "0";
             ViewBag.dateK = db.Rabota.First(x => x.Id == idRabota).Konec;

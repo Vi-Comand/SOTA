@@ -14,38 +14,39 @@
             <table class="table table-hover  table-sm table-bordered shadow">
                 <thead class="table-yel">
                     <tr>
+                        <th>Начать тестирование</th>
                         <th>Название работы</th>
                         <th>Предмет</th>
                         <th>Тип</th>
                         <th>Время начала</th>
                         <th>Время окончания</th>
                         <th>Продолжительность, мин.</th>
-                        <th>Начать тестирование</th>
                     </tr>
                 </thead>
                 <tbody>
                     @if (Model.RabotaTabls != null)
                     {
-        @foreach (var row in Model.RabotaTabls)
+                        @foreach (var row in Model.RabotaTabls)
 
-        {
+                        {
 
-<tr>
-    <td>@row.Name</td>
-    <td>@row.PredmN</td>
-    <td>@row.TipN</td>
-    <td>@row.Nachalo</td>
-    <td>@row.Konec</td>
-    <td>@row.Dliteln</td>
-    <td>
-        @if (row.Nachalo >= DateTime.Now)
-        {
-<a href="" class='btn btn-icon btn-sm btn-outline-yel text-left btn-block disabled'><i class='fas fa-square-root-alt'></i>Работа еще не началась</a> }
-else
-{
-<a asp-route-idRabota="@row.Id" asp-controller="Test" asp-action="Test" class='btn btn-icon btn-sm btn-outline-yel text-left btn-block ' onclick="load(@row.Id);"><i class='fa fa-square-root-alt ' id="i-@row.Id"></i>Открыть</a>}
-    </td>
-</tr>}}
+                            <tr>
+                                <td>
+                                    @if (row.Nachalo >= DateTime.Now)
+                                    {
+                                        <a href="" class='btn btn-icon btn-sm btn-outline-yel text-left btn-block disabled'><i class='fas fa-square-root-alt'></i>Работа еще не началась</a> }
+                                    else
+                                    {
+                                        <a asp-route-idRabota="@row.Id" asp-controller="Test" asp-action="Test" class='btn btn-icon btn-sm btn-outline-yel text-left btn-block ' onclick="load(@row.Id);"><i class='fa fa-square-root-alt ' id="i-@row.Id"></i>Открыть</a>}
+                                </td>
+                                <td>@row.Name</td>
+                                <td>@row.PredmN</td>
+                                <td>@row.TipN</td>
+                                <td>@row.Nachalo</td>
+                                <td>@row.Konec</td>
+                                <td>@row.Dliteln</td>
+
+                            </tr>}}
                 </tbody>
             </table>
 
