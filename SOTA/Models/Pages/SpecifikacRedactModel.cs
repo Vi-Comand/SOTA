@@ -12,5 +12,9 @@ namespace SOTA.Models
         public List<TipSpec> TipSpecs { get; set; }
         public List<Zadanie> Zadanies { get; set; }
         public List<Kriterocen> Kriterocens { get; set; }
+        public List<TypeStructSpec> TypeStructSpecs { get; set; }
+        public List<StructSpec> StructSpecs { get; set; }
     }
+
+
 }

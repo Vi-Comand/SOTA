@@ -1,5 +1,5 @@
-﻿using System;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 
 
 
@@ -97,6 +97,42 @@ namespace SOTA.Models
         }
     }
 
+    public class TypeStructSpec
+    {
+        public int Id
+        {
+            get; set;
+        }
+        public string Name
+        {
+            get; set;
+        }
+    }
+
+    public class StructSpec
+    {
+        public int Id
+        {
+            get; set;
+        }
+        public int IdSpec
+        {
+            get; set;
+        }
+        public int Type
+        {
+            get; set;
+        }
+        public int Number
+        {
+            get; set;
+        }
+        public string Text
+        {
+            get; set;
+        }
+    }
+
 
     public class Specific
     {
@@ -165,7 +201,7 @@ namespace SOTA.Models
     }
 
     public class Users
-    { 
+    {
         public int Id
         {
             get; set;

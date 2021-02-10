@@ -21,6 +21,8 @@ namespace SOTA.Models
         public DbSet<VariantUser> VariantUser { get; set; }
         public DbSet<UsersBalls> UsersBalls { get; set; }
         public DbSet<Kriterocen> Kriterocen { get; set; }
+        public DbSet<StructSpec> StructSpec { get; set; }
+        public DbSet<TypeStructSpec> TypeStructSpec { get; set; }
         public SotaContext(DbContextOptions<SotaContext> options)
             : base(options)
         {

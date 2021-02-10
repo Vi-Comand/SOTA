@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using SOTA.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing.Imaging;
@@ -16,6 +17,15 @@ using System.Threading.Tasks;
 
 namespace SOTA.Controllers
 {
+
+    class TipStructlist
+    {
+        public int Tip { get; set; }
+        public List<string> Data { get; set; }
+    }
+
+
+
     [Authorize]
     public class UprSpec : Controller
     {
@@ -71,6 +81,7 @@ namespace SOTA.Controllers
             model.Spec = new Specific();
             model.Predms = db.Predm.ToList();
             model.TipSpecs = db.TipSpec.ToList();
+
             return View(model);
         }
 
@@ -585,6 +596,10 @@ namespace SOTA.Controllers
         //{
         //    return View();
         //}
+
+
+
+
         public IActionResult SpecifikacRedact(int id_spec)
         {
             //string login = HttpContext.User.Identity.Name;
@@ -595,13 +610,76 @@ namespace SOTA.Controllers
             model.KolZad = !db.Zadanie.Any(x => x.Variant == 1) ? 0 : db.Zadanie.Count(x => x.Variant == 1 && x.IdSpec == id_spec);
 
             model.KolVar = !db.Zadanie.Any(x => x.IdSpec == id_spec) ? 0 : db.Zadanie.Where(x => x.IdSpec == id_spec).OrderByDescending(x => x.Variant).First().Variant;
-            model.Zadanies = ProverkaNaOdinakovBall(db.Zadanie.Where(x => x.IdSpec == id_spec).ToList(), model.KolZad);
+            //model.Zadanies = ProverkaNaOdinakovBall(db.Zadanie.Where(x => x.IdSpec == id_spec).ToList(), model.KolZad);
+            var zadanies = db.Zadanie.Where(x => x.IdSpec == id_spec && x.Variant == 1).OrderBy(y => y.Nomer).ToList();
             model.Kriterocens = db.Kriterocen.Where(x => x.IdSpec == id_spec).OrderBy(w => w.MaxBall).ToList();
             model.Predms = db.Predm.ToList();
             model.TipSpecs = db.TipSpec.ToList();
+            var q = db.StructSpec.Where(x => x.IdSpec == id_spec).OrderBy(x => x.Type).ToList();
+            model.TypeStructSpecs = db.TypeStructSpec.ToList();
+            var tips = q.Select(x => x.Type).Distinct();
+            List<TipStructlist> distTip = new List<TipStructlist>();
+            foreach (var tip in tips)
+            {
+                TipStructlist listTip = new TipStructlist();
+                // qwe = q.Where(x => x.Type == tip).Select(x => x.Text).ToList();
+                listTip.Tip = tip;
+                for (int i = 1; i <= model.KolZad; i++)
+                {
+                    try
+                    {
+                        if (q != null)
+                        {
+                            listTip.Data.Add(q.Where(x => x.Number == i && x.Type == tip).First().Text);
+                        }
+                        else
+                        {
+                            listTip.Data.Add("");
+                        }
+                    }
+                    catch (Exception ex)
+                    { }
+                }
+                distTip.Add(listTip);
+
+
+            }
+
+            //var result1 = from pl in zadanies
+            //              join Ball in q.Where(x => x.Type == 1) on pl.Nomer equals Ball.Number into Ball
+            //              from ball in Ball.DefaultIfEmpty()
+            //              join Tema in q.Where(x => x.Type == 2) on pl.Nomer equals Tema.Number into Tema
+            //              from tema in Tema.DefaultIfEmpty()
+            //              join Urov in q.Where(x => x.Type == 3) on pl.Nomer equals Urov.Number into Urov
+            //              from urov in Urov.DefaultIfEmpty()
+            //              join Kod in q.Where(x => x.Type == 4) on pl.Nomer equals Kod.Number into Kod
+            //              from kod in Kod.DefaultIfEmpty()
+            //              join Kod2 in q.Where(x => x.Type == 5) on pl.Nomer equals Kod2.Number into Kod2
+            //              from kod2 in Kod2.DefaultIfEmpty()
+
+
+            //              select new
+            //              {
+            //                  Text = pl.Text != null ? "1" : null,
+            //                  Number = pl.Nomer,
+            //                  Ball = ball?.Text,
+            //                  Tema = tema?.Text,
+            //                  Urov = urov?.Text,
+            //                  Kod = kod?.Text,
+            //                  Kod2 = kod2?.Text
+            //              };
 
 
 
+            /* List<string> list = new List<string>();
+             for (int i = 1; i <= distTip.Count(); i++)
+             {
+                 list = distTip[i].Concat(distTip[i]).ToList();
+
+             }*/
+
+
+            ViewBag.dist = distTip;
 
             return View("SpecifikacRedact", model);
         }

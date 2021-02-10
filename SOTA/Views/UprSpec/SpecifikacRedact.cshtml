@@ -56,7 +56,6 @@
                     <label class="label">Предмет</label>
                 </div>
 
-
                 <div class="input-group wrap-input100 validate-input col-lg-3 col-xl-3 col-md-3 col-6 group">
 
                     <div class="input-group-prepend ">
@@ -234,28 +233,29 @@
         //nazv = document.getElementById("nazv").value;
         //tip = document.getElementById("tip").value;
         //predmet = document.getElementById("predmet").value;
-        var model = '@Html.Raw(Json.Serialize(Model.Zadanies))';
-        let Zadanies = new Array();
-        Zadanies = JSON.parse(model);
+        var model = '@Html.Raw(Json.Serialize(ViewBag.dist))';
+        let StructSpecs = new Array();
+        StructSpecs = JSON.parse(model);
         let numbers = new Map();
 
+        alert(StructSpecs);
 
-        for (var i = 0; i < Zadanies.length; i++)
-            if (Zadanies[i].text != null) {
+        for (var i = 0; i < 3; i++)
+            if (StructSpecs[i].Text == 1) {
 
-                numbers.set(Zadanies[i].variant + "," + Zadanies[i].nomer, 1);
-                numbers.set(Zadanies[i].nomer + "b", Zadanies[i].ball);
-                numbers.set(Zadanies[i].nomer + "t", Zadanies[i].tema);
-                numbers.set(Zadanies[i].nomer + "u", Zadanies[i].urov);
+                numbers.set(StructSpecs[i].variant + "," + StructSpecs[i].nomer, 1);
+                numbers.set(StructSpecs[i].nomer + "b", StructSpecs[i].ball);
+                numbers.set(StructSpecs[i].nomer + "t", StructSpecs[i].tema);
+                numbers.set(StructSpecs[i].nomer + "u", StructSpecs[i].urov);
 
             }
     else
             {
 
-                numbers.set(Zadanies[i].variant + "," + Zadanies[i].nomer, 0);
-                numbers.set(Zadanies[i].nomer + "b", Zadanies[i].ball);
-                numbers.set(Zadanies[i].nomer + "t", Zadanies[i].tema);
-                numbers.set(Zadanies[i].nomer + "u", Zadanies[i].urov);
+                numbers.set(StructSpecs[i].variant + "," + StructSpecs[i].nomer, 0);
+                numbers.set(StructSpecs[i].nomer + "b", StructSpecs[i].ball);
+                numbers.set(StructSpecs[i].nomer + "t", StructSpecs[i].tema);
+                numbers.set(StructSpecs[i].nomer + "u", StructSpecs[i].urov);
             }
 
         console.log(numbers);
