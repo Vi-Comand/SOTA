@@ -236,12 +236,27 @@
         var model = '@Html.Raw(Json.Serialize(ViewBag.dist))';
         let StructSpecs = new Array();
         StructSpecs = JSON.parse(model);
+
         let numbers = new Map();
 
-        alert(StructSpecs);
 
-        for (var i = 0; i < 3; i++)
-            if (StructSpecs[i].Text == 1) {
+        var size = Object.keys(StructSpecs).length;
+
+       
+      
+        
+        for (var i = 0; i < size; i++) {
+            for (key in StructSpecs[i].data) {
+
+                
+                numbers.set(key + StructSpecs[i].tip, StructSpecs[i].data[key]);
+                numbers.set(key + StructSpecs[i].tip, StructSpecs[i].data[key]);
+                numbers.set(key + StructSpecs[i].tip, StructSpecs[i].data[key]);
+            }
+            console.log(numbers);
+        }
+
+           /* if (StructSpecs[i].Text == 1) {
 
                 numbers.set(StructSpecs[i].variant + "," + StructSpecs[i].nomer, 1);
                 numbers.set(StructSpecs[i].nomer + "b", StructSpecs[i].ball);
@@ -256,9 +271,9 @@
                 numbers.set(StructSpecs[i].nomer + "b", StructSpecs[i].ball);
                 numbers.set(StructSpecs[i].nomer + "t", StructSpecs[i].tema);
                 numbers.set(StructSpecs[i].nomer + "u", StructSpecs[i].urov);
-            }
+            }*/
 
-        console.log(numbers);
+       
         var d = new Date();
         var options = {
             year: 'numeric',
