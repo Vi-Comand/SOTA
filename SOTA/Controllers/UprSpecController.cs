@@ -622,13 +622,14 @@ namespace SOTA.Controllers
             foreach (var tip in tips)
             {
                 TipStructlist listTip = new TipStructlist();
+                listTip.Data = new List<string>();
                 // qwe = q.Where(x => x.Type == tip).Select(x => x.Text).ToList();
                 listTip.Tip = tip;
                 for (int i = 1; i <= model.KolZad; i++)
                 {
                     try
                     {
-                        if (q != null)
+                        if (q.Where(x => x.Number == i && x.Type == tip).Any())
                         {
                             listTip.Data.Add(q.Where(x => x.Number == i && x.Type == tip).First().Text);
                         }
