@@ -86,7 +86,12 @@
 
 
 <script>
+
+
+
+
     var OtvVBDMass = new Map();
+    var OtvSafetyVBDMass = new Map();
 $("#TabForZadan").on("click", function () {
 
     GetPredActiveLI();
@@ -219,6 +224,7 @@ $("#TabForZadan").on("click", function () {
         MyObj.id = id;
         MyObj.text = text;
         MyObj.otvVBD = otvVBD;
+       
         return MyObj;
     }
 
