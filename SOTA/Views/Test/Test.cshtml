@@ -87,6 +87,16 @@
 
 <script>
     var OtvVBDMass = new Map();
+   
+    //function ChekingSafetyAnswers() {
+    //    OtvVBDMass.length;
+    //    for (var row in OtvVBDMass) {
+    
+    //        alert("element:" + OtvVBDMass[1]);
+    //    }
+    //}
+
+  
 $("#TabForZadan").on("click", function () {
 
     GetPredActiveLI();
@@ -117,7 +127,8 @@ $("#TabForZadan").on("click", function () {
     });
 
 
-   window.onload = function() {
+    window.onload = function () {
+        
        VivodZadan();
    }
 
@@ -130,7 +141,7 @@ $("#TabForZadan").on("click", function () {
         @foreach (var row in Model._Zadan)
         {
 
-             @:OtvVBDMass.set(@row._idZadan, "@row._otvVBD");
+             @:OtvVBDMass.set(@row._idZadan, "@row._otvVBD",0);
 
             @: AddTextZadan(@row._nomer, "@row._text",@row._tip,@row._idZadan);
 

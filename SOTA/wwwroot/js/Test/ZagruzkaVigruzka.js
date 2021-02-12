@@ -170,7 +170,7 @@ function vbd(id, text,proveren) {
 
     var idRabota = document.getElementById("idRabota").value;
 
-  
+    alert("dase");
     //alert("vbd " + OtvVBDMass.get(parseInt(id)));
     if (text != OtvVBDMass.get(parseInt(id))) {
         jQuery.ajax({
@@ -186,11 +186,76 @@ function vbd(id, text,proveren) {
     var nZad = d[0].id.substr(3);
     nZad = nZad.substr(0, nZad.length - 4);
     document.getElementById("Zad" + nZad + "-tab").style.backgroundColor = "#999999";
-    console.log(OtvVBDMass);
 
+    console.log(OtvVBDMass);
+    setTimeout(
+        () => {
+            ChekingSafetyAnswers();
+        },
+        10 * 1000
+    );
 }
 
 
+var massCheking = new Array();
+ massCheking = [];
+function ChekingSafetyAnswers() {
+    var i = 0;
+    alert("dasd");
+    for (let [key, value] of OtvVBDMass.entries()) {
+        
+        console.log(key + " " + value);
+
+
+  
+        if (massCheking[i] != 1) {
+            massCheking[i] = 0;
+            var idRabota = document.getElementById("idRabota").value;
+
+            jQuery.ajax({
+                url: '/Test/ChekingSaveOtvet/',
+                type: "POST",
+                dataType: "json",
+                data: { id: key, text: value, idRabota: idRabota },
+                success: function (data) {
+                  
+                    if (data.data != "ok")
+                     {
+                       
+                         vbd(key, value, 0);
+                     
+                         alert("das1");
+
+                    }
+                    else if (data.data =="ok")
+                     {
+                      
+                        massCheking[data.index] = 1;
+                         
+                     }
+                }
+            });
+
+        }
+      
+
+        i++;
+    }
+    setTimeout(
+        () => {
+            jdjj();
+        },
+        10 * 1000
+    );
+     console.log(massCheking);
+      
+    
+}
+function jdjj() {
+    console.log(massCheking);
+}
+
+ 
 
 
 function GetActiveLI() {
