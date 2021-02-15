@@ -196,12 +196,20 @@ namespace SOTA.Controllers
 
             return zadan;
         }
-        public async Task<IActionResult> ChangedBallAjax(int n_spec, int n_zad, int ball)
+        public async Task<IActionResult> ChangedBallAjax(int n_spec, int n_zad, string ball)
         {
 
-            List<Zadanie> Zadans = db.Zadanie.Where(t => t.IdSpec == n_spec && t.Nomer == n_zad).ToList();
-            foreach (Zadanie row in Zadans)
-                row.Ball = ball;
+            List<StructSpec> structSpecs = db.StructSpec.Where(t => t.IdSpec == n_spec && t.Number == n_zad && t.Type==1).ToList();
+            if (structSpecs.Count != 0)
+            {
+                foreach (StructSpec row in structSpecs)
+                    row.Text = ball;
+            }
+            else
+            {
+                structSpecs.Add(new StructSpec() { IdSpec = n_spec, Number = n_zad, Type = 1, Text = ball });
+                db.StructSpec.Add(structSpecs[0]);
+            }
             db.SaveChanges();
             return Json("ok");
         }
@@ -209,9 +217,17 @@ namespace SOTA.Controllers
         public async Task<IActionResult> ChangedTemaAjax(int n_spec, int n_zad, string tema)
         {
 
-            List<Zadanie> Zadans = db.Zadanie.Where(t => t.IdSpec == n_spec && t.Nomer == n_zad).ToList();
-            foreach (Zadanie row in Zadans)
-                row.Tema = tema;
+            List<StructSpec> structSpecs = db.StructSpec.Where(t => t.IdSpec == n_spec && t.Number == n_zad && t.Type == 2).ToList();
+            if (structSpecs.Count != 0)
+            {
+                foreach (StructSpec row in structSpecs)
+                    row.Text = tema;
+            }
+            else
+            {
+                structSpecs.Add(new StructSpec() { IdSpec = n_spec, Number = n_zad, Type = 2, Text = tema });
+                db.StructSpec.Add(structSpecs[0]);
+            }
             db.SaveChanges();
             return Json("ok");
         }
@@ -219,9 +235,89 @@ namespace SOTA.Controllers
         public async Task<IActionResult> ChangedUrovAjax(int n_spec, int n_zad, string urov)
         {
 
-            List<Zadanie> Zadans = db.Zadanie.Where(t => t.IdSpec == n_spec && t.Nomer == n_zad).ToList();
-            foreach (Zadanie row in Zadans)
-                row.Urov = urov;
+            List<StructSpec> structSpecs = db.StructSpec.Where(t => t.IdSpec == n_spec && t.Number == n_zad && t.Type == 3).ToList();
+            if (structSpecs.Count != 0)
+            {
+                foreach (StructSpec row in structSpecs)
+                    row.Text = urov;
+            }
+            else
+            {
+                structSpecs.Add(new StructSpec() { IdSpec = n_spec, Number = n_zad, Type = 3, Text = urov });
+                db.StructSpec.Add(structSpecs[0]);
+            }
+            db.SaveChanges();
+            return Json("ok");
+        }
+
+        public async Task<IActionResult> ChangedKpAjax(int n_spec, int n_zad, string kod1)
+        {
+
+            List<StructSpec> structSpecs = db.StructSpec.Where(t => t.IdSpec == n_spec && t.Number == n_zad && t.Type == 4).ToList();
+            if (structSpecs.Count != 0)
+            {
+                foreach (StructSpec row in structSpecs)
+                    row.Text = kod1;
+            }
+            else
+            {
+                structSpecs.Add(new StructSpec() { IdSpec = n_spec, Number = n_zad, Type = 4, Text = kod1 });
+                db.StructSpec.Add(structSpecs[0]);
+            }
+            db.SaveChanges();
+            return Json("ok");
+        }
+
+        public async Task<IActionResult> ChangedKtAjax(int n_spec, int n_zad, string kod2)
+        {
+
+            List<StructSpec> structSpecs = db.StructSpec.Where(t => t.IdSpec == n_spec && t.Number == n_zad && t.Type == 5).ToList();
+            if (structSpecs.Count != 0)
+            {
+                foreach (StructSpec row in structSpecs)
+                    row.Text = kod2;
+            }
+            else
+            {
+                structSpecs.Add(new StructSpec() { IdSpec = n_spec, Number = n_zad, Type = 5, Text = kod2 });
+                db.StructSpec.Add(structSpecs[0]);
+            }
+            db.SaveChanges();
+            return Json("ok");
+        }
+
+        public async Task<IActionResult> ChangedRuAjax(int n_spec, int n_zad, string rekomenU)
+        {
+
+            List<StructSpec> structSpecs = db.StructSpec.Where(t => t.IdSpec == n_spec && t.Number == n_zad && t.Type == 6).ToList();
+            if (structSpecs.Count != 0)
+            {
+                foreach (StructSpec row in structSpecs)
+                    row.Text = rekomenU;
+            }
+            else
+            {
+                structSpecs.Add(new StructSpec() { IdSpec = n_spec, Number = n_zad, Type = 6, Text = rekomenU });
+                db.StructSpec.Add(structSpecs[0]);
+            }
+            db.SaveChanges();
+            return Json("ok");
+        }
+
+        public async Task<IActionResult> ChangedRkAjax(int n_spec, int n_zad, string rekomenK)
+        {
+
+            List<StructSpec> structSpecs = db.StructSpec.Where(t => t.IdSpec == n_spec && t.Number == n_zad && t.Type == 7).ToList();
+            if (structSpecs.Count != 0)
+            {
+                foreach (StructSpec row in structSpecs)
+                    row.Text = rekomenK;
+            }
+            else
+            {
+                structSpecs.Add(new StructSpec() { IdSpec = n_spec, Number = n_zad, Type = 7, Text = rekomenK });
+                db.StructSpec.Add(structSpecs[0]);
+            }
             db.SaveChanges();
             return Json("ok");
         }
@@ -612,7 +708,7 @@ namespace SOTA.Controllers
 
             model.KolVar = !db.Zadanie.Any(x => x.IdSpec == id_spec) ? 0 : db.Zadanie.Where(x => x.IdSpec == id_spec).OrderByDescending(x => x.Variant).First().Variant;
             //model.Zadanies = ProverkaNaOdinakovBall(db.Zadanie.Where(x => x.IdSpec == id_spec).ToList(), model.KolZad);
-            var zadanies = db.Zadanie.Where(x => x.IdSpec == id_spec && x.Variant == 1).OrderBy(y => y.Nomer).ToList();
+            var zadanies = db.Zadanie.Where(x => x.IdSpec == id_spec ).OrderBy(y => y.Nomer).ToList();
             model.Kriterocens = db.Kriterocen.Where(x => x.IdSpec == id_spec).OrderBy(w => w.MaxBall).ToList();
             model.Predms = db.Predm.ToList();
             model.TipSpecs = db.TipSpec.ToList();
@@ -620,13 +716,17 @@ namespace SOTA.Controllers
             model.TypeStructSpecs = db.TypeStructSpec.ToList();
             var tips = qar.Select(x => x.Type).Distinct();
             List<TipStructlist> distTip = new List<TipStructlist>();
+            TipStructlist listTip;
             foreach (var tip in tips)
             {
-                TipStructlist listTip = new TipStructlist();
+                 listTip = new TipStructlist();
                 listTip.Data = new List<string>();
                 // qwe = q.Where(x => x.Type == tip).Select(x => x.Text).ToList();
                 listTip.Tip = tip;
                 listTip.Name = model.TypeStructSpecs.Find(x=>x.Id==tip).Name;
+
+               
+
                 for (int i = 1; i <= model.KolZad; i++)
                 {
                         if (qar.Where(x => x.Number == i && x.Type == tip).Any())
@@ -640,6 +740,18 @@ namespace SOTA.Controllers
                 }
                 distTip.Add(listTip);
             }
+            listTip = new TipStructlist();
+            listTip.Data = new List<string>();
+            // qwe = q.Where(x => x.Type == tip).Select(x => x.Text).ToList();
+            listTip.Tip = 0;
+            listTip.Name = "Text";
+            for (int i = 0; i < zadanies.Count; i++)
+            {
+               
+                    listTip.Data.Add("n"+zadanies[i].Nomer+"v"+ zadanies[i].Variant+"t"+ (zadanies[i].Text!=null? "1":"0"));
+              
+            }
+            distTip.Add(listTip);
             ViewBag.dist = distTip;
 
             return View("SpecifikacRedact", model);

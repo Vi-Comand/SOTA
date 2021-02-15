@@ -105,8 +105,8 @@ namespace SOTA.Controllers
         {
             var login = HttpContext.User.Identity.Name;
             int idUser = db.Users.Where(p => p.Name == login).First().Id;
-            ResultTest Result = new ResultTest(idUser, idRabota, db);
             int idspec = db.Rabota.First(x => x.Id == idRabota).IdSpec;
+            ResultTest Result = new ResultTest(idUser, idRabota, idspec, db);
             double sumrab = db.Zadanie.Where(x => x.IdSpec == idspec && x.Variant == 1).Sum(r => r.Ball);
            
             ViewBag.sumrab = sumrab;

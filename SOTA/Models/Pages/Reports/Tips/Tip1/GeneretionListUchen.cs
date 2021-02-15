@@ -76,7 +76,7 @@ namespace SOTA.Models.Pages.Reports
                             FIO = (US.F!=null ? US.F+" " : "") + " " + (US.I!=null &&US.I.Any() ? US.I.Substring(0, 1) + "." : "") + (US.O != null && US.O.Any()  ? US.O.Substring(0, 1) + ".":""),
                              MO = MO.Name,
                              OO = OO.Name,
-                             Klass = Klass.KlassNom + Klass.Kod,
+                             Klass = Klass.Kod,
                              Var = Var.Variant,
                              Balls = Ball.Balls
 

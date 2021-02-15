@@ -246,16 +246,16 @@
       
         
         for (var i = 0; i < size; i++) {
+            var n = 1;
             for (key in StructSpecs[i].data) {
 
                 
-                numbers.set(key + StructSpecs[i].tip, StructSpecs[i].data[key]);
-                numbers.set(key + StructSpecs[i].tip, StructSpecs[i].data[key]);
-                numbers.set(key + StructSpecs[i].tip, StructSpecs[i].data[key]);
+                numbers.set(n +"-"+ StructSpecs[i].tip, StructSpecs[i].data[key]);
+                n++;
             }
-            console.log(numbers);
+            
         }
-
+        console.log(numbers);
            /* if (StructSpecs[i].Text == 1) {
 
                 numbers.set(StructSpecs[i].variant + "," + StructSpecs[i].nomer, 1);
@@ -307,9 +307,13 @@
 
 
 
-                table += ' <th width="100px">Количество баллов</th>';
-                table += ' <th width="100px">Уровень сложности</th>';
-                table += ' <th min-width="350px">Тема задания</th></tr></thead> <tbody>';
+                table += ' <th width="50px">Максимальный балл</th>';
+                table += ' <th width="50px">Уровень сложности</th>';
+                table += ' <th width="50px">Коды проверяемых элементов</th>';
+                table += ' <th width="50px">Коды требований</th>';
+                table += ' <th width="300px">Рекомендации ученика</th>';
+                table += ' <th width="300px">Рекомендации класса</th>';
+                table += ' <th width="550px">Тема задания</th></tr></thead> <tbody>';
 
 
                 for (var i = 1; i <= row; i++) {
@@ -322,7 +326,7 @@
                         }
                         if (j != collf) {
 
-                            if (numbers.get(j + "," +i ) == 1)
+                            if (numbers.get(j + "-0") == 1)
                             {
 
                                 table += "<td> <a href=/UprSpec/Zadanie?id_spec=" + n_spec + "&n_var=" + j + "&n_zad=" + i +" class='btn btn-icon btn-sm btn-outline-yel text-center btn-block ' style='wight:100%'>  <i class='fas fa-pencil-alt'></i>Изменить</a></td>";
@@ -333,31 +337,58 @@
                             }
                         }
                         else {
-                            if (numbers.get(i + "b") != null) {
-                                table += ' <td class=" wrap-input100 validate-input "><input type="number" class="form-control-sm input100 " id=Ball' + i + ' value=' + numbers.get(i + "b") + ' pattern="[0-9]{1}" required  onchange="changedball(' + i + ',Ball' + i + ')" /><span class="focus-input100"></span></td>';
+                            if (numbers.get(i + "-1") != null) {
+                                table += ' <td class=" wrap-input100 validate-input "><input type="number" class="form-control-sm input100 " id=Ball' + i + ' value=' + numbers.get(i + "-1") + ' pattern="[0-9]{1}" required  onchange="changedball(' + i + ',Ball' + i + ')" /><span class="focus-input100"></span></td>';
                             }
                             else {
-                                table += ' <td class=" wrap-input100 validate-input "><input type="number" class="form-control-sm input100 " id=Ball' + i + ' value="1" pattern="[0-9]{1}" required  onchange="changedball(' + i + ',Ball' + i + ')" /><span class="focus-input100"></span></td>';
+                                table += ' <td class=" wrap-input100 validate-input "><input type="number" class="form-control-sm input100 " id=Ball' + i + ' value="-1" pattern="[0-9]{1}" required  onchange="changedball(' + i + ',Ball' + i + ')" /><span class="focus-input100"></span></td>';
                             }
 
-                            if (numbers.get(i + "u") != null) {
-                                ur = numbers.get(i + "u");
+                            if (numbers.get(i + "-3") != null) {
+                                ur = numbers.get(i + "-3");
                                 table += ' <td class=" wrap-input100 validate-input "><input type="text" class="form-control-sm input100 " id=Urov' + i + ' value="' + ur + '"   onchange="changedurov(' + i + ',Urov' + i + ')" /><span class="focus-input100"></span></td>';
                             }
                             else {
                                 table += ' <td class=" wrap-input100 validate-input "><input type="text" class="form-control-sm input100 " id=Urov' + i + '  onchange="changedurov(' + i + ',Urov' + i + ')" /><span class="focus-input100"></span></td>';
                             }
 
-                            if (numbers.get(i + "t") != null) {
-                                tem = numbers.get(i + "t");
+                            
+
+                            if (numbers.get(i + "-4") != null) {
+                                k1 = numbers.get(i + "-4");
+                                table += ' <td class=" wrap-input100 validate-input "><input type="text" class="form-control-sm input100 " id=k1' + i + ' value="' + k1 + '"   onchange="changedk1(' + i + ',k1' + i + ')" /><span class="focus-input100"></span></td>';
+                            }
+                            else {
+                                table += ' <td class=" wrap-input100 validate-input "><input type="text" class="form-control-sm input100 " id=k1' + i + '  onchange="changedk1(' + i + ',k1' + i + ')" /><span class="focus-input100"></span></td>';
+                            }
+                            if (numbers.get(i + "-5") != null) {
+                                k2 = numbers.get(i + "-5");
+                                table += ' <td class=" wrap-input100 validate-input "><input type="text" class="form-control-sm input100 " id=k2' + i + ' value="' + k2 + '"   onchange="changedk2(' + i + ',k2' + i + ')" /><span class="focus-input100"></span></td>';
+                            }
+                            else {
+                                table += ' <td class=" wrap-input100 validate-input "><input type="text" class="form-control-sm input100 " id=k2' + i + '  onchange="changedk2(' + i + ',k2' + i + ')" /><span class="focus-input100"></span></td>';
+                            }
+                            if (numbers.get(i + "-6") != null) {
+                                rekU = numbers.get(i + "-6");
+                                table += ' <td class=" wrap-input100 validate-input "><input type="text" class="form-control-sm input100 " id=rekU' + i + ' value="' + rekU + '"   onchange="changedrekU(' + i + ',rekU' + i + ')" /><span class="focus-input100"></span></td>';
+                            }
+                            else {
+                                table += ' <td class=" wrap-input100 validate-input "><input type="text" class="form-control-sm input100 " id=rekU' + i + '  onchange="changedrekU(' + i + ',rekU' + i + ')" /><span class="focus-input100"></span></td>';
+                            }
+                            if (numbers.get(i + "-7") != null) {
+                                rekK = numbers.get(i + "-7");
+                                table += ' <td class=" wrap-input100 validate-input "><input type="text" class="form-control-sm input100 " id=rekK' + i + ' value="' + rekK + '"   onchange="changedrekK(' + i + ',rekK' + i + ')" /><span class="focus-input100"></span></td>';
+                            }
+                            else {
+                                table += ' <td class=" wrap-input100 validate-input "><input type="text" class="form-control-sm input100 " id=rekK' + i + '  onchange="changedrekK(' + i + ',rekK' + i + ')" /><span class="focus-input100"></span></td>';
+                            }
+                            if (numbers.get(i + "-2") != null) {
+                                tem = numbers.get(i + "-2");
                                 table += ' <td class=" wrap-input100 validate-input "><input type="text" class="form-control-sm input100 " id=Tema' + i + ' value="' + tem + '"   onchange="changedtema(' + i + ',Tema' + i + ')" /><span class="focus-input100"></span></td>';
                             }
                             else {
                                 table += ' <td class=" wrap-input100 validate-input "><input type="text" class="form-control-sm input100 " id=Tema' + i + '  onchange="changedtema(' + i + ',Tema' + i + ')" /><span class="focus-input100"></span></td>';
                             }
-
-
-
 
 
 
@@ -418,6 +449,66 @@
             type: "POST",
             dataType: "json",
             data: { n_zad: n_zad, n_spec: n_spec, urov: ur.value },
+            success: function (data) {
+                console.log(data);
+
+            }
+        });
+    }
+
+    function changedk1(n_zad, k1) {
+        n_spec = document.getElementById("id_spec").value;
+
+        jQuery.ajax({
+            url: '/UprSpec/ChangedKpAjax/',
+            type: "POST",
+            dataType: "json",
+            data: { n_zad: n_zad, n_spec: n_spec, kod1: k1.value },
+            success: function (data) {
+                console.log(data);
+
+            }
+        });
+    }
+
+    function changedk2(n_zad, k2) {
+        n_spec = document.getElementById("id_spec").value;
+
+        jQuery.ajax({
+            url: '/UprSpec/ChangedKtAjax/',
+            type: "POST",
+            dataType: "json",
+            data: { n_zad: n_zad, n_spec: n_spec, kod2: k2.value },
+            success: function (data) {
+                console.log(data);
+
+            }
+        });
+    }
+
+    function changedrekU(n_zad, rekU) {
+        n_spec = document.getElementById("id_spec").value;
+
+        jQuery.ajax({
+            url: '/UprSpec/ChangedRuAjax/',
+            type: "POST",
+            dataType: "json",
+            data: { n_zad: n_zad, n_spec: n_spec, rekomenU: rekU.value },
+            success: function (data) {
+                console.log(data);
+
+            }
+        });
+    }
+
+    function changedrekK(n_zad, rekK) {
+        n_spec = document.getElementById("id_spec").value;
+
+        jQuery.ajax({
+            url: '/UprSpec/ChangedRkAjax/',
+            type: "POST",
+            dataType: "json",
+            data: { n_zad: n_zad, n_spec: n_spec, rekomenK: rekK.value },
             success: function (data) {
                 console.log(data);
 

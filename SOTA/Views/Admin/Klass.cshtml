@@ -28,26 +28,26 @@
                                     <th>Логин</th>
                                     <th>Дата регистрации</th>
                                     <th>Управление</th>
-                                    <th>
-                                        Работа:
-                                        <select id="rab" class="form-control input100" asp-for="@Model.rabotaKlasss" required>
-                                            @if (Model.rabotaKlasss == null)
-                                            {
-                                                <option value=null>
-                                                    Нет назначенных работ
-                                                </option>
-                                            }
-                                            else
-                                            {
-                                                @foreach (RabotaUchen rabList in Model.rabotaKlasss)
-                                                {
-                                                    <option value=@rabList.Id>
-                                                        @rabList.Name
-                                                    </option>
-                                                    ;
-                                                }
-                                            }
-                                        </select>
+                                    <th>Завершившие
+                                        Работа: @ViewBag.last
+                                        @*<select id="rab" class="form-control input100" asp-for="@Model.rabotaKlasss" required>
+            @if (Model.rabotaKlasss == null)
+            {
+                <option value=null>
+                    Нет назначенных работ
+                </option>
+            }
+            else
+            {
+                @foreach (RabotaUchen rabList in Model.rabotaKlasss)
+                {
+                    <option value=@rabList.Id>
+                        @rabList.Name
+                    </option>
+                    ;
+                }
+            }
+        </select>*@
                                         <script>
                                             var select = document.querySelector('#rab');
 
@@ -55,7 +55,7 @@
 
                                         </script>
 
-                                        <a id="pokaz" class="btn btn-outline-success col-4 shadow" asp-action="Klass"><i class='fas fa-search'></i>Показать</a>
+                                        @*<a id="pokaz" class="btn btn-outline-success col-4 shadow" asp-action="Klass"><i class='fas fa-search'></i>Показать</a>*@
 
                                     </th>
                                 </tr>

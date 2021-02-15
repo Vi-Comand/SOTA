@@ -13,9 +13,12 @@
             <table class="table table-hover  table-sm table-bordered shadow align-content-center text-center">
                 <thead class="table-yel">
                     <tr>
-                        <th width="20%">Номер задания</th>
-                        <th width="20%">Балл</th>
-                        <th width="60%">Тема</th>
+                        <th width="10%">Номер задания</th>
+                        <th width="10%">Балл</th>
+                        <th width="10%">Максимальный балл</th>
+                        <th width="30%">Тема</th>
+                        <th width="10%">Уровень</th>
+                        <th width="30%">Рекомендации</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -23,7 +26,7 @@
                     {
 
                         double i = 0;
-
+                        double mi = 0;
 
                     @foreach (var row in Model.Result)
                         {
@@ -32,15 +35,19 @@
                     <tr>
                         <td>@row.Number</td>
                         <td>@row.Ball</td>
+                        <td>@row.MaxBall</td>
                         <td>@row.Tema</td>
-                    </tr>
-                            }
-                            i = i + row.Ball;
+                        <td>@row.Urov</td>
+                        <td>@if (row.Ball != 0) { @row.RekomU; }</td>
 
+                   </tr>
                         }
+                        i = i + row.Ball;
+                        mi = mi + row.MaxBall;
+                    }
                     <tr class="table-success">
                         <td>Всего </td>
-                        <td>@i @*из @ViewBag.sumrab*@ </td>
+                        <td colspan="5">@i из @mi </td>
                         <td>
                             @if (ViewBag.dateK > DateTime.Now)
                                 {
