@@ -166,11 +166,11 @@ function TextOtvTip4(nZad) {
 
 
 
-function vbd(id, text,proveren) {
-
+function vbd(id, text, proveren) {
+  //  alert("1" + " " + id + " " + text + " " + proveren);
     var idRabota = document.getElementById("idRabota").value;
 
-    alert("dase");
+  //  alert("dase");
     //alert("vbd " + OtvVBDMass.get(parseInt(id)));
     if (text != OtvVBDMass.get(parseInt(id))) {
         jQuery.ajax({
@@ -188,27 +188,36 @@ function vbd(id, text,proveren) {
     document.getElementById("Zad" + nZad + "-tab").style.backgroundColor = "#999999";
 
     console.log(OtvVBDMass);
-    setTimeout(
-        () => {
-            ChekingSafetyAnswers();
-        },
-        10 * 1000
-    );
+    //setTimeout(
+    //    () => {
+    //        ChekingSafetyAnswers();
+    //    },
+    //    150 * 1000
+    //);
 }
+function vbd1(id, text, proveren) {
+    jQuery.ajax({
+        url: '/Test/SaveOtvet/',
+        type: "POST",
+        dataType: "json",
+        data: { id: id, text: text, idRabota: idRabota, proveren: proveren }
 
-
+    });
+}
 var massCheking = new Array();
- massCheking = [];
+massCheking = [];
+setInterval(() => ChekingSafetyAnswers(), 180000);
 function ChekingSafetyAnswers() {
     var i = 0;
-    alert("dasd");
+
     for (let [key, value] of OtvVBDMass.entries()) {
         
         console.log(key + " " + value);
 
 
-  
-        if (massCheking[i] != 1) {
+       
+        if (massCheking[i] != value) {
+         
             massCheking[i] = 0;
             var idRabota = document.getElementById("idRabota").value;
 
@@ -216,44 +225,40 @@ function ChekingSafetyAnswers() {
                 url: '/Test/ChekingSaveOtvet/',
                 type: "POST",
                 dataType: "json",
-                data: { id: key, text: value, idRabota: idRabota },
+                data: { id: key, text: value, idRabota: idRabota,index:i },
                 success: function (data) {
-                  
-                    if (data.data != "ok")
-                     {
-                       
-                         vbd(key, value, 0);
+               
+                
+                    console.log(massCheking);
+                   // alert(data.data + " " + value);
+                    
+                    if (data == "neok" || data.data != value) {
+                        console.log(key + " " + value);
+                       // vbd1(key, value, 1);
+
                      
-                         alert("das1");
 
                     }
-                    else if (data.data =="ok")
-                     {
+                    else if (data.data == value) {
                       
-                        massCheking[data.index] = 1;
-                         
-                     }
-                }
+                       
+                        massCheking[Number(data.index)] = data.data;
+
+                    }
+                }   
             });
 
         }
-      
-
+        
+    
         i++;
     }
-    setTimeout(
-        () => {
-            jdjj();
-        },
-        10 * 1000
-    );
-     console.log(massCheking);
-      
+
+  
+
     
 }
-function jdjj() {
-    console.log(massCheking);
-}
+
 
  
 
