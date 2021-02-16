@@ -133,7 +133,7 @@ namespace SOTA.Models
                                 F = user.F,
                                 I = user.I,
                                 O = user.O,
-                                // Kod = user.Kod,
+                                Kod = user.Kod,
                                 MO = Mo.Name,
                                 OO = Oo.Name,
                                 Klass = Klass.Kod,

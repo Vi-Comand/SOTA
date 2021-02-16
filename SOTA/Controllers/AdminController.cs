@@ -95,9 +95,15 @@ namespace SOTA.Controllers
             ViewBag.rl = user.Role;
             ListUsersAdmin listUsersAdmin = new ListUsersAdmin(db);
             listUsersAdmin.GetRab(user.IdMo, user.IdOo, user.IdKlass);
-            listUsersAdmin.rabList.OrderBy(x => x.Konec);
-            int id_spec = listUsersAdmin.rabList.First().Id;
-            string name = listUsersAdmin.rabList.First().Name;
+            int id_spec=0;
+                string name="";
+            if (listUsersAdmin.rabList != null)
+            {
+                listUsersAdmin.rabList.OrderBy(x => x.Konec);
+            
+             id_spec = listUsersAdmin.rabList.First().Id;
+             name = listUsersAdmin.rabList.First().Name;
+            }
             if (listUsersAdmin.rabList == null)
             {
                 listUsersAdmin.LisrUsersA();

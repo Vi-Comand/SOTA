@@ -92,12 +92,28 @@ namespace SOTA.Models.Pages.Reports.Excel.Tip
                 workSheet.Cells[rowKol, indexColumnsBalls + 1].Value = row.SumBall;
                 rowKol++;
             }
+
             int indexColumnsProcVipolnen = 6;
+            workSheet.Cells[rowKol, 4].Value = "Средний процент";
             foreach (var row in Protokol.ProcVipZad)
             {
                 workSheet.Cells[rowKol, indexColumnsProcVipolnen].Value = Math.Round(row, 2);
                 indexColumnsProcVipolnen++;
             }
+            workSheet.Cells[rowKol, indexColumnsProcVipolnen].Value= Protokol.ProcVipZad.Sum()/KolZad;
+            workSheet.Cells[rowKol, indexColumnsProcVipolnen].Style.Numberformat.Format = "0.0%";
+            workSheet.Cells[rowKol, indexColumnsProcVipolnen].Style.Font.Bold=true;
+            rowKol++;
+            int indexColumnsSumVipolnen = 6;
+            workSheet.Cells[rowKol, 4].Value = "Средний балл";
+            foreach (var row in Protokol.SumVipZad)
+            {
+                workSheet.Cells[rowKol, indexColumnsSumVipolnen].Value = Math.Round(row, 2);
+                indexColumnsSumVipolnen++;
+            }
+            workSheet.Cells[rowKol, indexColumnsSumVipolnen].Value = Protokol.SumVipZad.Sum() / KolZad;
+            workSheet.Cells[rowKol, indexColumnsSumVipolnen].Style.Numberformat.Format = "0.00";
+
             Style(workSheet, kolUchen, KolZad);
             Chart(workSheet, kolUchen, KolZad);
 
@@ -111,26 +127,32 @@ namespace SOTA.Models.Pages.Reports.Excel.Tip
                 
                     workSheet.Cells[rowIndex, 1].Value = row.Number;
                 workSheet.Cells[rowIndex, 2].Value = row.CheckElementContent;
-                workSheet.Cells[rowIndex, 3].Value = row.LevelOfComplexity;
-                workSheet.Cells[rowIndex, 4].Value = row.MaxScore;
-                workSheet.Cells[rowIndex, 5].Value = row.AverageScore;
-                workSheet.Cells[rowIndex, 6].Value = row.LevelSuccess;
-                workSheet.Cells[rowIndex, 7].Value = row.Conclusion;
-
+                workSheet.Cells[rowIndex, 3].Value = row.KodPes;
+                workSheet.Cells[rowIndex, 4].Value = row.LevelOfComplexity;
+                workSheet.Cells[rowIndex, 5].Value = row.MaxScore;
+                workSheet.Cells[rowIndex, 6].Value = row.AverageScore;
+                workSheet.Cells[rowIndex, 7].Value = row.LevelSuccess;
+                workSheet.Cells[rowIndex, 8].Value = row.Conclusion;
+                if (row.LevelSuccess <= 0.50) { workSheet.Cells[rowIndex, 9].Value = row.Recomend;}
 
 
                 rowIndex++;
 
 
             }
-
-
+            rowIndex--;
+            ExcelBorderStyle Style = ExcelBorderStyle.Thin;
+            workSheet.Cells[1, 1, rowIndex, 9].Style.Border.Left.Style = Style;
+            workSheet.Cells[1, 1, rowIndex, 9].Style.Border.Right.Style = Style;
+            workSheet.Cells[1, 1, rowIndex, 9].Style.Border.Top.Style = Style;
+            workSheet.Cells[1, 1, rowIndex, 9].Style.Border.Bottom.Style = Style;
+            workSheet.Cells[2 , 6, rowIndex, 6].Style.Numberformat.Format = "0.00";
         }
 
             private void Chart(ExcelWorksheet workSheet, int kolRow,int kolZad)
         {
             double top=0;
-            for (int i = 1; i < kolRow+13 ; i++)
+            for (int i = 1; i < kolRow+20 ; i++)
                 top += workSheet.Row(i).Height;
             top =  top / 0.75;
             var ws = workSheet;
@@ -142,21 +164,35 @@ namespace SOTA.Models.Pages.Reports.Excel.Tip
             var chart = (ExcelBarChart)ws.Drawings.AddChart("barChart", eChartType.ColumnClustered);
             
             chart.Legend.Remove();
-            chart.SetSize(40*kolZad, 400);
+            chart.SetSize(100*kolZad, 400);
             chart.SetPosition((int)top, 20);
             chart.Title.Text = "Процент выполнения заданий";
             //chart.Direction = eDirection.Column; // error: Property or indexer 'OfficeOpenXml.Drawing.Chart.ExcelBarChart.Direction' cannot be assigned to -- it is read only
 
             chart.Series.Add(ExcelRange.GetAddress(12+kolRow, 6, 12 + kolRow, kolZad + 5), ExcelRange.GetAddress(11, 6, 11,kolZad+5 ));
 
+
+
+            var chart2 = (ExcelBarChart)ws.Drawings.AddChart("barChart2", eChartType.ColumnClustered);
+
+            chart2.Legend.Remove();
+            chart2.SetSize(100 * kolZad, 400);
+            chart2.SetPosition((int)top, 100+100*kolZad);
+            chart2.Title.Text = "Средний балл по заданиям";
+            //chart.Direction = eDirection.Column; // error: Property or indexer 'OfficeOpenXml.Drawing.Chart.ExcelBarChart.Direction' cannot be assigned to -- it is read only
+
+            chart2.Series.Add(ExcelRange.GetAddress(13 + kolRow, 6, 13 + kolRow, kolZad + 5), ExcelRange.GetAddress(11, 6, 11, kolZad + 5));
+
         }
         private void Style(ExcelWorksheet workSheet, int kolRow, int KolZad)
         {
             ExcelBorderStyle Style= ExcelBorderStyle.Thin;
-            workSheet.Cells[12, 1, 12 + kolRow, 7 + KolZad].Style.Border.Left.Style = Style;
-            workSheet.Cells[12, 1, 12 + kolRow, 7 + KolZad].Style.Border.Right.Style = Style;
-            workSheet.Cells[12, 1, 12 + kolRow, 7 + KolZad].Style.Border.Top.Style = Style;
-            workSheet.Cells[12, 1, 12 + kolRow, 7 + KolZad].Style.Border.Bottom.Style = Style;
+            workSheet.Cells[12, 1, 13 + kolRow, 7 + KolZad].Style.Border.Left.Style = Style;
+            workSheet.Cells[12, 1, 13 + kolRow, 7 + KolZad].Style.Border.Right.Style = Style;
+            workSheet.Cells[12, 1, 13 + kolRow, 7 + KolZad].Style.Border.Top.Style = Style;
+            workSheet.Cells[12, 1, 13 + kolRow, 7 + KolZad].Style.Border.Bottom.Style = Style;
+            workSheet.Cells[12 + kolRow, 6, 12 + kolRow, 6 + KolZad].Style.Numberformat.Format = "0.0%";
+            workSheet.Cells[12 + kolRow, 4, 13 + kolRow, 6 + KolZad].Style.Font.Bold = true;
         }
 
             private void AddNumberZadans(ExcelWorksheet workSheet, int KolZad)

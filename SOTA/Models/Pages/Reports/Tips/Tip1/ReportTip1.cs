@@ -45,6 +45,7 @@ namespace SOTA.Models.Pages.Reports
        private void FillingProtocol()
         {
             Rabota rab = db.Rabota.Find(idRabota);
+            protokol.IdSpec = rab.IdSpec;
             protokol.NameR = rab.Name;
             protokol.DateProved = rab.Nachalo.Date;
             protokol.Predmet = db.Predm.Find(db.Specific.Find(rab.IdSpec).Predm).Name;          
@@ -54,8 +55,8 @@ namespace SOTA.Models.Pages.Reports
             {
                 GeneretionListUchen list = new GeneretionListUchen(listBalls, db);
 
-                protokol.Tables = list.GetTables();
-
+                protokol.Tables = list.GetTables(protokol.IdSpec);
+                protokol.SumVipZad = list.GetSumVip();
                 protokol.ProcVipZad = list.GetProcVip();
                 protokol.KolUch = protokol.Tables.Count;
                 var AnalyticsTable = new CreatingAnalyticsTable(db, idRabota, protokol);

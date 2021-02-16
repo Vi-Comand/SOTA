@@ -35,17 +35,18 @@ namespace SOTA.Models.Pages.Test
         public void GetResult()
         {
             var str = db.StructSpec.Where(x=>x.IdSpec==_idSpec).ToList();
-            Result = (from Ub in db.UsersBalls.Where(x => x.IdUser == _idUser && x.IdRabota == _idRabota)
-                      join Zd in db.Zadanie on Ub.IdZadania equals Zd.Id into zd
-                      from Zd in zd.DefaultIfEmpty()
+            Result = (from Zd in db.Zadanie.Where(x => x.IdSpec == _idSpec && x.Variant==1)
+                      // from Ub in db.UsersBalls.Where(x => x.IdUser == _idUser && x.IdRabota == _idRabota)
+                      join Ub in db.UsersBalls.Where(x => x.IdUser == _idUser) on Zd.Id equals Ub.IdZadania into ub
+                      from Ub in ub.DefaultIfEmpty()
                       select new BallPoZadan
                       {
                           Number = Zd.Nomer,
-                          Ball = Ub.Ball,
-                          MaxBall = str.Where(x=>x.Type==1  && x.Number==Zd.Nomer) != null ? Convert.ToDouble(str.Where(x => x.Type == 1 && x.Number == Zd.Nomer).First().Text) : 0,
-                          Tema = str.Where(x => x.Type == 2 && x.Number == Zd.Nomer) != null ? str.Where(x => x.Type == 2 && x.Number == Zd.Nomer).First().Text : "",
-                          Urov = str.Where(x => x.Type == 3 && x.Number == Zd.Nomer) != null ? str.Where(x => x.Type == 3 && x.Number == Zd.Nomer).First().Text : "",
-                          RekomU = str.Where(x => x.Type == 6 && x.Number == Zd.Nomer) != null ? str.Where(x => x.Type == 6 && x.Number == Zd.Nomer).First().Text : ""
+                          Ball = Ub.Ball!=null?Ub.Ball:0,
+                          MaxBall = str.Where(x=>x.Type==1  && x.Number==Zd.Nomer).Count() != 0 ? Convert.ToDouble(str.Where(x => x.Type == 1 && x.Number == Zd.Nomer).First().Text) : 0,
+                          Tema = str.Where(x => x.Type == 2 && x.Number == Zd.Nomer).Count() != 0 ? str.Where(x => x.Type == 2 && x.Number == Zd.Nomer).First().Text : "",
+                          Urov = str.Where(x => x.Type == 3 && x.Number == Zd.Nomer).Count() != 0 ? str.Where(x => x.Type == 3 && x.Number == Zd.Nomer).First().Text : "",
+                          RekomU = str.Where(x => x.Type == 6 && x.Number == Zd.Nomer).Count() != 0 ? str.Where(x => x.Type == 6 && x.Number == Zd.Nomer).First().Text : ""
                       }).OrderBy(x => x.Number).ToList();
 
         }

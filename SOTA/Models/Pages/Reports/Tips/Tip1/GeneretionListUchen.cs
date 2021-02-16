@@ -11,6 +11,7 @@ namespace SOTA.Models.Pages.Reports
    
        
          List<RowProtokol> UsrBalls;
+        List<double> SumVipZad;
         List<double> ProcVipZad;
         public GeneretionListUchen(List<RowProtokol> UserBalls, SotaContext context)
         {
@@ -22,36 +23,55 @@ namespace SOTA.Models.Pages.Reports
         }
         public List<double> GetProcVip()
         {
-         
             return ProcVipZad;
         }
-        public List<RowProtokol> GetTables()
+
+        public List<double> GetSumVip()
+        {
+            return SumVipZad;
+        }
+        public List<RowProtokol> GetTables(int IdSpec)
         {
             GetListUchen();
-            RaschetBalls();
+            RaschetBalls(IdSpec);
             return UsrBalls;
         }
 
 
-        private void RaschetBalls()
+        private void RaschetBalls(int ISp)
         {
             if(UsrBalls!=null)
             {
+                var ListMaxBall = db.StructSpec.Where(x=>x.IdSpec==ISp && x.Type==1).OrderBy(x=>x.Number).ToList();
+                double kolMaxBall=0;
+                foreach (var row in ListMaxBall)
+                {
+                    kolMaxBall = kolMaxBall + Convert.ToDouble( row.Text);
+                }
+                   
                 double kolZad = UsrBalls[1].Balls.Count;
                 foreach(var row in UsrBalls)
                 {
                     row.SumBall = row.Balls.Where(x => x != -1).Sum();
-                    row.ProcVipUch = row.Balls.Where(x => x != -1 && x != 0).Count() / kolZad * 100;
+                    row.ProcVipUch = row.Balls.Where(x => x != -1 && x != 0).Sum() / kolMaxBall * 100;
                 }
                 
                 ProcVipZad = new List<double>();
+                SumVipZad = new List<double>();
                 double a = UsrBalls.Count;
+                foreach(var lball in ListMaxBall)
+                {
+                    double b = UsrBalls.Select(x => x.Balls[lball.Number - 1]).Where(x => x != 0 && x != -1).Sum();
+                    double Proc = b / a/Convert.ToDouble(lball.Text) ;
+                    ProcVipZad.Add(Proc);
+                }
+
                 for (int i=1;i<=kolZad;i++)
                 {
                    
-                    double b = UsrBalls.Select(x => x.Balls[i - 1]).Where(x => x != 0 && x != -1).Count();
-                    double Proc =  b/a  * 100;
-                   ProcVipZad.Add(Proc);
+                    double b = UsrBalls.Select(x => x.Balls[i - 1]).Where(x => x != 0 && x != -1).Sum();
+                    double Sum =  b/a  ;
+                   SumVipZad.Add(Sum);
                 }
                
             }

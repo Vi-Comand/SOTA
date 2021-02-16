@@ -30,7 +30,30 @@ namespace SOTA.Models.Pages.Reports
         private void FillingAnalyticsTableFromBD()
         {
             int SpecID = db.Rabota.Find(RabotaID).IdSpec;
-            AnalyticsTable = db.Zadanie.Where(x => x.IdSpec == SpecID && x.Variant==1).Select(y => new RowAnalytics { Number = y.Nomer, CheckElementContent = y.Tema, LevelOfComplexity = y.Urov, MaxScore=y.Ball==0?db.Otvet.Where(x=>x.IdZadan==y.Id&&x.Ustar==0).Select(b=>b.Ball).Sum(): y.Ball }).OrderBy(x=>x.Number).ToList();
+            var str = db.StructSpec.Where(x => x.IdSpec == SpecID).ToList();
+            //Result = (from Ub in db.UsersBalls.Where(x => x.IdUser == _idUser && x.IdRabota == _idRabota)
+            //          join Zd in db.Zadanie on Ub.IdZadania equals Zd.Id into zd
+            //          from Zd in zd.DefaultIfEmpty()
+            //          select new BallPoZadan
+            //          {
+            //              Number = Zd.Nomer,
+            //              Ball = Ub.Ball,
+            //              MaxBall = str.Where(x => x.Type == 1 && x.Number == Zd.Nomer) != null ? Convert.ToDouble(str.Where(x => x.Type == 1 && x.Number == Zd.Nomer).First().Text) : 0,
+            //              Tema = str.Where(x => x.Type == 2 && x.Number == Zd.Nomer) != null ? str.Where(x => x.Type == 2 && x.Number == Zd.Nomer).First().Text : "",
+            //              Urov = str.Where(x => x.Type == 3 && x.Number == Zd.Nomer) != null ? str.Where(x => x.Type == 3 && x.Number == Zd.Nomer).First().Text : "",
+            //              RekomU = str.Where(x => x.Type == 6 && x.Number == Zd.Nomer) != null ? str.Where(x => x.Type == 6 && x.Number == Zd.Nomer).First().Text : ""
+            //          }).OrderBy(x => x.Number).ToList();
+            
+            AnalyticsTable = db.Zadanie.Where(x => x.IdSpec == SpecID && x.Variant==1).Select(y => new RowAnalytics
+            {
+                Number = y.Nomer,
+                CheckElementContent = str.Where(x => x.Type == 2 && x.Number == y.Nomer).Any() ? str.Where(x => x.Type == 2 && x.Number == y.Nomer).First().Text : "",
+                LevelOfComplexity = str.Where(x => x.Type == 3 && x.Number == y.Nomer).Any() ? str.Where(x => x.Type == 3 && x.Number == y.Nomer).First().Text : "",
+                MaxScore = str.Where(x => x.Type == 1 && x.Number == y.Nomer).Any() ? Convert.ToDouble(str.Where(x => x.Type == 1 && x.Number == y.Nomer).First().Text) : 0,
+                KodPt = str.Where(x => x.Type == 5 && x.Number == y.Nomer).Any() ? str.Where(x => x.Type == 5 && x.Number == y.Nomer).First().Text : "",
+                KodPes = str.Where(x => x.Type == 4 && x.Number == y.Nomer).Any() ? str.Where(x => x.Type == 4 && x.Number == y.Nomer).First().Text : "",
+                Recomend = str.Where(x => x.Type == 7 && x.Number == y.Nomer).Any() ? str.Where(x => x.Type == 7 && x.Number == y.Nomer).First().Text : ""
+            }).OrderBy(x=>x.Number).ToList();
        
         }
         private void CalculationAnalyticsTable()
@@ -88,13 +111,13 @@ namespace SOTA.Models.Pages.Reports
         }
         private string GetConclusion(double LevelSuccess)
         {
-            if (LevelSuccess < 30)
+            if (LevelSuccess < 0.30)
                 return "Данный элемент содержания усвоен на крайне низком уровне.Требуется серьёзная коррекция.";
-            if (LevelSuccess < 50)
+            if (LevelSuccess < 0.50)
                 return "Данный элемент содержания усвоен на низком уровне. Требуется коррекция.";
-            if (LevelSuccess < 70)
+            if (LevelSuccess < 0.70)
                 return "Данный элемент содержания усвоен на приемлемом уровне. Возможно, необходимо обратить внимание на категорию учащихся, затрудняющихся с данным заданием.";
-            if (LevelSuccess < 90)
+            if (LevelSuccess < 0.90)
                 return "Данный элемент содержания усвоен на хорошем уровне. Важно поддерживать этот уровень у сильных учащихся и продолжать подготовку слабых учащихся";
 
             return "Данный элемент содержания усвоен на высоком уровне. Важно зафиксировать данный уровень. Обратить внимание на причины и условия обеспечившие высокий результат.";

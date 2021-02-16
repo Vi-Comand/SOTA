@@ -38,7 +38,7 @@
                         <td>@row.MaxBall</td>
                         <td>@row.Tema</td>
                         <td>@row.Urov</td>
-                        <td>@if (row.Ball != 0) { @row.RekomU; }</td>
+                        <td>@if (row.Ball == 0) { @row.RekomU; }</td>
 
                    </tr>
                         }
@@ -47,7 +47,7 @@
                     }
                     <tr class="table-success">
                         <td>Всего </td>
-                        <td colspan="5">@i из @mi </td>
+                        <td colspan="4">@i из @mi </td>
                         <td>
                             @if (ViewBag.dateK > DateTime.Now)
                                 {
