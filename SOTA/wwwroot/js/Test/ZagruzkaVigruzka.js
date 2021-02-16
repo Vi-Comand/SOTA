@@ -166,11 +166,11 @@ function TextOtvTip4(nZad) {
 
 
 
-function vbd(id, text,proveren) {
-
+function vbd(id, text, proveren) {
+  //  alert("1" + " " + id + " " + text + " " + proveren);
     var idRabota = document.getElementById("idRabota").value;
 
-  
+  //  alert("dase");
     //alert("vbd " + OtvVBDMass.get(parseInt(id)));
     if (text != OtvVBDMass.get(parseInt(id))) {
         jQuery.ajax({
@@ -186,11 +186,81 @@ function vbd(id, text,proveren) {
     var nZad = d[0].id.substr(3);
     nZad = nZad.substr(0, nZad.length - 4);
     document.getElementById("Zad" + nZad + "-tab").style.backgroundColor = "#999999";
-    console.log(OtvVBDMass);
 
+    console.log(OtvVBDMass);
+    //setTimeout(
+    //    () => {
+    //        ChekingSafetyAnswers();
+    //    },
+    //    150 * 1000
+    //);
+}
+function vbd1(id, text, proveren) {
+    jQuery.ajax({
+        url: '/Test/SaveOtvet/',
+        type: "POST",
+        dataType: "json",
+        data: { id: id, text: text, idRabota: idRabota, proveren: proveren }
+
+    });
+}
+var massCheking = new Array();
+massCheking = [];
+setInterval(() => ChekingSafetyAnswers(), 180000);
+function ChekingSafetyAnswers() {
+    var i = 0;
+
+    for (let [key, value] of OtvVBDMass.entries()) {
+        
+        console.log(key + " " + value);
+
+
+       
+        if (massCheking[i] != value) {
+         
+            massCheking[i] = 0;
+            var idRabota = document.getElementById("idRabota").value;
+
+            jQuery.ajax({
+                url: '/Test/ChekingSaveOtvet/',
+                type: "POST",
+                dataType: "json",
+                data: { id: key, text: value, idRabota: idRabota,index:i },
+                success: function (data) {
+               
+                
+                    console.log(massCheking);
+                   // alert(data.data + " " + value);
+                    
+                    if (data == "neok" || data.data != value) {
+                        console.log(key + " " + value);
+                       // vbd1(key, value, 1);
+
+                     
+
+                    }
+                    else if (data.data == value) {
+                      
+                       
+                        massCheking[Number(data.index)] = data.data;
+
+                    }
+                }   
+            });
+
+        }
+        
+    
+        i++;
+    }
+
+  
+
+    
 }
 
 
+ 
 
 
 function GetActiveLI() {

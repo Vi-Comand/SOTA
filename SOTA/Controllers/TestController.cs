@@ -90,7 +90,28 @@ namespace SOTA.Controllers
 
 
 
+        public IActionResult ChekingSaveOtvet(int id, int idRabota, int index,string text)
+        {
+            var login = HttpContext.User.Identity.Name;
+            int idUser = db.Users.Where(p => p.Name == login).First().Id;
+            try
+            {
+                string textOtv = db.AnswerUser.Where(x => x.IdUser == idUser && x.IdRabota == idRabota && x.IdZadan == id).First().TextOtv;
+                if (textOtv == text)
+                    return Json(new { data = text, index });
+                else
+                {
+                    SaveOtvUser save = new SaveOtvUser(id, text, db, idUser, idRabota, 1);
+                 
+                }
+            }
+            catch
+            {
+                SaveOtvUser save = new SaveOtvUser(id, text, db, idUser, idRabota, 1);
+            }
 
+            return Json("neok");
+        }
 
         public IActionResult SaveOtvet(int id, string text, int idRabota, int proveren)
         {
