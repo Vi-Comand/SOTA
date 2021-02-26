@@ -128,7 +128,7 @@ namespace SOTA.Controllers
             int idUser = db.Users.Where(p => p.Name == login).First().Id;
             int idspec = db.Rabota.First(x => x.Id == idRabota).IdSpec;
             ResultTest Result = new ResultTest(idUser, idRabota, idspec, db);
-            double sumrab = db.Zadanie.Where(x => x.IdSpec == idspec && x.Variant == 1).Sum(r => r.Ball);
+            double sumrab = db.StructSpec.Where(x => x.IdSpec == idspec && x.Type == 1).Sum(r => Convert.ToDouble(r.Text));
            
             ViewBag.sumrab = sumrab;
             ViewBag.role = "0";

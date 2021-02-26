@@ -35,7 +35,7 @@ namespace SOTA.Models
         {
             get; set;
         }
-        public double Ball
+        public double PriceError
         {
             get; set;
         }

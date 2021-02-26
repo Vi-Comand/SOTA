@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using SOTA.Models.Pages.Test;
 using SOTA.Models.Pages.Test.TestRaschet;
 using SOTA.Models.Pages.Test.TestRaschet.ConcreteStrategy;
 
@@ -83,14 +84,22 @@ namespace SOTA.Models.Pages.TestRaschet
         private int idRabota;
         private int idUser;
       
-        public RaschetBallsUser(SotaContext context,int _idRabota, int _idUser)
+        public RaschetBallsUser(SotaContext context,int idRabota, int idUser)
         {
             db = context;
             List<UsersBalls> VBD =new List<UsersBalls>();
-            VBD = db.UsersBalls.Where(x => x.IdRabota == _idRabota && x.IdUser == _idUser).ToList();
-            idRabota = _idRabota;
-            idUser = _idUser;
+            VBD = db.UsersBalls.Where(x => x.IdRabota == idRabota && x.IdUser == idUser).ToList();
+            this.idRabota = idRabota;
+            this.idUser = idUser;
             ClearBD(VBD);
+            int idSpec = db.Rabota.Find(idRabota).IdSpec;
+
+            var fsdfs = StaticRabotsOtvVBD.staticOtvVBDs;
+
+
+            StaticRabotsOtvVBD.Add(idSpec,db);
+            
+
             FormirOtvetsUser();
             FormirOtvVBD();
             PodgotovkaRascheta();
@@ -110,7 +119,7 @@ namespace SOTA.Models.Pages.TestRaschet
             var vrem = db.AnswerUser.Where(x => x.IdRabota == idRabota && x.IdUser == idUser).ToList();
 
             OtvetsUsers = vrem.Join(db.Zadanie, x => x.IdZadan, y => y.Id,
-                (x, y) => new AnswerUserRascheta { Otvet =(AnswerUser)x, Tip = y.Tip ,Ball=y.Ball}).ToList();
+                (x, y) => new AnswerUserRascheta { Otvet =(AnswerUser)x, Tip = y.Tip}).ToList();
 
         }
 
