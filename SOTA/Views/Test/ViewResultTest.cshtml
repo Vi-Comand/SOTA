@@ -28,39 +28,45 @@
                         double i = 0;
                         double mi = 0;
 
-                    @foreach (var row in Model.Result)
+                        @foreach (var row in Model.Result)
                         {
                             if (ViewBag.dateK < DateTime.Now)
                             {
-                    <tr>
-                        <td>@row.Number</td>
-                        <td>@row.Ball</td>
-                        <td>@row.MaxBall</td>
-                        <td>@row.Tema</td>
-                        <td>@row.Urov</td>
-                        <td>@if (row.Ball == 0) { @row.RekomU; }</td>
+                                <tr>
+                                    <td>@row.Number</td>
+                                    <td>@row.Ball</td>
+                                    <td>@row.MaxBall</td>
+                                    <td>@row.Tema</td>
+                                    <td>@row.Urov</td>
+                                    <td>@if (row.Ball == 0)
+                                    {@row.RekomU;
+                                }</td>
 
-                   </tr>
+                                </tr>
+                            }
+                            i = i + row.Ball;
+                            mi = mi + row.MaxBall;
                         }
-                        i = i + row.Ball;
-                        mi = mi + row.MaxBall;
-                    }
-                    <tr class="table-success">
-                        <td>Всего </td>
-                        <td colspan="4">@i из @mi </td>
-                        <td>
-                            @if (ViewBag.dateK > DateTime.Now)
+                        <tr class="table-success">
+                            <td>Всего </td>
+                            <td colspan="4">@i из @mi </td>
+                            <td>
+                                @if (ViewBag.dateK > DateTime.Now)
                                 {
-                            <p>Результаты по заданиям будут доступны после</p>  @ViewBag.dateK
+                                    <p>Результаты по заданиям будут доступны после</p> @ViewBag.dateK
                                 }
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
                     }
-                </tbody>
-                <tfoot class=" ">
+                    else
+                    {
+                    <td>Результаты расчитываются обновите страницу позже</td>
+                }
+                    </tbody>
+                    <tfoot class=" ">
 
-                </tfoot>
-            </table>
+                    </tfoot>
+                </table>
         </div>
 
     </div>

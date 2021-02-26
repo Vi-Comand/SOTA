@@ -13,13 +13,15 @@ namespace SOTA.Models.Pages.Reports
          List<RowProtokol> UsrBalls;
         List<double> SumVipZad;
         List<double> ProcVipZad;
-        public GeneretionListUchen(List<RowProtokol> UserBalls, SotaContext context)
+        int idRabota;
+        public GeneretionListUchen(List<RowProtokol> UserBalls, SotaContext context, int _idRabota)
         {
             db = context;
             UsrBalls = UserBalls;
-   
-          
-           
+
+            idRabota = _idRabota;
+
+
         }
         public List<double> GetProcVip()
         {
@@ -49,7 +51,7 @@ namespace SOTA.Models.Pages.Reports
                     kolMaxBall = kolMaxBall + Convert.ToDouble( row.Text);
                 }
                    
-                double kolZad = UsrBalls[1].Balls.Count;
+                double kolZad = db.Zadanie.Where(x=>x.IdSpec==ISp && x.Variant==1).Count();
                 foreach(var row in UsrBalls)
                 {
                     row.SumBall = row.Balls.Where(x => x != -1).Sum();
@@ -88,7 +90,7 @@ namespace SOTA.Models.Pages.Reports
                         join MO in db.Mo on US.IdMo equals MO.Id 
                         join OO in db.Oo on US.IdOo equals OO.Id
                         join Klass in db.Klass on US.IdKlass equals Klass.Id 
-                        join Var in db.VariantUser on US.Id equals Var.IdUser 
+                        join Var in db.VariantUser.Where(x=>x.IdRabota==idRabota) on US.Id equals Var.IdUser 
 
                         select new RowProtokol
                         {

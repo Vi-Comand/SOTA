@@ -63,7 +63,7 @@ namespace SOTA.Models.Pages.Reports.Excel.Tip
         }
         private void FillProtokolList(ExcelWorksheet workSheet)
         {
-            int KolZad = Protokol.Tables[1].Balls.Count;
+            int KolZad = Protokol.KolZad;
             int kolUchen = Protokol.Tables.Count;
             AddNumberZadans(workSheet, KolZad);
             int rowKol = 12;

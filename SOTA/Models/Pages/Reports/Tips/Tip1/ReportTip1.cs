@@ -47,13 +47,15 @@ namespace SOTA.Models.Pages.Reports
             Rabota rab = db.Rabota.Find(idRabota);
             protokol.IdSpec = rab.IdSpec;
             protokol.NameR = rab.Name;
+
             protokol.DateProved = rab.Nachalo.Date;
             protokol.Predmet = db.Predm.Find(db.Specific.Find(rab.IdSpec).Predm).Name;          
             protokol.KolVar = db.Zadanie.Where(x => x.IdSpec == rab.IdSpec).OrderByDescending(x => x.Variant).First().Variant;
+            protokol.KolZad = db.Zadanie.Where(x => x.IdSpec == rab.IdSpec && x.Variant == 1).Count();
             var listBalls = FillingBall();
             if (listBalls.Count != 0)
             {
-                GeneretionListUchen list = new GeneretionListUchen(listBalls, db);
+                GeneretionListUchen list = new GeneretionListUchen(listBalls, db, idRabota);
 
                 protokol.Tables = list.GetTables(protokol.IdSpec);
                 protokol.SumVipZad = list.GetSumVip();

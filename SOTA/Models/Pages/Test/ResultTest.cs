@@ -35,19 +35,28 @@ namespace SOTA.Models.Pages.Test
         public void GetResult()
         {
             var str = db.StructSpec.Where(x=>x.IdSpec==_idSpec).ToList();
-            Result = (from Zd in db.Zadanie.Where(x => x.IdSpec == _idSpec && x.Variant==1)
-                      // from Ub in db.UsersBalls.Where(x => x.IdUser == _idUser && x.IdRabota == _idRabota)
-                      join Ub in db.UsersBalls.Where(x => x.IdUser == _idUser) on Zd.Id equals Ub.IdZadania into ub
-                      from Ub in ub.DefaultIfEmpty()
-                      select new BallPoZadan
-                      {
-                          Number = Zd.Nomer,
-                          Ball = Ub.Ball!=null?Ub.Ball:0,
-                          MaxBall = str.Where(x=>x.Type==1  && x.Number==Zd.Nomer).Count() != 0 ? Convert.ToDouble(str.Where(x => x.Type == 1 && x.Number == Zd.Nomer).First().Text) : 0,
-                          Tema = str.Where(x => x.Type == 2 && x.Number == Zd.Nomer).Count() != 0 ? str.Where(x => x.Type == 2 && x.Number == Zd.Nomer).First().Text : "",
-                          Urov = str.Where(x => x.Type == 3 && x.Number == Zd.Nomer).Count() != 0 ? str.Where(x => x.Type == 3 && x.Number == Zd.Nomer).First().Text : "",
-                          RekomU = str.Where(x => x.Type == 6 && x.Number == Zd.Nomer).Count() != 0 ? str.Where(x => x.Type == 6 && x.Number == Zd.Nomer).First().Text : ""
-                      }).OrderBy(x => x.Number).ToList();
+            int VarUs = db.VariantUser.Where(x => x.IdUser == _idUser && x.IdRabota == _idRabota).First().Variant;
+            if (db.UsersBalls.Where(x => x.IdUser == _idUser && x.IdRabota == _idRabota).Any())
+            {
+                Result = (from Zd in db.Zadanie.Where(x => x.IdSpec == _idSpec && x.Variant == VarUs)
+                              // from Ub in db.UsersBalls.Where(x => x.IdUser == _idUser && x.IdRabota == _idRabota)
+                          join Ub in db.UsersBalls.Where(x => x.IdUser == _idUser && x.IdRabota == _idRabota) on Zd.Id equals Ub.IdZadania into ub
+                          from Ub in ub.DefaultIfEmpty()
+                          select new BallPoZadan
+                          {
+                              Number = Zd.Nomer,
+                              Ball = Ub.Ball != null ? Ub.Ball : 0,
+                              MaxBall = str.Where(x => x.Type == 1 && x.Number == Zd.Nomer).Count() != 0 ? Convert.ToDouble(str.Where(x => x.Type == 1 && x.Number == Zd.Nomer).First().Text) : 0,
+                              Tema = str.Where(x => x.Type == 2 && x.Number == Zd.Nomer).Count() != 0 ? str.Where(x => x.Type == 2 && x.Number == Zd.Nomer).First().Text : "",
+                              Urov = str.Where(x => x.Type == 3 && x.Number == Zd.Nomer).Count() != 0 ? str.Where(x => x.Type == 3 && x.Number == Zd.Nomer).First().Text : "",
+                              RekomU = str.Where(x => x.Type == 6 && x.Number == Zd.Nomer).Count() != 0 ? str.Where(x => x.Type == 6 && x.Number == Zd.Nomer).First().Text : ""
+                          }).OrderBy(x => x.Number).ToList();
+            }
+            else
+            {
+                Result = null;
+            }
+            
 
         }
 

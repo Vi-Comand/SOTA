@@ -11,6 +11,7 @@ namespace SOTA.Models.Pages.Reports
         public string Predmet { get; set; }
         public DateTime DateProved { get; set; }
         public int KolVar { get; set; }
+        public int KolZad { get; set; }
         public int IdSpec { get; set; }
         public int KolUch { get; set; }
         public List<RowProtokol> Tables { get; set; }
