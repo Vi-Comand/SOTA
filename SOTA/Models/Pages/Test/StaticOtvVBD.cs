@@ -21,6 +21,17 @@ namespace SOTA.Models.Pages.Test
 
             staticOtvVBDs.Add(add);
         }
+        public static bool Find(int idSpec)
+        {
+            if (staticOtvVBDs.Where(x => x.IDSpec == idSpec).Any())
+                return true;
+                return false;
+        }
+        //public static List<StaticZadOtvVBD> SearchZadans(int[] idZadans,int idSpec)
+        //{
+        //    return staticOtvVBDs.Where(x=>x.IDSpec==idSpec).Select(y => y.ZadOtvVBD);
+        //}
+
         static void Delete()
         {
 
@@ -42,13 +53,13 @@ namespace SOTA.Models.Pages.Test
 
         public void Add()
         {
-            ZadOtvVBD = db.Zadanie.Where(x=>x.IdSpec== IDSpec).Select(x => new ZadOtvVBD { ID = x.Id, PriceError = x.PriceError, Otvets = db.Otvet.Where(y => y.IdZadan == x.Id).Select(y => new OtvetVBDs { Text = y.Text, Ball = y.Ball }).ToList() }).ToList();
+            ZadOtvVBD = db.Zadanie.Where(x=>x.IdSpec== IDSpec).Select(x => new ZadOtvVBD { ID = x.Id,Ball=Convert.ToDouble(db.StructSpec.FirstOrDefault(z=>z.IdSpec== IDSpec &&z.Number==x.Nomer && z.Type==1).Text), PriceError = x.PriceError, Otvets = db.Otvet.Where(y => y.IdZadan == x.Id && y.Ustar==0 && y.Verno==1).Select(y => new OtvetVBDs { ID=y.Id,Text = y.Text.Replace(" ","").ToUpper(),Param=y.Param1, Ball = y.Ball }).ToList() }).ToList();
            
 
         }
+       
 
-
-    }
+ }
 
     public class ZadOtvVBD
     {
@@ -59,7 +70,9 @@ namespace SOTA.Models.Pages.Test
     }
     public class OtvetVBDs
     {
+        public int ID { get; set; }
         public string Text { get; set; }
+        public double Param { get; set; }
         public double Ball { get; set; }
     }
 }

@@ -83,7 +83,7 @@ namespace SOTA.Models.Pages.TestRaschet
         private List<Otvet> OtvetsVBD;
         private int idRabota;
         private int idUser;
-      
+      private int idSpec;
         public RaschetBallsUser(SotaContext context,int idRabota, int idUser)
         {
             db = context;
@@ -92,16 +92,16 @@ namespace SOTA.Models.Pages.TestRaschet
             this.idRabota = idRabota;
             this.idUser = idUser;
             ClearBD(VBD);
-            int idSpec = db.Rabota.Find(idRabota).IdSpec;
+            this.idSpec=  db.Rabota.Find(idRabota).IdSpec;
 
-            var fsdfs = StaticRabotsOtvVBD.staticOtvVBDs;
+            if (!StaticRabotsOtvVBD.Find(idSpec))
+            {
 
-
-            StaticRabotsOtvVBD.Add(idSpec,db);
+                StaticRabotsOtvVBD.Add(idSpec, db);
+            }
             
 
             FormirOtvetsUser();
-            FormirOtvVBD();
             PodgotovkaRascheta();
         }
 
@@ -127,7 +127,7 @@ namespace SOTA.Models.Pages.TestRaschet
         {
             
             int[] idZadans = OtvetsUsers.Select(x => x.Otvet.IdZadan).ToArray();
-            OtvetsVBD = db.Otvet.Where(x=>idZadans.Contains(x.IdZadan)).ToList();
+         
         }
 
         private void PodgotovkaRascheta()
@@ -139,23 +139,44 @@ namespace SOTA.Models.Pages.TestRaschet
             OtvUsr = OtvetsUsers.Where(x => x.Tip == 1).ToList();
             if (OtvUsr.Count != 0)
             {
-                int[] mass = OtvUsr.Select(x => x.Otvet.IdZadan).ToArray();
-                OtvVBD = OtvetsVBD.Where(x => mass.Contains(x.IdZadan)).ToList();
-                OtvUsrPoschitano.AddRange( RaschetaTip1(OtvUsr, OtvVBD));
+                //int[] mass = OtvUsr.Select(x => x.Otvet.IdZadan).ToArray();
+               // OtvVBD = OtvetsVBD.Where(x => mass.Contains(x.IdZadan)).ToList();
+                var OtvVBDn = StaticRabotsOtvVBD.staticOtvVBDs.Where(x => x.IDSpec == idSpec).First().ZadOtvVBD;
+             foreach(var row in OtvUsr)
+                {
+                    row.Otvet.TextOtv = row.Otvet.TextOtv.Replace(" ", "").ToUpper();
+        OtvUsrPoschitano.Add(RaschetaTip1(row, OtvVBDn.Where(x => x.ID == row.Otvet.IdZadan).First()));
+
+                }
+                       
             }
             OtvUsr = OtvetsUsers.Where(x => x.Tip == 2).ToList();
             if (OtvUsr.Count != 0)
             {
-                int[] mass = OtvUsr.Select(x => x.Otvet.IdZadan).ToArray();
-                OtvVBD = OtvetsVBD.Where(x => mass.Contains(x.IdZadan)).Where(x => x.Verno == 1).ToList();
-                OtvUsrPoschitano.AddRange(RaschetaTip2(OtvUsr, OtvVBD));
+                var OtvVBDn = StaticRabotsOtvVBD.staticOtvVBDs.Where(x => x.IDSpec == idSpec).First().ZadOtvVBD;
+                foreach (var row in OtvUsr)
+                {
+
+
+
+                   OtvUsrPoschitano.Add(RaschetaTip2(row, OtvVBDn.Where(x => x.ID == row.Otvet.IdZadan).First()));
+
+                }
+
             }
             OtvUsr = OtvetsUsers.Where(x => x.Tip == 4).ToList();
             if (OtvUsr.Count != 0)
             {
-                int[] mass = OtvUsr.Select(x => x.Otvet.IdZadan).ToArray();
-                OtvVBD = OtvetsVBD.Where(x => mass.Contains(x.IdZadan)).Where(x => x.Verno == 1).ToList();
-                OtvUsrPoschitano.AddRange(RaschetaTip4(OtvUsr, OtvVBD));
+                var OtvVBDn = StaticRabotsOtvVBD.staticOtvVBDs.Where(x => x.IDSpec == idSpec).First().ZadOtvVBD;
+                foreach (var row in OtvUsr)
+                {
+
+                    row.Otvet.TextOtv = row.Otvet.TextOtv.Replace(" ", "").ToUpper();
+
+                    OtvUsrPoschitano.Add(RaschetaTip4(row, OtvVBDn.Where(x => x.ID == row.Otvet.IdZadan).First()));
+
+                }
+
             }
             db.UsersBalls.AddRange(OtvUsrPoschitano.Select(x=>new UsersBalls(){Ball = x.Ball,Date = DateTime.Now,IdRabota=x.Otvet.IdRabota,IdUser=x.Otvet.IdUser,IdZadania = x.Otvet.IdZadan}));
             db.SaveChanges();
@@ -179,104 +200,152 @@ namespace SOTA.Models.Pages.TestRaschet
 
             return otvetsDictionary;
         }
-        private List<AnswerUserRascheta> RaschetaTip4(List<AnswerUserRascheta> OtvUsr, List<Otvet> OtvVBD)
+        private AnswerUserRascheta RaschetaTip4(AnswerUserRascheta OtvUsr, ZadOtvVBD OtvVBD)
         {
-            foreach (var row in OtvUsr)
-            {
-                bool Verno = true;
-                ;
+            
+           
+                
                 bool obshBall = false;
-                if (row.Ball != 0)
+                if (OtvVBD.Ball != 0)
                     obshBall = true;
 
 
-                Dictionary<int, string> otvetsDictionary= RazdlenieStrokiTip4(row);
-                if(otvetsDictionary!=null)
-                    foreach (var str in otvetsDictionary)
+                Dictionary<int, string> otvetsDictionary= RazdlenieStrokiTip4(OtvUsr);
+
+            if (OtvVBD.Otvets.Select(x => x.Ball).Sum() != 0)
+            {
+                foreach (var row in otvetsDictionary)
+                {
+                    var param = OtvVBD.Otvets.Where(y => y.ID == row.Key).First().Param;
+                    var VernOtv = OtvVBD.Otvets.Where(x => x.Param > param && x.Param < param + 0.9).ToList();
+
+                    try
                     {
-                        List<string> otvets = RazdlenieStrokiTip4(';', str.Value);
-                        Otvet first = null;
-                        foreach (var x in OtvVBD)
+                        var otv = VernOtv.Where(x => x.Text == row.Value).First();
+                        if (otv != null)
                         {
-                            if (x.Id == str.Key)
-                            {
-                                first = x;
-                                break;
-                            }
+                            OtvUsr.Ball += OtvVBD.Otvets.Where(x=>x.ID== row.Key).First().Ball;
                         }
-
-                        double numberOtv = first.Param1;
-                        double numberOtv1 = numberOtv + 0.9;
-                        var otvetVbdList = OtvVBD.Where(x => x.Param1 > numberOtv && x.Param1 < numberOtv1 && x.IdZadan==row.Otvet.IdZadan).ToList();
-                        int kolVerno = 0;
-                        foreach (var strokaOtvet in otvetVbdList)
-                        {
-                            int count = 0;
-                            foreach (var x in otvets)
-                            {
-                                if (x == strokaOtvet.Text) count++;
-                            }
-
-                            if (count != 0)
-                            {
-                                kolVerno++;
-
-                            }
-                        }
-
-                        if (kolVerno != otvetVbdList.Count && obshBall)
-                        {
-                            Verno = false;
-                            break;
-                        }
-                        else if(!obshBall)
-                            row.Ball += first.Ball;
-                        
-
-                    
-                  
+                    }
+                    catch
+                    {
+                      
+                    }
                 }
 
-                if (!Verno)
-                    row.Ball = 0;
+                
             }
+            else if (OtvVBD.PriceError != 0)
+            {
+                int Verno = 0;
+                foreach (var row in otvetsDictionary)
+                {
+                    var param = OtvVBD.Otvets.Where(y => y.ID == row.Key).First().Param;
+                    var VernOtv = OtvVBD.Otvets.Where(x => x.Param > param && x.Param < param + 0.9).ToList();
+
+                    if (VernOtv.Where(x => x.Text == row.Value).Any())
+                    {
+                        Verno++;
+                    }
+
+                }
+
+
+                OtvUsr.Ball = OtvVBD.Ball - OtvVBD.PriceError * (OtvVBD.Otvets.Where(x => Math.Round(x.Param % 1, 1) == 0.1).Count() - Verno);
+
+                if (OtvUsr.Ball < 0)
+                {
+                    OtvUsr.Ball = 0;
+                }
+            }
+            else
+            {
+                int Verno = 0;
+                foreach (var row in otvetsDictionary)
+                {
+                    var param = OtvVBD.Otvets.Where(y => y.ID == row.Key).First().Param;
+                    var VernOtv = OtvVBD.Otvets.Where(x => x.Param > param && x.Param < param + 0.9).ToList();
+
+                    if (VernOtv.Where(x => x.Text == row.Value).Any())
+                    {
+                        Verno++;
+                    }
+
+                }
+
+                if (OtvVBD.Otvets.Where(x => Math.Round(x.Param % 1, 1) == 0.1).Count() == Verno)
+                {
+                    OtvUsr.Ball = OtvVBD.Ball;
+                }
+                else
+                {
+                    OtvUsr.Ball = 0;
+                }
+
+            }
+
+
+
+
+            OtvUsr.Ball = Math.Round(OtvUsr.Ball, 0, MidpointRounding.AwayFromZero);
 
             return OtvUsr;
         }
 
-        private List<AnswerUserRascheta> RaschetaTip2(List<AnswerUserRascheta>OtvUsr,List<Otvet>OtvVBD)
+        private AnswerUserRascheta RaschetaTip2(AnswerUserRascheta OtvUsr, ZadOtvVBD OtvVBD)
         {
-            if (OtvVBD != null)
-                foreach (var row in OtvUsr)
-                {
-                    List<int> idChecks= RazdelenieStrokiChecks(';',row.Otvet.TextOtv);
-                    List<Otvet> sovpad = OtvVBD.Where(x => idChecks.Contains(x.Id)).ToList();
-                    if (row.Ball == 0)
-                    {
-                       
-                        foreach (var str in sovpad)
-                        {
-                            row.Ball += str.Ball;
-                        }
+            
+                    List<int> idChecks= RazdelenieStrokiChecks(';', OtvUsr.Otvet.TextOtv);
 
-                        
-                    }
-                    else
+             if (OtvVBD.Otvets.Select(x=>x.Ball).Sum()!= 0)
+            { 
+                foreach(int id in idChecks)
+                {
+                     
+                    try
                     {
-                        if (sovpad.Count != 0)
+                       var  otv = OtvVBD.Otvets.Where(x => x.ID == id).First();
+                        if (otv != null)
                         {
-                            int kolVerno = OtvVBD.Count(x => x.IdZadan == sovpad[0].IdZadan);
-                            if (sovpad.Count != kolVerno)
-                            {
-                                row.Ball = 0;
-                            }
-                        }
-                        else
-                        {
-                            row.Ball = 0;
+                            OtvUsr.Ball += otv.Ball;
                         }
                     }
+                    catch
+                    {
+
+                    }
+                   
+                   
+                   
                 }
+
+            }
+            
+            else if (OtvVBD.PriceError != 0)
+            {
+                int sovpad = OtvVBD.Otvets.Where(x => idChecks.Contains(x.ID)).Count();
+                int Error = (idChecks.Count - sovpad) + (OtvVBD.Otvets.Count - sovpad);
+                OtvUsr.Ball = OtvVBD.Ball - Error * OtvVBD.PriceError;
+                if (OtvUsr.Ball < 0)
+                    OtvUsr.Ball = 0;
+            }
+            else
+            {
+                int sovpad = OtvVBD.Otvets.Where(x => idChecks.Contains(x.ID)).Count();
+                if (sovpad == OtvVBD.Otvets.Count)
+                {
+                    OtvUsr.Ball = OtvVBD.Ball;
+
+
+
+                }
+                else
+                {
+                    OtvUsr.Ball = 0;
+                }
+
+            }
+            OtvUsr.Ball = Math.Round(OtvUsr.Ball, 0, MidpointRounding.AwayFromZero);
             return OtvUsr;
         }
         private List<string> RazdlenieStrokiTip4(char Razdelitel, string Stroka)
@@ -325,29 +394,24 @@ namespace SOTA.Models.Pages.TestRaschet
         }
 
        
-        private List<AnswerUserRascheta> RaschetaTip1(List<AnswerUserRascheta> OtvUsr, List<Otvet> OtvVBD)
+        private AnswerUserRascheta RaschetaTip1(AnswerUserRascheta OtvUsr, ZadOtvVBD OtvVBD)
         {
             if (OtvVBD != null)
-                foreach (var row in OtvUsr)
-                {
+               
                     try
-                    {if(row.Ball==0)
-                        row.Ball = OtvVBD.FirstOrDefault(x => x.IdZadan == row.Otvet.IdZadan && x.Text == row.Otvet.TextOtv)
-                            .Ball;
-                        else
-                        {
-                            row.Ball = OtvVBD.FirstOrDefault(x =>
-                                x.IdZadan == row.Otvet.IdZadan && x.Text == row.Otvet.TextOtv) != null
-                                ? row.Ball
+                    {
+                        OtvUsr.Ball = OtvVBD.Otvets.FirstOrDefault(x =>
+                                x.Text == OtvUsr.Otvet.TextOtv) != null
+                                ? OtvVBD.Ball
                                 : 0;
 
-                        }
+                     
                     }
                     catch
                     {
-                        row.Ball = 0;
+                    OtvUsr.Ball = 0;
                     }
-                }
+            OtvUsr.Ball = Math.Round(OtvUsr.Ball, 0, MidpointRounding.AwayFromZero);
             return OtvUsr;
         }
 
