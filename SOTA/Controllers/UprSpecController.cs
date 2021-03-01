@@ -191,7 +191,7 @@ namespace SOTA.Controllers
             Zadanie zadan = new Zadanie();
             zadan.IdSpec = n_spec;
             zadan.Variant = n_var;
-            zadan.Ball = 1;
+           
             zadan.Nomer = n_zad;
 
             return zadan;
@@ -756,62 +756,62 @@ namespace SOTA.Controllers
 
             return View("SpecifikacRedact", model);
         }
-        public List<Zadanie> ProverkaNaOdinakovBall(List<Zadanie> Zadans, int kol_zad)
-        {
-            List<Zadanie> Proveren = new List<Zadanie>();
+        //public List<Zadanie> ProverkaNaOdinakovBall(List<Zadanie> Zadans, int kol_zad)
+        //{
+        //    List<Zadanie> Proveren = new List<Zadanie>();
 
-            for (int i = 1; i <= kol_zad; i++)
-            {
-                List<Zadanie> NaProverku = Zadans.Where(x => x.Nomer == i).ToList();
-                Proveren.AddRange(ZadanNaOdinakovBall(NaProverku));
+        //    for (int i = 1; i <= kol_zad; i++)
+        //    {
+        //        List<Zadanie> NaProverku = Zadans.Where(x => x.Nomer == i).ToList();
+        //        Proveren.AddRange(ZadanNaOdinakovBall(NaProverku));
 
 
-            }
+        //    }
 
-            return Proveren;
-        }
+        //    return Proveren;
+        //}
 
-        public async Task<List<Zadanie>> ZadanNaOdinakovBallAsync(List<Zadanie> Zadans)
-        {
-            var result = await Task.Run(() => ZadanNaOdinakovBall(Zadans));
-            return result;
-        }
+        //public async Task<List<Zadanie>> ZadanNaOdinakovBallAsync(List<Zadanie> Zadans)
+        //{
+        //    var result = await Task.Run(() => ZadanNaOdinakovBall(Zadans));
+        //    return result;
+        //}
 
-        private List<Zadanie> ZadanNaOdinakovBall(List<Zadanie> Zadans)
-        {
-            bool NeOdinakov = false;
-            if (Zadans != null)
-            {
-                double Ball = Zadans.First().Ball;
-                foreach (Zadanie zadan in Zadans)
-                {
-                    if (zadan.Ball != Ball)
-                    {
-                        NeOdinakov = true;
-                        break;
-                    }
-                    //Сомнительный костыль
-                    if (zadan.Text != null)
-                    {
-                        zadan.Text = "1";
-                    }
-                    if (zadan.Doptext != null)
-                    {
-                        zadan.Doptext = "1";
-                    }
-                }
+        //private List<Zadanie> ZadanNaOdinakovBall(List<Zadanie> Zadans)
+        //{
+        //    bool NeOdinakov = false;
+        //    if (Zadans != null)
+        //    {
+        //        double Ball = Zadans.First().Ball;
+        //        foreach (Zadanie zadan in Zadans)
+        //        {
+        //            if (zadan.Ball != Ball)
+        //            {
+        //                NeOdinakov = true;
+        //                break;
+        //            }
+        //            //Сомнительный костыль
+        //            if (zadan.Text != null)
+        //            {
+        //                zadan.Text = "1";
+        //            }
+        //            if (zadan.Doptext != null)
+        //            {
+        //                zadan.Doptext = "1";
+        //            }
+        //        }
 
-            }
-            if (NeOdinakov)
-            {
-                foreach (Zadanie zadan in Zadans)
-                {
-                    zadan.Ball = 0;
-                }
-            }
+        //    }
+        //    if (NeOdinakov)
+        //    {
+        //        foreach (Zadanie zadan in Zadans)
+        //        {
+        //            zadan.Ball = 0;
+        //        }
+        //    }
 
-            return Zadans;
-        }
+        //    return Zadans;
+        //}
 
 
 
@@ -888,7 +888,7 @@ namespace SOTA.Controllers
             model.IdSpec = id_spec;
             model.Text = Zadan.Text;
             model.Tip = Zadan.Tip;
-            model.Ball = Zadan.Ball;
+            
             model.Otvets = db.Otvet.Where(x => x.IdZadan == Zadan.Id && x.Ustar != 1).ToList();
             model.DopText = Zadan.Doptext;
             if (Zadan.Tip == 4 && model.Otvets != null)
