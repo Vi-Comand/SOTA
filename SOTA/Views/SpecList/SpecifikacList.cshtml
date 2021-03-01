@@ -33,7 +33,7 @@
                         <td><input type="checkbox" class="DEL" value="@row.Id" /></td>
                         <td> <a href="/UprSpec/SpecifikacRedact?id_spec=@row.Id" class='btn btn-icon btn-sm btn-outline-yel text-left btn-block'><i class='fas fa-plus'></i>@row.Name</a></td>
                         <td>@Model.TipSpecs.Where(x => x.Id == row.Tip).First().Name</td>
-                        <td>@Model.Predms.Where(x => x.Id == row.Tip).First().Name</td>
+                        <td>@Model.Predms.Where(x => x.Id == row.Predm).First().Name</td>
                         <td>
                             @if (Model.KolZadVSpec.Count != 0)
                             {
