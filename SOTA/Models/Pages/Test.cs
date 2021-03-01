@@ -37,7 +37,7 @@ namespace SOTA.Models
         private int _idUser;
         private Zadanie Zadan;
         public List<OtvTest> _Otv { get; set; }
-
+        public int _kolVern { get; set; }
         private SotaContext _db;
         public ZadanTest(int id, SotaContext db, int idRabota, int idUser)
         {
@@ -91,8 +91,8 @@ namespace SOTA.Models
                 _text = q.Text
 
             }).ToList();
-            int kol_verno = _db.Otvet.Where(x => x.IdZadan == _idZadan && x.Ustar == 0 && x.Verno == 1).Count();
-            if (kol_verno == 1)
+             _kolVern = _db.Otvet.Where(x => x.IdZadan == _idZadan && x.Ustar == 0 && x.Verno == 1).Count();
+            if (_kolVern == 1)
                 _tip = 3;
         }
 
