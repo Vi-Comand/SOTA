@@ -196,6 +196,22 @@ namespace SOTA.Controllers
 
             return zadan;
         }
+
+        public async Task<IActionResult> ChangedIsNumberAjax(int n_zad, int num)
+        {
+            List<Zadanie> zadanies = db.Zadanie.Where(t =>  t.Id == n_zad ).ToList();
+            if (zadanies.Count != 0)
+            {
+                foreach (Zadanie row in zadanies)
+                    row.IsNumber = num;
+            }
+           
+            db.SaveChanges();
+            return Json("ok");
+        }
+
+
+
         public async Task<IActionResult> ChangedBallAjax(int n_spec, int n_zad, string ball)
         {
 
@@ -888,7 +904,7 @@ namespace SOTA.Controllers
             model.IdSpec = id_spec;
             model.Text = Zadan.Text;
             model.Tip = Zadan.Tip;
-            
+            model.IsNumber = Zadan.IsNumber;
             model.Otvets = db.Otvet.Where(x => x.IdZadan == Zadan.Id && x.Ustar != 1).ToList();
             model.DopText = Zadan.Doptext;
             if (Zadan.Tip == 4 && model.Otvets != null)

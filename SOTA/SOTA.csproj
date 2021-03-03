@@ -70,7 +70,6 @@
 
 
   <ItemGroup>
-    <Folder Include="wwwroot\fonts\" />
     <Folder Include="wwwroot\Reports\FinishedReports\Tip1\Rabota\" />
     <Folder Include="wwwroot\UprSpec\uploads\" />
     <Folder Include="wwwroot\Img\" />

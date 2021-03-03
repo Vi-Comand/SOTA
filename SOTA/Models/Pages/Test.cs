@@ -33,6 +33,8 @@ namespace SOTA.Models
         public string _Doptext { get; }
         public string _otvVBD { get; set; }
         public int _nomer { get; }
+        public int _isNumber { get; }
+        public int _kolVerno { get; set; }
         private int _idRabota;
         private int _idUser;
         private Zadanie Zadan;
@@ -52,7 +54,7 @@ namespace SOTA.Models
                 _db = db;
                 _idRabota = idRabota;
                 _nomer = Zadan.Nomer;
-
+                _isNumber = Zadan.IsNumber;
             }
             if (Zadan.Tip == 2)
                 LoadOtvetTip2();
@@ -91,8 +93,8 @@ namespace SOTA.Models
                 _text = q.Text
 
             }).ToList();
-            int kol_verno = _db.Otvet.Where(x => x.IdZadan == _idZadan && x.Ustar == 0 && x.Verno == 1).Count();
-            if (kol_verno == 1)
+            _kolVerno = _db.Otvet.Where(x => x.IdZadan == _idZadan && x.Ustar == 0 && x.Verno == 1).Count();
+            if (_kolVerno == 1)
                 _tip = 3;
         }
 

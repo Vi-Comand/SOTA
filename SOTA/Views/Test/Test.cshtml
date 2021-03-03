@@ -5,6 +5,7 @@
 <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
 <script src="~/js/Test/ZagruzkaVigruzka.js"></script>
 <script src="~/js/Test/KonecRabot.js"></script>
+<script src="~/js/Test/IsNumber.js"></script>
 
 <div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -151,7 +152,7 @@ $("#TabForZadan").on("click", function () {
 
             if (row._tip == 1)
             {
-                @:AddZOtvTip1(@row._nomer,"@row._otvVBD");
+                @:AddZOtvTip1(@row._nomer,"@row._otvVBD", @row._isNumber);
             }
             if (row._tip == 2)
             {
@@ -171,7 +172,7 @@ $("#TabForZadan").on("click", function () {
 
                // @:razborCheck("@row._otvVBD", MyArray);
 
-                @:AddZOtvTip2(MyArray,@row._nomer,"@row._otvVBD");
+                @:AddZOtvTip2(MyArray,@row._nomer,"@row._otvVBD", @row._kolVerno);
 
 
 
@@ -271,12 +272,18 @@ $("#TabForZadan").on("click", function () {
 
 
 
-    function AddZOtvTip1(i,text) {
-
-        document.getElementById('OtvetZadan[' + i + ']').innerHTML = "<input type='text' id='Zad" + i +"Otvet'class='form-control input100 border-dark otv-"+i+"' value="+text+" ><span class='focus-input100 '></span><label class='label' style='left:10px;'>Ответ</label>";
+    function AddZOtvTip1(i, text, isNum) {
+        
+        if (isNum == 1) {
+            document.getElementById('OtvetZadan[' + i + ']').innerHTML = "<input type='text' id='Zad" + i + "Otvet' oninput='FormText(this)' class='form-control input100 border-dark otv-" + i + "' value=" + text + "  ><span class='focus-input100 '></span><label class='label' style='left:10px;'  >Ответ</label>";
+            
+        }
+        else {
+            document.getElementById('OtvetZadan[' + i + ']').innerHTML = "<input type='text' id='Zad" + i + "Otvet'class='form-control input100 border-dark otv-" + i + "' value=" + text + " ><span class='focus-input100 '></span><label class='label' style='left:10px;'>Ответ</label>";
+        }
     }
 
-    function AddZOtvTip2(MyArray, nZad,StrOtv) {
+    function AddZOtvTip2(MyArray, nZad, StrOtv, kolVern) {
 
         for (i = 0; i < MyArray.length; i++) {
             var est = null;
@@ -291,12 +298,21 @@ $("#TabForZadan").on("click", function () {
                 i +
                 "\" id=\"nZad" + nZad + "ch" +
                 i +
-            "\" value=" + MyArray[i].id + "  class=\"custom-switch-input otv-" + nZad+"  \" " + cheked +"><span class=\"custom-switch-indicator\"  > </span >" +
+            "\" value=" + MyArray[i].id + "  class=\"custom-switch-input otv-" + nZad + "  \" " + cheked + " onclick='ProhibitionSelection(this," + kolVern + "," + nZad+")'><span class=\"custom-switch-indicator\"  > </span >" +
                 MyArray[i].text +
                 "</label></br>";
         }
 
     }
+
+    function ProhibitionSelection(q, vern, idOtvet) {
+        var idOtv = "OtvetZadan[" + idOtvet +"]";
+        var a = document.querySelectorAll('input.custom-switch-input.otv-' + idOtvet+':checked');
+        if (a.length > vern) {
+            q.checked = false;
+            alert("В выберите "+vern+" ответа");
+        }
+    };
 
     var kolRadioButtonName = 0;
     function AddZOtvTip3(MyArray, nZad, StrOtv) {

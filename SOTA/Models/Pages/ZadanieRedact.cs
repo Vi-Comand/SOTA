@@ -16,5 +16,6 @@ namespace SOTA.Models
         public int KolStrTabOtv { get; set; }
         public List<Otvet> Otvets { get; set; }
         public string DopText { get; set; }
+        public int IsNumber { get; set; }
     }
 }

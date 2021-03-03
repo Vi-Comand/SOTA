@@ -37,7 +37,7 @@ namespace SOTA.Controllers
 
             string remoteIpAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
             Users user = null;
-            if (model.Name != null && model.Pass != null)
+            if (model.Name != null && model.Pass != null )
             {
                 user = new Users();
                 try
@@ -125,9 +125,10 @@ namespace SOTA.Controllers
                 //}
             }
 
-
-            ViewBag.Error = "Некорректные логин и(или) пароль";
-
+            if (model.Pass != null)
+            {
+                ViewBag.Error = "Некорректные логин и(или) пароль";
+            }
 
 
             return View(model);
