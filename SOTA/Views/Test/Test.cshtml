@@ -86,18 +86,50 @@
 </form>
 
 
+
+
 <script>
-    var OtvVBDMass = new Map();
+
+    
    
+
+       
+    
+
+
+    //$("#nZad6ch0").on("click", function () {
+    //    alert("das");
+    //    if ($(".group input:checked").length >= 2) { // Не больше 2-х checkbox
+    //        $(".group input:not(:checked)").attr("disabled", true);
+    //    } else {
+    //        $(".group input:disabled").attr("disabled", false);
+    //    }
+    //});
+    function reply_click()
+    {
+        
+    }
+
+    var OtvVBDMass = new Map();
+
     //function ChekingSafetyAnswers() {
     //    OtvVBDMass.length;
     //    for (var row in OtvVBDMass) {
-    
+
     //        alert("element:" + OtvVBDMass[1]);
     //    }
     //}
 
-  
+    
+    var reply_click = function () {
+        alert(this.id);
+        if ($("#" + this.id + " :checked").length >= 2) { // Не больше 2-х checkbox
+            $("#" + this.id + " :not(:checked)").attr("disabled", true);
+        
+        //}else {
+        //    $("#" + this.id + " input:disabled").attr("disabled", false);
+        }
+    }
 $("#TabForZadan").on("click", function () {
 
     GetPredActiveLI();
@@ -129,8 +161,9 @@ $("#TabForZadan").on("click", function () {
 
 
     window.onload = function () {
-        
-       VivodZadan();
+      
+        VivodZadan();
+        document.getElementById('OtvetZadan[6]').onclick = reply_click;
    }
 
     function VivodZadan() {
@@ -225,7 +258,7 @@ $("#TabForZadan").on("click", function () {
         }
         console.log(OtvVBDMass);
     }
-
+  
     function ObjVibOtv(id, text, otvVBD) {
         var MyObj = new Object();
         MyObj.id = id;
@@ -248,7 +281,7 @@ $("#TabForZadan").on("click", function () {
     //    }
 
     //}
-
+  
     function AddTextZadan(i, text,tip,id) {
         var divText = document.getElementById('TextZadan[' + i + ']');
 
@@ -270,7 +303,7 @@ $("#TabForZadan").on("click", function () {
 
     }
 
-
+ 
 
     function AddZOtvTip1(i, text, isNum) {
         
@@ -368,7 +401,7 @@ $("#TabForZadan").on("click", function () {
         //TableCreate.after(div);
     }
 
-
+    
 
 
 
@@ -435,18 +468,18 @@ $("#TabForZadan").on("click", function () {
 
 
     }
-
+ 
     function PredTextZadan(Zadan) {
         var TextZadan = document.getElementById("TextZadanPredprosmotr");
         TextZadan.innerHTML = Zadan.text;
 
     }
-
+ 
     function PredStrOtv() {
         var OtvetZadan = document.getElementById("OtvetiZadanPredprosmotr");
         OtvetZadan.innerHTML = ' <input type="text" class="form-control input100" />';
     }
-
+   
     function PredVibOtv(arrOtvBD) {
         var col = 0;
         for (i = 0; i < arrOtvBD.length; i++) {
@@ -477,7 +510,7 @@ $("#TabForZadan").on("click", function () {
                 "</label></br>";
         }
     }
-
+   
     function PredVibOtvRadio(arrOtvBD) {
 
         var OtvetZadan = document.getElementById("OtvetiZadanPredprosmotr");
@@ -496,7 +529,7 @@ $("#TabForZadan").on("click", function () {
         }
 
     }
-
+   
 
     function PredTabOtv(arrOtvBD) {
         row = arrOtvBD.length;
@@ -536,4 +569,10 @@ $("#TabForZadan").on("click", function () {
         var OtvetZadan = document.getElementById("OtvetiZadanPredprosmotr");
         OtvetZadan.innerHTML = ' <textarea rows="5" cols="100" ></textarea>';
     }
+
+
+    
+
+
 </script>
+
