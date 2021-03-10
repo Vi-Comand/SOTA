@@ -4,7 +4,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <script type="text/javascript" src="~/UprSpec/scripts/jquery-2.x-git.js"></script>
 
-
+<script type="text/javascript" src="~/js/Test/IsNumber.js"></script>
 
 
 
@@ -60,7 +60,10 @@
                 ZapolnOtvTip4();
             if (@Model.Tip== 5)
                 ZapolnOtvTip5();
-
+            if (@Model.IsNumber == 1) {
+                document.getElementById("NumberAnswer").checked = true;
+                chek();
+            }
             predprosmotr();
         }
         function ZapolnOtvTip1() {
@@ -439,7 +442,7 @@
                                 <form name="myForm1">
                                     <div class="col row">
 
-                                        <div class="input-group wrap-input100 validate-input col-4">
+                                        <div class="input-group wrap-input100 validate-input col-4 d-none">
 
                                             <input type="text" class="form-control input100" id="BallStrOtv" asp-for="@Model.Ball" size="3" placeholder="Баллы" />
                                             <span class="focus-input100"></span>
@@ -451,38 +454,87 @@
                                             </a>
 
                                         </div>
+                                        <div class="m-sm-1" height="42px" id="NumberAnswerDiv">
+                                            <label class="custom-switch mt-2" style="height:28px">
+
+                                                <input type="checkbox" name="NumberAnswer" id="NumberAnswer" class="custom-switch-input" onchange="chek()">
+                                                <span class="custom-switch-indicator"></span>Числовой ответ
+                                            </label>
+                                        </div>
                                     </div>
 
                                     <div class="col">
 
                                         <div id="StrOtvet[0]" class="input-group wrap-input100 validate-input col-12">
-
-
-
-                                            <div class="m-sm-1" height="42px" id="NumberAnswer">
-                                                <label class="custom-switch mt-2" style="height:28px">
-
-                                                    <input type="checkbox" name="NumberAnswer" id="NumberAnswer" value="1" class="custom-switch-input">
-                                                    <span class="custom-switch-indicator"></span>Числовой ответ
-                                                </label>
-                                            </div>
-
                                             <div class="input-group-prepend ">
                                                 <div class="input-group-text">
                                                     <i class="far fa-comment-alt"></i>
                                                 </div>
                                             </div>
-
-
-
-
-
-
                                             <input type="text" class="form-control input100" id="StrOtv[0]" placeholder="Правильный ответ" />
                                             <span class="focus-input100"></span>
 
                                         </div>
                                     </div>
+
+                                    <div id="group">
+                                        <input type="checkbox" class="QQ" onclick="cc(this)">checkbox 1
+                                        <input type="checkbox" class="QQ" onclick="cc(this)">checkbox 2
+                                        <input type="checkbox" class="QQ" onclick="cc(this)">checkbox 3
+                                    </div>
+
+                                    <script>
+                                        function cc(q, idOtv) {
+                                            var idOtv = "OtvetZadan[4]";
+                                            var a = document.querySelectorAll('#'+idOtv+' input.custom-switch-input:checked');
+                                            if (a.length>1) {
+                                                q.checked = false;
+                                                alert("В ответе не более ");
+                                            }
+                                        };
+                                    </script>
+
+
+                                    <script>
+
+
+
+
+
+
+
+
+
+
+
+                                        function chek() {
+                                            var numberCheck = document.getElementById("NumberAnswer");
+                                            var textO = document.getElementById("StrOtv[0]");
+                                            if (numberCheck.checked) {
+                                                textO.setAttribute("oninput", "FormText (this)");
+                                                changedNum(1);
+                                            }
+                                            else {
+                                                textO.setAttribute("oninput", "");
+                                                changedNum(0);
+                                            }
+                                        };
+
+                                        function changedNum(numb) {
+
+                                            var idZadania = document.getElementById("idZadania").value;
+                                            jQuery.ajax({
+                                                url: '/UprSpec/ChangedIsNumberAjax/',
+                                                type: "POST",
+                                                dataType: "json",
+                                                data: { n_zad: idZadania, num: numb },
+                                                success: function (data) {
+                                                    console.log(data);
+
+                                                }
+                                            });
+                                        }
+                                    </script>
                                 </form>
 
                                 <div class="input-group wrap-input100 validate-input col-3">
@@ -511,6 +563,7 @@
                                                     </div>
                                                     <input type="text" class="form-control input100 col-3 ml-sm-0 mt-sm-0" id="BallVibOtv" asp-for="@Model.Ball" size="3" placeholder="Баллы" />
                                                     <span class="focus-input100"></span>
+
 
                                                     <label class="custom-switch mt-2">
 

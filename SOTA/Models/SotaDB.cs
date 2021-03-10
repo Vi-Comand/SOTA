@@ -15,7 +15,7 @@ namespace SOTA.Models
         {
             get; set;
         }
-        public string Name
+        public int IsNumber
         {
             get; set;
         }
