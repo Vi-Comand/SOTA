@@ -41,9 +41,8 @@ namespace SOTA.Models.Pages.Reports
         private string GetName()
         {
             Protokol.Tables= Protokol.Tables.OrderBy(x => x.OO).ToList();
-           string name= Protokol.Tables[0].OO== Protokol.Tables[Protokol.Tables.Count-1].OO? Protokol.Tables[0].OO: Protokol.Tables[0].MO;
+           string name= Protokol.Tables[0].OO == Protokol.Tables[Protokol.Tables.Count - 1].OO ? Protokol.Tables[0].MO + "_" + Protokol.Tables[0].OO : Protokol.Tables[0].MO;
 
-          
 
             return name;
 

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SOTA.Models;
+using SOTA.Models.Pages.Test;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,9 +37,14 @@ namespace SOTA.Controllers
         //[Route("Rabota/RabotaAdd/{IdRabota?}")]
         //  [HttpPost]
 
+        public IActionResult CleanAllStaticSpec()
+        {
+            StaticRabotsOtvVBD.CleanStaticOtvVBDs();
+            return RedirectToAction("RabotaList");
+        }
 
 
-        public IActionResult RabotaSozdan()
+            public IActionResult RabotaSozdan()
         {
             Rabota rabota = new Rabota();
             db.Rabota.Add(rabota);

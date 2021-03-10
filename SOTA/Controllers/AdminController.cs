@@ -99,7 +99,7 @@ namespace SOTA.Controllers
                 string name="";
             if (listUsersAdmin.rabList != null)
             {
-                listUsersAdmin.rabList.OrderBy(x => x.Konec);
+                listUsersAdmin.rabList.OrderByDescending(x => x.Konec);
             
              id_spec = listUsersAdmin.rabList.First().Id;
              name = listUsersAdmin.rabList.First().Name;

@@ -32,9 +32,9 @@ namespace SOTA.Models.Pages.Test
         //    return staticOtvVBDs.Where(x=>x.IDSpec==idSpec).Select(y => y.ZadOtvVBD);
         //}
 
-        static void Delete()
-        {
-
+        public static void CleanStaticOtvVBDs()
+        {if(staticOtvVBDs.Any())
+            staticOtvVBDs.Clear();
         }
     }
 
