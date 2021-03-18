@@ -1,6 +1,6 @@
 function FormText(obj) {
     if (this.ST) return; var ov = obj.value;
-    var ovrl = ov.replace(/\d*\.?\d*/, '').length; this.ST = true;
+    var ovrl = ov.replace(/\-?\d*\.?\d*/, '').length; this.ST = true;
     if (ovrl > 0) { obj.value = obj.lang; Fshowerror(obj); return }
     obj.lang = obj.value; this.ST = null;
 }

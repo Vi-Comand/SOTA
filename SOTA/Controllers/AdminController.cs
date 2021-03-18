@@ -99,10 +99,10 @@ namespace SOTA.Controllers
                 string name="";
             if (listUsersAdmin.rabList != null)
             {
-                listUsersAdmin.rabList.OrderByDescending(x => x.Konec);
+                listUsersAdmin.rabList.OrderBy(x => x.Konec);
             
-             id_spec = listUsersAdmin.rabList.First().Id;
-             name = listUsersAdmin.rabList.First().Name;
+             id_spec = listUsersAdmin.rabList.OrderByDescending(x => x.Konec).First().Id;
+             name = listUsersAdmin.rabList.OrderByDescending(x => x.Konec).First().Name;
             }
             if (listUsersAdmin.rabList == null)
             {
