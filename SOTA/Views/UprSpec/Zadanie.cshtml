@@ -354,8 +354,17 @@
 
 <body>
 
-    <a href="/UprSpec/SpecifikacRedact?id_spec=@Model.IdSpec" class='btn btn-icon btn-sm btn-outline-yel text-left btn-block'><i class='fas fa-arrow-circle-left'></i>Назад</a>
-
+    <a href="/UprSpec/SpecifikacRedact?id_spec=@Model.IdSpec" class='btn btn-icon btn-sm btn-outline-yel text-left btn-block'><i class='fas fa-arrow-circle-left'></i>Назад в спецификацию</a>
+    <div class="row">
+        @if ((ViewBag.n_zad - 1) > 0)
+        {
+            <a href="/UprSpec/Zadanie?id_spec=@Model.IdSpec&n_var=@ViewBag.n_var&n_zad=@(ViewBag.n_zad - 1)" class='btn btn-icon col-5 btn-outline-danger text-left btn-block'><i class='fas fa-arrow-circle-left'></i>Предыдущее</a>
+        }
+        @if ((ViewBag.n_zad + 1) <= ViewBag.kol_z)
+        {
+            <a href="/UprSpec/Zadanie?id_spec=@Model.IdSpec&n_var=@ViewBag.n_var&n_zad=@(ViewBag.n_zad + 1)" class='btn btn-icon col-5 btn-outline-success text-right btn-block ml-auto'>Следующее<i class='fas fa-arrow-circle-right'></i></a>
+        }
+        </div>
     <h3>Вариант: @ViewBag.n_var Задание: @ViewBag.n_zad</h3>
     <div class="card-body">
         <div id="accordion">
@@ -369,7 +378,7 @@
                             <tr>
                                 <td>
 
-                                    <br>
+                                    <h4>Текст задания</h4>
                                     <form name="exampleForm" action="example.html" method="post">
                                         <input type="hidden" asp-for="@Model.Id" id="idZadania" />
                                         <textarea id="textarea1" name="test1" style="width:1000px;height:400px;">
@@ -390,7 +399,7 @@
                             <tr>
                                 <td>
 
-                                    <br>
+                                    <h4>Дополнительный текст</h4>
                                     <form name="exampleForm1" action="example.html" method="post">
                                         <input type="hidden" asp-for="@Model.Id" id="idZadania" />
                                         <textarea id="textarea2" name="test2" style="width:1000px;height:400px;">
@@ -477,17 +486,13 @@
                                         </div>
                                     </div>
 
-                                    <div id="group">
-                                        <input type="checkbox" class="QQ" onclick="cc(this)">checkbox 1
-                                        <input type="checkbox" class="QQ" onclick="cc(this)">checkbox 2
-                                        <input type="checkbox" class="QQ" onclick="cc(this)">checkbox 3
-                                    </div>
+                                   
 
                                     <script>
                                         function cc(q, idOtv) {
                                             var idOtv = "OtvetZadan[4]";
-                                            var a = document.querySelectorAll('#'+idOtv+' input.custom-switch-input:checked');
-                                            if (a.length>1) {
+                                            var a = document.querySelectorAll('#' + idOtv + ' input.custom-switch-input:checked');
+                                            if (a.length > 1) {
                                                 q.checked = false;
                                                 alert("В ответе не более ");
                                             }
@@ -537,8 +542,8 @@
                                     </script>
                                 </form>
 
-                                <div class="input-group wrap-input100 validate-input col-3">
-                                    <a href="#" class="btn btn-success input100 btn-icon icon-left" name="SaveOtvet" id="SaveOtvet">
+                                <div class="input-group wrap-input100 validate-input col-12">
+                                    <a href="#" class="btn btn-success input100 btn-icon icon-left col-12" name="SaveOtvet" id="SaveOtvet">
                                         <i class="far fa-save"></i>
                                         <ya-tr-span data-index="147-0" data-value=" Default" data-translation="Сохранить ответ" data-type="trSpan">Сохранить ответ</ya-tr-span>
                                     </a>
@@ -553,170 +558,190 @@
                                 <form name="myForm">
                                     <div class="container-fluid">
                                         <div class="row align-items-center ">
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-5">
                                                 <div class="input-group wrap-input100 validate-input row">
 
-                                                    <div class="input-group-prepend ">
-                                                        <div class="input-group-text">
-                                                            <i class="fas fa-list-ol"></i>
-                                                        </div>
-                                                    </div>
-                                                    <input type="text" class="form-control input100 col-3 ml-sm-0 mt-sm-0" id="BallVibOtv" asp-for="@Model.Ball" size="3" placeholder="Баллы" />
-                                                    <span class="focus-input100"></span>
+
 
 
                                                     <label class="custom-switch mt-2">
 
-                                                        <input type="checkbox" name="checkBallVibOtv" id="checkBallVibOtv" onchange="ballvibotvall()" class="custom-switch-input">
+                                                        <input type="checkbox" name="checkBallCena" id="checkBallCena" onchange="cena()" class="custom-switch-input">
                                                         <span class="custom-switch-indicator"></span>
-                                                        <span class="custom-switch-description">Раздельные баллы</span>
+                                                        <span class="custom-switch-description">Цена ошибки</span>
                                                     </label>
                                                 </div>
+
                                             </div>
-
-
-                                            <div class="col-sm-2">Верный ответ</div>
-                                            <div class="col-sm-2">Балл за ответ</div>
+                                            <div class="input-group wrap-input100 col-3 m-sm-1 hiden" id="DivCena">
+                                                <div class="input-group-prepend ">
+                                                    <div class="input-group-text">
+                                                        <i class="fas fa-ban"></i>
+                                                    </div>
+                                                </div>
+                                                <input type="number" class="form-control input100" name="InputCena" id="InputCena" value="0"/>
+                                                <span class="focus-input100"></span>
+                                            </div>
                                         </div>
+                                            <div class="row align-items-center ">
+                                                <div class="col-sm-6">
+                                                    <div class="input-group wrap-input100 validate-input row">
+
+
+
+
+                                                        <label class="custom-switch mt-2">
+
+                                                            <input type="checkbox" name="checkBallVibOtv" id="checkBallVibOtv" onchange="ballvibotvall()" class="custom-switch-input">
+                                                            <span class="custom-switch-indicator"></span>
+                                                            <span class="custom-switch-description">Раздельные баллы</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="col-sm-2">Верный ответ</div>
+                                                <div class="col-sm-2">Балл за ответ</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6 " id="ViborOtvetov">
+                                                    <div class="input-group wrap-input100 row m-sm-1" id="DivViborOtveta[1]">
+                                                        <div class="input-group-prepend ">
+                                                            <div class="input-group-text">
+                                                                <i class="fas fa-list-ol"></i>
+                                                            </div>
+                                                        </div>
+                                                        <input type="text" class="form-control input100 " name="ViborOtveta[1]" id="ViborOtveta[1]" placeholder="Введите ответ" />
+                                                        <span class="focus-input100"></span>
+                                                    </div>
+                                                    <div class="input-group wrap-input100 row m-sm-1" id="DivViborOtveta[2]">
+                                                        <div class="input-group-prepend ">
+                                                            <div class="input-group-text">
+                                                                <i class="fas fa-list-ol"></i>
+                                                            </div>
+                                                        </div>
+                                                        <input type="text" class="form-control input100" name="ViborOtveta[2]" id="ViborOtveta[2]" placeholder="Введите ответ" />
+                                                        <span class="focus-input100"></span>
+                                                    </div>
+                                                    <div class="input-group wrap-input100 row m-sm-1" id="DivViborOtveta[3]">
+                                                        <div class="input-group-prepend ">
+                                                            <div class="input-group-text">
+                                                                <i class="fas fa-list-ol"></i>
+                                                            </div>
+                                                        </div>
+                                                        <input type="text" class="form-control input100" name="ViborOtveta[3]" id="ViborOtveta[3]" placeholder="Введите ответ" />
+                                                        <span class="focus-input100"></span>
+                                                    </div>
+                                                    <div class="input-group wrap-input100 row m-sm-1" id="DivViborOtveta[4]">
+                                                        <div class="input-group-prepend ">
+                                                            <div class="input-group-text">
+                                                                <i class="fas fa-list-ol"></i>
+                                                            </div>
+                                                        </div>
+                                                        <input type="text" class="form-control input100" name="ViborOtveta[4]" id="ViborOtveta[4]" placeholder="Введите ответ" />
+                                                        <span class="focus-input100"></span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-2" id="ViborOtvetovShek">
+                                                    <div class="m-sm-1" height="42px" id="DivViborOtvetaShek[1]">
+                                                        <label class="custom-switch mt-2" style="height:28px">
+
+                                                            <input type="checkbox" name="check[1]" id="check[1]" value="1" onchange="ballvibotv(1)" class="custom-switch-input">
+                                                            <span class="custom-switch-indicator"></span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="m-sm-1" height="42px" id="DivViborOtvetaShek[2]">
+                                                        <label class="custom-switch mt-2" style="height:28px">
+
+                                                            <input type="checkbox" name="check[2]" id="check[2]" value="1" onchange="ballvibotv(2)" class="custom-switch-input">
+                                                            <span class="custom-switch-indicator"></span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="m-sm-1" height="42px" id="DivViborOtvetaShek[3]">
+                                                        <label class="custom-switch mt-2" style="height:28px">
+
+                                                            <input type="checkbox" name="check[3]" id="check[3]" value="1" onchange="ballvibotv(3)" class="custom-switch-input">
+                                                            <span class="custom-switch-indicator"></span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="m-sm-1" height="42px" id="DivViborOtvetaShek[4]">
+                                                        <label class="custom-switch mt-2" style="height:28px">
+
+                                                            <input type="checkbox" name="check[4]" id="check[4]" value="1" onchange="ballvibotv(4)" class="custom-switch-input">
+                                                            <span class="custom-switch-indicator"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-2" id="ViborOtvetovBall">
+                                                    <div id="DivBallVibOtv[1]" class="input-group wrap-input100 row m-sm-1 hiden">
+                                                        <div class="input-group-prepend ">
+                                                            <div class="input-group-text">
+                                                                <i class="fas fa-list-ol"></i>
+                                                            </div>
+                                                        </div>
+                                                        <input type="text" class="form-control input100" name="BallVibOtv[1]" id="BallVibOtv[1]" size="3" placeholder="Балл" />
+                                                        <span class="focus-input100"></span>
+                                                    </div>
+                                                    <div id="DivBallVibOtv[2]" class="input-group wrap-input100 row m-sm-1 hiden">
+                                                        <div class="input-group-prepend ">
+                                                            <div class="input-group-text">
+                                                                <i class="fas fa-list-ol"></i>
+                                                            </div>
+                                                        </div>
+                                                        <input type="text" class="form-control input100" name="BallVibOtv[2]" id="BallVibOtv[2]" size="3" placeholder="Балл" />
+                                                        <span class="focus-input100"></span>
+                                                    </div>
+                                                    <div id="DivBallVibOtv[3]" class="input-group wrap-input100 row m-sm-1 hiden">
+                                                        <div class="input-group-prepend ">
+                                                            <div class="input-group-text">
+                                                                <i class="fas fa-list-ol"></i>
+                                                            </div>
+                                                        </div>
+                                                        <input type="text" class="form-control input100" name="BallVibOtv[3]" id="BallVibOtv[3]" size="3" placeholder="Балл" />
+                                                        <span class="focus-input100"></span>
+                                                    </div>
+                                                    <div id="DivBallVibOtv[4]" class="input-group wrap-input100 row m-sm-1 hiden">
+                                                        <div class="input-group-prepend ">
+                                                            <div class="input-group-text">
+                                                                <i class="fas fa-list-ol"></i>
+                                                            </div>
+                                                        </div>
+                                                        <input type="text" class="form-control input100" name="BallVibOtv[4]" id="BallVibOtv[4]" size="3" placeholder="Балл" />
+                                                        <span class="focus-input100"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <div class="row">
-                                            <div class="col-6 " id="ViborOtvetov">
-                                                <div class="input-group wrap-input100 row m-sm-1" id="DivViborOtveta[1]">
-                                                    <div class="input-group-prepend ">
-                                                        <div class="input-group-text">
-                                                            <i class="fas fa-list-ol"></i>
-                                                        </div>
-                                                    </div>
-                                                    <input type="text" class="form-control input100 " name="ViborOtveta[1]" id="ViborOtveta[1]" placeholder="Введите ответ" />
-                                                    <span class="focus-input100"></span>
-                                                </div>
-                                                <div class="input-group wrap-input100 row m-sm-1" id="DivViborOtveta[2]">
-                                                    <div class="input-group-prepend ">
-                                                        <div class="input-group-text">
-                                                            <i class="fas fa-list-ol"></i>
-                                                        </div>
-                                                    </div>
-                                                    <input type="text" class="form-control input100" name="ViborOtveta[2]" id="ViborOtveta[2]" placeholder="Введите ответ" />
-                                                    <span class="focus-input100"></span>
-                                                </div>
-                                                <div class="input-group wrap-input100 row m-sm-1" id="DivViborOtveta[3]">
-                                                    <div class="input-group-prepend ">
-                                                        <div class="input-group-text">
-                                                            <i class="fas fa-list-ol"></i>
-                                                        </div>
-                                                    </div>
-                                                    <input type="text" class="form-control input100" name="ViborOtveta[3]" id="ViborOtveta[3]" placeholder="Введите ответ" />
-                                                    <span class="focus-input100"></span>
-                                                </div>
-                                                <div class="input-group wrap-input100 row m-sm-1" id="DivViborOtveta[4]">
-                                                    <div class="input-group-prepend ">
-                                                        <div class="input-group-text">
-                                                            <i class="fas fa-list-ol"></i>
-                                                        </div>
-                                                    </div>
-                                                    <input type="text" class="form-control input100" name="ViborOtveta[4]" id="ViborOtveta[4]" placeholder="Введите ответ" />
-                                                    <span class="focus-input100"></span>
-                                                </div>
+                                            <div class="input-group wrap-input100 validate-input col-4">
+                                                <a href="#" class="btn btn-success input100 btn-icon icon-left" name="add" id="add">
+                                                    <i class="fas fa-plus"></i>
+                                                    <ya-tr-span>Добавить</ya-tr-span>
+                                                </a>
+                                                <span class="focus-input100"></span>
+                                            </div>
+                                            <div class="input-group wrap-input100 validate-input col-4">
+                                                <a href="#" class="btn btn-danger input100 btn-icon icon-left" name="del" id="del">
+                                                    <i class="fas fa-times"></i>
+                                                    <ya-tr-span>Удалить</ya-tr-span>
+                                                </a>
+                                                <span class="focus-input100"></span>
                                             </div>
 
-                                            <div class="col-2" id="ViborOtvetovShek">
-                                                <div class="m-sm-1" height="42px" id="DivViborOtvetaShek[1]">
-                                                    <label class="custom-switch mt-2" style="height:28px">
 
-                                                        <input type="checkbox" name="check[1]" id="check[1]" value="1" onchange="ballvibotv(1)" class="custom-switch-input">
-                                                        <span class="custom-switch-indicator"></span>
-                                                    </label>
-                                                </div>
-                                                <div class="m-sm-1" height="42px" id="DivViborOtvetaShek[2]">
-                                                    <label class="custom-switch mt-2" style="height:28px">
-
-                                                        <input type="checkbox" name="check[2]" id="check[2]" value="1" onchange="ballvibotv(2)" class="custom-switch-input">
-                                                        <span class="custom-switch-indicator"></span>
-                                                    </label>
-                                                </div>
-                                                <div class="m-sm-1" height="42px" id="DivViborOtvetaShek[3]">
-                                                    <label class="custom-switch mt-2" style="height:28px">
-
-                                                        <input type="checkbox" name="check[3]" id="check[3]" value="1" onchange="ballvibotv(3)" class="custom-switch-input">
-                                                        <span class="custom-switch-indicator"></span>
-                                                    </label>
-                                                </div>
-                                                <div class="m-sm-1" height="42px" id="DivViborOtvetaShek[4]">
-                                                    <label class="custom-switch mt-2" style="height:28px">
-
-                                                        <input type="checkbox" name="check[4]" id="check[4]" value="1" onchange="ballvibotv(4)" class="custom-switch-input">
-                                                        <span class="custom-switch-indicator"></span>
-                                                    </label>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-2" id="ViborOtvetovBall">
-                                                <div id="DivBallVibOtv[1]" class="input-group wrap-input100 row m-sm-1 hiden">
-                                                    <div class="input-group-prepend ">
-                                                        <div class="input-group-text">
-                                                            <i class="fas fa-list-ol"></i>
-                                                        </div>
-                                                    </div>
-                                                    <input type="text" class="form-control input100" name="BallVibOtv[1]" id="BallVibOtv[1]" value="0" size="3" placeholder="Балл" />
-                                                    <span class="focus-input100"></span>
-                                                </div>
-                                                <div id="DivBallVibOtv[2]" class="input-group wrap-input100 row m-sm-1 hiden">
-                                                    <div class="input-group-prepend ">
-                                                        <div class="input-group-text">
-                                                            <i class="fas fa-list-ol"></i>
-                                                        </div>
-                                                    </div>
-                                                    <input type="text" class="form-control input100" id="BallVibOtv[2]" size="3" placeholder="Балл" />
-                                                    <span class="focus-input100"></span>
-                                                </div>
-                                                <div id="DivBallVibOtv[3]" class="input-group wrap-input100 row m-sm-1 hiden">
-                                                    <div class="input-group-prepend ">
-                                                        <div class="input-group-text">
-                                                            <i class="fas fa-list-ol"></i>
-                                                        </div>
-                                                    </div>
-                                                    <input type="text" class="form-control input100" id="BallVibOtv[3]" size="3" placeholder="Балл" />
-                                                    <span class="focus-input100"></span>
-                                                </div>
-                                                <div id="DivBallVibOtv[4]" class="input-group wrap-input100 row m-sm-1 hiden">
-                                                    <div class="input-group-prepend ">
-                                                        <div class="input-group-text">
-                                                            <i class="fas fa-list-ol"></i>
-                                                        </div>
-                                                    </div>
-                                                    <input type="text" class="form-control input100" id="BallVibOtv[4]" size="3" placeholder="Балл" />
-                                                    <span class="focus-input100"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="input-group wrap-input100 validate-input col-2">
-                                            <a href="#" class="btn btn-success input100 btn-icon icon-left" name="add" id="add">
-                                                <i class="fas fa-plus"></i>
-                                                <ya-tr-span>Добавить</ya-tr-span>
-                                            </a>
-                                            <span class="focus-input100"></span>
-                                        </div>
-                                        <div class="input-group wrap-input100 validate-input col-2">
-                                            <a href="#" class="btn btn-danger input100 btn-icon icon-left" name="del" id="del">
-                                                <i class="fas fa-times"></i>
-                                                <ya-tr-span>Удалить</ya-tr-span>
-                                            </a>
-                                            <span class="focus-input100"></span>
                                         </div>
 
 
-                                    </div>
 
 
 
+</form>
 
 
-                                </form>
-
-
-                                <div class="input-group wrap-input100 validate-input col-3">
+                                <div class="input-group wrap-input100 validate-input col-12">
                                     <a href="#" class="btn btn-success input100 btn-icon icon-left" name="SaveViborOtvet" id="SaveViborOtvet">
                                         <i class="far fa-save"></i>
                                         <ya-tr-span data-index="147-0" data-value=" Default" data-translation="Сохранить ответ" data-type="trSpan">Сохранить ответ</ya-tr-span>
@@ -846,6 +871,7 @@
             var iStr = 0;
             var obshBall = 0;
             var checkboxBallVibOtv = document.getElementById("checkBallVibOtv");
+            var cena = document.getElementById("InputCena").value;
             obshBall = 1;
 
 
@@ -880,8 +906,13 @@
                 }
                 console.log(arr1[i]);
             }
+            
+            vbdcena(cena);
             vbd(2, arr, arr1, obshBall);
-
+            
+            
+               
+            
 
         });
 
@@ -902,7 +933,7 @@
             }
 
             vbd(1, arr, arr1, 0);
-
+            
         });
         jQuery("#SaveSvbOtvet").click(function () {
             var arr = [];
@@ -993,6 +1024,21 @@
 
             });
             predprosmotr();
+        }
+
+        function vbdcena(cena) {
+            var idZadania = document.getElementById("idZadania").value;
+            jQuery.ajax({
+                url: '/UprSpec/SaveCena/',
+                type: "POST",
+                dataType: "json",
+                data: { idZadania: idZadania, Cena: cena },
+                success: function (query) {
+
+                }
+
+            });
+           
         }
 
         jQuery('#add').click(function () {
@@ -1110,16 +1156,18 @@
         }
 
         function ballvibotvall() {
+           
             for (i = 1; i <= NomerViborOtv; i++) {
-                ballvibotv(i);
+                //ballvibotv(i);
 
                 var checkbox = document.getElementById('checkBallVibOtv');
                 if (checkbox.checked) {
-                    document.getElementById('BallVibOtv').hidden = true;
+                    //document.getElementById('BallVibOtv').hidden = true;
+                    ballvibotv(i);
                 }
                 else {
-                    document.getElementById('BallVibOtv').hidden = false;
-
+                    //document.getElementById('BallVibOtv').hidden = false;
+                    ballvibotv(i);
                 }
 
             }
@@ -1141,7 +1189,24 @@
             }
         }
 
+        function cena() {
 
+            var checkboxCena = document.getElementById('checkBallCena');
+            var checkboxRazd = document.getElementById('checkBallVibOtv');
+            var divcheck = document.getElementById('DivCena');
+            var inp = document.getElementById('InputCena');
+            if (checkboxCena.checked ) {
+                divcheck.classList.remove('hiden');
+                checkboxRazd.checked =false;
+                ballvibotvall()
+            }
+            else {
+                if (divcheck != null) {
+                    divcheck.classList.add('hiden');
+                    inp.value = 0;
+                }
+            }
+        }
 
 
         function balltableotv() {

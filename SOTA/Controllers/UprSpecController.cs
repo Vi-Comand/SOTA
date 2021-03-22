@@ -701,6 +701,20 @@ namespace SOTA.Controllers
             return Json("ok");
         }
 
+
+        public async Task<IActionResult> SaveCena(int idZadania, int Cena)
+        {
+            Zadanie EditZadanie = new Zadanie();
+            EditZadanie = db.Zadanie.Find(idZadania);
+            EditZadanie.PriceError = Cena;
+            
+            db.SaveChanges();
+
+
+            return Json("ok");
+        }
+
+
         public IActionResult Privacy()
         {
             return View();
@@ -898,7 +912,8 @@ namespace SOTA.Controllers
             ViewBag.rl = Convert.ToInt16(HttpContext.User.Claims.First(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value);
             ViewBag.n_var = n_var;
             ViewBag.n_zad = n_zad;
-            ZadanieRedact model = new ZadanieRedact();
+            ViewBag.kol_z = db.Zadanie.Where(x => x.IdSpec == id_spec && x.Variant == 1).Count();
+                ZadanieRedact model = new ZadanieRedact();
             var Zadan = db.Zadanie.Where(x => x.IdSpec == id_spec && x.Nomer == n_zad && x.Variant == n_var).First();
             model.Id = Zadan.Id;
             model.IdSpec = id_spec;
