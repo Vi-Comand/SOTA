@@ -922,6 +922,7 @@ namespace SOTA.Controllers
             model.IsNumber = Zadan.IsNumber;
             model.Otvets = db.Otvet.Where(x => x.IdZadan == Zadan.Id && x.Ustar != 1).ToList();
             model.DopText = Zadan.Doptext;
+            model.PriceError = Zadan.PriceError;
             if (Zadan.Tip == 4 && model.Otvets != null)
                 try
                 {

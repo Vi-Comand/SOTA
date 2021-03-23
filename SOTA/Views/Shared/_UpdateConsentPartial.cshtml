@@ -1,0 +1,35 @@
+﻿@using Microsoft.AspNetCore.Http.Features
+
+@{
+    var consentFeature1 = Context.Features.Get<ITrackingConsentFeature>();
+    var showBanner1 = !consentFeature1?.CanTrack ?? false;
+    var cookieString1 = consentFeature1?.CreateConsentCookie();
+}
+
+@if (showBanner1)
+{
+<div id="cookieConsent1" class="alert alert-info alert-dismissible fade show" role="alert">
+    <div style="width:85%"> Используя этот сайт, Вы выражаете согласие на сбор и обработку Ваших персональных данных с применением cookie-файлов.</div>
+    <div>
+        <button type="button" class="accept-policy close" data-dismiss="alert" aria-label="Close" data-cookie-string1="@cookieString1">
+            <span aria-hidden="true">Понятно</span>
+        </button>
+    </div>
+    <div class="card">
+        <h5 class="card-header">Обновления</h5>
+        <div class="card-body">
+            <h5 class="card-title">Особое обращение с заголовком</h5>
+            <p class="card-text">С вспомогательным текстом ниже в качестве естественного перехода к дополнительному контенту.</p>
+            <a href="#" class="btn btn-primary">Перейти куда-нибудь</a>
+        </div>
+    </div>
+</div>
+    <script>
+        (function () {
+            var button = document.querySelector("#cookieConsent1 button[data-cookie-string1]");
+            button.addEventListener("click", function (event) {
+                document.cookie = button.dataset.cookieString1;
+            }, false);
+        })();
+    </script>
+    }

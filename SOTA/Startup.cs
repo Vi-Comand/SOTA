@@ -46,6 +46,10 @@ namespace SOTA
 
             });
 
+          
+
+
+
             //services.AddDbContext<DbContext>();
 
             ////and this: add identity and create the db
@@ -82,6 +86,9 @@ namespace SOTA
                 app.UseHsts();
             }
 
+            
+
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
@@ -93,8 +100,25 @@ namespace SOTA
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+
+            /*Сомнительные куки может быть когда нибудь
+            app.Run(async (context) =>
+            {
+                if (context.Request.Cookies.ContainsKey("update"))
+                {
+                    string update = context.Request.Cookies["update"];
+                    //   await context.Response.WriteAsync($"Hello {name}!");
+                }
+                else
+                {
+                    context.Response.Cookies.Append("update", "no");
+                    // await context.Response.WriteAsync("Hello World!");
+                }
+            });
+            */
         }
-        
-        
-        }
+
+
+    }
 }

@@ -17,5 +17,6 @@ namespace SOTA.Models
         public List<Otvet> Otvets { get; set; }
         public string DopText { get; set; }
         public int IsNumber { get; set; }
+        public double PriceError { get; set; }
     }
 }

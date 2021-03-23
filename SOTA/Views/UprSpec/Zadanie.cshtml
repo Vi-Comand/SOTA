@@ -85,9 +85,11 @@
                 @: var text = "@row.Text";
                 @: var ball = "@row.Ball";
                 @: var verno = "@row.Verno";
-                @:ForOtvTip2(nomZad, text, ball, verno);
+             @: var price = "@Model.PriceError";
+                @:ForOtvTip2(nomZad, text, ball, verno, price);
                 @: nomZad++;
             }
+           
         }
 
         function ZapolnOtvTip4() {
@@ -106,7 +108,8 @@
 
                 @: var ball = "@row.Ball";
                 @: var param = "@row.Param1";
-                @:ForOtvTip4(param, text, ball);
+            @: var price = "@Model.PriceError";
+                @:ForOtvTip4(param, text, ball, price);
 
             }
         }
@@ -123,8 +126,10 @@
 
 
 
-        function ForOtvTip2(nomZad,text,ball, verno) {
+        function ForOtvTip2(nomZad,text,ball, verno, price) {
             var checkBallVibOtv = document.getElementById("checkBallVibOtv");
+            var checkBallCena = document.getElementById("checkBallCena");
+            var divCena = document.getElementById("DivCena");
             console.log(ball);
             console.log(text);
             console.log(nomZad);
@@ -133,6 +138,10 @@
                 checkBallVibOtv.checked = true;
             }
 
+            if (price != 0 && !checkBallCena.checked) {
+                checkBallCena.checked = true;
+                divCena.classList.remove('hiden');
+            }
 
             if (nomZad >4) {
                 AddTip2();
@@ -154,10 +163,14 @@
         }
 
 
-        function ForOtvTip4(param, text, ball) {
+        function ForOtvTip4(param, text, ball, price) {
             var mass = param.split(",");
-
-
+            var checkBallCena = document.getElementById("checkBallCenaTb");
+            var divCena = document.getElementById("DivCenaTb");
+            if (price != 0 && !checkBallCena.checked) {
+                checkBallCena.checked = true;
+                divCena.classList.remove('hiden');
+            }
 
             if (ball > 0) {
                 if (!document.getElementById("checkBallTabOtv").checked) { document.getElementById("checkBallTabOtv").checked = true;
@@ -579,7 +592,7 @@
                                                         <i class="fas fa-ban"></i>
                                                     </div>
                                                 </div>
-                                                <input type="number" class="form-control input100" name="InputCena" id="InputCena" value="0"/>
+                                                <input type="number" class="form-control input100" name="InputCena" id="InputCena" asp-for="@Model.PriceError"/>
                                                 <span class="focus-input100"></span>
                                             </div>
                                         </div>
@@ -755,16 +768,38 @@
 
                                 <div class="container-fluid">
                                     <div class="row align-items-center ">
+                                        <div class="col-sm-5">
+                                            <div class="input-group wrap-input100 validate-input row">
+
+
+
+
+                                                <label class="custom-switch mt-2">
+
+                                                    <input type="checkbox" name="checkBallCenaTb" id="checkBallCenaTb" onchange="cenaTb()" class="custom-switch-input">
+                                                    <span class="custom-switch-indicator"></span>
+                                                    <span class="custom-switch-description">Цена ошибки</span>
+                                                </label>
+                                            </div>
+
+                                        </div>
+                                        <div class="input-group wrap-input100 col-3 m-sm-1 hiden" id="DivCenaTb">
+                                            <div class="input-group-prepend ">
+                                                <div class="input-group-text">
+                                                    <i class="fas fa-ban"></i>
+                                                </div>
+                                            </div>
+                                            <input type="number" class="form-control input100" name="InputCenaTb" id="InputCenaTb" asp-for="@Model.PriceError" />
+                                            <span class="focus-input100"></span>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center ">
                                         <div class="col-sm-6">
                                             <div class="input-group wrap-input100 validate-input row">
 
-                                                <div class="input-group-prepend ">
-                                                    <div class="input-group-text">
-                                                        <i class="fas fa-list-ol"></i>
-                                                    </div>
-                                                </div>
-                                                <input type="text" class="form-control input100 col-3 ml-sm-0 mt-sm-0" id="BallTabOtv" asp-for="@Model.Ball" size="3" placeholder="Баллы" />
-                                                <span class="focus-input100"></span>
+
+                                                <input type="text" class="form-control input100 col-3 ml-sm-0 mt-sm-0 hiden d-none" id="BallTabOtv" asp-for="@Model.Ball" size="3" placeholder="Баллы" />
+
 
                                                 <label class="custom-switch mt-2">
 
@@ -776,18 +811,35 @@
                                         </div>
 
 
+                                    </div>
+                                    <div class="row align-items-center ">
+                                        <div class="input-group wrap-input100 col-6 m-sm-1">
+                                            <div class="input-group-prepend ">
+                                                <div class="input-group-text">
+                                                    <i class="fas fa-table"></i>
+                                                </div>
+                                            </div>
+                                            <input type="text" class="form-control input100  ml-sm-0 mt-sm-0 " id="kolRow" placeholder="Кол. строк" />
+                                            <span class="focus-input100"></span>
+                                        </div>
 
-                                        <input type="text" id="kolRow" />
 
-                                        <button type="button" name="AddTabel" id="AddTabel" OnClick="generateTable()">Добавить таблицу</button>
+                                        <button type="button" name="AddTabel" id="AddTabel" class="btn btn-outline-yel input100  icon-left col-5" OnClick="generateTable()">
+                                            Создать таблицу
+                                        </button>
 
                                         <div id="TableCreate">
 
 
                                         </div>
                                         <div class="input-group wrap-input100 validate-input col-12">
-                                            <button class="btn btn-outline-warning" id="SaveOtvetTable">Сохранить ответ</button>
+                                            <a href="#" class="btn btn-success input100 btn-icon icon-left" name="SaveOtvetTable" id="SaveOtvetTable">
+                                                <i class="far fa-save"></i>
+                                                <ya-tr-span data-index="147-0" data-value=" Default" data-translation="Сохранить ответ" data-type="trSpan">Сохранить ответ</ya-tr-span>
+                                            </a>
+                                            <span class="focus-input100"></span>
                                         </div>
+                                        
 
                                     </div>
                                 </div>
@@ -798,23 +850,23 @@
                                     <table id="tableSvbOtv">
                                         <tr id="SvbOtvetRow[0]">
                                             <td>
-                                                <input type="text" id="BallSvbOtv[0]" size="3" />
+                                                <input type="text" class="form-control input100  ml-sm-0 mt-sm-0 " id="BallSvbOtv[0]" size="3" />
                                             </td>
                                             <td>
                                                 <div id="SvbOtvetDiv[0]">
-                                                    <textarea rows="2" cols="45" name="SvbOtv[0]" id="SvbOtv[0]"></textarea>
+                                                    <textarea rows="1" cols="120" class="form-control input100  ml-sm-0 mt-sm-0 " name="SvbOtv[0]" id="SvbOtv[0]"></textarea>
 
                                                 </div>
                                             </td>
                                             <td>
-                                                <button type="button" name="delAlternativeSvb" class="classDelAlternativeSvb" value="1" id="delAlternativeSvb" OnClick="d(0);">Удалить</button>
+                                                <button type="button" name="delAlternativeSvb" class="classDelAlternativeSvb btn btn-outline-danger input100" value="1" id="delAlternativeSvb" OnClick="d(0);">Удалить</button>
                                             </td>
                                         </tr>
                                     </table>
 
                                     <div>
 
-                                        <button type="button" name="addAlternativeSvb" id="addAlternativeSvb">Добавить</button>
+                                        <button type="button" class="btn btn-outline-yel input100   col-6" name="addAlternativeSvb" id="addAlternativeSvb">Добавить</button>
                                     </div>
 
 
@@ -968,7 +1020,7 @@
             var arr1 = [];
             var indexArr = 0;
             var obshBall = 0;
-
+            var cena = document.getElementById("InputCenaTb").value;
             var checkboxBallOtv = document.getElementById("checkBallTabOtv");
 
             if (checkboxBallOtv.checked)
@@ -1005,7 +1057,7 @@
 
             }
 
-
+            vbdcena(cena);
             vbd(4, arr, arr1, obshBall);
 
         });
@@ -1156,13 +1208,15 @@
         }
 
         function ballvibotvall() {
-           
+            var checkboxCena = document.getElementById('checkBallCena');
             for (i = 1; i <= NomerViborOtv; i++) {
                 //ballvibotv(i);
 
                 var checkbox = document.getElementById('checkBallVibOtv');
                 if (checkbox.checked) {
                     //document.getElementById('BallVibOtv').hidden = true;
+                    checkboxCena.checked = false;
+                    cena();
                     ballvibotv(i);
                 }
                 else {
@@ -1208,12 +1262,33 @@
             }
         }
 
+        function cenaTb() {
+
+            var checkboxCena = document.getElementById('checkBallCenaTb');
+            var checkboxRazd = document.getElementById('checkBallTabOtv');
+            var divcheck = document.getElementById('DivCenaTb');
+            var inp = document.getElementById('InputCenaTb');
+            if (checkboxCena.checked) {
+                divcheck.classList.remove('hiden');
+                checkboxRazd.checked = false;
+                balltableotv()
+            }
+            else {
+                if (divcheck != null) {
+                    divcheck.classList.add('hiden');
+                    inp.value = 0;
+                }
+            }
+        }
 
         function balltableotv() {
             var checkbox = document.getElementById('checkBallTabOtv');
+            var checkboxCena = document.getElementById('checkBallCenaTb');
             if (checkbox.checked) {
                 document.getElementById("BallTabOtv").hidden = true;
                 var table = document.getElementById('TabelOtvet');
+                checkboxCena.checked = false;
+                cenaTb();
                 for (i = 1; i <= table.rows.length; i++) {
                     var but = document.getElementById("but[" + i + "]");
                     but.innerHTML = '<input type="text" id="BallTabOtv[' + i + ']"  size="2"  />' + but.innerHTML;
@@ -1340,9 +1415,9 @@
 
                 for (var j = 1; j <= 2; j++) {
                     if (j == 1) {
-                        table += "<td id=\"but[" + i + "]\"><button type=\"button\" name=\"addAlternativeTable[" + i + "]\" id=\"addAlternativeTable[" + i + "]\" class=\"classAddAlternativeTable\"  OnClick=\"addInput(" + i + ",2);\"  >+</button> <button type=\"button\" name=\"delAlternativeTable[" + i + "]\" id=\"delAlternativeTable[" + i + "]\" class=\"classDelAlternativeTable\"  OnClick=\"delInput(" + i + ",2);\"  >-</button></td> ";
+                        table += "<td id=\"but[" + i + "]\"><button type=\"button\" class=\"btn btn-outline-yel\" name=\"addAlternativeTable[" + i + "]\" id=\"addAlternativeTable[" + i + "]\" class=\"classAddAlternativeTable\"  OnClick=\"addInput(" + i + ",2);\"  >+</button> <button type=\"button\" class=\"btn btn-outline-yel\" name=\"delAlternativeTable[" + i + "]\" id=\"delAlternativeTable[" + i + "]\" class=\"classDelAlternativeTable\"  OnClick=\"delInput(" + i + ",2);\"  >-</button></td> ";
                     }
-                    table += "<td><input type=\"text\" name= \"ach" + i + "," + j + "\" id= \"ach" + i + "," + j + "\"/> </td>";
+                    table += "<td><input type=\"text\" class=\"form-control input100\"  ml-sm-0 mt-sm-0  name= \"ach" + i + "," + j + "\" id= \"ach" + i + "," + j + "\"/> </td>";
 
 
                 }
