@@ -20,6 +20,7 @@ namespace SOTA.Models
         public DbSet<AnswerUser> AnswerUser { get; set; }
         public DbSet<VariantUser> VariantUser { get; set; }
         public DbSet<UsersBalls> UsersBalls { get; set; }
+        public DbSet<UsersDeleted> UsersDeleted { get; set; }
         public DbSet<Kriterocen> Kriterocen { get; set; }
         public DbSet<StructSpec> StructSpec { get; set; }
         public DbSet<TypeStructSpec> TypeStructSpec { get; set; }

@@ -166,7 +166,76 @@ namespace SOTA.Controllers
             }
         }
 
-        public IActionResult RazrReg(int idReg, int role)
+        public IActionResult AddUserAjax(string f, string i, string o)
+        {
+            string login = HttpContext.User.Identity.Name;
+            Users klass = db.Users.Where(p => p.Name == login).First();
+            Users user = new Users();
+            string n="";
+            var list = db.Users.Select(x => new   {name = x.Name }).ToList();
+               
+                user.F = f;
+                user.I = i;
+                user.O = o;
+            n = f + i + o;
+            for (int j = 1; j < 1000; j++)
+            {
+                var q = list.Where(x => x.name.ToString() == n).Count();
+                
+                
+                if (q == 0)
+                {
+                    user.Name = n;
+                    break;
+                }
+                else
+                {
+                    n = f + i + o;
+                    n = n +"_"+j.ToString();
+                 }
+            }
+                user.IdKlass = klass.IdKlass;
+                user.IdMo = klass.IdMo;
+                user.IdOo = klass.IdOo;
+                user.Kod = "1";
+
+            db.Users.Add(user);
+                db.SaveChanges();
+                return Json("Ok");
+         
+        }
+
+
+        public IActionResult DelUser(int idDel)
+        {
+            string login = HttpContext.User.Identity.Name;
+            Users klass = db.Users.Where(p => p.Name == login).First();
+            if (klass.Role == 1)
+            {
+                Users user = new Users();
+                user = db.Users.FirstOrDefault(u => u.Id == idDel);
+                UsersDeleted usersDeleted = new UsersDeleted();
+                usersDeleted.DateDel = DateTime.Now;
+                usersDeleted.F = user.F;
+                usersDeleted.I = user.I;
+                usersDeleted.O = user.O;
+                usersDeleted.Name = user.Name;
+                usersDeleted.IdKlass = user.IdKlass;
+                usersDeleted.IdMo = user.IdMo;
+                usersDeleted.IdOo = user.IdOo;
+                usersDeleted.IdDel = user.Id;
+                db.UsersDeleted.Add(usersDeleted);
+                db.Users.Remove(user);
+                db.SaveChanges();
+                return Redirect("Klass");
+            }
+            else
+            {
+                return Redirect("Index");
+            }
+        }
+
+            public IActionResult RazrReg(int idReg, int role)
         {
             if (role == 4)
             {

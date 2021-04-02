@@ -261,6 +261,54 @@ namespace SOTA.Models
 
     }
 
+    public class UsersDeleted
+    {
+        public int Id
+        {
+            get; set;
+        }
+        public int IdKlass
+        {
+            get; set;
+        }
+        public int IdOo
+        {
+            get; set;
+        }
+        public int IdMo
+        {
+            get; set;
+        }
+       
+        public string Name
+        {
+            get; set;
+        }
+        
+        public DateTime DateDel
+        {
+            get; set;
+        }
+        public string F
+        {
+            get; set;
+        }
+        public string I
+        {
+            get; set;
+        }
+        public string O
+        {
+            get; set;
+        }
+
+        public int IdDel
+        {
+            get; set;
+        }
+    }
+
+
     public class Oo
     {
         public int Id
