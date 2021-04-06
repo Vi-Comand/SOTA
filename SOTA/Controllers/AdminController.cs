@@ -30,6 +30,7 @@ namespace SOTA.Controllers
             usersPage.LisrUsersMO = listUsersAdmin.LisrUsersAdm.Where(x => x.Role == 3).OrderBy(x => x.IdMo).ToList();
             usersPage.LisrUsersOO = listUsersAdmin.LisrUsersAdm.Where(x => x.Role == 2).OrderBy(x => x.IdMo).ToList();
             usersPage.LisrUsersKlass = listUsersAdmin.LisrUsersAdm.Where(x => x.Role == 1).OrderBy(x => x.IdMo).ThenBy(x => x.IdOo).ToList();
+            usersPage.usersDeleteds = db.UsersDeleted.ToList();
             // usersPage.LisrUsersTest = listUsersAdmin.LisrUsersAdm.Where(x => x.Role == 0).ToList();
             // LisrUsersA listMo = new ListUsersMo();
             //listMo.UsersMo = db.Users.Where(p => p.Role == 3).ToList();
@@ -235,7 +236,57 @@ namespace SOTA.Controllers
             }
         }
 
-            public IActionResult RazrReg(int idReg, int role)
+        public IActionResult RestoreUsers(int idDel)
+        {
+            string login = HttpContext.User.Identity.Name;
+            Users klass = db.Users.Where(p => p.Name == login).First();
+            if (klass.Role == 4)
+            {
+                UsersDeleted usersDeleted = new UsersDeleted();
+
+                usersDeleted = db.UsersDeleted.FirstOrDefault(u => u.IdDel == idDel);
+                var list = db.Users.Select(x => new { name = x.Name }).ToList();
+                Users user = new Users();
+                user.F = usersDeleted.F;
+                user.I = usersDeleted.I;
+                user.O = usersDeleted.O;
+                string n = usersDeleted.Name;
+                for (int j = 1; j < 1000; j++)
+                {
+                    var q = list.Where(x => x.name.ToString() == n).Count();
+
+
+                    if (q == 0)
+                    {
+                        user.Name = n;
+                        break;
+                    }
+                    else
+                    {
+                        n = usersDeleted.Name;
+                        n = n + "_" + j.ToString();
+                    }
+                }
+                
+                user.IdKlass = usersDeleted.IdKlass;
+                user.IdMo = usersDeleted.IdMo;
+                user.IdOo = usersDeleted.IdOo;
+                user.Id = usersDeleted.IdDel;
+                user.Kod = "1";
+                db.Users.Add(user);
+                db.UsersDeleted.Remove(usersDeleted);
+                db.SaveChanges();
+                return Redirect("Users");
+            }
+            else
+            {
+                return Redirect("Index");
+            }
+        }
+
+
+
+        public IActionResult RazrReg(int idReg, int role)
         {
             if (role == 4)
             {

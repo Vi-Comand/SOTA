@@ -203,7 +203,49 @@
                 </div>
             </div>
             <div class="tab-pane fade" id="search" role="tabpanel" aria-labelledby="search-tab">
-                search
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover  table-sm table-bordered shadow">
+                            <thead class="table-yel">
+                                <tr>
+                                    <th>#</th>
+                                    <th>МО</th>
+                                    <th>ОО</th>
+                                    <th>Класс</th>
+                                    <th>Логин</th>
+                                    <th>Дата удаления</th>
+                                    <th>Управление</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < Model.usersDeleteds.Count; i++)
+                                {
+                                <tr>
+                                    <td>@Model.usersDeleteds[i].Id </td>
+                                    <td>@Model.usersDeleteds[i].IdMo</td>
+                                    <td>@Model.usersDeleteds[i].IdOo</td>
+                                    <td>@Model.usersDeleteds[i].IdKlass</td>
+                                    <td>@Model.usersDeleteds[i].Name</td>
+                                    <td>@Model.usersDeleteds[i].DateDel</td>
+
+                                    <td>
+                                        
+                                            <a asp-area="" asp-controller="Admin" asp-action="RestoreUsers" asp-route-idDel="@Model.usersDeleteds[i].IdDel"  class="btn btn-success">Востановить</a>
+                                       
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                            <tfoot class=" ">
+                                <tr>
+                                    <td>Всего </td>
+                                    <td>@Model.usersDeleteds.Count</td>
+                                    @*<td>@ViewBag.SumTest</td>*@
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -39,7 +39,7 @@ namespace SOTA.Models
         public List<UsersAdmin> LisrUsersOO;
         public List<UsersAdmin> LisrUsersKlass;
         public List<UsersAdmin> LisrUsersTest;
-
+        public List<UsersDeleted> usersDeleteds;
         public List<RabotaUchen> rabotaKlasss;
     }
 
