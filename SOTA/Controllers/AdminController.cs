@@ -96,14 +96,14 @@ namespace SOTA.Controllers
             ViewBag.rl = user.Role;
             ListUsersAdmin listUsersAdmin = new ListUsersAdmin(db);
             listUsersAdmin.GetRab(user.IdMo, user.IdOo, user.IdKlass);
-            int id_spec=0;
-                string name="";
+            int id_spec = 0;
+            string name = "";
             if (listUsersAdmin.rabList != null)
             {
                 listUsersAdmin.rabList.OrderBy(x => x.Konec);
-            
-             id_spec = listUsersAdmin.rabList.OrderByDescending(x => x.Konec).First().Id;
-             name = listUsersAdmin.rabList.OrderByDescending(x => x.Konec).First().Name;
+
+                id_spec = listUsersAdmin.rabList.OrderByDescending(x => x.Konec).First().Id;
+                name = listUsersAdmin.rabList.OrderByDescending(x => x.Konec).First().Name;
             }
             if (listUsersAdmin.rabList == null)
             {
@@ -172,18 +172,18 @@ namespace SOTA.Controllers
             string login = HttpContext.User.Identity.Name;
             Users klass = db.Users.Where(p => p.Name == login).First();
             Users user = new Users();
-            string n="";
-            var list = db.Users.Select(x => new   {name = x.Name }).ToList();
-               
-                user.F = f;
-                user.I = i;
-                user.O = o;
+            string n = "";
+            var list = db.Users.Select(x => new { name = x.Name }).ToList();
+
+            user.F = f;
+            user.I = i;
+            user.O = o;
             n = f + i + o;
             for (int j = 1; j < 1000; j++)
             {
                 var q = list.Where(x => x.name.ToString() == n).Count();
-                
-                
+
+
                 if (q == 0)
                 {
                     user.Name = n;
@@ -192,18 +192,18 @@ namespace SOTA.Controllers
                 else
                 {
                     n = f + i + o;
-                    n = n +"_"+j.ToString();
-                 }
+                    n = n + "_" + j.ToString();
+                }
             }
-                user.IdKlass = klass.IdKlass;
-                user.IdMo = klass.IdMo;
-                user.IdOo = klass.IdOo;
-                user.Kod = "1";
+            user.IdKlass = klass.IdKlass;
+            user.IdMo = klass.IdMo;
+            user.IdOo = klass.IdOo;
+            user.Kod = "1";
 
             db.Users.Add(user);
-                db.SaveChanges();
-                return Json("Ok");
-         
+            db.SaveChanges();
+            return Json("Ok");
+
         }
 
 
@@ -267,7 +267,7 @@ namespace SOTA.Controllers
                         n = n + "_" + j.ToString();
                     }
                 }
-                
+
                 user.IdKlass = usersDeleted.IdKlass;
                 user.IdMo = usersDeleted.IdMo;
                 user.IdOo = usersDeleted.IdOo;
