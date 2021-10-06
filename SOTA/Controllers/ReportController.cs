@@ -24,7 +24,7 @@ namespace SOTA.Controllers
         [Route("Report/ReportsList/")]
         public IActionResult ReportsList()
         {
-            
+
             ViewBag.rl = Convert.ToInt16(HttpContext.User.Claims.First(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value);
 
             return View();
@@ -79,17 +79,19 @@ namespace SOTA.Controllers
 
             if (user.Role == 4)
             {
-                var mos = db.Mo.ToList();
-                for (int i = 0; i < mos.Count; i++)
-                {
-                    try
-                    {
-                        Report = new ReportTip1(db, IdRabota, new Mo { Id = mos[i].Id });
-                        RedirectToAction("File", "Download", new { path = Report.Create() });
-                    }
-                    catch
-                    { }
-                }
+                //var mos = db.Mo.ToList();
+                //for (int i = 0; i < mos.Count; i++)
+                //{
+                //    try
+                //    {
+                //        Report = new ReportTip1(db, IdRabota, new Mo { Id = mos[i].Id });
+                //        RedirectToAction("File", "Download", new { path = Report.Create() });
+                //    }
+                //    catch
+                //    { }
+                //}
+                Report = new ReportTip1(db, IdRabota, new Mo { Id = 0 });
+                return RedirectToAction("File", "Download", new { path = Report.Create() });
             }
 
 

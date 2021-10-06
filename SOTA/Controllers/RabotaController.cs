@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-
+//TODO: Скрывать прошедшие работы поле в базе hiden, в таблиу добавить chekbox 
 
 namespace SOTA.Controllers
 {
@@ -44,7 +44,7 @@ namespace SOTA.Controllers
         }
 
 
-            public IActionResult RabotaSozdan()
+        public IActionResult RabotaSozdan()
         {
             Rabota rabota = new Rabota();
             db.Rabota.Add(rabota);

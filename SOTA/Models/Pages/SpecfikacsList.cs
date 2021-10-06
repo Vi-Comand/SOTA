@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+// TODO: Скрывать прошедшие спецификации поле в базе hiden, в таблиу добавить chekbox 
 namespace SOTA.Models
 {
     public class SchetchikZadVSpecs

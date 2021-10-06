@@ -1,14 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SOTA.Models;
 using SOTA.Models.Pages.Test;
 using SOTA.Models.Pages.TestRaschet;
 using System;
 using System.Linq;
 using System.Threading;
-
+//TODO: Архивация ответов прошедшей работы
 namespace SOTA.Controllers
 {
-    //[Authorize]
+    //[Authorize]//TODO: Проставлять конец на юзерах по зоершению работы и просчитать исука результаты а то не полнятно нихуя / по кнопке и таймеру
     public class TestController : Controller
     {
         SotaContext db;
@@ -90,7 +91,7 @@ namespace SOTA.Controllers
 
 
 
-        public IActionResult ChekingSaveOtvet(int id, int idRabota, int index,string text)
+        public IActionResult ChekingSaveOtvet(int id, int idRabota, int index, string text)
         {
             var login = HttpContext.User.Identity.Name;
             int idUser = db.Users.Where(p => p.Name == login).First().Id;
@@ -102,7 +103,7 @@ namespace SOTA.Controllers
                 else
                 {
                     SaveOtvUser save = new SaveOtvUser(id, text, db, idUser, idRabota, 1);
-                 
+
                 }
             }
             catch
@@ -129,7 +130,7 @@ namespace SOTA.Controllers
             int idspec = db.Rabota.First(x => x.Id == idRabota).IdSpec;
             ResultTest Result = new ResultTest(idUser, idRabota, idspec, db);
             double sumrab = db.StructSpec.Where(x => x.IdSpec == idspec && x.Type == 1).Sum(r => Convert.ToDouble(r.Text));
-           
+
             ViewBag.sumrab = sumrab;
             ViewBag.role = "0";
             ViewBag.dateK = db.Rabota.First(x => x.Id == idRabota).Konec;

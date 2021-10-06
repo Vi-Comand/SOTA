@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SOTA.Models;
 using System;
 using System.Linq;
-
+//TODO: Скрывать прошедшие работы . Добавить вкладку прошедшие 
 namespace SOTA.Controllers
 {
     [Authorize]

@@ -64,7 +64,7 @@
         const RESOLUTION = 1;
         let w = canvas.width = canvas.offsetWidth * RESOLUTION;
         let h = canvas.height = canvas.offsetHeight * RESOLUTION;
-        const PARTICLE_COUNT = 300;
+        const PARTICLE_COUNT = 250;
         const CONNECT_DISTANCE = w * 0.06;
         const FORCE_DISTANCE = w * 0.2;
         const r = (n = 1) => Math.random() * n;
@@ -154,10 +154,10 @@
                         ctx.moveTo(line.p1.x, line.p1.y);
                         ctx.lineTo(line.p2.x, line.p2.y);
                         ctx.strokeStyle = `rgb(
-                        ${Math.floor(line.color.r * colorSwing)},
-                        ${Math.floor((line.color.g * 0.5) + ((line.color.g * 0.5) * colorSwing))},
-                        ${line.color.b}
-                        )`
+                            ${Math.floor(line.color.r * colorSwing)},
+                            ${Math.floor((line.color.g * 0.5) + ((line.color.g * 0.5) * colorSwing))},
+                            ${line.color.b}
+                            )`
                         ctx.lineWidth = (line.opacity * 4);
                         ctx.stroke();
                         ctx.closePath();

@@ -14,7 +14,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Threading.Tasks;
-
+//TODO: Выводить инструкцию в начале работы если не пустое поле
 namespace SOTA.Controllers
 {
 
