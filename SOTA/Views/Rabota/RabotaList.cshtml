@@ -18,6 +18,7 @@
                 <thead class="table-yel">
                     <tr>
                         <th></th>
+                        <th></th>
                         <th>Название работы</th>
                         <th>Спецификация</th>
                         <th>Предмет</th>
@@ -38,6 +39,7 @@
 
                             <tr>
                                 <td><input type="checkbox" class="DEL" value="@row.Id" /></td>
+                                <td><a href="/Rabota/RabotaRedact?IdRabota=@row.Id" class='btn btn-icon btn-sm btn-outline-yel text-left btn-block'><i class='fas fa-pencil-alt'></i>Рассчитать @row.CountNotEnd </a></td>
                                 <td><a href="/Rabota/RabotaRedact?IdRabota=@row.Id" class='btn btn-icon btn-sm btn-outline-yel text-left btn-block'><i class='fas fa-pencil-alt'></i>@row.Name </a></td>
                                 <td>
                                     @if (row.IdSpec != 0)

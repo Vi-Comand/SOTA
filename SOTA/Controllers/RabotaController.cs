@@ -79,10 +79,18 @@ namespace SOTA.Controllers
             ViewBag.rl = Convert.ToInt16(HttpContext.User.Claims.First(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value);
             RabotaList rabotaList = new RabotaList();
 
-            rabotaList.Rabotas = db.Rabota.ToList();
+
+            rabotaList.Rabotas = db.Rabota.Select(x => new WorkNotEnd { Id = x.Id, IdSpec = x.IdSpec, Dliteln = x.Dliteln, Klass = x.Klass, Konec = x.Konec, ListUchasn = x.ListUchasn, Nachalo = x.Nachalo, Name = x.Name, Sozd = x.Sozd, UrovenRabot = x.UrovenRabot, CountNotEnd = db.VariantUser.Count(y => y.IdRabota == x.Id && y.Konec == 0) }).ToList();
 
             return View(rabotaList);
         }
+        public async Task<IActionResult> CalucaltionWork()
+        {
+
+            return RedirectToAction("RabotaList");
+
+        }
+
         public async Task<IActionResult> RabotaNaznach(RabotaRedact rabota)
         {
             //string login = HttpContext.User.Identity.Name;
@@ -104,7 +112,7 @@ namespace SOTA.Controllers
             return RedirectToAction("RabotaList");
 
         }
-
+       
         public async Task<IActionResult> Variants(int idRabota)
         {
             //string login = HttpContext.User.Identity.Name;

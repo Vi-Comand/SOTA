@@ -221,11 +221,13 @@ namespace SOTA.Models
         }
 
     }
+   
+
 
     public class RabotaList
     {
         //
-        public List<Rabota> Rabotas { get; set; }
+        public List<WorkNotEnd> Rabotas { get; set; }
 
 
 

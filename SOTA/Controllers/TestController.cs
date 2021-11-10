@@ -49,7 +49,26 @@ namespace SOTA.Controllers
 
 
 
+        public IActionResult KonecRabot(int idRabota,int idUser)
+        {
+            //var login = HttpContext.User.Identity.Name;
+            //int idUser = db.Users.Where(p => p.Name == login).First().Id;
+            VariantUser variantUser = db.VariantUser.Where(x => x.IdUser == idUser && x.IdRabota == idRabota).First();
+            Thread.Sleep(1000);
 
+            if (variantUser.Konec == 0)
+            {
+                variantUser.Konec = 1;
+                variantUser.KonecDate = DateTime.Now;
+
+                IRaschetBallsUser raschet = new RaschetBallsUser(db, idRabota, idUser);
+
+
+            }
+
+            return RedirectToAction("ViewResultTest", new { idRabota });
+
+        }
 
         //---------------------------------------------------тест расчета-------------------------------------------------------
 
