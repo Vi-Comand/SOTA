@@ -20,7 +20,8 @@ namespace SOTA.Controllers
         private SotaContext db;
 
         public AccountController(SotaContext context)
-        {
+        { 
+            var q=11;
             db = context;
         }
 
