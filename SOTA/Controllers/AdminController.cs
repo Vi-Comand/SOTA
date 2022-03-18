@@ -17,6 +17,7 @@ namespace SOTA.Controllers
         private SotaContext db;
         public AdminController(SotaContext context)
         {
+            var b = 1;
             var a = 1;
             db = context;
         }
