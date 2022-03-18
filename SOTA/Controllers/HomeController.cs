@@ -16,7 +16,7 @@ namespace SOTA.Controllers
         SotaContext db;
 
         public HomeController(SotaContext context)
-        {
+        { var rr=7;
             db = context;
         }
         public IActionResult Index()
