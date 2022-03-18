@@ -13,9 +13,11 @@ namespace SOTA.Controllers
     [Authorize]
     public class AdminController : Controller
     {
+        
         private SotaContext db;
         public AdminController(SotaContext context)
         {
+            var a = 1;
             db = context;
         }
 
