@@ -15,7 +15,7 @@ namespace SOTA.Controllers
 
         [HttpGet]
         public async Task<IActionResult> File(string path)
-        {
+        { int cg=4;
             if (path == "NotData")
             {
                 return RedirectToAction("ErroreData");
