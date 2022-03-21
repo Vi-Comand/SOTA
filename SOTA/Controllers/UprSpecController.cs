@@ -30,7 +30,7 @@ namespace SOTA.Controllers
     [Authorize]
     public class UprSpec : Controller
     {
-
+        nf=2
         SotaContext db;
 
         public UprSpec(SotaContext context)
