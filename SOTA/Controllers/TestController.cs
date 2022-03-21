@@ -13,7 +13,7 @@ namespace SOTA.Controllers
     {
         SotaContext db;
         public TestController(SotaContext context)
-        { int pr=1;
+
             db = context;
         }
         //public  IActionResult SaveOtvet(int id,string text)

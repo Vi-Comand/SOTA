@@ -12,7 +12,7 @@ namespace SOTA.Controllers
         SotaContext db;
 
         public UchenController(SotaContext context)
-        {
+        { nf=1;
             db = context;
         }
         // [HttpGet]
